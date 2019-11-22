@@ -1,4 +1,4 @@
-# Ruth
+# Ruth [![CircleCI](https://circleci.com/gh/10PinesLabs/ruth.svg?style=svg)](https://circleci.com/gh/10PinesLabs/ruth)
 ## Applicacion para cosas de roots.
 
 ### Desarollo

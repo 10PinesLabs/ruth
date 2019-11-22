@@ -20,7 +20,7 @@ class Reunion extends React.Component {
 
     return (
       <ReunionContainer>
-        <Temario />
+        <Temario/>
         Tema actual
       <Button onClick={this.handleCerrarReunion}> Cerrar reunion </Button>
       </ReunionContainer>);

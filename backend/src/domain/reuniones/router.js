@@ -8,9 +8,8 @@ const router = Router({ promise: true });
 
 const controller = ReunionController(context);
 
-router.get('/', asyncMiddleware(controller.reunion));
-router.post('/', asyncMiddleware(controller.crear));
-
-router.put('/', asyncMiddleware(controller.actualizar));
+router.get('/reunionActual', asyncMiddleware(controller.reunion));
+router.post('/reunionDeRoots', asyncMiddleware(controller.crear));
+router.put('/reunionActual', asyncMiddleware(controller.actualizar));
 
 export default router;

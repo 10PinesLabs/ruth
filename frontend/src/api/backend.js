@@ -4,7 +4,7 @@ const requester = Requester.createDefaultRequester();
 
 const Backend = {
   getReunion() {
-    return requester.get('/reunionDeRoots');
+    return requester.get('/reunionActual');
   },
 
   empezarReunion() {
@@ -12,7 +12,7 @@ const Backend = {
   },
 
   cerrarReunion() {
-    return requester.put('/reunionDeRoots', { abierta: false });
+    return requester.put('/reunionActual', { abierta: false });
   },
 };
 
