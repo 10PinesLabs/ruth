@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     inicio: DataTypes.DATE,
     fin: DataTypes.DATE,
     cantidadDeMinutosDelTema: DataTypes.INTEGER,
+    prioridad: DataTypes.INTEGER,
   }, {});
   Tema.associate = function (models) {
     Tema.Reunion = Tema.belongsTo(models.Reunion, {as: 'reunion'});
