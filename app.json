@@ -9,6 +9,12 @@
         "NPM_CONFIG_PRODUCTION": {
             "description": "Para instalar dev dependencys",
             "value": "false"
+        },
+        "TEMAS_ROOTS_HOST": {
+            "description": "Donde esta el server de votacion"
+        },
+        "TEMAS_ROOTS_API_KEY": {
+            "description": "Como autenticarse con el server de votacion"
         }
     },
     "repository": "https://github.com/10PinesLabs/ruth",
