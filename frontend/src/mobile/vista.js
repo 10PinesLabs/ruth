@@ -94,9 +94,9 @@ class Vista extends React.Component {
   };
 
   onWannaStopTalkClick = () => {
-    this.props.dispatchEvent({ tipo: 'Quiero Desencolarme' });
-    this.setState({ wannaTalk: false });
-  };
+    this.props.dispatchEvent({tipo: 'Quiero Desencolarme'});
+    this.setState({wannaTalk: false});
+  }
 
   render() {
     return (

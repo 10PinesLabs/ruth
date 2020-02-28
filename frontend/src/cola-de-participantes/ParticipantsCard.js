@@ -1,8 +1,6 @@
 import React from 'react';
 import ParticipantCounter from './ParticipantCounter';
-import {
-  CardContainer, CardInfoContainer, CardName, UserAvatar,
-} from './ParticipantsCard.styled';
+import { CardContainer, CardInfoContainer, CardName, UserAvatar } from './ParticipantsCard.styled';
 import getGravatarUrlFor from '../api/gravatar';
 
 class ParticipantsCard extends React.Component {
