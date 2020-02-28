@@ -1,9 +1,6 @@
 import React from 'react';
-import Card from '@material-ui/core/Card';
 import ParticipantCounter from './ParticipantCounter';
-import {
-  CardSubcontainer, cardContainerStyle, CardName, UserAvatar,
-} from './ParticipantsCard.styled';
+import { CardContainer, CardInfoContainer, CardName, UserAvatar } from './ParticipantsCard.styled';
 import getGravatarUrlFor from '../api/gravatar';
 
 class ParticipantsCard extends React.Component {
@@ -25,19 +22,32 @@ class ParticipantsCard extends React.Component {
     return this.props.participant.inicio === null;
   }
 
+  getCardHeight() {
+    if (this.props.isParticipantTalking) return '15em';
+    return '13em';
+  }
+
+  getCardWidth() {
+    if (this.props.isParticipantTalking) return '13em';
+    return '11em';
+  }
 
   render() {
-    return (
-          <Card style={cardContainerStyle(this.props.isParticipantTalking)}>
-            <CardSubcontainer>
-              <UserAvatar isTalking={this.props.isParticipantTalking} avatar={getGravatarUrlFor(this.props.participant.email)}/>
-              <CardName>
-                {this.props.participant.nombre}
-              </CardName>
-            </CardSubcontainer>
-            <ParticipantCounter estadoOrador={this.estadoOrador()} />
-          </Card>
-    );
+    return this.props.participant ? (
+      <CardContainer
+        key={this.props.key}
+        isInteractive={this.props.interactive}
+        isTalking={this.props.isParticipantTalking}
+        height={this.getCardHeight()}
+        width={this.getCardWidth()}
+      >
+        <UserAvatar isTalking={this.props.isParticipantTalking} avatar={getGravatarUrlFor(this.props.participant.email)} />
+        <CardInfoContainer>
+          <CardName isInteractive={this.props.interactive}> {this.props.participant.nombre} </CardName>
+          <ParticipantCounter isInteractive={this.props.interactive} key={this.props.key} estadoOrador={this.estadoOrador()} />
+        </CardInfoContainer>
+      </CardContainer>
+    ) : <div> Nadie esta hablando</div>;
   }
 }
 

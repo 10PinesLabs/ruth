@@ -1,39 +1,43 @@
 import React from 'react';
-import { TextField } from '@material-ui/core';
 import { connect } from 'react-redux';
 import Vista from './vista';
 
-class Mobile extends React.Component {
-  dispatch = (data) => {
-    if (this.props.tema) {
+const Mobile = ({idTema, usuario, dispatch, ...props}) => {
+
+  const dispatchEvent = (data) => {
+    if (idTema) {
       const evento = {
-        nombre: this.props.usuario.nombre,
-        email: this.props.usuario.email,
+        autor: 'MOBILE',
+        data: { tipo: data.tipo, ...(data.reaccion ? {reaccion: data.reaccion}: {})},
+        nombre: usuario.nombre,
+        email: usuario.email,
         fecha: Date.now(),
-        idTema: this.props.tema,
-        data,
+        idTema,
       };
-      this.props.dispatch(evento);
+      dispatch(evento);
     }
   };
 
-  render() {
     return (
       <>
-        <TextField value={this.props.usuario.nombre} onChange={this.handleNameChange}/>
-        <div><br></br> Tema actual: {this.props.tema}</div>
-        <Vista dispatch={this.dispatch}/>
+        <Vista dispatchEvent={dispatchEvent} {...props}/>
       </>
     );
-  }
 }
 
 
-const mapDispatchToProps = (state) => {
+const mapStateToProps = (state) => {
   const tema = state.temas.find((t) => t.fin === null && t.inicio !== null);
+  const title = tema && tema.titulo;
+  const participant = tema && tema.oradores && tema.oradores.find(orador => orador.inicio !== null && orador.fin === null);
+
+  const queuedParticipants = tema && tema.oradores && tema.oradores.filter(orador => orador.inicio === null).length || 0;
   return {
-    tema: tema && tema.id,
+    idTema: tema && tema.id,
+    title,
+    participant,
+    queuedParticipants,
   };
 };
 
-export default connect(mapDispatchToProps)(Mobile);
+export default connect(mapStateToProps)(Mobile);

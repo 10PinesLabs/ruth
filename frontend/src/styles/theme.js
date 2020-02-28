@@ -1,10 +1,10 @@
 
 export const font = {
-  family: 'Roboto, sans-serif',
+  family: "'Poppins',sans-serif",
   module: '16px',
-  h1: 'Roboto Condensed, sans-serif',
+  h1: "'Poppins',sans-serif",
   sizeH1: '3.5rem',
-  h2: 'Roboto Condensed, sans-serif',
+  h2: "'Poppins',sans-serif",
   sizeH2: '2rem',
   p: 'Montserrat, sans-serif',
   sizeP: '1.25rem',

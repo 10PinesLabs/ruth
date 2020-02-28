@@ -35,7 +35,7 @@ class ParticipantCounter extends React.Component {
       return (<></>);
     }
     return (
-        <ClockContainer>
+        <ClockContainer isInteractive={this.props.interactive}>
           <Clock seconds={this.state.secondsElapsed}/>
         </ClockContainer>
     );

@@ -9,27 +9,29 @@ import {
 import ParticipantsCard from './ParticipantsCard';
 
 const ParticipantsQueue = ({ participants = [], isTalking }) => {
-  const getQueuedParticipants = participants.filter((participant) => participant.inicio === null && !isTalking(participant));
 
-  const getParticipantsThatAlreadyTalked = participants.filter((participant) => participant.inicio !== null && !isTalking(participant));
+  const getQueuedParticipants = () => participants.filter((participant) => participant.inicio === null && !isTalking(participant));
 
-  const talkingParticipant = participants.find((participant) => isTalking(participant));
+  const getParticipantsThatAlreadyTalked = () => participants.filter((participant) => participant.inicio !== null && !isTalking(participant));
+
+  const getTalkingParticipant = () => participants.find((participant) => isTalking(participant));
 
   return (
     <QueueContainer>
       <QueuedLeftCardsStyle>
         <QueuedCardsLeftContainerStyle>
-          {getQueuedParticipants
+          { getQueuedParticipants()
             .map((participant, index) => <ParticipantsCard
               participant={participant}
               key={index}/>)
           }
         </QueuedCardsLeftContainerStyle>
       </QueuedLeftCardsStyle>
-      {talkingParticipant && <ParticipantsCard participant={talkingParticipant} isParticipantTalking={true}/>}
+      {getTalkingParticipant() && <ParticipantsCard participant={getTalkingParticipant()} isParticipantTalking/>}
       <QueuedRightCardsStyle>
         <QueuedCardsRightContainerStyle>
-          {getParticipantsThatAlreadyTalked.map((participant, index) => <ParticipantsCard
+          { getParticipantsThatAlreadyTalked().map((participant, index) => <ParticipantsCard
+
             participant={participant} key={index}/>)}
         </QueuedCardsRightContainerStyle>
       </QueuedRightCardsStyle>
