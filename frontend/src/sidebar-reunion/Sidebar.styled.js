@@ -1,11 +1,13 @@
 import styled from 'styled-components';
-import { colors, font, sizeBreakpoint } from '../styles/theme';
+import {
+  colors, font, sidebar, sizeBreakpoint,
+} from '../styles/theme';
 
 export const SidebarContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 18%;
+  width: ${sidebar.width};
   background: ${colors.black30};
   border-left: 0.1rem solid ${colors.black30};
 `;

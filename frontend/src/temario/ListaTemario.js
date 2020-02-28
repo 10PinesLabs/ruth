@@ -5,7 +5,7 @@ import TemaItem from './TemaItem';
 
 const ListaTemario = ({ temas, seleccionarTema }) => (
   <ListaTemasContainer>
-    {temas.map((tema) => <TemaItem tema={tema}
+    {temas.map((tema) => <TemaItem key={tema.id} tema={tema}
       seleccionarTema={seleccionarTema}/>)}
   </ListaTemasContainer>
 );

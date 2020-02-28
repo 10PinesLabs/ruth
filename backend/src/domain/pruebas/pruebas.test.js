@@ -5,5 +5,5 @@ describe('Post Endpoints', () => {
   it('should create a new post', () => request(app)
     .get('/api/pruebas/temas')
     .send()
-    .then((res) => expect(res.statusCode).toEqual(200)));
+    .then((res) => expect(res.statusCode).toEqual(403)));
 });

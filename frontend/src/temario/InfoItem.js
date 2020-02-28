@@ -5,8 +5,8 @@ import {
 
 const InfoItem = (props) => (
     <InfoItemContainer>
-      <InfoImageContainer>
-        <InfoImage src={props.src} alt={props.altText}/>
+      <InfoImageContainer withPadding={!props.isAvatar}>
+        <InfoImage src={props.src} alt={props.altText} rounded={props.isAvatar}/>
       </InfoImageContainer>
       <Texto> {props.descripcion} </Texto>
     </InfoItemContainer>

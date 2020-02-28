@@ -1,10 +1,9 @@
 import styled from 'styled-components';
-import { colors, font, translucid } from '../styles/theme';
+import { colors, temario, translucid } from '../styles/theme';
 
 
 export const SidebarIzquierdo = styled.div`
-  background: url('./fondo-pino.png');
-  width: 22%;
+  width: ${temario.width};
   background: linear-gradient(${translucid.green}, ${translucid.green}),
               url('./fondo-pino.png');
 `;

@@ -15,7 +15,7 @@ class ChartLine extends React.Component {
         },
       };
       return lineOptions;
-    }
+    };
 
     formattedData = () => ({
       labels: this.props.data.horarios,
@@ -26,7 +26,7 @@ class ChartLine extends React.Component {
         backgroundColor: data.color,
         fill: false,
       })),
-    })
+    });
 
     render() {
       return (

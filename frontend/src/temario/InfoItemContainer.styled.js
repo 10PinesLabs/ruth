@@ -21,16 +21,16 @@ export const InfoImageContainer = styled.div`
   }
   overflow: hidden;
   background: ${colors.white};
-  padding: 1.25rem;
   box-sizing: border-box;
+  ${(props) => props.withPadding && 'padding: 1.25rem;'}
 `;
 
 export const InfoImage = styled.img`
-  src: ${(props) => props.src};
+  src: '${(props) => props.src}';
   max-width: 100%;
   max-height: 100%;
+  ${(props) => props.rounded && 'border-radius: 50%;'}
 `;
-
 
 export const Texto = styled.p`
 font-size: 1rem;

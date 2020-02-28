@@ -1,13 +1,16 @@
 import React from 'react';
 
 class Clock extends React.Component {
+  getMinutes = () => {
+    return Math.floor(Math.abs(this.props.seconds) / 60);
+  };
 
-  getMinutes = () => Math.floor(this.props.seconds / 60);
-
-  getSeconds = () => (`0${this.props.seconds % 60}`).slice(-2);
+  getSeconds = () => {
+    return (`0${Math.abs(this.props.seconds) % 60}`).slice(-2);
+  };
 
   render() {
-    if(this.props.seconds < 0){
+    if (this.props.seconds < 0) {
       return ('Tiempo Acabado');
     }
     return (

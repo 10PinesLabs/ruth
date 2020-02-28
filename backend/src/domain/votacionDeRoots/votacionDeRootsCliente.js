@@ -11,15 +11,15 @@ function getTemasRootsDeVerdad() {
 
 function getTemasRootsMock() {
   return Promise.resolve(
-      // eslint-disable-next-line import/prefer-default-export
-      require('./temas-fixture.json'),
+    // eslint-disable-next-line import/prefer-default-export
+    require('./temas-fixture.json'),
   );
 }
 
 const getTemasRoots = process.env.NODE_ENV === 'test' ? getTemasRootsMock : getTemasRootsDeVerdad;
 
 const VotacionCliente = {
-  getTemasRoots
+  getTemasRoots,
 };
 
 export default VotacionCliente;

@@ -5,12 +5,12 @@ export default function (wss) {
     ws.on('message', (message) => {
       context.eventosRepo.guardarEvento(message, JSON.parse(message).idTema);
       wss.clients.forEach((client) => {
-        client.send(JSON.stringify([message]));
+        client.send(JSON.stringify([JSON.parse(message)]));
       });
     });
-    context.eventosRepo.findAllEventos()
+    context.eventosRepo.findEventosUltimaReunion()
       .then((data) => {
-        ws.send(JSON.stringify(data.map((eventData) => eventData.evento)));
+        ws.send(JSON.stringify(data.map((eventData) => ({ ...eventData.evento, id: eventData.id, reunionId: eventData.reunionId }))));
       });
   };
 }

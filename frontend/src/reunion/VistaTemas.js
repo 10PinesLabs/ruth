@@ -10,7 +10,6 @@ import Temario from '../temario/Temario';
 class VistaTemas extends React.Component {
   constructor(props) {
     super(props);
-    this.socket = new WebSocket('ws://localhost:8760/ws');
     this.state = {
       selectedElement: 'Tema Actual',
       indiceTemaAMostrar: this.indiceTemaATratar(),
@@ -116,7 +115,8 @@ class VistaTemas extends React.Component {
     return (
           <ReunionContainer>
             <Temario temas={this.props.temas}
-              seleccionarTema={this.seleccionarTema} />
+              seleccionarTema={this.seleccionarTema}
+              cerrarReunion={this.handleCerrarReunion}/>
             <VistaSeleccionada tema={this.temaSeleccionado()}
               terminarTema={this.terminarTema}
               empezarTema={this.empezarTema}
@@ -130,9 +130,8 @@ class VistaTemas extends React.Component {
               selectedElement={this.state.selectedElement}
               link={this.temaSeleccionado().linkDePresentacion} />
           </ReunionContainer>
-      );
+    );
   }
-
 }
 
 export default VistaTemas;

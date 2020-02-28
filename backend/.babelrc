@@ -4,9 +4,9 @@
         "@babel/preset-env"
     ],
     "plugins": [
+        "@babel/plugin-transform-runtime",
         "add-module-exports",
-        [
-            "module-resolver",
+        [ "module-resolver",
             {
                 "root": [
                     "./src"

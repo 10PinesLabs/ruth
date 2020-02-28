@@ -17,7 +17,7 @@ class ParticipantCounter extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.estadoOrador.detalle === "hablando") {
+    if (this.props.estadoOrador.detalle === 'hablando') {
       this.runWatch();
     }
   }
@@ -31,11 +31,11 @@ class ParticipantCounter extends React.Component {
   };
 
   render() {
-    if (this.props.estadoOrador.detalle === "encolado") {
+    if (this.props.estadoOrador.detalle === 'encolado') {
       return (<></>);
     }
     return (
-        <ClockContainer>
+        <ClockContainer isInteractive={this.props.interactive}>
           <Clock seconds={this.state.secondsElapsed}/>
         </ClockContainer>
     );

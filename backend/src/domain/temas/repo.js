@@ -13,23 +13,23 @@ export default class TemasRepo {
   findTemasDeReunion(id) {
     return models.Tema.findAll({
       where: {
-         reunionId: id
-      }});
+        reunionId: id,
+      },
+    });
   }
 
   guardarTemas(reunion, temas) {
     return models.Tema.bulkCreate(temas.map((tema) => {
       const temaSanitizado = pick(tema, ['tipo', 'titulo', 'descripcion', 'duracion', 'autor', 'obligatoriedad',
-        'linkDePresentacion', 'propuestas', 'temasParaRepasar', 'cantidadDeMinutosDelTema','prioridad']);
-
+        'linkDePresentacion', 'propuestas', 'temasParaRepasar', 'cantidadDeMinutosDelTema', 'prioridad', 'mailDelAutor']);
       return { ...temaSanitizado, reunionId: reunion.id };
     }));
   }
 
   actualizar(tema) {
     models.Tema.update(tema)
-    .then(function(rowsUpdated) {
-      res.json(rowsUpdated)
-    });
+      .then((rowsUpdated) => {
+        res.json(rowsUpdated);
+      });
   }
 }

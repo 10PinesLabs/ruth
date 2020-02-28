@@ -1,38 +1,43 @@
 import styled from 'styled-components';
-import { colors, font, sizeBreakpoint } from '../styles/theme';
+import { colors, font, sizeBreakpoint, temario } from '../styles/theme';
 
-export const TemarioContainer = styled.div(({ isActive }) => `
-  display: flex;
-  flex-direction: row-reverse;
-  transition: all 0.2s linear;
+export const TemarioContainer = styled.div(({isActive}) =>`
+  background: ${colors.downy};
+  border-right: 1em solid ${colors.viridian};
+  box-sizing: border-box;
+  left: ${isActive ? '0' : `-${temario.width}`};
+  padding: 1em;
   position: fixed;
-  left: ${isActive ? '0' : '-17em'};
+  transition: all 0.2s linear;
+  width: calc(${temario.width} + 1em);
 `);
 
-export const Temas = styled.div`
-  min-height: 100vh;
-  padding: 1em;
-  width: 15em;  
-  background: ${colors.downy};
-  border-right-style: solid;
-  border-width: 10px;
-  border-color: ${colors.viridian};
+export const Arrow = styled.img`
+  background-color:${colors.viridian};
+  border-radius: 0 4em 4em 0;
+  cursor: pointer;
+  font-size: 1.5rem;
+  height: 1.5em;
+  line-height: 2em;
+  overflow: visible;
+  padding: 0.5em 0.8em 0.5em;
+  position: absolute;
+  top: 0.5em;
+  transform: translateX(100%);
+  right: 0;
+  width: 1.2em;
 `;
 
-export const Arrow = styled.img`
-  font-size: 1.5rem;
-  padding: 0.5em;
-  padding-right: 0.8em;
-  line-height: 2em;
-  width: 1.2em;
-  height: 1.5em;
-  border-bottom-right-radius: 4em;
-  border-top-right-radius: 4em;
-  background: ${colors.viridian};
-  overflow: visible;
-  margin-top: 0.5em;
-  background-color:${colors.viridian};
-  cursor: pointer;
+export const Temas = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  };
 `;
 
 export const LeyendaEmpresa = styled.div`

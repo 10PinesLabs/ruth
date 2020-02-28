@@ -25,6 +25,7 @@ yarn-error.log*
 #idea
 backend/.idea/*
 frontend/.idea/*
+.idea/*
 
 # Base de datos en docker
 db-data/

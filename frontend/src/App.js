@@ -1,18 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import { toast, Slide } from 'react-toastify';
+import { Slide, toast } from 'react-toastify';
+import { Route, Switch } from 'react-router-dom';
 import GlobalStyle from './GlobalStyle.styled';
 import EmpezarReunion from './empezar-reunion/EmpezarReunion';
 import backend from './api/backend';
 import './toast.css';
+import { ReduxWebSocketWrapper } from './ReduxWebSocketWrapper';
+import Mobile from './mobile';
+import Oradores from './oradores';
+import TestChart from './chart';
 import TemasHandler from './reunion/TemasHandler';
 
-// NOTA A DESAROLLADERE: Si van a tocar este crchivo, hablen con Joaquito :)
-const App = ({ location }) => {
-  const [reunionDeRoots, setReunionDeRoots] = useState({});
+const App = ({ location, usuario }) => {
+  const [reunion, setReunion] = useState();
+
   useEffect(() => {
-    backend.getReunion().then((reunion) => setReunionDeRoots(reunion));
-  }, [location]);
+    const fetchData = async () => {
+      const reunionResponse = await backend.getReunion();
+      setReunion(reunionResponse);
+    };
+    fetchData();
+  }, []);
+
+  const handleReunionIniciada = (nuevaReunion) => {
+    setReunion(nuevaReunion);
+  };
 
   toast.configure({
     position: toast.POSITION.BOTTOM_CENTER,
@@ -20,18 +32,29 @@ const App = ({ location }) => {
     transition: Slide,
   });
 
-  return (
-    <>
+  if (!reunion) {
+    return <div>Cargando</div>;
+  }
+
+
+  if (reunion.abierta !== true) {
+    return <>
       <GlobalStyle/>
-      <Switch location={location}>
-        <Route exact path="/"
-               render={() => (reunionDeRoots.abierta ? <Redirect to="/reunionDeRoots"/>
-                 : <EmpezarReunion {...reunionDeRoots} location={location}/>)}/>
-        <Route exact path="/reunionDeRoots"
-               render={() => (reunionDeRoots.abierta ? <TemasHandler {...reunionDeRoots} location={location}/> : <Redirect to="/"/>)}/>
+      <EmpezarReunion {...reunion} handleReunionIniciada={handleReunionIniciada}/>)}/>
+    </>;
+  }
+
+  return <>
+    <GlobalStyle/>
+    <ReduxWebSocketWrapper reunion={reunion} usuario={usuario}>
+      <Switch>
+        <Route exact path="/mobile" component={() => <Mobile usuario={usuario}/>}/>
+        <Route exact path="/oradores" component={Oradores}/>
+        <Route exact path="/chart" component={TestChart}/>
+        <Route exact path="/" component={TemasHandler} />
       </Switch>
-    </>
-  );
+    </ReduxWebSocketWrapper>
+  </>;
 };
 
 

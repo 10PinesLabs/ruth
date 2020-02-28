@@ -6,12 +6,14 @@ import VotacionDeRoots from '../votacionDeRoots/votacionDeRoots';
 
 const router = Router({ promise: true });
 
-const repo = context.temasRepo;
+const repo = context.reunionesRepo;
 
 const controller = PruebasController({
   buscarTemasVotacionRoots: () => VotacionDeRoots.getTemasRoots(),
+  repo,
 });
 
 router.get('/temas', asyncMiddleware(controller.temas));
+router.get('/cerrar', asyncMiddleware(controller.cerrar));
 
 export default router;

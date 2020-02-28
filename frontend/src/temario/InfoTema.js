@@ -1,6 +1,7 @@
 import React from 'react';
 import { InfoTemaContainer } from './InfoTema.styled';
 import InfoItem from './InfoItem';
+import getGravatarUrlFor from '../api/gravatar';
 
 class InfoTema extends React.Component {
   imagenTipoDuracion = (tipoDuracion) => {
@@ -29,11 +30,11 @@ class InfoTema extends React.Component {
 
   render() {
     const {
-      autor, duracion, obligatoriedad, cantidadDeMinutosDelTema,
+      autor, duracion, obligatoriedad, cantidadDeMinutosDelTema, mailDelAutor = '',
     } = this.props.tema;
     return (
       <InfoTemaContainer>
-        <InfoItem src="./usuarie.png" altText="Usuarie" descripcion={autor}/>
+        <InfoItem src={getGravatarUrlFor(mailDelAutor)} altText="Usuarie" descripcion={autor} isAvatar={true}/>
         <InfoItem src={this.imagenTipoDuracion(duracion)} altText="Pino" descripcion={`${cantidadDeMinutosDelTema} min.`}/>
         <InfoItem src={this.imagenObligatoriedad(obligatoriedad)} altText="Obligatorio" descripcion={diccObligatoriedad[obligatoriedad]}/>
       </InfoTemaContainer>

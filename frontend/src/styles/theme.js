@@ -1,10 +1,10 @@
 
 export const font = {
-  family: 'Roboto, sans-serif',
+  family: "'Poppins',sans-serif",
   module: '16px',
-  h1: 'Roboto Condensed, sans-serif',
+  h1: "'Poppins',sans-serif",
   sizeH1: '3.5rem',
-  h2: 'Roboto Condensed, sans-serif',
+  h2: "'Poppins',sans-serif",
   sizeH2: '2rem',
   p: 'Montserrat, sans-serif',
   sizeP: '1.25rem',
@@ -15,6 +15,7 @@ export const colors = {
   primary: '#68C9B2',
   secondary: '#448495',
   lightGrey: '#E0E0E0',
+  darkRed: '#FF7F7F',
   black50: '#7F7F7F',
   black40: '#AFAFAF',
   black30: '#DADADA',
@@ -37,4 +38,12 @@ export const translucid = {
 export const sizeBreakpoint = {
   bigWidth: '1920px',
   bigHeight: '1080px',
+};
+
+export const sidebar = {
+  width: '18rem',
+};
+
+export const temario = {
+  width: '18rem',
 };

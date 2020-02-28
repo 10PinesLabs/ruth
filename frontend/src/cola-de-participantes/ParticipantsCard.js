@@ -1,36 +1,11 @@
 import React from 'react';
-import Card from '@material-ui/core/Card';
-import { Button } from '@material-ui/core';
-import {
-  faHashtag, faSync, faThumbsDown, faThumbsUp,
-} from '@fortawesome/free-solid-svg-icons';
 import ParticipantCounter from './ParticipantCounter';
 import {
-  CardSubcontainer,
-  cardContainerStyle,
-  CardName,
-  UserAvatar,
-  CardInteractionsContainer,
+  CardContainer, CardInfoContainer, CardName, UserAvatar,
 } from './ParticipantsCard.styled';
-import { ReactionButton } from '../mobile/ReactionButton';
-
-const subjectReactionsContainerStyle = {
-  display: 'flex',
-  flexDirection: 'row',
-  alignItems: 'center',
-  justifyContent: 'center',
-  borderTop: '1px solid white',
-  background: 'rgb(0, 0, 0, 0.7)',
-  height: '4.5rem',
-};
+import getGravatarUrlFor from '../api/gravatar';
 
 class ParticipantsCard extends React.Component {
-  state = {
-    subjectThumbsUpClicked: false,
-    subjectThumbsDownClicked: false,
-    subjectRecommendingEndingClicked: false,
-  };
-
   estadoOrador() {
     if (this.estaEncolado()) {
       return { detalle: 'encolado' };
@@ -49,28 +24,32 @@ class ParticipantsCard extends React.Component {
     return this.props.participant.inicio === null;
   }
 
+  getCardHeight() {
+    if (this.props.isParticipantTalking) return '15em';
+    return '13em';
+  }
+
+  getCardWidth() {
+    if (this.props.isParticipantTalking) return '13em';
+    return '11em';
+  }
+
   render() {
-    return (
-          <Card key={this.props.key} style={cardContainerStyle(this.props.isParticipantTalking)}>
-            <CardSubcontainer>
-              <UserAvatar isTalking={this.props.isParticipantTalking}/>
-              <CardName>
-                {this.props.participant.nombre}
-              </CardName>
-            </CardSubcontainer>
-            <ParticipantCounter key={this.props.key} estadoOrador={this.estadoOrador()} />
-            {
-              this.props.interactive
-                && <CardInteractionsContainer>
-                  <div style={subjectReactionsContainerStyle}>
-                    <ReactionButton isActive={this.state.subjectThumbsUpClicked} isDisabled={this.state.subjectThumbsDownClicked} icon={faThumbsUp} />
-                    <ReactionButton isActive={this.state.subjectThumbsDownClicked} isDisabled={this.state.subjectThumbsUpClicked} icon={faThumbsDown} />
-                    <ReactionButton isActive={this.state.subjectRecommendingEndingClicked} icon={faSync}/>
-                  </div>
-                </CardInteractionsContainer>
-            }
-          </Card>
-    );
+    return this.props.participant ? (
+      <CardContainer
+        key={this.props.key}
+        isInteractive={this.props.interactive}
+        isTalking={this.props.isParticipantTalking}
+        height={this.getCardHeight()}
+        width={this.getCardWidth()}
+      >
+        <UserAvatar isTalking={this.props.isParticipantTalking} avatar={getGravatarUrlFor(this.props.participant.email)} />
+        <CardInfoContainer>
+          <CardName isInteractive={this.props.interactive}> {this.props.participant.nombre} </CardName>
+          <ParticipantCounter isInteractive={this.props.interactive} key={this.props.key} estadoOrador={this.estadoOrador()} />
+        </CardInfoContainer>
+      </CardContainer>
+    ) : <div> Nadie esta hablando</div>;
   }
 }
 

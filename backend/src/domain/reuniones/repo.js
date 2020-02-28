@@ -1,6 +1,5 @@
 /* eslint-disable class-methods-use-this */
 import models from '~/database/models';
-import { getLastElement } from './helpers/listHelper';
 
 export default class ReunionesRepo {
   findAll() {
@@ -19,7 +18,11 @@ export default class ReunionesRepo {
     models.Reunion.update(reunion);
   }
 
-  findLastCreated() {
-    return models.Reunion.findAll().then((reuniones) => getLastElement(reuniones));
+  async findLastCreated() {
+    const ultimaReunionId = await models.Reunion.max('id');
+    if (!ultimaReunionId) {
+      return null;
+    }
+    return models.Reunion.findByPk(ultimaReunionId);
   }
 }

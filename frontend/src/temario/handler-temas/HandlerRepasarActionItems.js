@@ -1,16 +1,12 @@
 import React from 'react';
-import { DescripcionTemaContainer, Titulo } from '../descripcion-tipo-tema/DescripcionTema.styled';
+import DescripcionActionItems from '../descripcion-tipo-tema/DescripcionActionItems';
 
 const HandlerRepasarActionItems = {
   canHandle(tipoTema) {
     return tipoTema === 'repasarActionItems';
   },
   handleTema(tema) {
-    return (
-      <DescripcionTemaContainer>
-        <Titulo>Repasar Action Items</Titulo>
-      </DescripcionTemaContainer>
-    );
+    return <DescripcionActionItems tema={tema}/>;
   },
 };
 

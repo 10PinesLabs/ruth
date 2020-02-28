@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { colors } from '../styles/theme';
+import { colors, temario } from '../styles/theme';
 
 export const InfoTemaContainer = styled.div`
   display:flex;
@@ -7,6 +7,6 @@ export const InfoTemaContainer = styled.div`
   align-items: center;
   justify-content: space-around;
   background: ${colors.downy};
-  width: 22%;
+  width: ${temario.width};
   height: 100vh;
 `;

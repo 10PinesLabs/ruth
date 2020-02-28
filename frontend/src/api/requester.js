@@ -16,7 +16,7 @@ const Requester = {
   createDefaultRequester: () => {
     const defaultRequester = axios.create({
       baseURL: backendUrl,
-      timeout: 7000,
+      timeout: 60000,
       headers: {
         'Content-Type': 'application/json',
       },
