@@ -1,37 +1,57 @@
+import {produce} from "immer";
+
+export const tipoDeEvento = {
+  HABLAR: 'Quiero Hablar',
+  DEJAR_DE_HABLAR: 'Quiero Dejar de Hablar',
+  DESENCOLAR: 'Quiero Desencolarme',
+};
+
+
 function hayAlguienHablando(state) {
   return state.filter((orador) => !orador.fin).length === 0;
 }
 
-export default function oradoresReducer(state = [], evento) {
-  // TODO: Ver qué hacer cuando se vuelve a encolar una misma persona
-  switch (evento.type) {
-    case 'Quiero Hablar':
-      if (hayAlguienHablando(state)) {
-        return [...state, {
-          nombre: evento.nombre, email: evento.email, inicio: evento.fecha, fin: null,
-        }];
-      }
-      return [...state, {
-        nombre: evento.nombre, email: evento.email, inicio: null, fin: null,
-      }];
+function estaEncoladoParaHablar(draft, nombre) {
+  return draft.filter(orador => orador.fin === null)
+    .some(orador => orador.nombre === nombre);
+}
 
-    case 'Quiero Desencolarme':
-      if (state.some((orador) => orador.nombre === evento.nombre && orador.inicio != null)) return state;
-      return state.filter((orador) => orador.nombre !== evento.nombre);
-    case 'Quiero Dejar de Hablar': {
+function estaHablando(orador, {nombre}){
+  return orador.nombre === nombre && orador.inicio !== null
+}
+
+export default (state = [], evento) => produce(state, (draft) => {
+  const {nombre, email, fecha} = evento;
+
+  switch (evento.type) {
+    case tipoDeEvento.HABLAR:
+      if (hayAlguienHablando(draft)) {
+        draft.push({
+          nombre, email, inicio: fecha, fin: null,
+        });
+      }
+      if (!estaEncoladoParaHablar(draft, nombre))
+        draft.push({nombre, email, inicio: null, fin: null});
+      break;
+
+    case tipoDeEvento.DESENCOLAR:
+      if (draft.some((orador) => estaHablando(orador, evento))) return;
+      return draft.filter((orador) => orador.nombre !== nombre);
+
+    case tipoDeEvento.DEJAR_DE_HABLAR: {
       let proximoOrador = null;
-      return state.map((orador, index) => {
+      return draft.map((orador, index) => {
         if (index === proximoOrador) {
-          return { ...orador, inicio: evento.fecha };
+          return {...orador, inicio: fecha};
         }
-        if (orador.nombre === evento.nombre) {
+        if (estaHablando(orador, evento)) {
           proximoOrador = index + 1;
-          return { ...orador, fin: evento.fecha };
+          return {...orador, fin: fecha};
         }
         return orador;
       });
     }
     default:
-      return state;
+      return;
   }
-}
+});
