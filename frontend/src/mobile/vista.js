@@ -18,6 +18,7 @@ import {
 import { ReactionsContainer } from '../components/SubjectReactionsContainer.styled';
 import { CardInteractionsContainer } from '../components/InteractionsContainer.styled';
 import { tipoDeEvento } from '../store/oradores';
+import { reactionTypes } from '../store/reacciones';
 
 const talkButtonStyle = (pressed, talking) => {
   let background;
@@ -70,22 +71,26 @@ class Vista extends React.Component {
   };
 
   onSubjectThumbsUpClick = () => {
-    this.props.dispatchEvent({ tipo: 'Reaccionar', reaccion: 'thumbsUpTemaActual👍' });
+    this.props.dispatchEvent({ tipo: reactionTypes.REACCIONAR, nombre: 'thumbsUpTemaActual👍' });
+    this.props.dispatchEvent({ tipo: reactionTypes.DESREACCIONAR, nombre: 'thumbsDownTemaActual👍' });
     this.setState({ subjectThumbsUpClicked: true, subjectThumbsDownClicked: false });
   };
 
   onSubjectThumbsDownClick = () => {
-    this.props.dispatchEvent({ tipo: 'Reaccionar', reaccion: 'thumbsDownTemaActual' });
+    this.props.dispatchEvent({ tipo: reactionTypes.DESREACCIONAR, nombre: 'thumbsUpTemaActual👍' });
+    this.props.dispatchEvent({ tipo: reactionTypes.REACCIONAR, nombre: 'thumbsDownTemaActual👍' });
     this.setState({ subjectThumbsUpClicked: false, subjectThumbsDownClicked: true });
   };
 
   onSubjectSlackClick = () => {
-    this.props.dispatchEvent({ tipo: 'Reaccionar', reaccion: 'slackTemaActual' });
+    const tipo = this.state.subjectSlackClicked ? reactionTypes.DESREACCIONAR : reactionTypes.REACCIONAR;
+    this.props.dispatchEvent({ tipo, nombre: 'slackTemaActual' });
     this.setState({ subjectSlackClicked: !this.state.subjectSlackClicked });
   };
 
   onSubjectRecommendingEndingClicked = () => {
-    this.props.dispatchEvent({ tipo: 'Reaccionar', reaccion: 'redondearTemaActual' });
+    const tipo = this.state.subjectRecommendingEndingClicked ? reactionTypes.DESREACCIONAR : reactionTypes.REACCIONAR;
+    this.props.dispatchEvent({ tipo, nombre: 'redondearTemaActual' });
     this.setState({ subjectRecommendingEndingClicked: !this.state.subjectRecommendingEndingClicked });
   };
 

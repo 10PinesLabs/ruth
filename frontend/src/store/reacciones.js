@@ -13,17 +13,23 @@ function yaReacciono(draft, { nombre, usuario }) {
 
 export default (state = [], evento) => produce(state, (draft) => {
   const { nombre, usuario } = evento;
-
   switch (evento.type) {
-    case reactionTypes.REINICIAR:
-      return [];
-    case reactionTypes.REACCIONAR:
-      if (!yaReacciono(draft, evento)) return draft.push({ usuario, nombre });
+    case reactionTypes.REINICIAR: {
+      draft = [];
+      break;
+    }
+    case reactionTypes.REACCIONAR: {
+      if (yaReacciono(draft, evento)) return;
+      draft.push({ usuario, nombre });
+      break;
+    }
+    case reactionTypes.DESREACCIONAR: {
+      if (!yaReacciono(draft, evento)) return;
+      draft.filter((p) => p.usuario.email !== usuario.email && p.nombre === nombre);
+      break;
+    }
+    default: {
       return draft;
-    case reactionTypes.DESREACCIONAR:
-      if (yaReacciono(draft, evento)) return draft.filter((p) => p.usuario.email !== usuario.email && p.nombre === nombre);
-      return draft;
-    default:
-      return draft;
+    }
   }
 });
