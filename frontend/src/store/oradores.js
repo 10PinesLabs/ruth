@@ -1,4 +1,4 @@
-import {produce} from "immer";
+import { produce } from 'immer';
 
 export const tipoDeEvento = {
   HABLAR: 'Quiero Hablar',
@@ -12,26 +12,24 @@ function hayAlguienHablando(state) {
 }
 
 function estaEncoladoParaHablar(draft, nombre) {
-  return draft.filter(orador => orador.fin === null)
-    .some(orador => orador.nombre === nombre);
+  return draft.filter((orador) => orador.fin === null)
+    .some((orador) => orador.nombre === nombre);
 }
 
-function estaHablando(orador, {nombre}){
-  return orador.nombre === nombre && orador.inicio !== null
+function estaHablando(orador, { nombre }) {
+  return orador.nombre === nombre && orador.inicio !== null;
 }
 
 export default (state = [], evento) => produce(state, (draft) => {
-  const {nombre, email, fecha} = evento;
-
+  const { nombre, email, fecha } = evento;
   switch (evento.type) {
     case tipoDeEvento.HABLAR:
-      if (hayAlguienHablando(draft)) {
-        draft.push({
-          nombre, email, inicio: fecha, fin: null,
-        });
-      }
-      if (!estaEncoladoParaHablar(draft, nombre))
-        draft.push({nombre, email, inicio: null, fin: null});
+      hayAlguienHablando(draft) && draft.push({
+        nombre, email, inicio: fecha, fin: null,
+      });
+      !estaEncoladoParaHablar(draft, nombre) && draft.push({
+        nombre, email, inicio: null, fin: null,
+      });
       break;
 
     case tipoDeEvento.DESENCOLAR:
@@ -41,17 +39,19 @@ export default (state = [], evento) => produce(state, (draft) => {
     case tipoDeEvento.DEJAR_DE_HABLAR: {
       let proximoOrador = null;
       return draft.map((orador, index) => {
+        if (orador.fin) return orador;
+
         if (index === proximoOrador) {
-          return {...orador, inicio: fecha};
+          return { ...orador, inicio: fecha };
         }
+
         if (estaHablando(orador, evento)) {
           proximoOrador = index + 1;
-          return {...orador, fin: fecha};
+          return { ...orador, fin: fecha };
         }
         return orador;
       });
     }
     default:
-      return;
   }
 });
