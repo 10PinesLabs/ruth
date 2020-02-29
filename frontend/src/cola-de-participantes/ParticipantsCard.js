@@ -1,6 +1,8 @@
 import React from 'react';
 import ParticipantCounter from './ParticipantCounter';
-import { CardContainer, CardInfoContainer, CardName, UserAvatar } from './ParticipantsCard.styled';
+import {
+  CardContainer, CardInfoContainer, CardName, UserAvatar,
+} from './ParticipantsCard.styled';
 import getGravatarUrlFor from '../api/gravatar';
 
 class ParticipantsCard extends React.Component {
@@ -35,16 +37,15 @@ class ParticipantsCard extends React.Component {
   render() {
     return this.props.participant ? (
       <CardContainer
-        key={this.props.key}
         isInteractive={this.props.interactive}
         isTalking={this.props.isParticipantTalking}
         height={this.getCardHeight()}
         width={this.getCardWidth()}
       >
-        <UserAvatar isTalking={this.props.isParticipantTalking} avatar={getGravatarUrlFor(this.props.participant.email)} />
+        <UserAvatar isTalking={this.props.isParticipantTalking} avatar={getGravatarUrlFor(this.props.participant.usuario.email)} />
         <CardInfoContainer>
-          <CardName isInteractive={this.props.interactive}> {this.props.participant.nombre} </CardName>
-          <ParticipantCounter isInteractive={this.props.interactive} key={this.props.key} estadoOrador={this.estadoOrador()} />
+          <CardName isInteractive={this.props.interactive}> {this.props.participant.usuario.nombre} </CardName>
+          <ParticipantCounter isInteractive={this.props.interactive} estadoOrador={this.estadoOrador()} />
         </CardInfoContainer>
       </CardContainer>
     ) : <div> Nadie esta hablando</div>;

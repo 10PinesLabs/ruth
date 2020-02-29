@@ -20,7 +20,7 @@ class ChartLine extends React.Component {
     formattedData = () => ({
       labels: this.props.data.horarios,
       datasets: this.props.data.data.map((data) => ({
-        label: data.name,
+        label: data.nombre,
         data: data.data,
         borderColor: data.color,
         backgroundColor: data.color,

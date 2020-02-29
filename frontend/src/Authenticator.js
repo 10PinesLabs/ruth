@@ -1,8 +1,6 @@
 import React from 'react';
 import { createBrowserHistory } from 'history';
-import {
-  Route, Router, Switch,
-} from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import App from './App';
 import Backend from './api/backend';
 

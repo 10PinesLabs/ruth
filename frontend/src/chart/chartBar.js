@@ -29,7 +29,7 @@ class ChartBar extends React.Component {
     });
 
     formattedData = () => ({
-      labels: (this.props.data.data || []).map((bar) => bar.name),
+      labels: (this.props.data.data || []).map((bar) => bar.nombre),
       datasets: [{
         data: (this.props.data.data || []).map((bar) => bar.value),
         backgroundColor: this.props.data.color,
