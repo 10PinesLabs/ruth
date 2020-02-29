@@ -63,25 +63,12 @@ export const ActionContainerStyle = styled.div`
     min-height: 8em;
 `;
 
-export const QueuedParticipantsDesc = styled.div`
-    display: none;
-    width: 8em;
-    height: 3em;
-    padding: 0.5em;
-    border-radius: 20px;
-        background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRBvqFqZpJ08P0JcheadQG6O7Cln-SZauMu9CiqKJzHRKmcOEkY");
-    box-shadow: inset 4px 4px 8px #6b6b6b, inset -4px -4px 6px #d4d2d2;
-`;
-
 export const QueuedParticipants = styled.div`
     position: absolute;
     top: 90%;
     right: 20;
     margin-top: 1em;
     margin-left: 2em;
-    /* background: blue; */
-    /* border-top: 1px solid white; */
-    /* border-left: 1px solid white; */
     display: flex;
     justify-content: space-between;
     padding: 0.5em;
@@ -99,8 +86,4 @@ export const SubjectTitle = styled.div`
     padding-bottom: 0.5em;
     text-align: center;
     font-family: 'Poppins', sans-serif;
-`;
-
-export const ActionText = styled.span`
-    margin-right: 1em;
 `;

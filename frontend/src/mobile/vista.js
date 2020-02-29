@@ -17,6 +17,7 @@ import {
 } from './vista.styled';
 import { ReactionsContainer } from '../components/SubjectReactionsContainer.styled';
 import { CardInteractionsContainer } from '../components/InteractionsContainer.styled';
+import { tipoDeEvento } from '../store/oradores';
 
 const talkButtonStyle = (pressed, talking) => {
   let background;
@@ -89,13 +90,14 @@ class Vista extends React.Component {
   };
 
   onWannaTalkClick = () => {
-    this.props.dispatchEvent({ tipo: 'Quiero Hablar' });
+    this.props.dispatchEvent({ tipo: tipoDeEvento.HABLAR });
     this.setState({ wannaTalk: true });
   };
 
   onWannaStopTalkClick = () => {
-    this.props.dispatchEvent({tipo: 'Quiero Desencolarme'});
-    this.setState({wannaTalk: false});
+    if (this.props.participant.inicio !== null && this.props.participant.fin === null) this.props.dispatchEvent({ tipo: tipoDeEvento.DEJAR_DE_HABLAR });
+    else this.props.dispatchEvent({ tipo: tipoDeEvento.DESENCOLAR });
+    this.setState({ wannaTalk: false });
   }
 
   render() {
