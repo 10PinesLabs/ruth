@@ -15,8 +15,7 @@ export default (state = [], evento) => produce(state, (draft) => {
   const { nombre, usuario } = evento;
   switch (evento.type) {
     case reactionTypes.REINICIAR: {
-      draft = [];
-      break;
+      return draft = [];
     }
     case reactionTypes.REACCIONAR: {
       if (yaReacciono(draft, evento)) return;
@@ -25,8 +24,7 @@ export default (state = [], evento) => produce(state, (draft) => {
     }
     case reactionTypes.DESREACCIONAR: {
       if (!yaReacciono(draft, evento)) return;
-      draft.filter((p) => p.usuario.email !== usuario.email && p.nombre === nombre);
-      break;
+      return draft.filter((p) => p.usuario.email !== usuario.email && p.nombre === nombre);
     }
     default: {
       return draft;

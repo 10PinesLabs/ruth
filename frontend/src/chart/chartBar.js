@@ -1,6 +1,6 @@
 import React from 'react';
-import {Bar} from 'react-chartjs-2';
-import {ChartlineContainer} from './Chart.styled';
+import { Bar } from 'react-chartjs-2';
+import { ChartlineContainer } from './Chart.styled';
 
 class ChartBar extends React.Component {
   graphOptions = () => ({
@@ -18,8 +18,8 @@ class ChartBar extends React.Component {
     scales: {
       xAxes: [{
         ticks: {
-          fontSize: 30
-        }
+          fontSize: 30,
+        },
       }],
       yAxes: [
         {
@@ -27,7 +27,7 @@ class ChartBar extends React.Component {
             beginAtZero: true,
             min: 0,
             suggestedMin: 0,
-            fontSize: 20
+            fontSize: 20,
           },
         },
       ],
@@ -36,10 +36,10 @@ class ChartBar extends React.Component {
 
   formattedData = () => {
     const reaccionesPorItem = this.props.data.data
-      .map(data => data.nombre)
+      .map((data) => data.nombre)
       .reduce((map, reaccion) => {
         map[reaccion] = (map[reaccion] || 0) + 1;
-        return map
+        return map;
       }, {});
 
     return {

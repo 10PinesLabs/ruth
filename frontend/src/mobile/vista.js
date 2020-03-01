@@ -8,9 +8,9 @@ import {
   faThumbsDown,
   faThumbsUp,
 } from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ParticipantsCard from '../cola-de-participantes/ParticipantsCard';
-import {ReactionButton} from './ReactionButton';
+import { ReactionButton } from './ReactionButton';
 import {
   ActionContainerStyle,
   Logo,
@@ -22,13 +22,10 @@ import {
   SubjectTitle, TemaNoEmpezado,
   TopSectionContainer,
 } from './vista.styled';
-
 import { ReactionsContainer } from '../components/SubjectReactionsContainer.styled';
-import { CardInteractionsContainer } from '../components/InteractionsContainer.styled';
 import { tipoDeEvento } from '../store/oradores';
+import { CardInteractionsContainer } from '../components/InteractionsContainer.styled';
 import { reactionTypes } from '../store/reacciones';
-
-
 
 const talkButtonStyle = (pressed, talking) => {
   let background;
@@ -55,7 +52,7 @@ const logoImage = 'https://res-4.cloudinary.com/crunchbase-production/image/uplo
   + '256,f_auto,q_auto:eco/wuhk5weer0fkhmh2oyhv';
 
 const getFontSizeForWindow = () => {
-  const {innerHeight} = window;
+  const { innerHeight } = window;
   if (innerHeight < 590) return '12';
   if (innerHeight < 670) return '14';
   if (innerHeight < 750) return '16';
@@ -81,27 +78,27 @@ class Vista extends React.Component {
   };
 
   onSubjectThumbsUpClick = () => {
-    this.props.dispatchEvent({tipo: reactionTypes.REACCIONAR, nombre: '👍'});
-    this.props.dispatchEvent({tipo: reactionTypes.DESREACCIONAR, nombre: '👎'});
-    this.setState({subjectThumbsUpClicked: true, subjectThumbsDownClicked: false});
+    this.props.dispatchEvent({ tipo: reactionTypes.REACCIONAR, nombre: '👍' });
+    this.props.dispatchEvent({ tipo: reactionTypes.DESREACCIONAR, nombre: '👎' });
+    this.setState({ subjectThumbsUpClicked: true, subjectThumbsDownClicked: false });
   };
 
   onSubjectThumbsDownClick = () => {
-    this.props.dispatchEvent({tipo: reactionTypes.DESREACCIONAR, nombre: '👍'});
-    this.props.dispatchEvent({tipo: reactionTypes.REACCIONAR, nombre: '👎'});
-    this.setState({subjectThumbsUpClicked: false, subjectThumbsDownClicked: true});
+    this.props.dispatchEvent({ tipo: reactionTypes.DESREACCIONAR, nombre: '👍' });
+    this.props.dispatchEvent({ tipo: reactionTypes.REACCIONAR, nombre: '👎' });
+    this.setState({ subjectThumbsUpClicked: false, subjectThumbsDownClicked: true });
   };
 
   onSubjectSlackClick = () => {
     const tipo = this.state.subjectSlackClicked ? reactionTypes.DESREACCIONAR : reactionTypes.REACCIONAR;
-    this.props.dispatchEvent({tipo, nombre: '💬'});
-    this.setState({subjectSlackClicked: !this.state.subjectSlackClicked});
+    this.props.dispatchEvent({ tipo, nombre: '💬' });
+    this.setState({ subjectSlackClicked: !this.state.subjectSlackClicked });
   };
 
   onSubjectRecommendingEndingClicked = () => {
     const tipo = this.state.subjectRecommendingEndingClicked ? reactionTypes.DESREACCIONAR : reactionTypes.REACCIONAR;
-    this.props.dispatchEvent({tipo, nombre: '🔄'});
-    this.setState({subjectRecommendingEndingClicked: !this.state.subjectRecommendingEndingClicked});
+    this.props.dispatchEvent({ tipo, nombre: '🔄' });
+    this.setState({ subjectRecommendingEndingClicked: !this.state.subjectRecommendingEndingClicked });
   };
 
   onWannaTalkClick = () => {
@@ -112,7 +109,6 @@ class Vista extends React.Component {
   onWannaStopTalkClick = () => {
     if (this.props.participant.inicio !== null && this.props.participant.fin === null) this.props.dispatchEvent({ tipo: tipoDeEvento.DEJAR_DE_HABLAR });
     else this.props.dispatchEvent({ tipo: tipoDeEvento.DESENCOLAR });
-    this.setState({ wannaTalk: false });
   }
 
   render() {
@@ -127,8 +123,8 @@ class Vista extends React.Component {
             <SubjectTitle>
               {this.props.title}
             </SubjectTitle>
-              {this.props.temaEmpezado ?
-              <ReactionsContainer height={6}>
+              {this.props.temaEmpezado
+                ? <ReactionsContainer height={6}>
                   <ReactionButton isBig isActive={this.state.subjectThumbsUpClicked}
                                   isDisabled={this.state.subjectThumbsDownClicked} icon={faThumbsUp}
                                   onClick={this.onSubjectThumbsUpClick}/>
@@ -152,13 +148,13 @@ class Vista extends React.Component {
         <ActionContainerStyle>
           {
             this.props.temaEmpezado ? (
-            !this.state.wannaTalk
-              ? <div style={talkButtonStyle(false)} onClick={this.onWannaTalkClick}>
+              !this.state.wannaTalk
+                ? <div style={talkButtonStyle(false)} onClick={this.onWannaTalkClick}>
                 <FontAwesomeIcon icon={faMicrophoneAlt} color={'silver'} size={'2x'}/>
               </div>
-              : <div style={{
-                display: 'flex', flexDirection: '', alignItems: 'center', justifyContent: 'center',
-              }}>
+                : <div style={{
+                  display: 'flex', flexDirection: '', alignItems: 'center', justifyContent: 'center',
+                }}>
                 <div style={talkButtonStyle(true, false)} onClick={this.onWannaStopTalkClick}>
                   <FontAwesomeIcon icon={faMicrophoneAltSlash} color={'black'} size={'2x'}/>
                 </div>
@@ -168,8 +164,8 @@ class Vista extends React.Component {
                     }}> {this.props.queuedParticipants} </span>
                   <FontAwesomeIcon icon={faMale} color={'silver'} size={'1x'}/>
                 </QueuedParticipants>
-              </div>) :
-              <div style={talkButtonStyle(false)}>
+              </div>)
+              : <div style={talkButtonStyle(false)}>
               <FontAwesomeIcon icon={faMicrophoneAltSlash} color={'#ff3b3b8c'} size={'2x'}/>
             </div>
           }
