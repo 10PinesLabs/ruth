@@ -54,8 +54,8 @@ describe('reaccionesReducer', () => {
     });
 
     it('si el usuario ya habia reaccionado, quita la reaccion', () => {
-      state = [reaccion('unaReaccion', unUsuario)];
-      expect(reaccionesReducer(state, evento)).toEqual([]);
+      state = [reaccion('unaReaccion', unUsuario), reaccion('otraReaccion', unUsuario)];
+      expect(reaccionesReducer(state, evento)).toEqual([reaccion('otraReaccion', unUsuario)]);
     });
 
     it('si el usuario no habia reaccionado, no hace nada', () => {

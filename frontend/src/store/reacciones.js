@@ -17,14 +17,13 @@ export default (state = [], evento) => produce(state, (draft) => {
     case reactionTypes.REINICIAR: {
       return draft = [];
     }
-    case reactionTypes.REACCIONAR: {
-      if (yaReacciono(draft, evento)) return;
-      draft.push({ usuario, nombre });
+    case reactionTypes.REACCIONAR:
+      if (!yaReacciono(draft, evento)) draft.push({ usuario, nombre });
       break;
-    }
+
     case reactionTypes.DESREACCIONAR: {
-      if (!yaReacciono(draft, evento)) return;
-      return draft.filter((p) => p.usuario.email !== usuario.email && p.nombre === nombre);
+      if (yaReacciono(draft, evento)) draft = draft.filter((p) => (p.usuario.email !== usuario.email && p.nombre === nombre) || p.nombre !== nombre);
+      return draft;
     }
     default: {
       return draft;
