@@ -69,47 +69,35 @@ const getFontSizeForWindow = () => {
 };
 
 class Vista extends React.Component {
-  state = {
-    subjectThumbsUpClicked: false,
-    subjectThumbsDownClicked: false,
-    subjectSlackClicked: false,
-    subjectRecommendingEndingClicked: false,
-    wannaTalk: false,
-  };
 
   onSubjectThumbsUpClick = () => {
     this.props.dispatchEvent({ tipo: reactionTypes.REACCIONAR, nombre: '👍' });
     this.props.dispatchEvent({ tipo: reactionTypes.DESREACCIONAR, nombre: '👎' });
-    this.setState({ subjectThumbsUpClicked: true, subjectThumbsDownClicked: false });
   };
 
   onSubjectThumbsDownClick = () => {
     this.props.dispatchEvent({ tipo: reactionTypes.DESREACCIONAR, nombre: '👍' });
     this.props.dispatchEvent({ tipo: reactionTypes.REACCIONAR, nombre: '👎' });
-    this.setState({ subjectThumbsUpClicked: false, subjectThumbsDownClicked: true });
   };
 
   onSubjectSlackClick = () => {
-    const tipo = this.state.subjectSlackClicked ? reactionTypes.DESREACCIONAR : reactionTypes.REACCIONAR;
+    const tipo = this.props.slack ? reactionTypes.DESREACCIONAR : reactionTypes.REACCIONAR;
     this.props.dispatchEvent({ tipo, nombre: '💬' });
-    this.setState({ subjectSlackClicked: !this.state.subjectSlackClicked });
   };
 
   onSubjectRecommendingEndingClicked = () => {
-    const tipo = this.state.subjectRecommendingEndingClicked ? reactionTypes.DESREACCIONAR : reactionTypes.REACCIONAR;
+    const tipo = this.props.redondear ? reactionTypes.DESREACCIONAR : reactionTypes.REACCIONAR;
     this.props.dispatchEvent({ tipo, nombre: '🔄' });
-    this.setState({ subjectRecommendingEndingClicked: !this.state.subjectRecommendingEndingClicked });
   };
 
   onWannaTalkClick = () => {
     this.props.dispatchEvent({ tipo: tipoDeEvento.HABLAR });
-    this.setState({ wannaTalk: true });
   };
 
   onWannaStopTalkClick = () => {
     if (this.props.participant.inicio !== null && this.props.participant.fin === null) this.props.dispatchEvent({ tipo: tipoDeEvento.DEJAR_DE_HABLAR });
     else this.props.dispatchEvent({ tipo: tipoDeEvento.DESENCOLAR });
-  }
+  };
 
   render() {
     return (
@@ -125,15 +113,15 @@ class Vista extends React.Component {
             </SubjectTitle>
               {this.props.temaEmpezado
                 ? <ReactionsContainer height={6}>
-                  <ReactionButton isBig isActive={this.state.subjectThumbsUpClicked}
-                                  isDisabled={this.state.subjectThumbsDownClicked} icon={faThumbsUp}
+                  <ReactionButton isBig isActive={this.props.thumbsUp}
+                                  isDisabled={this.props.thumbsDown} icon={faThumbsUp}
                                   onClick={this.onSubjectThumbsUpClick}/>
-                  <ReactionButton isBig isActive={this.state.subjectThumbsDownClicked}
-                                  isDisabled={this.state.subjectThumbsUpClicked} icon={faThumbsDown}
+                  <ReactionButton isBig isActive={this.props.thumbsDown}
+                                  isDisabled={this.props.thumbsUp} icon={faThumbsDown}
                                   onClick={this.onSubjectThumbsDownClick}/>
-                  <ReactionButton isBig isActive={this.state.subjectSlackClicked} icon={faHashtag}
+                  <ReactionButton isBig isActive={this.props.slack} icon={faHashtag}
                                   onClick={this.onSubjectSlackClick}/>
-                  <ReactionButton isBig isActive={this.state.subjectRecommendingEndingClicked} icon={faSync}
+                  <ReactionButton isBig isActive={this.props.redondear} icon={faSync}
                                   onClick={this.onSubjectRecommendingEndingClicked}/>
             </ReactionsContainer>
                 : <TemaNoEmpezado> El tema todavia no empezo </TemaNoEmpezado>
@@ -148,7 +136,7 @@ class Vista extends React.Component {
         <ActionContainerStyle>
           {
             this.props.temaEmpezado ? (
-              !this.state.wannaTalk
+              !this.props.wannaTalk
                 ? <div style={talkButtonStyle(false)} onClick={this.onWannaTalkClick}>
                 <FontAwesomeIcon icon={faMicrophoneAlt} color={'silver'} size={'2x'}/>
               </div>
