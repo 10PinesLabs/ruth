@@ -1,8 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import Vista from './vista';
 
-const Mobile = ({ usuario, dispatch, tema, ...props }) => {
+export const reacciones = {
+  REDONDEAR: '🔄',
+  SLACK: '💬',
+  THUMBS_UP: '👍',
+  THUMBS_DOWN: '👎'
+};
+
+const Mobile = ({usuario, dispatch, tema, ...props}) => {
   const dispatchEvent = (data) => {
     if (tema.id) {
       const evento = {
@@ -15,22 +22,19 @@ const Mobile = ({ usuario, dispatch, tema, ...props }) => {
       dispatch(evento);
     }
   };
-  const wannaTalk = Boolean(tema && tema.oradores.find(orador => orador.usuario.email === usuario.email));
-  const thumbsUp = Boolean(tema && tema.reacciones.filter(r => r.nombre === '👍').find(reaccion => reaccion.usuario.email === usuario.email));
-  const thumbsDown = Boolean(tema && tema.reacciones.filter(r => r.nombre === '👎').find(reaccion => reaccion.usuario.email === usuario.email));
-  const slack = Boolean(tema && tema.reacciones.filter(r => r.nombre === '💬').find(reaccion => reaccion.usuario.email === usuario.email));
-  const redondear = Boolean(tema && tema.reacciones.filter(r => r.nombre === '🔄').find(reaccion => reaccion.usuario.email === usuario.email));
+  const esUsuarioActual = evento => evento.usuario.email === usuario.email;
+  const reaccionoCon = (reaccion) => Boolean(tema && tema.reacciones.filter(r => r.nombre === reaccion).find(esUsuarioActual));
 
   return (
     <>
-        <Vista {...props}
-               dispatchEvent={dispatchEvent}
-               wannaTalk={wannaTalk}
-               thumbsUp={thumbsUp}
-               thumbsDown={thumbsDown}
-               slack={slack}
-               redondear={redondear}
-               tema={tema} />
+      <Vista {...props}
+             dispatchEvent={dispatchEvent}
+             wannaTalk={Boolean(tema && tema.oradores.find(esUsuarioActual))}
+             thumbsUp={reaccionoCon(reacciones.THUMBS_UP)}
+             thumbsDown={reaccionoCon(reacciones.THUMBS_DOWN)}
+             slack={reaccionoCon(reacciones.SLACK)}
+             redondear={reaccionoCon(reacciones.REDONDEAR)}
+             tema={tema}/>
     </>
   );
 };

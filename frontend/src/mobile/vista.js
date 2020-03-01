@@ -26,6 +26,7 @@ import { ReactionsContainer } from '../components/SubjectReactionsContainer.styl
 import { tipoDeEvento } from '../store/oradores';
 import { CardInteractionsContainer } from '../components/InteractionsContainer.styled';
 import { reactionTypes } from '../store/reacciones';
+import {reacciones} from "./index";
 
 const talkButtonStyle = (pressed, talking) => {
   let background;
@@ -71,23 +72,23 @@ const getFontSizeForWindow = () => {
 class Vista extends React.Component {
 
   onSubjectThumbsUpClick = () => {
-    this.props.dispatchEvent({ tipo: reactionTypes.REACCIONAR, nombre: '👍' });
-    this.props.dispatchEvent({ tipo: reactionTypes.DESREACCIONAR, nombre: '👎' });
+    this.props.dispatchEvent({ tipo: reactionTypes.REACCIONAR, nombre: reacciones.THUMBS_UP });
+    this.props.dispatchEvent({ tipo: reactionTypes.DESREACCIONAR, nombre: reacciones.THUMBS_DOWN});
   };
 
   onSubjectThumbsDownClick = () => {
-    this.props.dispatchEvent({ tipo: reactionTypes.DESREACCIONAR, nombre: '👍' });
-    this.props.dispatchEvent({ tipo: reactionTypes.REACCIONAR, nombre: '👎' });
+    this.props.dispatchEvent({ tipo: reactionTypes.DESREACCIONAR, nombre: reacciones.THUMBS_UP });
+    this.props.dispatchEvent({ tipo: reactionTypes.REACCIONAR, nombre: reacciones.THUMBS_DOWN });
   };
 
   onSubjectSlackClick = () => {
     const tipo = this.props.slack ? reactionTypes.DESREACCIONAR : reactionTypes.REACCIONAR;
-    this.props.dispatchEvent({ tipo, nombre: '💬' });
+    this.props.dispatchEvent({ tipo, nombre: reacciones.SLACK });
   };
 
   onSubjectRecommendingEndingClicked = () => {
     const tipo = this.props.redondear ? reactionTypes.DESREACCIONAR : reactionTypes.REACCIONAR;
-    this.props.dispatchEvent({ tipo, nombre: '🔄' });
+    this.props.dispatchEvent({ tipo, nombre: reacciones.REDONDEAR });
   };
 
   onWannaTalkClick = () => {
