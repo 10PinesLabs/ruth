@@ -81,26 +81,26 @@ class Vista extends React.Component {
   };
 
   onSubjectThumbsUpClick = () => {
-    this.props.dispatchEvent({tipo: reactionTypes.REACCIONAR, nombre: 'thumbsUpTemaActual👍'});
-    this.props.dispatchEvent({tipo: reactionTypes.DESREACCIONAR, nombre: 'thumbsDownTemaActual👍'});
+    this.props.dispatchEvent({tipo: reactionTypes.REACCIONAR, nombre: '👍'});
+    this.props.dispatchEvent({tipo: reactionTypes.DESREACCIONAR, nombre: '👎'});
     this.setState({subjectThumbsUpClicked: true, subjectThumbsDownClicked: false});
   };
 
   onSubjectThumbsDownClick = () => {
-    this.props.dispatchEvent({tipo: reactionTypes.DESREACCIONAR, nombre: 'thumbsUpTemaActual👍'});
-    this.props.dispatchEvent({tipo: reactionTypes.REACCIONAR, nombre: 'thumbsDownTemaActual👍'});
+    this.props.dispatchEvent({tipo: reactionTypes.DESREACCIONAR, nombre: '👍'});
+    this.props.dispatchEvent({tipo: reactionTypes.REACCIONAR, nombre: '👎'});
     this.setState({subjectThumbsUpClicked: false, subjectThumbsDownClicked: true});
   };
 
   onSubjectSlackClick = () => {
     const tipo = this.state.subjectSlackClicked ? reactionTypes.DESREACCIONAR : reactionTypes.REACCIONAR;
-    this.props.dispatchEvent({tipo, nombre: 'slackTemaActual'});
+    this.props.dispatchEvent({tipo, nombre: '💬'});
     this.setState({subjectSlackClicked: !this.state.subjectSlackClicked});
   };
 
   onSubjectRecommendingEndingClicked = () => {
     const tipo = this.state.subjectRecommendingEndingClicked ? reactionTypes.DESREACCIONAR : reactionTypes.REACCIONAR;
-    this.props.dispatchEvent({tipo, nombre: 'redondearTemaActual'});
+    this.props.dispatchEvent({tipo, nombre: '🔄'});
     this.setState({subjectRecommendingEndingClicked: !this.state.subjectRecommendingEndingClicked});
   };
 

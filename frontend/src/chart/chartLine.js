@@ -1,10 +1,10 @@
 import React from 'react';
-import { Line } from 'react-chartjs-2';
-import { ChartlineContainer } from './Chart.styled';
+import {Line} from 'react-chartjs-2';
+import {ChartlineContainer} from './Chart.styled';
 
 class ChartLine extends React.Component {
     graphOptions = () => {
-      const lineOptions = {
+      return {
         layout: {
           padding: {
             left: 60,
@@ -14,7 +14,6 @@ class ChartLine extends React.Component {
           },
         },
       };
-      return lineOptions;
     };
 
     formattedData = () => ({
