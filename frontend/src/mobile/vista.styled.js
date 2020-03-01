@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import React from "react";
 
 export const MobileUsableArea = styled.div(({ fontSize }) => `
     width: 100%;
@@ -81,9 +82,23 @@ export const QueuedParticipants = styled.div`
 
 export const SubjectTitle = styled.div`
     color: grey; 
+    margin: 0.5em 0 0 0;
     font-size: 2em;
     font-weight: 200; 
-    padding-bottom: 0.5em;
     text-align: center;
     font-family: 'Poppins', sans-serif;
+`;
+
+export const TemaNoEmpezado  = styled.div`
+    margin: 0.5em 0 0 0;
+    font-size: 2em;
+    font-weight: 200; 
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 6rem;
+    width: 70%;
+    font-weight: bold;
 `;
