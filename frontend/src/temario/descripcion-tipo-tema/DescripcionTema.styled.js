@@ -25,6 +25,8 @@ export const Descripcion = styled.div`
   white-space: pre-line;
   text-align: justify;
   margin: 0 3em;
+  width: 100%;
+  margin-top: 3em;
 `;
 
 export const ListaTemasARepasar = styled.ul`

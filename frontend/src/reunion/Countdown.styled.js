@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { colors, font } from '../styles/theme';
+import {colors, font, sidebar} from '../styles/theme';
 
 const timeIsUpAlarm = keyframes`
   0% {
@@ -22,13 +22,17 @@ const noAnimation = keyframes`
   }
 `;
 
-// eslint-disable-next-line import/prefer-default-export
 export const CountdownContainer = styled.div`
+  display: flex;
+  position: absolute;
+  bottom: 0;
   font-family: ${font.h1};
   font-size: ${font.sizeCountdown};
-  padding: 0.7rem 0;
   text-align: center;
-
+  align-items: center;  
+  width: calc(100% - ${sidebar.width});
+  justify-content: center;
+  
   animation-name: ${(props) => (props.negative ? timeIsUpAlarm : noAnimation)};
   animation-duration: 2s;
   animation-timing-function: ease;

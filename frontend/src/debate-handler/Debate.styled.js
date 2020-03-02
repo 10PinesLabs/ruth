@@ -5,6 +5,7 @@ export const DebateContainer = styled.div`
     display: flex;
     flex: 1;
     width: calc(100% - ${sidebar.width});
+    margin-top: 5em;
 `;
 
 export const SubDebateContainer = styled.div`  
@@ -16,9 +17,13 @@ export const SubDebateContainer = styled.div`
 `;
 
 export const TitleContainer = styled.div`  
+    position: absolute;
+    top: 0;
+    right: calc(${sidebar.width}/2);
     display: flex;
     flex-direction: column;
     height: 10%;
+    width: 100%;
     align-items: center;
     justify-content: center;
 `;
@@ -39,10 +44,12 @@ export const ParticipantsContainer = styled.div`
     background-color: white;
     height: 45%
     align-items: center;
-    justify-content: center;
+    justify-content: start;
+    padding: 2em 0 0 0;
 `;
 
 export const Titulo = styled.h1`
+
   font-size: ${font.sizeH1} ;
   font-family: ${font.h1};
 `;

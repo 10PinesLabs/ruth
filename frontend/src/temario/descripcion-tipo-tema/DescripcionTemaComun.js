@@ -5,7 +5,6 @@ class DescripcionTemaComun extends React.Component {
   render() {
     return (
       <DescripcionTemaContainer>
-          <Titulo>{this.props.tema.titulo}</Titulo>
           <Descripcion>{this.props.tema.descripcion}</Descripcion>
       </DescripcionTemaContainer>
     );
