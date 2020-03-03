@@ -1,16 +1,23 @@
 import context from '~/context';
 
+function parserLastEvent(req) {
+  const lastEventId = parseInt(req.query.lastEvent, 10);
+  if (Number.isNaN(lastEventId)) {
+    return null;
+  }
+  return lastEventId;
+}
+
 export default function (wss) {
-  return (ws) => {
-    ws.on('message', (message) => {
-      context.eventosRepo.guardarEvento(message, JSON.parse(message).idTema);
-      wss.clients.forEach((client) => {
-        client.send(JSON.stringify([JSON.parse(message)]));
-      });
-    });
-    context.eventosRepo.findEventosUltimaReunion()
-      .then((data) => {
-        ws.send(JSON.stringify(data.map((eventData) => ({ ...eventData.evento, id: eventData.id, reunionId: eventData.reunionId }))));
-      });
+  return async (ws, req) => {
+    const lastEvent = parserLastEvent(req);
+    const eventos = await context.eventosRepo.findEventosUltimaReunion(lastEvent);
+    ws.send(JSON.stringify(
+      eventos.map((evento) => ({
+        ...evento.evento,
+        id: evento.id,
+        reunionId: evento.reunionId,
+      })),
+    ));
   };
 }
