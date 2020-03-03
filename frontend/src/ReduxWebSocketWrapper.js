@@ -25,7 +25,6 @@ export class ReconnectingWebSocket {
 
     this.websocket.onerror = (e) => {
       console.error(e);
-      this.reconnect();
     };
 
     this.websocket.onmessage = (mensaje) => {
