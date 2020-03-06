@@ -11,31 +11,31 @@ function hayAlguienHablando(state) {
   return state.filter((orador) => !orador.fin).length === 0;
 }
 
-function estaEncoladoParaHablar(draft, nombre) {
+function estaEncoladoParaHablar(draft, usuario) {
   return draft.filter((orador) => orador.fin === null)
-    .some((orador) => orador.nombre === nombre);
+    .some((orador) => orador.usuario.nombre === usuario.nombre);
 }
 
-function estaHablando(orador, { nombre }) {
-  return orador.nombre === nombre && orador.inicio !== null;
+function estaHablando(orador, evento) {
+  return orador.usuario.nombre === evento.usuario.nombre && orador.inicio !== null;
 }
 
 export default (state = [], evento) => produce(state, (draft) => {
-  const { nombre, email, fecha } = evento;
+  const { usuario, fecha } = evento;
   switch (evento.type) {
     case tipoDeEvento.HABLAR:
       hayAlguienHablando(draft) && draft.push({
-        nombre, email, inicio: fecha, fin: null,
+        usuario, inicio: fecha, fin: null,
       });
-      !estaEncoladoParaHablar(draft, nombre) && draft.push({
-        nombre, email, inicio: null, fin: null,
+      !estaEncoladoParaHablar(draft, usuario) && draft.push({
+        usuario, inicio: null, fin: null,
       });
       break;
 
-    case tipoDeEvento.DESENCOLAR:
+    case tipoDeEvento.DESENCOLAR: {
       if (draft.some((orador) => estaHablando(orador, evento))) return;
-      return draft.filter((orador) => orador.nombre !== nombre);
-
+      return draft.filter((orador) => orador.usuario.nombre !== usuario.nombre);
+    }
     case tipoDeEvento.DEJAR_DE_HABLAR: {
       let proximoOrador = null;
       return draft.map((orador, index) => {
@@ -49,6 +49,7 @@ export default (state = [], evento) => produce(state, (draft) => {
           proximoOrador = index + 1;
           return { ...orador, fin: fecha };
         }
+
         return orador;
       });
     }
