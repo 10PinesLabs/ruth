@@ -12,30 +12,14 @@
     -webkit-transform: translate3d(0, 0, 9999px);
     position: fixed;
     padding: 4px;
-    width: 100%;
+    max-width: 35em;
+    min-width: 25em;
     box-sizing: border-box;
-    color: var(--white); }
-    .Toastify__toast-container--top-left {
-      top: 1em;
-      left: 1em; }
-    .Toastify__toast-container--top-center {
-      top: 1em;
-      left: 50%;
-      margin-left: -160px; }
-    .Toastify__toast-container--top-right {
-      top: 1em;
-      right: 1em; }
-    .Toastify__toast-container--bottom-left {
-      bottom: 1em;
-      left: 1em; }
-    .Toastify__toast-container--bottom-center {
-      bottom: -3%;
-      left: 0%;
-      margin-left: 0; }
-    .Toastify__toast-container--bottom-right {
-      bottom: 1em;
-      right: 1em; }
-  
+    color: var(--white);
+    bottom: 0;
+    right: 0;
+}
+
   @media only screen and (max-width: 480px) {
     .Toastify__toast-container {
       width: 100vw;
@@ -49,7 +33,7 @@
       .Toastify__toast-container--rtl {
         right: 0;
         left: initial; } }
-  
+
   .Toastify__toast {
     position: relative;
     min-height: 64px;
@@ -74,11 +58,11 @@
       margin: auto 0;
       -ms-flex: 1;
           flex: 1; }
-  
+
   @media only screen and (max-width: 480px) {
     .Toastify__toast {
       margin-bottom: 0; } }
-  
+
   .Toastify__close-button {
     color: var(--white);
     font-weight: bold;
@@ -97,13 +81,13 @@
       opacity: 0.3; }
     .Toastify__close-button:hover, .Toastify__close-button:focus {
       opacity: 1; }
-  
+
   @keyframes Toastify__trackProgress {
     0% {
       transform: scaleX(1); }
     100% {
       transform: scaleX(0); } }
-  
+
   .Toastify__progress-bar {
     position: absolute;
     top: 0;
@@ -127,23 +111,23 @@
     background: var(--warning-color); }
     .Toastify__progress-bar--error {
     background: var(--error-color); }
-  
+
   @keyframes Toastify__slideInUp {
     from {
       transform: translate3d(0, 110%, 0);
       visibility: visible; }
     to {
       transform: translate3d(0, 0, 0); } }
-  
+
   @keyframes Toastify__slideOutDown {
     from {
       transform: translate3d(0, 0, 0); }
     to {
       visibility: hidden;
       transform: translate3d(0, 500px, 0); } }
-  
+
   .Toastify__slide-enter--bottom-center {
     animation-name: Toastify__slideInUp; }
-  
+
   .Toastify__slide-exit--bottom-center {
     animation-name: Toastify__slideOutDown; }
