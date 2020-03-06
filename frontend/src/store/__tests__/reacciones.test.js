@@ -56,6 +56,15 @@ describe('reaccionesReducer', () => {
       it('si hay un thumbs down previamenete, deberia sacarlo', () => {
         expect(reaccionesReducer(state, evento)).toEqual([reaccion(reacciones.THUMBS_UP, unUsuario)]);
       });
+
+      it('si un usuario reacciona y habia reacciones de otros usuarios, no deberian ser borradas', () => {
+        state = reaccionesReducer(state, {...evento, usuario: {nombre: 'otro', email: 'reotro'}});
+        state = reaccionesReducer(state, {...evento, usuario: {nombre: 'otroV', email: 'reotro2'}});
+        expect(reaccionesReducer(state, evento)).toEqual([
+          reaccion(reacciones.THUMBS_UP, {nombre: 'otro', email: 'reotro'} ),
+          reaccion(reacciones.THUMBS_UP, {nombre: 'otroV', email: 'reotro2'}),
+          reaccion(reacciones.THUMBS_UP, unUsuario)]);
+      });
     });
 
     describe(`#${reacciones.THUMBS_DOWN}`, () => {
@@ -71,6 +80,7 @@ describe('reaccionesReducer', () => {
       it('si hay un thumbs up previamenete, deberia sacarlo', () => {
         expect(reaccionesReducer(state, evento)).toEqual([reaccion(reacciones.THUMBS_DOWN, unUsuario)]);
       });
+
     });
   });
 
