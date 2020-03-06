@@ -1,23 +1,33 @@
 import React from 'react';
 import {
-  faThumbsUp, faThumbsDown, faHashtag, faSync, faMicrophoneAlt, faMicrophoneAltSlash, faMale,
+  faHashtag,
+  faMale,
+  faMicrophoneAlt,
+  faMicrophoneAltSlash,
+  faSync,
+  faThumbsDown,
+  faThumbsUp,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ParticipantsCard from '../cola-de-participantes/ParticipantsCard';
 import { ReactionButton } from './ReactionButton';
 import {
-  MobileUsableArea,
-  ParticipantsContainer,
-  SubjectTitle,
   ActionContainerStyle,
+  Logo,
   LogoHeader,
   LogoLabel,
-  Logo,
-  TopSectionContainer, QueuedParticipants,
+  MobileUsableArea,
+  ParticipantsContainer,
+  QueuedParticipants,
+  SubjectTitle,
+  TemaNoEmpezado,
+  TopSectionContainer,
 } from './vista.styled';
 import { ReactionsContainer } from '../components/SubjectReactionsContainer.styled';
-import { CardInteractionsContainer } from '../components/InteractionsContainer.styled';
 import { tipoDeEvento } from '../store/oradores';
+import { CardInteractionsContainer } from '../components/InteractionsContainer.styled';
+import { reactionTypes } from '../store/reacciones';
+import { reacciones } from './index';
 
 const talkButtonStyle = (pressed, talking) => {
   let background;
@@ -60,100 +70,84 @@ const getFontSizeForWindow = () => {
   return '39';
 };
 
-class Vista extends React.Component {
-  state = {
-    subjectThumbsUpClicked: false,
-    subjectThumbsDownClicked: false,
-    subjectSlackClicked: false,
-    subjectRecommendingEndingClicked: false,
-    wannaTalk: false,
+
+const Vista = ({
+  dispatchEvent, temaEmpezado, title, usuario, queuedParticipants, participant, thumbsDown, thumbsUp, slack, redondear, wannaTalk,
+}) => {
+  const handleReaction = (nombre, estaReaccionado) => {
+    const tipo = estaReaccionado ? reactionTypes.DESREACCIONAR : reactionTypes.REACCIONAR;
+    dispatchEvent({ tipo, nombre });
   };
 
-  onSubjectThumbsUpClick = () => {
-    this.props.dispatchEvent({ tipo: 'Reaccionar', reaccion: 'thumbsUpTemaActual👍' });
-    this.setState({ subjectThumbsUpClicked: true, subjectThumbsDownClicked: false });
+  const onWannaTalkClick = () => {
+    dispatchEvent({ tipo: tipoDeEvento.HABLAR });
   };
 
-  onSubjectThumbsDownClick = () => {
-    this.props.dispatchEvent({ tipo: 'Reaccionar', reaccion: 'thumbsDownTemaActual' });
-    this.setState({ subjectThumbsUpClicked: false, subjectThumbsDownClicked: true });
+  const onWannaStopTalkClick = () => {
+    if (participant.inicio !== null && participant.fin === null) dispatchEvent({ tipo: tipoDeEvento.DEJAR_DE_HABLAR });
+    else dispatchEvent({ tipo: tipoDeEvento.DESENCOLAR });
   };
 
-  onSubjectSlackClick = () => {
-    this.props.dispatchEvent({ tipo: 'Reaccionar', reaccion: 'slackTemaActual' });
-    this.setState({ subjectSlackClicked: !this.state.subjectSlackClicked });
-  };
-
-  onSubjectRecommendingEndingClicked = () => {
-    this.props.dispatchEvent({ tipo: 'Reaccionar', reaccion: 'redondearTemaActual' });
-    this.setState({ subjectRecommendingEndingClicked: !this.state.subjectRecommendingEndingClicked });
-  };
-
-  onWannaTalkClick = () => {
-    this.props.dispatchEvent({ tipo: tipoDeEvento.HABLAR });
-    this.setState({ wannaTalk: true });
-  };
-
-  onWannaStopTalkClick = () => {
-    if (this.props.participant.inicio !== null && this.props.participant.fin === null) this.props.dispatchEvent({ tipo: tipoDeEvento.DEJAR_DE_HABLAR });
-    else this.props.dispatchEvent({ tipo: tipoDeEvento.DESENCOLAR });
-    this.setState({ wannaTalk: false });
-  }
-
-  render() {
-    return (
-      <MobileUsableArea fontSize={getFontSizeForWindow()}>
-        <TopSectionContainer>
-          <LogoHeader>
-            <Logo src={logoImage}/>
-            <LogoLabel> Ruth </LogoLabel>
-          </LogoHeader>
-          <CardInteractionsContainer height={'25%'} width={'95%'}>
-            <SubjectTitle>
-              {this.props.title}
-            </SubjectTitle>
-            <ReactionsContainer height={6}>
-              <ReactionButton isBig isActive={this.state.subjectThumbsUpClicked}
-                              isDisabled={this.state.subjectThumbsDownClicked} icon={faThumbsUp}
-                              onClick={this.onSubjectThumbsUpClick} />
-              <ReactionButton isBig isActive={this.state.subjectThumbsDownClicked}
-                              isDisabled={this.state.subjectThumbsUpClicked} icon={faThumbsDown}
-                              onClick={this.onSubjectThumbsDownClick} />
-              <ReactionButton isBig isActive={this.state.subjectSlackClicked} icon={faHashtag}
-                              onClick={this.onSubjectSlackClick} />
-              <ReactionButton isBig isActive={this.state.subjectRecommendingEndingClicked} icon={faSync}
-                              onClick={this.onSubjectRecommendingEndingClicked} />
+  return (
+    <MobileUsableArea fontSize={getFontSizeForWindow()}>
+      <TopSectionContainer>
+        <LogoHeader>
+          <Logo src={logoImage}/>
+          <LogoLabel> Ruth </LogoLabel>
+        </LogoHeader>
+        <CardInteractionsContainer>
+          <SubjectTitle>
+            {title}
+          </SubjectTitle>
+          {temaEmpezado
+            ? <ReactionsContainer height={6}>
+              <ReactionButton isBig isActive={thumbsUp}
+                              isDisabled={thumbsDown} icon={faThumbsUp}
+                              onClick={() => handleReaction(reacciones.THUMBS_UP, thumbsUp)}/>
+              <ReactionButton isBig isActive={thumbsDown}
+                              isDisabled={thumbsUp} icon={faThumbsDown}
+                              onClick={() => handleReaction(reacciones.THUMBS_DOWN, thumbsDown)}/>
+              <ReactionButton isBig isActive={slack} icon={faHashtag}
+                              onClick={() => handleReaction(reacciones.SLACK, slack)}/>
+              <ReactionButton isBig isActive={redondear} icon={faSync}
+                              onClick={() => handleReaction(reacciones.REDONDEAR, redondear)}/>
             </ReactionsContainer>
-          </CardInteractionsContainer>
-        </TopSectionContainer>
-        <ParticipantsContainer>
-          <ParticipantsCard interactive isParticipantTalking
-                            dispatch={this.props.dispatchEvent}
-                            participant={this.props.participant} />
-        </ParticipantsContainer>
-        <ActionContainerStyle>
-          {
-            !this.state.wannaTalk
-              ? <div style={talkButtonStyle(false)} onClick={this.onWannaTalkClick}>
-                <FontAwesomeIcon icon={faMicrophoneAlt} color={'silver'} size={'2x'} />
-              </div>
+            : <TemaNoEmpezado> El tema todavia no empezo </TemaNoEmpezado>
+          }
+        </CardInteractionsContainer>
+      </TopSectionContainer>
+      <ParticipantsContainer>
+        <ParticipantsCard interactive isParticipantTalking
+                          dispatch={dispatchEvent}
+                          participant={participant}/>
+      </ParticipantsContainer>
+      <ActionContainerStyle>
+        {
+          temaEmpezado ? (
+            !wannaTalk
+              ? <div style={talkButtonStyle(false)} onClick={onWannaTalkClick}>
+                  <FontAwesomeIcon icon={faMicrophoneAlt} color={'silver'} size={'2x'}/>
+                </div>
               : <div style={{
                 display: 'flex', flexDirection: '', alignItems: 'center', justifyContent: 'center',
               }}>
-                  <div style={talkButtonStyle(true, false)} onClick={this.onWannaStopTalkClick}>
-                    <FontAwesomeIcon icon={faMicrophoneAltSlash} color={'black'} size={'2x'} />
+                  <div style={talkButtonStyle(true, false)} onClick={onWannaStopTalkClick}>
+                    <FontAwesomeIcon icon={faMicrophoneAltSlash} color={'black'} size={'2x'}/>
                   </div>
                   <QueuedParticipants>
                     <span style={{
                       color: 'silver', fontSize: '0.9em', marginRight: '0.3em', fontFamily: "'Poppins', sans-serif",
-                    }}> {this.props.queuedParticipants} </span>
-                    <FontAwesomeIcon icon={faMale} color={'silver'} size={'1x'} />
+                    }}> {queuedParticipants} </span>
+                    <FontAwesomeIcon icon={faMale} color={'silver'} size={'1x'}/>
                   </QueuedParticipants>
-              </div>
-          }
-        </ActionContainerStyle>
-      </MobileUsableArea>
-    );
-  }
-}
+                </div>)
+            : <div style={talkButtonStyle(false)}>
+              <FontAwesomeIcon icon={faMicrophoneAltSlash} color={'#ff3b3b8c'} size={'2x'}/>
+            </div>
+        }
+      </ActionContainerStyle>
+    </MobileUsableArea>
+  );
+};
+
 export default Vista;

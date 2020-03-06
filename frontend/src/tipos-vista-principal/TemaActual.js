@@ -1,13 +1,15 @@
 import React from 'react';
-import { faCaretRight, faCaretLeft } from '@fortawesome/free-solid-svg-icons';
+import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  TemaActualContainer, VistaDelMedioContainer, Botonera,
-  BotoneraNavegacionTemas, BotoneraCerrarReunion,
+  Botonera,
+  BotoneraNavegacionTemas,
+  TemaActualContainer,
+  VistaDelMedioContainer,
 } from './TemaActual.styled';
 import InfoTema from '../temario/InfoTema';
 import HandlerTipoTema from '../temario/handler-temas/HandlerTipoTema';
-import { Button, SecondaryButton } from '../components/Button.styled';
+import { Button } from '../components/Button.styled';
 import Countdown from '../reunion/Countdown';
 
 class TemaActual extends React.Component {

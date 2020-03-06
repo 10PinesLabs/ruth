@@ -2,41 +2,58 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Vista from './vista';
 
-const Mobile = ({idTema, usuario, dispatch, ...props}) => {
+export const reacciones = {
+  REDONDEAR: '🔄',
+  SLACK: '💬',
+  THUMBS_UP: '👍',
+  THUMBS_DOWN: '👎',
+};
 
+const Mobile = ({
+  usuario, dispatch, tema, ...props
+}) => {
   const dispatchEvent = (data) => {
-    if (idTema) {
+    if (tema.id) {
       const evento = {
         autor: 'MOBILE',
-        data: { tipo: data.tipo, ...(data.reaccion ? {reaccion: data.reaccion}: {})},
-        nombre: usuario.nombre,
-        email: usuario.email,
         fecha: Date.now(),
-        idTema,
+        idTema: tema.id,
+        usuario,
+        data,
       };
       dispatch(evento);
     }
   };
-
-    return (
-      <>
-        <Vista dispatchEvent={dispatchEvent} {...props}/>
-      </>
-    );
-}
+  const esUsuarioActual = (evento) => evento.usuario.email === usuario.email;
+  const reaccionoCon = (reaccion) => Boolean(tema && tema.reacciones.filter((r) => r.nombre === reaccion).find(esUsuarioActual));
+  console.log(tema && tema.oradores);
+  return (
+    <>
+      <Vista {...props}
+        usuario={usuario}
+             dispatchEvent={dispatchEvent}
+             wannaTalk={Boolean(tema && tema.oradores.filter((orador) => orador.fin === null).find(esUsuarioActual))}
+             thumbsUp={reaccionoCon(reacciones.THUMBS_UP)}
+             thumbsDown={reaccionoCon(reacciones.THUMBS_DOWN)}
+             slack={reaccionoCon(reacciones.SLACK)}
+             redondear={reaccionoCon(reacciones.REDONDEAR)}
+             tema={tema}/>
+    </>
+  );
+};
 
 
 const mapStateToProps = (state) => {
   const tema = state.temas.find((t) => t.fin === null && t.inicio !== null);
   const title = tema && tema.titulo;
-  const participant = tema && tema.oradores && tema.oradores.find(orador => orador.inicio !== null && orador.fin === null);
-
-  const queuedParticipants = tema && tema.oradores && tema.oradores.filter(orador => orador.inicio === null).length || 0;
+  const participant = tema && tema.oradores && tema.oradores.find((orador) => orador.inicio !== null && orador.fin === null);
+  const queuedParticipants = (tema && tema.oradores && tema.oradores.filter((orador) => orador.inicio === null).length) || 0;
   return {
-    idTema: tema && tema.id,
     title,
     participant,
     queuedParticipants,
+    temaEmpezado: tema && tema.inicio,
+    tema,
   };
 };
 

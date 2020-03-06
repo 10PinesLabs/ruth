@@ -1,30 +1,8 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import produce from 'immer';
 import oradoresReducer from './oradores';
+import reaccionesReducer from './reacciones';
 import Backend from '../api/backend';
-
-export function reaccionesReducer(state = [], evento) {
-  switch (evento.type) {
-    case 'Reiniciar reacciones':
-      return [];
-    case 'Reaccionar': {
-      const eventReaction = evento.reaccion;
-      if (state.some((stateReaction) => stateReaction.name === eventReaction)) {
-        return state.map((stateReaction) => {
-          if (stateReaction.name === eventReaction) {
-            return { ...stateReaction, value: stateReaction.value + 1 };
-          }
-          return stateReaction;
-        });
-      }
-
-      return state.concat([{ name: eventReaction, value: 1 }]);
-    }
-
-    default:
-      return state;
-  }
-}
 
 const TEMA_INCIAL_STATE = {
   oradores: [],
