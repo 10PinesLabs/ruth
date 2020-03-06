@@ -4,7 +4,7 @@ const orador = (usuario, inicio, fin) => ({
   usuario, inicio: inicio || null, fin: fin || null,
 });
 
-const otroUsuario = { nombre: 'OtroAlguien', email: 'otroEmail'};
+const otroUsuario = { nombre: 'OtroAlguien', email: 'otroEmail' };
 
 const unUsuario = {
   nombre: 'Alguien',
@@ -38,7 +38,7 @@ describe('#oradoresReducer reducer', () => {
       state = oradoresReducer(state, {
         ...evento,
         fecha: 2,
-        usuario: otroUsuario
+        usuario: otroUsuario,
       });
       evento = { ...evento, fecha: 3 };
       expect(oradoresReducer(state, evento)).toEqual([orador(unUsuario, 1),
@@ -62,7 +62,7 @@ describe('#oradoresReducer reducer', () => {
       evento = {
         type: tipoDeEvento.DESENCOLAR,
         fecha: 1,
-        usuario: unUsuario
+        usuario: unUsuario,
       };
     });
 

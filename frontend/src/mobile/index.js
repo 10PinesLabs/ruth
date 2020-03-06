@@ -1,15 +1,17 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import Vista from './vista';
 
 export const reacciones = {
   REDONDEAR: '🔄',
   SLACK: '💬',
   THUMBS_UP: '👍',
-  THUMBS_DOWN: '👎'
+  THUMBS_DOWN: '👎',
 };
 
-const Mobile = ({usuario, dispatch, tema, ...props}) => {
+const Mobile = ({
+  usuario, dispatch, tema, ...props
+}) => {
   const dispatchEvent = (data) => {
     if (tema.id) {
       const evento = {
@@ -22,15 +24,15 @@ const Mobile = ({usuario, dispatch, tema, ...props}) => {
       dispatch(evento);
     }
   };
-  const esUsuarioActual = evento => evento.usuario.email === usuario.email;
-  const reaccionoCon = (reaccion) => Boolean(tema && tema.reacciones.filter(r => r.nombre === reaccion).find(esUsuarioActual));
-  console.log(tema && tema.oradores)
+  const esUsuarioActual = (evento) => evento.usuario.email === usuario.email;
+  const reaccionoCon = (reaccion) => Boolean(tema && tema.reacciones.filter((r) => r.nombre === reaccion).find(esUsuarioActual));
+  console.log(tema && tema.oradores);
   return (
     <>
       <Vista {...props}
         usuario={usuario}
              dispatchEvent={dispatchEvent}
-             wannaTalk={Boolean(tema && tema.oradores.filter(orador => orador.fin === null).find(esUsuarioActual))}
+             wannaTalk={Boolean(tema && tema.oradores.filter((orador) => orador.fin === null).find(esUsuarioActual))}
              thumbsUp={reaccionoCon(reacciones.THUMBS_UP)}
              thumbsDown={reaccionoCon(reacciones.THUMBS_DOWN)}
              slack={reaccionoCon(reacciones.SLACK)}

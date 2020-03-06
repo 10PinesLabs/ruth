@@ -8,9 +8,9 @@ import {
   faThumbsDown,
   faThumbsUp,
 } from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ParticipantsCard from '../cola-de-participantes/ParticipantsCard';
-import {ReactionButton} from './ReactionButton';
+import { ReactionButton } from './ReactionButton';
 import {
   ActionContainerStyle,
   Logo,
@@ -23,11 +23,11 @@ import {
   TemaNoEmpezado,
   TopSectionContainer,
 } from './vista.styled';
-import {ReactionsContainer} from '../components/SubjectReactionsContainer.styled';
-import {tipoDeEvento} from '../store/oradores';
-import {CardInteractionsContainer} from '../components/InteractionsContainer.styled';
-import {reactionTypes} from '../store/reacciones';
-import {reacciones} from "./index";
+import { ReactionsContainer } from '../components/SubjectReactionsContainer.styled';
+import { tipoDeEvento } from '../store/oradores';
+import { CardInteractionsContainer } from '../components/InteractionsContainer.styled';
+import { reactionTypes } from '../store/reacciones';
+import { reacciones } from './index';
 
 const talkButtonStyle = (pressed, talking) => {
   let background;
@@ -54,7 +54,7 @@ const logoImage = 'https://res-4.cloudinary.com/crunchbase-production/image/uplo
   + '256,f_auto,q_auto:eco/wuhk5weer0fkhmh2oyhv';
 
 const getFontSizeForWindow = () => {
-  const {innerHeight} = window;
+  const { innerHeight } = window;
   if (innerHeight < 590) return '12';
   if (innerHeight < 670) return '14';
   if (innerHeight < 750) return '16';
@@ -71,20 +71,21 @@ const getFontSizeForWindow = () => {
 };
 
 
-const Vista = ({dispatchEvent, temaEmpezado, title, usuario, queuedParticipants, participant, thumbsDown, thumbsUp, slack, redondear, wannaTalk}) => {
-
+const Vista = ({
+  dispatchEvent, temaEmpezado, title, usuario, queuedParticipants, participant, thumbsDown, thumbsUp, slack, redondear, wannaTalk,
+}) => {
   const handleReaction = (nombre, estaReaccionado) => {
     const tipo = estaReaccionado ? reactionTypes.DESREACCIONAR : reactionTypes.REACCIONAR;
-    dispatchEvent({tipo, nombre})
+    dispatchEvent({ tipo, nombre });
   };
 
   const onWannaTalkClick = () => {
-    dispatchEvent({tipo: tipoDeEvento.HABLAR});
+    dispatchEvent({ tipo: tipoDeEvento.HABLAR });
   };
 
   const onWannaStopTalkClick = () => {
-    if (participant.inicio !== null && participant.fin === null) dispatchEvent({tipo: tipoDeEvento.DEJAR_DE_HABLAR});
-    else dispatchEvent({tipo: tipoDeEvento.DESENCOLAR});
+    if (participant.inicio !== null && participant.fin === null) dispatchEvent({ tipo: tipoDeEvento.DEJAR_DE_HABLAR });
+    else dispatchEvent({ tipo: tipoDeEvento.DESENCOLAR });
   };
 
   return (
@@ -123,13 +124,13 @@ const Vista = ({dispatchEvent, temaEmpezado, title, usuario, queuedParticipants,
       <ActionContainerStyle>
         {
           temaEmpezado ? (
-              !wannaTalk
-                ? <div style={talkButtonStyle(false)} onClick={onWannaTalkClick}>
+            !wannaTalk
+              ? <div style={talkButtonStyle(false)} onClick={onWannaTalkClick}>
                   <FontAwesomeIcon icon={faMicrophoneAlt} color={'silver'} size={'2x'}/>
                 </div>
-                : <div style={{
-                  display: 'flex', flexDirection: '', alignItems: 'center', justifyContent: 'center',
-                }}>
+              : <div style={{
+                display: 'flex', flexDirection: '', alignItems: 'center', justifyContent: 'center',
+              }}>
                   <div style={talkButtonStyle(true, false)} onClick={onWannaStopTalkClick}>
                     <FontAwesomeIcon icon={faMicrophoneAltSlash} color={'black'} size={'2x'}/>
                   </div>
@@ -147,6 +148,6 @@ const Vista = ({dispatchEvent, temaEmpezado, title, usuario, queuedParticipants,
       </ActionContainerStyle>
     </MobileUsableArea>
   );
-}
+};
 
 export default Vista;

@@ -1,4 +1,5 @@
 import reaccionesReducer, { reactionTypes } from '../reacciones';
+import {reacciones} from "../../mobile";
 
 const unUsuario = {
   email: 'unEmail@email',
@@ -40,6 +41,36 @@ describe('reaccionesReducer', () => {
     it('si el usuario reacciona mas de una vez, no hace nada', () => {
       state = reaccionesReducer(state, evento);
       expect(reaccionesReducer(state, evento)).toEqual([reaccion('unaReaccion', unUsuario)]);
+    });
+
+    describe(`#${reacciones.THUMBS_UP}`, () => {
+      beforeEach(() => {
+        evento = {
+          type: reactionTypes.REACCIONAR,
+          nombre: reacciones.THUMBS_UP,
+          usuario: unUsuario,
+        };
+        state = reaccionesReducer([], {...evento, nombre: reacciones.THUMBS_DOWN});
+      });
+
+      it('si hay un thumbs down previamenete, deberia sacarlo', () => {
+        expect(reaccionesReducer(state, evento)).toEqual([reaccion(reacciones.THUMBS_UP, unUsuario)]);
+      });
+    });
+
+    describe(`#${reacciones.THUMBS_DOWN}`, () => {
+      beforeEach(() => {
+        evento = {
+          type: reactionTypes.REACCIONAR,
+          nombre: reacciones.THUMBS_DOWN,
+          usuario: unUsuario,
+        };
+        state = reaccionesReducer([], {...evento, nombre: reacciones.THUMBS_UP});
+      });
+
+      it('si hay un thumbs up previamenete, deberia sacarlo', () => {
+        expect(reaccionesReducer(state, evento)).toEqual([reaccion(reacciones.THUMBS_DOWN, unUsuario)]);
+      });
     });
   });
 
