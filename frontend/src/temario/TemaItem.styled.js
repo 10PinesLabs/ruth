@@ -16,7 +16,8 @@ export const TituloTema = styled.div`
     font-size: 2rem;
   }
   letter-spacing: 1px;
-  color: ${colors.viridian};
+  color: ${props => props.estaSeleccionado ? colors.black10 : colors.viridian};
+  transition: color 0.1s ease-in;
   max-width: calc(100% - 2.5rem)
   
 `;

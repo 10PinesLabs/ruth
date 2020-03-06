@@ -8,7 +8,7 @@ class TemaItem extends React.Component {
   render() {
     return (
           <TemaItemContainer onClick = {() => this.props.seleccionarTema(this.props.tema)}>
-              <TituloTema>{this.props.tema.titulo}</TituloTema>
+              <TituloTema estaSeleccionado={this.props.estaSeleccionado}>{this.props.tema.titulo}</TituloTema>
               <IconoDuracion tema={this.props.tema}/>
           </TemaItemContainer>
     );
