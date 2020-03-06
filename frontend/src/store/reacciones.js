@@ -22,17 +22,11 @@ export default (state = [], evento) => produce(state, (draft) => {
 
         switch (evento.nombre) {
           case reacciones.THUMBS_UP:
-            return [...draft.filter(r => (r.nombre !== reacciones.THUMBS_DOWN && usuario.email === r.usuario.email) ||
-              (r.nombre === reacciones.THUMBS_DOWN && usuario.email !== r.usuario.email)), {
-              nombre,
-              usuario
-            }];
+            return [...draft.filter(r => (r.nombre !== reacciones.THUMBS_DOWN && usuario.email === r.usuario.email)
+              || (usuario.email !== r.usuario.email)), { nombre, usuario }];
           case reacciones.THUMBS_DOWN:
             return [...draft.filter(r => (r.nombre !== reacciones.THUMBS_UP && usuario.email === r.usuario.email) ||
-              (r.nombre === reacciones.THUMBS_UP && usuario.email !== r.usuario.email)), {
-              nombre,
-              usuario
-            }];
+              (usuario.email !== r.usuario.email)), { nombre, usuario }];
           default:
             !yaReacciono(draft, evento) && draft.push({usuario, nombre});
         }

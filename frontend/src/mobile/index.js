@@ -26,7 +26,7 @@ const Mobile = ({
   };
   const esUsuarioActual = (evento) => evento.usuario.email === usuario.email;
   const reaccionoCon = (reaccion) => Boolean(tema && tema.reacciones.filter((r) => r.nombre === reaccion).find(esUsuarioActual));
-  console.log(tema && tema.oradores);
+
   return (
     <>
       <Vista {...props}
