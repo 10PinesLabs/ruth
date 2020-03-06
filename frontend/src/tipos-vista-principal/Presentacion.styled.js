@@ -1,12 +1,5 @@
 import styled from 'styled-components';
-import { colors, temario, translucid } from '../styles/theme';
-
-
-export const SidebarIzquierdo = styled.div`
-  width: ${temario.width};
-  background: linear-gradient(${translucid.green}, ${translucid.green}),
-              url('./fondo-pino.png');
-`;
+import {colors} from '../styles/theme';
 
 export const PresentacionContainter = styled.div`  
     display: flex;
