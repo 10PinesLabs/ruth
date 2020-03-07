@@ -47,10 +47,13 @@ const INITIAL_STATE = {
   temas: null,
   reunion: null,
   ultimoEventoId: null,
+  bloqueandoEvento: false
 };
 
 export const reducer = (state = INITIAL_STATE, action) => produce(state, (draft) => {
-  draft.ultimoEventoId = action.id;
+  if (action.id) {
+    draft.ultimoEventoId = action.id;
+  }
   switch (action.type) {
     case 'Empezar Reunion': {
       draft.temas = action.temas.map((tema) => temaReducer(tema, action)).sort(compareTema);
@@ -74,35 +77,57 @@ export const reducer = (state = INITIAL_STATE, action) => produce(state, (draft)
           orador.fin = ahora;
         }
       }
-    }
       break;
+    }
+    case 'Bloquear evento': {
+      draft.bloqueandoEvento = true;
+      break;
+    }
+    case 'Desbloquear evento': {
+      draft.bloqueandoEvento = false;
+      break;
+    }
     default:
       if (draft.temas) {
         const temaIndex = draft.temas.findIndex((tema) => tema.id === action.idTema);
-        draft.temas[temaIndex] = temaReducer(state.temas[temaIndex], action);
+        draft.temas[ temaIndex ] = temaReducer(state.temas[ temaIndex ], action);
       }
       break;
   }
 });
+
+const bloquearEvento = () => ( {
+  type: 'Bloquear evento'
+} );
+
+
+const desbloquearEvento = () => ( {
+  type: 'Desbloquear evento'
+} );
 
 const wsForwarder = (ws) => (store) => (next) => (action) => {
   if (!action.comesFromWS) {
     // We don't dispatch actions that we send to the ws since we'll
     // see them twice, in the future we could be smarter.
     const state = store.getState();
-    Backend.publicarEvento({ reunionId: state.reunion.id, ultimoEventoId: state.ultimoEventoId, ...action })
-      .then(() => {
-        console.log('el backend me respondio bien');
-      })
-      .catch(() => {
-        console.error('el backend fallo');
-      });
+    if(!state.bloqueandoEvento) {
+      next(bloquearEvento());
+      Backend.publicarEvento({ reunionId: state.reunion.id, ultimoEventoId: state.ultimoEventoId, ...action })
+        .then(() => {
+          console.log('el backend me respondio bien');
+        })
+        .catch(() => {
+          console.error('el backend fallo');
+          next(desbloquearEvento());
+        });
+    }
   } else {
     next(action);
+    next(desbloquearEvento());
   }
 };
 
 export default (ws) => configureStore({
   reducer,
-  middleware: [...getDefaultMiddleware(), wsForwarder(ws)],
+  middleware: [ ...getDefaultMiddleware(), wsForwarder(ws) ],
 });
