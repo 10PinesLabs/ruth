@@ -1,21 +1,34 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { Button, SecondaryButton } from "../components/Button.styled";
+import { Typography } from "@material-ui/core";
+import Slide from "@material-ui/core/Slide";
+import './modal.css'
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 export const TerminarTemaDialog = ({ open, onClose, onConfirm }) => (
   <Dialog
     open={ open }
     onClose={ onClose }
+    TransitionComponent={Transition}
+    keepMounted
     aria-labelledby="alert-dialog-title"
     aria-describedby="alert-dialog-description"
   >
-    <DialogTitle id="alert-dialog-title">{ "Terminar tema?" }</DialogTitle>
+    <DialogTitle id="alert-dialog-title" disableTypography>
+      <Typography variant="h4" className="modal-title">
+        ¿Terminar tema?
+      </Typography>
+    </DialogTitle>
     <DialogActions>
-      <Button onClick={ onClose } color="primary">
+      <SecondaryButton onClick={ onClose }>
         Cancelar
-      </Button>
+      </SecondaryButton>
       <Button onClick={ () => {
         onClose();
         onConfirm()
