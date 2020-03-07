@@ -7,6 +7,7 @@ import HandlerTipoTema from '../temario/handler-temas/HandlerTipoTema';
 import { Button, SecondaryButton } from '../components/Button.styled';
 import Countdown from '../reunion/Countdown';
 import { TerminarTemaDialog } from "./Modal";
+import Zoom from "@material-ui/core/Zoom";
 
 function TemaActual(props) {
   const [ open, setOpen] = useState(false);
@@ -28,7 +29,7 @@ function TemaActual(props) {
             { !props.tema.inicio &&
             <Button disabled={ !props.temaATratar } onClick={ props.empezarTema }>Empezar Tema</Button> }
             { props.tema.inicio &&
-            <SecondaryButton disabled={ !props.temaActivo } onClick={ () => setOpen(true) }>Terminar Tema</SecondaryButton> }
+            <Zoom in style={{ transitionDelay: '100ms' }}><SecondaryButton disabled={ !props.temaActivo } onClick={ () => setOpen(true) }>Terminar Tema</SecondaryButton></Zoom> }
             <TerminarTemaDialog open={ open} onClose={ () => setOpen(false) } onConfirm={ props.terminarTema }/>
             <FontAwesomeIcon
               icon={ faCaretRight }
