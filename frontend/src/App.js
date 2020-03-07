@@ -48,10 +48,10 @@ const App = ({ location, usuario }) => {
     <GlobalStyle/>
     <ReduxWebSocketWrapper reunion={reunion} usuario={usuario}>
       <Switch>
-        <Route exact path="/mobile" component={() => <Mobile usuario={usuario}/>}/>
+        <Route exact path="/" component={() => <Mobile usuario={usuario}/>}/>
         <Route exact path="/oradores" component={Oradores}/>
         <Route exact path="/chart" component={TestChart}/>
-        <Route exact path="/" component={TemasHandler} />
+        <Route exact path="/presentador" component={TemasHandler} />
       </Switch>
     </ReduxWebSocketWrapper>
   </>;
