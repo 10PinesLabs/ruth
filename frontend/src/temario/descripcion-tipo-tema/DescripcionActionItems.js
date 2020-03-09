@@ -1,13 +1,14 @@
 import React from 'react';
 import {Descripcion, DescripcionTemaContainer, ListaTemasARepasar} from './DescripcionTema.styled';
+import {useSpring} from "react-spring";
 
-class DescripcionActionItems extends React.Component {
-  render() {
+const DescripcionActionItems = ({tema}) => {
+  const props = useSpring({opacity: 1, from: {opacity: 0}});
     return (
-      <DescripcionTemaContainer>
+      <DescripcionTemaContainer style={props}>
         <Descripcion>
           <ListaTemasARepasar>
-            {this.props.tema.temasParaRepasar.map((temaReunionAnterior, index) => <li key={`tema-a-repasar-${index}`}>
+            {tema.temasParaRepasar.map((temaReunionAnterior, index) => <li key={`tema-a-repasar-${index}`}>
               <b> {temaReunionAnterior.tema.titulo} </b>
               {temaReunionAnterior.actionItems.length !== 0
                 ? <ul>
@@ -22,7 +23,6 @@ class DescripcionActionItems extends React.Component {
         </Descripcion>
       </DescripcionTemaContainer>
     );
-  }
-}
+};
 
 export default DescripcionActionItems;

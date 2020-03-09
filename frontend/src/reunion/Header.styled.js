@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import {font, header, temario} from "../styles/theme";
+import {animated} from 'react-spring';
 
-export const HeaderContainer = styled.div`
+export const HeaderContainer = styled(animated.div)`
   z-index: 10;
   display: flex;
   position: absolute;

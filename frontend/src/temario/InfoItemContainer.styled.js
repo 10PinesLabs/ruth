@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import {colors, font, sizeBreakpoint, temario} from '../styles/theme';
+import {colors, font, sizeBreakpoint} from '../styles/theme';
+import {animated} from 'react-spring';
 
 export const InfoItemContainer = styled.div`
   display:flex;
@@ -50,7 +51,7 @@ export const Texto = styled.p`
   width: 8em;
 `;
 
-export const InfoTemaContainer = styled.div`
+export const InfoTemaContainer = styled(animated.div)`
   display:flex;
   align-items: center;
   justify-content: space-evenly;

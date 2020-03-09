@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {toast} from 'react-toastify';
 import Sidebar from '../sidebar-reunion/Sidebar';
 import {ReunionContainer, VistaTemaContainer} from './Reunion.styled';
@@ -7,139 +7,126 @@ import Presentacion from '../tipos-vista-principal/Presentacion';
 import Debate from '../tipos-vista-principal/Debate';
 import Temario from '../temario/Temario';
 import Header from "./Header";
+import {useSpring} from "react-spring";
 
-class VistaTemas extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedElement: 'Tema Actual',
-      indiceTemaAMostrar: this.indiceTemaATratar(),
-    };
-  }
 
-  componentDidUpdate = (prevProps) => {
-    if (this.props !== prevProps) {
-      this.setState({
-        indiceTemaAMostrar: this.indiceTemaATratar(),
-      });
-    }
-  }
+const VistaTemas = ({actualizarTema, cerrarReunion, temas}) => {
 
-  vistas = [TemaActual, Presentacion, Debate]
+  const indiceTemaATratar = () => {
+    const indiceTemaSinFinalizar = temas.findIndex((tema) => tema.fin === null);
+    const ultimoTema = temas.length - 1;
+    return indiceTemaSinFinalizar >= 0 ? indiceTemaSinFinalizar : ultimoTema;
+  };
 
-  obtenerVista = () => this.vistas.find((vista) => vista.canHandleView(this.state.selectedElement))
+  const [indiceTemaAMostrar, setIndiceTemaAMostrar] = useState(indiceTemaATratar());
+  const [selectedElement, setSelectedElement] = useState('Tema Actual');
 
-  empezarTema = () => {
-    if (this.temaSeleccionado().inicio !== null) {
+  useEffect(() => {setIndiceTemaAMostrar(indiceTemaATratar())}, [indiceTemaATratar()]);
+
+  const empezarTema = () => {
+    if (temaSeleccionado().inicio !== null) {
       return toast.error('No se puede iniciar un tema que ya fue iniciado');
     }
-    if (this.state.indiceTemaAMostrar !== this.indiceTemaATratar()) {
+    if (indiceTemaAMostrar !== indiceTemaATratar()) {
       return toast.error('Existe otro tema para tratar');
     }
-    return this.props.actualizarTema({
-      id: this.temaSeleccionado().id,
+    return actualizarTema({
+      id: temaSeleccionado().id,
       inicio: Date.now(),
       fin: null,
     });
-  }
+  };
 
-  terminarTema = () => {
-    this.props.actualizarTema({
-      id: this.temaSeleccionado().id,
-      inicio: this.temaSeleccionado().inicio,
+  const terminarTema = () => {
+    actualizarTema({
+      id: temaSeleccionado().id,
+      inicio: temaSeleccionado().inicio,
       fin: Date.now(),
     });
     toast.success('Tema finalizado');
-  }
+  };
 
-  handleCerrarReunion = () => {
-    if (this.temaActivo()) {
-      this.terminarTema();
+  const handleCerrarReunion = () => {
+    if (temaActivo()) {
+      terminarTema();
     }
-    this.props.cerrarReunion();
-  }
+    cerrarReunion();
+  };
 
-  handleSelection = (name) => {
-    this.setState({
-      selectedElement: name,
-    });
-  }
+  const temaSeleccionado = () => {
+    return temas[indiceTemaAMostrar];
+  };
 
-  temaSeleccionado() {
-    return this.props.temas[this.state.indiceTemaAMostrar];
-  }
+  const seleccionarTema = (temaSeleccionado) => {
+    const index = temas.findIndex((tema) => tema === temaSeleccionado);
+    setIndiceTemaAMostrar(index);
+    setSelectedElement('Tema Actual');
+  };
 
-  seleccionarTema = (temaSeleccionado) => {
-    const index = this.props.temas.findIndex((tema) => tema === temaSeleccionado);
-    this.setState({indiceTemaAMostrar: index, selectedElement: 'Tema Actual'});
-  }
-
-  avanzarTema = () => {
-    if (this.state.indiceTemaAMostrar !== this.props.temas.length - 1) {
-      this.setState({indiceTemaAMostrar: this.state.indiceTemaAMostrar + 1});
+  const avanzarTema = () => {
+    if (indiceTemaAMostrar !== temas.length - 1) {
+      setIndiceTemaAMostrar(indiceTemaAMostrar + 1);
     }
-  }
+  };
 
-  retrocederTema = () => {
-    if (this.state.indiceTemaAMostrar !== 0) {
-      this.setState({indiceTemaAMostrar: this.state.indiceTemaAMostrar - 1});
+  const retrocederTema = () => {
+    if (indiceTemaAMostrar !== 0) {
+      setIndiceTemaAMostrar(indiceTemaAMostrar - 1);
     }
-  }
+  };
 
-  ultimoTema = () => this.indiceTemaATratar() === this.props.temas.length - 1
+  const esElSiguienteTemaATratar = () => indiceTemaAMostrar === indiceTemaATratar();
 
-  indiceTemaATratar() {
-    const indiceTemaSinFinalizar = this.props.temas.findIndex((tema) => tema.fin === null);
-    const ultimoTema = this.props.temas.length - 1;
-    return indiceTemaSinFinalizar >= 0 ? indiceTemaSinFinalizar : ultimoTema;
-  }
-
-  esElSiguienteTemaATratar = () => this.state.indiceTemaAMostrar === this.indiceTemaATratar()
-
-  segundosRestantes = () => {
-    const {inicio, fin, cantidadDeMinutosDelTema} = this.temaSeleccionado();
+  const segundosRestantes = () => {
+    const {inicio, fin, cantidadDeMinutosDelTema} = temaSeleccionado();
     if (inicio === null) {
       return cantidadDeMinutosDelTema * 60;
     }
     const tiempo = fin === null ? Date.now() : Date.parse(fin);
     return Math.round(cantidadDeMinutosDelTema * 60
       - (tiempo - Date.parse(inicio)) / 1000);
-  }
+  };
 
-  temaActivo = () => {
-    const {inicio, fin} = this.temaSeleccionado();
+  const temaActivo = () => {
+    const {inicio, fin} = temaSeleccionado();
     return inicio !== null && fin === null;
-  }
+  };
 
-  render() {
-    const VistaSeleccionada = this.obtenerVista();
-    return (
-      <ReunionContainer>
-        <Temario temas={this.props.temas}
-                 seleccionarTema={this.seleccionarTema}
-                 cerrarReunion={this.handleCerrarReunion}
-                 temaActual={this.temaSeleccionado()}
-        />
-        <Header titulo={this.temaSeleccionado().titulo}
-                segundosRestantes={this.segundosRestantes()}
-                temaActivo={this.temaActivo()}
-        />
-        <VistaTemaContainer>
-          <VistaSeleccionada tema={this.temaSeleccionado()}
-                             terminarTema={this.terminarTema}
-                             empezarTema={this.empezarTema}
-                             temaActivo={this.temaActivo()}
-                             avanzarTema={this.avanzarTema}
-                             retrocederTema={this.retrocederTema}
-                             temaATratar={this.esElSiguienteTemaATratar()}
-                             handleCerrarReunion={this.handleCerrarReunion}/>
-        </VistaTemaContainer>
-        <Sidebar handleSelection={this.handleSelection}
-                 selectedElement={this.state.selectedElement}
-                 link={this.temaSeleccionado().linkDePresentacion}/>
-      </ReunionContainer>
-    );
-  }
-}
+  const obtenerVista = () => vistas[selectedElement] || 'Tema Actual';
+  const propsToAnimate = useSpring({opacity: 1, from: {opacity: 0}});
+  const VistaSeleccionada = obtenerVista();
 
+  return (
+    <ReunionContainer style={propsToAnimate}>
+      <Temario temas={temas}
+               seleccionarTema={seleccionarTema}
+               cerrarReunion={handleCerrarReunion}
+               temaActual={temaSeleccionado()}
+      />
+      <Header titulo={temaSeleccionado().titulo}
+              segundosRestantes={segundosRestantes()}
+              temaActivo={temaActivo()}
+      />
+      <VistaTemaContainer style={propsToAnimate}>
+        <VistaSeleccionada tema={temaSeleccionado()}
+                           terminarTema={terminarTema}
+                           empezarTema={empezarTema}
+                           temaActivo={temaActivo()}
+                           avanzarTema={avanzarTema}
+                           retrocederTema={retrocederTema}
+                           temaATratar={esElSiguienteTemaATratar()}
+                           handleCerrarReunion={handleCerrarReunion}/>
+      </VistaTemaContainer>
+      <Sidebar handleSelection={setSelectedElement}
+               selectedElement={selectedElement}
+               link={temaSeleccionado().linkDePresentacion}/>
+    </ReunionContainer>
+  );
+};
+
+const vistas = {
+  'Tema Actual': TemaActual,
+  'Presentación': Presentacion,
+  'Debate': Debate
+};
 export default VistaTemas;

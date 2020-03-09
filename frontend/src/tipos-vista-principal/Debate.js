@@ -1,17 +1,37 @@
 import React from 'react';
-import DebateSocket from '../debate-handler/DebateSocket';
+import {colors} from "../styles/theme";
+import {GraphsContainer, ParticipantsContainer, SubDebateContainer} from "../debate-handler/Debate.styled";
+import ParticipantsQueue from "../cola-de-participantes/ParticipantsQueue";
+import ChartBar from "../chart/chartBar";
+import ChartLine from "../chart/chartLine";
+import {useSpring} from "react-spring";
 
-class Debate extends React.Component {
-    static canHandleView = (view) => view === 'Debate'
+const Debate = ({tema}) => {
+  const dataBar = () => ({
+    data: tema.reacciones,
+    color: colors.downy,
+  });
 
-    render() {
-      return (
-          <DebateSocket
-            segundosRestantes={this.props.segundosRestantes}
-            temaActivo={this.props.temaActivo}
-            tema={this.props.tema}/>
-      );
-    }
-}
+  const isTalking = (participant) => participant.inicio !== null && participant.fin === null;
+
+  const debateData = {
+    participants: tema.oradores,
+    dataBar: dataBar(),
+    dataLine: {data: []},
+  };
+
+  const props = useSpring({opacity: 1, from: {opacity: 0}});
+  return (
+    <SubDebateContainer style={props}>
+      <GraphsContainer>
+        <ChartLine data={debateData.dataLine}/>
+        <ChartBar data={debateData.dataBar}/>
+      </GraphsContainer>
+      <ParticipantsContainer>
+        <ParticipantsQueue participants={debateData.participants} isTalking={isTalking}/>
+      </ParticipantsContainer>
+    </SubDebateContainer>
+  );
+};
 
 export default Debate;

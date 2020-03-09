@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import {font, sizeBreakpoint} from '../../styles/theme';
+import {animated} from 'react-spring';
 
-
-export const DescripcionTemaContainer = styled.div`
+export const DescripcionTemaContainer = styled(animated.div)`
   display: flex;
   flex: 1;
   flex-direction:column;

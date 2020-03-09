@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import {animated} from 'react-spring';
 
-export const SubDebateContainer = styled.div`  
+export const SubDebateContainer = styled(animated.div)`  
     display: flex;
     flex-direction: column;
     flex: 1;

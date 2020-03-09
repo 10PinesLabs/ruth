@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import {colors} from '../styles/theme';
+import {animated} from 'react-spring';
 
-export const VistaDelMedioContainer = styled.div` 
+export const VistaDelMedioContainer = styled(animated.div)` 
     display: flex; 
     flex-direction: column;
     flex: 1;
