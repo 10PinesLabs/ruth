@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   faHashtag,
   faMale,
@@ -28,6 +28,7 @@ import {tipoDeEvento} from '../store/oradores';
 import {CardInteractionsContainer} from '../components/InteractionsContainer.styled';
 import {reactionTypes} from '../store/reacciones';
 import {reacciones} from './index';
+import {SkeletonCircle, SkeletonLine} from "../skeleton/Skeleton.styled";
 
 const talkButtonStyle = (pressed, talking) => {
   let background;
@@ -89,18 +90,28 @@ const Vista = ({
     else dispatchEvent({tipo: tipoDeEvento.DESENCOLAR});
   };
 
+  const [showSkeleton, setShowSekelton] = useState(true);
+  useEffect(() => {setTimeout(() => setShowSekelton(false), 1000)}, []);
+
   return (
     <MobileUsableArea fontSize={getFontSizeForWindow()}>
       <TopSectionContainer>
         <LogoHeader>
-          <Logo src={logoImage}/>
-          <LogoLabel> Ruth </LogoLabel>
+              <Logo src={logoImage}/>
+              <LogoLabel> Ruth </LogoLabel>
         </LogoHeader>
         <CardInteractionsContainer>
           <SubjectTitle>
-            {title}
+            { showSkeleton ? <SkeletonLine/> : title }
           </SubjectTitle>
-          {temaEmpezado
+          {showSkeleton?
+            <ReactionsContainer height={6}>
+              <ReactionSkeleton />
+              <ReactionSkeleton />
+              <ReactionSkeleton />
+              <ReactionSkeleton />
+          </ReactionsContainer>:
+            (temaEmpezado
             ? <ReactionsContainer height={6}>
               <ReactionButton isBig isActive={thumbsUp}
                               isDisabled={thumbsDown} icon={faThumbsUp}
@@ -113,7 +124,7 @@ const Vista = ({
               <ReactionButton isBig isActive={redondear} icon={faSync}
                               onClick={() => handleReaction(reacciones.REDONDEAR, redondear)}/>
             </ReactionsContainer>
-            : <TemaNoEmpezado> El tema todavia no empezo </TemaNoEmpezado>
+            : <TemaNoEmpezado> El tema todavia no empezo </TemaNoEmpezado>)
           }
         </CardInteractionsContainer>
       </TopSectionContainer>
@@ -124,7 +135,8 @@ const Vista = ({
       </ParticipantsContainer>
       <ActionContainerStyle>
         {
-          temaEmpezado ? (
+          showSkeleton? <MicrophoneSkeleton />
+            : (temaEmpezado ? (
               !wannaTalk
                 ? <div style={talkButtonStyle(false)} onClick={onWannaTalkClick}>
                   <FontAwesomeIcon icon={faMicrophoneAlt} color={'silver'} size={'2x'}/>
@@ -144,7 +156,7 @@ const Vista = ({
                 </div>)
             : <div style={talkButtonStyle(false)}>
               <FontAwesomeIcon icon={faMicrophoneAltSlash} color={'#ff3b3b8c'} size={'2x'}/>
-            </div>
+            </div>)
         }
       </ActionContainerStyle>
     </MobileUsableArea>
@@ -152,3 +164,13 @@ const Vista = ({
 };
 
 export default Vista;
+
+const MicrophoneSkeleton = () =>
+  <div style={talkButtonStyle(false)}>
+    <SkeletonCircle />
+  </div>;
+
+const ReactionSkeleton = () =>
+  <div style={{...talkButtonStyle(false), height: '3.5em', width: '3.5em', marginRight: '1em'}}>
+    <SkeletonCircle />
+  </div>;
