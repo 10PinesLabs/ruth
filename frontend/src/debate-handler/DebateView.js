@@ -7,17 +7,15 @@ import ParticipantsQueue from '../cola-de-participantes/ParticipantsQueue';
 class DebateView extends React.Component {
   render() {
     return (
-      <DebateContainer>
-        <SubDebateContainer>
-          <GraphsContainer>
-            <ChartLine data={this.props.debateData.dataLine}/>
-            <ChartBar data={this.props.debateData.dataBar}/>
-          </GraphsContainer>
-          <ParticipantsContainer>
-            <ParticipantsQueue participants={this.props.debateData.participants} isTalking={this.props.isTalking}/>
-          </ParticipantsContainer>
-        </SubDebateContainer>
-      </DebateContainer>
+      <SubDebateContainer>
+        <GraphsContainer>
+          <ChartLine data={this.props.debateData.dataLine}/>
+          <ChartBar data={this.props.debateData.dataBar}/>
+        </GraphsContainer>
+        <ParticipantsContainer>
+          <ParticipantsQueue participants={this.props.debateData.participants} isTalking={this.props.isTalking}/>
+        </ParticipantsContainer>
+      </SubDebateContainer>
     );
   }
 }

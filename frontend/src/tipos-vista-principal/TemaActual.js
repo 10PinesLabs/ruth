@@ -10,30 +10,30 @@ class TemaActual extends React.Component {
   static canHandleView = (view) => view === 'Tema Actual';
 
   render() {
-    const { tema } = this.props;
+    const {tema} = this.props;
     return (
-      <TemaActualContainer>
-        <VistaDelMedioContainer>
-          {(new HandlerTipoTema()).handleTipoTema(tema)}
-        <InfoTema tema={tema} />
-          <Botonera>
-            <BotoneraNavegacionTemas>
-              <FontAwesomeIcon
-                icon={faCaretLeft}
-                size="4x"
-                cursor={'pointer'}
-                onClick={this.props.retrocederTema}/>
-              {!this.props.tema.inicio && <Button disabled={!this.props.temaATratar} onClick={this.props.empezarTema}>Empezar Tema</Button>}
-              {this.props.tema.inicio && <Button disabled={!this.props.temaActivo} onClick={this.props.terminarTema}>Terminar Tema</Button>}
-              <FontAwesomeIcon
-                icon={faCaretRight}
-                size="4x"
-                onClick={this.props.avanzarTema}
-                cursor={'pointer'}/>
-            </BotoneraNavegacionTemas>
-          </Botonera>
-        </VistaDelMedioContainer>
-      </TemaActualContainer>
+      <VistaDelMedioContainer>
+        {(new HandlerTipoTema()).handleTipoTema(tema)}
+        <InfoTema tema={tema}/>
+        <Botonera>
+          <BotoneraNavegacionTemas>
+            <FontAwesomeIcon
+              icon={faCaretLeft}
+              size="4x"
+              cursor={'pointer'}
+              onClick={this.props.retrocederTema}/>
+            {!this.props.tema.inicio &&
+            <Button disabled={!this.props.temaATratar} onClick={this.props.empezarTema}>Empezar Tema</Button>}
+            {this.props.tema.inicio &&
+            <Button disabled={!this.props.temaActivo} onClick={this.props.terminarTema}>Terminar Tema</Button>}
+            <FontAwesomeIcon
+              icon={faCaretRight}
+              size="4x"
+              onClick={this.props.avanzarTema}
+              cursor={'pointer'}/>
+          </BotoneraNavegacionTemas>
+        </Botonera>
+      </VistaDelMedioContainer>
     );
   }
 }

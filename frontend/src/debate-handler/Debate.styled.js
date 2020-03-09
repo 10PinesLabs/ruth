@@ -1,12 +1,4 @@
 import styled from 'styled-components';
-import {header, sidebar} from '../styles/theme';
-
-export const DebateContainer = styled.div`  
-    display: flex;
-    flex: 1;
-    width: calc(100% - ${sidebar.width});
-    margin-top: ${header.height};
-`;
 
 export const SubDebateContainer = styled.div`  
     display: flex;

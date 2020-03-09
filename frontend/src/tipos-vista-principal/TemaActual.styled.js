@@ -1,11 +1,5 @@
 import styled from 'styled-components';
-import {colors, header} from '../styles/theme';
-
-export const TemaActualContainer = styled.div`  
-    display: flex;
-    margin-top: ${header.height};
-    flex: 1;
-`;
+import {colors} from '../styles/theme';
 
 export const VistaDelMedioContainer = styled.div` 
     display: flex; 
