@@ -1,18 +1,14 @@
 import styled from 'styled-components';
 
-export const CardContainer = styled.div(({
-  isTalking, isInteractive, height, width,
-}) => `
-  margin: ${!isTalking ? '0em 1em 0em 1em' : '0em 1em 0em 1em'};
+export const CardContainer = styled.div(({isTalking}) => `
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: ${isInteractive ? 'linear-gradient(145deg, #c7c7c7, #ececec)' : 'white'};
+  background: linear-gradient(145deg, #c7c7c7, #ececec);
   justify-content: space-between;
-  height: ${height};
-  width: ${width};
-  cursor: ${isTalking ? 'pointer' : ''};
-
+  width: ${isTalking ? '12em' : '10em'};
+  height: ${isTalking ? '15em' : '13.5em'};
+  margin: 0 0.5em;
   box-shadow: 5px 5px 10px #828282, -5px -5px 10px #ffffff;
   border-radius: 20px;
 `);
@@ -22,27 +18,23 @@ export const CardInfoContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 2em;
   height: 100%;
   width: 100%;
+  margin: 0.5em 0;
 `;
 
-export const UserAvatar = styled.div(({ isTalking, avatar }) => `
+export const UserAvatar = styled.div(({isTalking, avatar}) => `
   background-image: url(${avatar});
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  height: 10rem;
-  width: ${!isTalking ? '10rem' : '12rem'};
+  min-height: ${isTalking? '9.5em' : '8em'};
+  width: 100%;
   border-radius: 20px 20px 0 0;
-  margin: ${!isTalking ? '0 0em 1em 0em' : '0 -2em 1em -2em'};
-  height: 7em;
-  min-height: 7em;
-  width: ${!isTalking ? '11em' : '13em'};
 `);
 
-export const CardName = styled.span(({ isInteractive }) => `
-  font-size: 1em;
+export const CardName = styled.span`
+  font-size: 1.2rem;
   text-align: center;
-  color: ${isInteractive ? 'grey' : 'black'};
-`);
+  color: black;
+`;

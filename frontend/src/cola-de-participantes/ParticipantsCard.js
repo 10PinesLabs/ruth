@@ -24,23 +24,12 @@ class ParticipantsCard extends React.Component {
     return this.props.participant.inicio === null;
   }
 
-  getCardHeight() {
-    if (this.props.isParticipantTalking) return '15em';
-    return '13em';
-  }
-
-  getCardWidth() {
-    if (this.props.isParticipantTalking) return '13em';
-    return '11em';
-  }
 
   render() {
     return this.props.participant ? (
       <CardContainer
         isInteractive={this.props.interactive}
         isTalking={this.props.isParticipantTalking}
-        height={this.getCardHeight()}
-        width={this.getCardWidth()}
       >
         <UserAvatar isTalking={this.props.isParticipantTalking} avatar={getGravatarUrlFor(this.props.participant.usuario.email)} />
         <CardInfoContainer>

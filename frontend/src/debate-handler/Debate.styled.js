@@ -36,7 +36,6 @@ export const GraphsContainer = styled.div`
 export const ParticipantsContainer = styled.div`  
     display: flex;
     flex-direction: column;
-    background-color: white;
     height: 45%
     align-items: center;
     justify-content: center;
