@@ -6,6 +6,7 @@ import TemaActual from '../tipos-vista-principal/TemaActual';
 import Presentacion from '../tipos-vista-principal/Presentacion';
 import Debate from '../tipos-vista-principal/Debate';
 import Temario from '../temario/Temario';
+import Header from "./Header";
 
 class VistaTemas extends React.Component {
   constructor(props) {
@@ -119,10 +120,13 @@ class VistaTemas extends React.Component {
               cerrarReunion={this.handleCerrarReunion}
               temaActual={this.temaSeleccionado()}
             />
+            <Header titulo={this.temaSeleccionado().titulo}
+                    segundosRestantes={this.segundosRestantes()}
+                    temaActivo={this.temaActivo()}
+            />
             <VistaSeleccionada tema={this.temaSeleccionado()}
               terminarTema={this.terminarTema}
               empezarTema={this.empezarTema}
-              segundosRestantes={this.segundosRestantes()}
               temaActivo= {this.temaActivo()}
               avanzarTema= {this.avanzarTema}
               retrocederTema= {this.retrocederTema}

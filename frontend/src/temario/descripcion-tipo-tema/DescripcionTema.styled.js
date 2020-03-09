@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { font, sizeBreakpoint } from '../../styles/theme';
+import {font, sizeBreakpoint} from '../../styles/theme';
 
 
 export const DescripcionTemaContainer = styled.div`
@@ -8,11 +8,6 @@ export const DescripcionTemaContainer = styled.div`
   flex-direction:column;
   align-items: center;
   overflow-y: auto;
-`;
-
-export const Titulo = styled.h1`
-  font-size: ${font.sizeH1} ;
-  font-family: ${font.h1};
 `;
 
 export const Descripcion = styled.div`

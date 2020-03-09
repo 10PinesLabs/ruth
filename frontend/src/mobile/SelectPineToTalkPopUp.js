@@ -46,7 +46,7 @@ export class SelectPineToTalkPopUp extends React.Component {
             value={this.props.selectedPine}
             onChange={this.props.handlePineChange}
             style={{
-              background: 'white', width: '10rem', marginBottom: '1rem', paddingLeft: '1rem',
+              background: 'white', height: '10rem', marginBottom: '1rem', paddingLeft: '1rem',
             }}
           >
             {this.props.availablePines.map((name) => (

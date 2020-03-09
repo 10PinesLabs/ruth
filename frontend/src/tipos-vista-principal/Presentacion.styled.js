@@ -1,9 +1,10 @@
 import styled from 'styled-components';
-import {colors} from '../styles/theme';
+import {colors, header} from '../styles/theme';
 
 export const PresentacionContainter = styled.div`  
     display: flex;
     flex: 1;
+    margin-top: ${header.height};
 `;
 
 export const SlidesContainer = styled.div` 

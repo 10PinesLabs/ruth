@@ -1,13 +1,10 @@
 import React from 'react';
-import {
-  DescripcionTemaContainer, Titulo, Descripcion, ListaTemasARepasar,
-} from './DescripcionTema.styled';
+import {Descripcion, DescripcionTemaContainer, ListaTemasARepasar} from './DescripcionTema.styled';
 
 class DescripcionActionItems extends React.Component {
   render() {
     return (
       <DescripcionTemaContainer>
-        <Titulo>{this.props.tema.titulo}</Titulo>
         <Descripcion>
           <ListaTemasARepasar>
             {this.props.tema.temasParaRepasar.map((temaReunionAnterior, index) => <li key={`tema-a-repasar-${index}`}>

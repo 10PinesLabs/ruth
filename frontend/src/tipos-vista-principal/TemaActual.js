@@ -1,16 +1,10 @@
 import React from 'react';
-import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  Botonera,
-  BotoneraNavegacionTemas,
-  TemaActualContainer,
-  VistaDelMedioContainer,
-} from './TemaActual.styled';
+import {faCaretLeft, faCaretRight} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {Botonera, BotoneraNavegacionTemas, TemaActualContainer, VistaDelMedioContainer,} from './TemaActual.styled';
 import InfoTema from '../temario/InfoTema';
 import HandlerTipoTema from '../temario/handler-temas/HandlerTipoTema';
-import { Button } from '../components/Button.styled';
-import Countdown from '../reunion/Countdown';
+import {Button} from '../components/Button.styled';
 
 class TemaActual extends React.Component {
   static canHandleView = (view) => view === 'Tema Actual';
@@ -19,12 +13,10 @@ class TemaActual extends React.Component {
     const { tema } = this.props;
     return (
       <TemaActualContainer>
-        <InfoTema tema={tema} />
         <VistaDelMedioContainer>
           {(new HandlerTipoTema()).handleTipoTema(tema)}
+        <InfoTema tema={tema} />
           <Botonera>
-            <Countdown activo={this.props.temaActivo}
-                       segundos={this.props.segundosRestantes}/>
             <BotoneraNavegacionTemas>
               <FontAwesomeIcon
                 icon={faCaretLeft}

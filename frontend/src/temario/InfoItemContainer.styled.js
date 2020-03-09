@@ -1,10 +1,13 @@
 import styled from 'styled-components';
-import { colors, font, sizeBreakpoint } from '../styles/theme';
+import {colors, font, sizeBreakpoint, temario} from '../styles/theme';
 
 export const InfoItemContainer = styled.div`
   display:flex;
   flex-direction: column;
   align-items: center;
+  justify-content: start;
+  width: 10em;
+  min-height: 8em;
 `;
 
 export const InfoImageContainer = styled.div`
@@ -12,9 +15,9 @@ export const InfoImageContainer = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  border: 0.25rem solid ${colors.viridian};
-  height: 9rem;
-  width: 9rem;
+  border: 0.15rem solid ${colors.viridian};
+  height: 5rem;
+  width: 5rem;
   @media (min-width: ${sizeBreakpoint.bigWidth}), @media (min-height: ${sizeBreakpoint.bigHeight}) {
     height: 15rem;
     width: 15rem;
@@ -33,14 +36,24 @@ export const InfoImage = styled.img`
 `;
 
 export const Texto = styled.p`
-font-size: 1rem;
-@media (min-width: ${sizeBreakpoint.bigWidth}), @media (min-height: ${sizeBreakpoint.bigHeight})  {
-  font-size: 2rem;
-}
-font-family: ${font.p};
-color:white;
-margin-top: 1em;
-text-align: center;
-max-width: 90%;
+  font-size: 1rem;
+  @media (min-width: ${sizeBreakpoint.bigWidth}), @media (min-height: ${sizeBreakpoint.bigHeight})  {
+    font-size: 2rem;
+  }
+  font-family: ${font.p};
+  color: black;;
+  margin-top: 1em;
+  text-align: center;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 8em;
+`;
 
+export const InfoTemaContainer = styled.div`
+  display:flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 20em;
+  height: 10em;
 `;

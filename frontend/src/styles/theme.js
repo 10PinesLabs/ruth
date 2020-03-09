@@ -1,4 +1,3 @@
-
 export const font = {
   family: "'Poppins',sans-serif",
   module: '16px',
@@ -46,4 +45,8 @@ export const sidebar = {
 
 export const temario = {
   width: '18rem',
+};
+
+export const header = {
+  height: '6em',
 };

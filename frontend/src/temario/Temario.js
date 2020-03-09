@@ -27,7 +27,7 @@ class Temario extends React.Component {
                         temaActual={this.props.temaActual}
                         seleccionarTema = {this.props.seleccionarTema}/>
         </ContenidoTemario>
-        <SecondaryButton style={{ marginBottom: '2rem', marginTop: 'auto', padding: '0.5em 0',  width: '100%' }}
+        <SecondaryButton style={{ marginBottom: '2rem', marginTop: 'auto', padding: '0.5em 0',  height: '3em' }}
                          onClick={this.props.cerrarReunion}
                          disabled={false}>Cerrar Reunión</SecondaryButton>
         <Arrow src="./pino-blanco.svg"

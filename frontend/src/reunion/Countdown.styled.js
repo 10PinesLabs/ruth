@@ -28,6 +28,7 @@ export const CountdownContainer = styled.div`
   font-size: ${font.sizeCountdown};
   padding: 0.7rem 0;
   text-align: center;
+  width: 5em;
 
   animation-name: ${(props) => (props.negative ? timeIsUpAlarm : noAnimation)};
   animation-duration: 2s;
