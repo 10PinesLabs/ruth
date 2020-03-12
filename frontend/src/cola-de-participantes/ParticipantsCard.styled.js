@@ -9,8 +9,8 @@ export const CardContainer = styled.div(({
   align-items: center;
   background: ${isInteractive ? 'linear-gradient(145deg, #c7c7c7, #ececec)' : 'white'};
   justify-content: space-between;
-  height: ${height};
-  width: ${width};
+  height: ${isTalking ? '15em' : '13em'};
+  width: ${isTalking? '13em': '11em'};
   cursor: ${isTalking ? 'pointer' : ''};
 
   box-shadow: 5px 5px 10px #828282, -5px -5px 10px #ffffff;
