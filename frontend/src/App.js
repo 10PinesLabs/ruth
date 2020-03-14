@@ -10,6 +10,7 @@ import Mobile from './mobile';
 import Oradores from './oradores';
 import TestChart from './chart';
 import TemasHandler from './reunion/TemasHandler';
+import NotFound from "./not-found-page/NotFound";
 
 const App = ({ location, usuario }) => {
   const [reunion, setReunion] = useState();
@@ -52,6 +53,7 @@ const App = ({ location, usuario }) => {
         <Route exact path="/oradores" component={Oradores}/>
         <Route exact path="/chart" component={TestChart}/>
         <Route exact path="/presentador" component={TemasHandler} />
+        <Route path="*" component={props => <NotFound {...props} />} />
       </Switch>
     </ReduxWebSocketWrapper>
   </>;
