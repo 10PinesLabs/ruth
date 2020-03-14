@@ -1,55 +1,49 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import ParticipantCounter from './ParticipantCounter';
 import {
   CardContainer, CardInfoContainer, CardName, UserAvatar,
 } from './ParticipantsCard.styled';
 import getGravatarUrlFor from '../api/gravatar';
+import {SkeletonBlock, SkeletonLine} from "../skeleton/Skeleton.styled";
 
-class ParticipantsCard extends React.Component {
-  estadoOrador() {
-    if (this.estaEncolado()) {
+const ParticipantsCard = ({participant, isParticipantTalking, interactive, }) => {
+  const estadoOrador = () => {
+    if (estaEncolado()) {
       return { detalle: 'encolado' };
-    } if (this.hablo()) {
-      return { detalle: 'hablo', seconds: Math.ceil((this.props.participant.fin - this.props.participant.inicio) / 1000) };
+    } if (hablo()) {
+      return { detalle: 'hablo', seconds: Math.ceil((participant.fin - participant.inicio) / 1000) };
     }
-    // TODO: Algunas veces cuando hay reacciones el número avanza o retrocede.
-    return { detalle: 'hablando', seconds: Math.ceil((Date.now() - this.props.participant.inicio) / 1000) };
-  }
+    return { detalle: 'hablando', seconds: Math.ceil((Date.now() - participant.inicio) / 1000) };
+  };
 
-  hablo() {
-    return this.props.participant.fin !== null;
-  }
+  const hablo = () => {
+    return participant.fin !== null;
+  };
 
-  estaEncolado() {
-    return this.props.participant.inicio === null;
-  }
+  const estaEncolado = () => {
+    return participant.inicio === null;
+  };
+    const [showSkeleton, setShowSekelton] = useState(true);
+    useEffect(() => {setTimeout(() => setShowSekelton(false), 1000)}, []);
 
-  getCardHeight() {
-    if (this.props.isParticipantTalking) return '15em';
-    return '13em';
-  }
-
-  getCardWidth() {
-    if (this.props.isParticipantTalking) return '13em';
-    return '11em';
-  }
-
-  render() {
-    return this.props.participant ? (
-      <CardContainer
-        isInteractive={this.props.interactive}
-        isTalking={this.props.isParticipantTalking}
-        height={this.getCardHeight()}
-        width={this.getCardWidth()}
-      >
-        <UserAvatar isTalking={this.props.isParticipantTalking} avatar={getGravatarUrlFor(this.props.participant.usuario.email)} />
+    return showSkeleton ? <SkeletonComponent interactive isParticipantTalking /> : (participant ? (
+      <CardContainer isInteractive={interactive} isTalking={isParticipantTalking}>
+        <UserAvatar isTalking={isParticipantTalking} avatar={getGravatarUrlFor(participant.usuario.email)} />
         <CardInfoContainer>
-          <CardName isInteractive={this.props.interactive}> {this.props.participant.usuario.nombre} </CardName>
-          <ParticipantCounter isInteractive={this.props.interactive} estadoOrador={this.estadoOrador()} />
+          <CardName isInteractive={interactive}> {participant.usuario.nombre} </CardName>
+          <ParticipantCounter isInteractive={interactive} estadoOrador={estadoOrador()} />
         </CardInfoContainer>
       </CardContainer>
-    ) : <div> Nadie esta hablando</div>;
-  }
-}
+    ) : <div> Nadie esta hablando</div>);
+};
 
 export default ParticipantsCard;
+
+const SkeletonComponent = ({interactive, isParticipantTalking}) =>
+  <CardContainer isInteractive={interactive} isTalking={isParticipantTalking}>
+    <UserAvatar><SkeletonBlock/></UserAvatar>
+    <CardInfoContainer style={ {display: 'flex', alignItems: 'space-between'} }>
+      <SkeletonLine/>
+      <SkeletonLine/>
+    </CardInfoContainer>
+</CardContainer>;

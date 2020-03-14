@@ -26,6 +26,8 @@ class ChartBar extends React.Component {
           ticks: {
             beginAtZero: true,
             min: 0,
+            suggestedMax: 10,
+            precision: 0,
             suggestedMin: 0,
             fontSize: 20,
           },

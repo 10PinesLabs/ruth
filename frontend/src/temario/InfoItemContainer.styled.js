@@ -19,10 +19,6 @@ export const InfoImageContainer = styled.div`
   border: 0.15rem solid ${colors.viridian};
   height: 5rem;
   width: 5rem;
-  @media (min-width: ${sizeBreakpoint.bigWidth}), @media (min-height: ${sizeBreakpoint.bigHeight}) {
-    height: 15rem;
-    width: 15rem;
-  }
   overflow: hidden;
   background: ${colors.white};
   box-sizing: border-box;
@@ -38,9 +34,6 @@ export const InfoImage = styled.img`
 
 export const Texto = styled.p`
   font-size: 1rem;
-  @media (min-width: ${sizeBreakpoint.bigWidth}), @media (min-height: ${sizeBreakpoint.bigHeight})  {
-    font-size: 2rem;
-  }
   font-family: ${font.p};
   color: black;;
   margin-top: 1em;
