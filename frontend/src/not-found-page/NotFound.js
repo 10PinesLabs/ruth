@@ -3,7 +3,7 @@ import {Botonera, Descripcion, Imagen, NotFoundContainer, Parrafo, Titulo} from 
 import {Button, SecondaryButton} from "../components/Button.styled";
 import {useSpring} from "react-spring";
 
-const NotFound = () => {
+const NotFound = ({history}) => {
   const props = useSpring({
     opacity: 1,
     from: {opacity: 0},
@@ -20,8 +20,8 @@ const NotFound = () => {
         <Parrafo> Dejanos ayudarte, elige a donde quieres ir: </Parrafo>
       </Descripcion>
       <Botonera>
-        <Button onClick={}> Modo espectador </Button>
-        <SecondaryButton onClick={}> Modo presentacion </SecondaryButton>
+        <Button onClick={() => history.push('/')}> Modo espectador </Button>
+        <SecondaryButton onClick={() => history.push('/presentador')}> Modo presentacion </SecondaryButton>
       </Botonera>
     </NotFoundContainer>
   );

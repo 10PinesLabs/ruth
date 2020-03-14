@@ -53,7 +53,7 @@ const App = ({ location, usuario }) => {
         <Route exact path="/oradores" component={Oradores}/>
         <Route exact path="/chart" component={TestChart}/>
         <Route exact path="/presentador" component={TemasHandler} />
-        <Route path="*" component={NotFound} />
+        <Route path="*" component={props => <NotFound {...props} />} />
       </Switch>
     </ReduxWebSocketWrapper>
   </>;
