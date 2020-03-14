@@ -1,48 +1,57 @@
-import React, { useState } from 'react';
-import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Botonera, BotoneraNavegacionTemas, TemaActualContainer, VistaDelMedioContainer, } from './TemaActual.styled';
+import React, {useState} from 'react';
+import {faCaretLeft, faCaretRight} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {Botonera, BotoneraNavegacionTemas, VistaDelMedioContainer,} from './TemaActual.styled';
 import InfoTema from '../temario/InfoTema';
-import HandlerTipoTema from '../temario/handler-temas/HandlerTipoTema';
-import { Button, SecondaryButton } from '../components/Button.styled';
-import Countdown from '../reunion/Countdown';
-import { TerminarTemaDialog } from "./Modal";
+import {Button, SecondaryButton} from '../components/Button.styled';
+import {useSpring} from "react-spring";
+import DescripcionTemaComun from "../temario/descripcion-tipo-tema/DescripcionTemaComun";
+import DescripcionActionItems from "../temario/descripcion-tipo-tema/DescripcionActionItems";
+import DescripcionPropuestaPinos from "../temario/descripcion-tipo-tema/DescripcionPropuestaPinos";
+import {TerminarTemaDialog} from "./Modal";
 import Zoom from "@material-ui/core/Zoom";
 
-function TemaActual(props) {
-  const [ open, setOpen] = useState(false);
-  const { tema } = props;
+const tiposDeTema = {
+  'conDescripcion': DescripcionTemaComun,
+  'repasarActionItems': DescripcionActionItems,
+  'proponerPinos': DescripcionPropuestaPinos,
+};
+
+const TemaActual = ({tema, retrocederTema, temaATratar, empezarTema, avanzarTema, temaActivo, terminarTema}) => {
+  const props = useSpring({opacity: 1, from: {opacity: 0}});
+  const DescripcionDelTema = tiposDeTema[tema.tipo];
+  const [open, setOpen] = useState(false);
+
   return (
-    <TemaActualContainer>
-      <InfoTema tema={ tema }/>
-      <VistaDelMedioContainer>
-        { ( new HandlerTipoTema() ).handleTipoTema(tema) }
-        <Botonera>
-          <Countdown activo={ props.temaActivo }
-                     segundos={ props.segundosRestantes }/>
-          <BotoneraNavegacionTemas>
-            <FontAwesomeIcon
-              icon={ faCaretLeft }
-              size="4x"
-              cursor={ 'pointer' }
-              onClick={ props.retrocederTema }/>
-            { !props.tema.inicio &&
-            <Button disabled={ !props.temaATratar } onClick={ props.empezarTema }>Empezar Tema</Button> }
-            { props.tema.inicio &&
-            <Zoom in style={{ transitionDelay: '100ms' }}><SecondaryButton disabled={ !props.temaActivo } onClick={ () => setOpen(true) }>Terminar Tema</SecondaryButton></Zoom> }
-            <TerminarTemaDialog open={ open} onClose={ () => setOpen(false) } onConfirm={ props.terminarTema }/>
-            <FontAwesomeIcon
-              icon={ faCaretRight }
-              size="4x"
-              onClick={ props.avanzarTema }
-              cursor={ 'pointer' }/>
-          </BotoneraNavegacionTemas>
-        </Botonera>
-      </VistaDelMedioContainer>
-    </TemaActualContainer>
+    <VistaDelMedioContainer style={props}>
+      <DescripcionDelTema tema={tema}/>
+      <InfoTema tema={tema}/>
+      <Botonera>
+        <BotoneraNavegacionTemas>
+          <FontAwesomeIcon
+            icon={faCaretLeft}
+            size="4x"
+            cursor={'pointer'}
+            onClick={retrocederTema}/>
+          {!tema.inicio &&
+          <Button disabled={!temaATratar} onClick={empezarTema}>Empezar Tema</Button>}
+          {tema.inicio &&
+          <Zoom in style={{transitionDelay: '100ms'}}>
+            <SecondaryButton disabled={!temaActivo} onClick={() => setOpen(true)}>
+              Terminar Tema
+            </SecondaryButton>
+          </Zoom>
+          }
+          <TerminarTemaDialog open={open} onClose={() => setOpen(false)} onConfirm={terminarTema}/>
+
+          <FontAwesomeIcon
+            icon={faCaretRight}
+            size="4x"
+            onClick={avanzarTema}
+            cursor={'pointer'}/>
+        </BotoneraNavegacionTemas>
+      </Botonera>
+    </VistaDelMedioContainer>
   );
-}
-
-TemaActual.canHandleView = (view) => view === 'Tema Actual';
-
+};
 export default TemaActual;

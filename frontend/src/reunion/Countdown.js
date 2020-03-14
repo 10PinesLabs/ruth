@@ -1,5 +1,5 @@
 import React from 'react';
-import { CountdownContainer } from './Countdown.styled';
+import {CountdownContainer} from './Countdown.styled';
 import Clock from '../clock/Clock';
 
 export default class Countdown extends React.Component {
@@ -34,7 +34,7 @@ export default class Countdown extends React.Component {
 
   runCountdown = () => {
     this.myInterval = setInterval(() => {
-      const { segundos } = this.state;
+      const {segundos} = this.state;
       this.setState({
         segundos: segundos - 1,
       });
@@ -47,9 +47,9 @@ export default class Countdown extends React.Component {
 
   render() {
     return (
-            <CountdownContainer negative={this.state.segundos < 0 && this.props.activo}>
-                <Clock seconds={this.state.segundos}/>
-            </CountdownContainer>
+      <CountdownContainer negative={this.state.segundos < 0 && this.props.activo}>
+        <Clock seconds={this.state.segundos}/>
+      </CountdownContainer>
     );
   }
 }

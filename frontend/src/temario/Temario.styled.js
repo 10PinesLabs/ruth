@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { colors, font, sizeBreakpoint, temario } from '../styles/theme';
 
 export const TemarioContainer = styled.div(({isActive}) =>`
+  z-index: 100;
   background: ${colors.downy};
   border-right: 1em solid ${colors.viridian};
   box-sizing: border-box;

@@ -1,21 +1,9 @@
 import React from 'react';
-import { InfoTemaContainer } from './InfoTema.styled';
 import InfoItem from './InfoItem';
 import getGravatarUrlFor from '../api/gravatar';
+import {InfoTemaContainer} from "./InfoItemContainer.styled";
 
 class InfoTema extends React.Component {
-  imagenTipoDuracion = (tipoDuracion) => {
-    switch (tipoDuracion) {
-      case 'CORTO':
-        return './tema-corto.svg';
-      case 'MEDIO':
-        return './tema-mediano.svg';
-      case 'LARGO':
-        return './tema-largo.svg';
-      default:
-        return null;
-    }
-  }
 
   imagenObligatoriedad = (obligatoriedad) => {
     switch (obligatoriedad) {
@@ -30,12 +18,12 @@ class InfoTema extends React.Component {
 
   render() {
     const {
-      autor, duracion, obligatoriedad, cantidadDeMinutosDelTema, mailDelAutor = '',
+      autor, obligatoriedad, cantidadDeMinutosDelTema, mailDelAutor = '',
     } = this.props.tema;
     return (
       <InfoTemaContainer>
         <InfoItem src={getGravatarUrlFor(mailDelAutor)} altText="Usuarie" descripcion={autor} isAvatar={true}/>
-        <InfoItem src={this.imagenTipoDuracion(duracion)} altText="Pino" descripcion={`${cantidadDeMinutosDelTema} min.`}/>
+        <InfoItem src={'./duracion.svg'} altText="Pino" descripcion={`${cantidadDeMinutosDelTema} min.`}/>
         <InfoItem src={this.imagenObligatoriedad(obligatoriedad)} altText="Obligatorio" descripcion={diccObligatoriedad[obligatoriedad]}/>
       </InfoTemaContainer>
     );
