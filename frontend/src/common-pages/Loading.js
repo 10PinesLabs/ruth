@@ -1,6 +1,5 @@
 import React from "react";
-import {PageContainer} from "./CommonPages.styled";
-import {Titulo} from "../reunion/Header.styled";
+import {PageContainer, Titulo} from "./CommonPages.styled";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {useSpring} from "react-spring";
 
