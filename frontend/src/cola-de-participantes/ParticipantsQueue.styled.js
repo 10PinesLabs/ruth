@@ -30,7 +30,6 @@ export const QueuedCardsLeftContainerStyle = styled.div`
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-  border-right: 1px solid silver;
   padding-right: 1rem;
   width: 100%;
 `;
@@ -40,7 +39,6 @@ export const QueuedCardsRightContainerStyle = styled.div`
   flex-direction: row-reverse;
   align-items: center;
   justify-content: flex-end;
-  border-left: 1px solid silver;
   padding-left: 1rem;
   width: 100%;
 
