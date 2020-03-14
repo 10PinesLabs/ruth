@@ -10,7 +10,8 @@ import Mobile from './mobile';
 import Oradores from './oradores';
 import TestChart from './chart';
 import TemasHandler from './reunion/TemasHandler';
-import NotFound from "./not-found-page/NotFound";
+import NotFound from "./common-pages/NotFound";
+import Loading from "./common-pages/Loading";
 
 const App = ({ location, usuario }) => {
   const [reunion, setReunion] = useState();
@@ -34,7 +35,7 @@ const App = ({ location, usuario }) => {
   });
 
   if (!reunion) {
-    return <div>Cargando</div>;
+    return <Loading />;
   }
 
 

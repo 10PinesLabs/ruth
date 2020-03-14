@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import createStore from './store';
+import Loading from "./common-pages/Loading";
 
 function getWebSocket(lastEvent) {
   const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
@@ -65,7 +66,7 @@ export const ReduxWebSocketWrapper = (props) => {
   }, [props]);
 
   if (!store) {
-    return <div>Cargando</div>;
+    return <Loading/>;
   }
 
 

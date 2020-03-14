@@ -1,5 +1,5 @@
 import React from "react";
-import {Botonera, Descripcion, Imagen, NotFoundContainer, Parrafo, Titulo} from "./NotFound.styled";
+import {Botonera, Descripcion, Imagen, PageContainer, Parrafo, Titulo} from "./CommonPages.styled";
 import {Button, SecondaryButton} from "../components/Button.styled";
 import {useSpring} from "react-spring";
 
@@ -10,7 +10,7 @@ const NotFound = ({history}) => {
   });
 
   return (
-    <NotFoundContainer style={props}>
+    <PageContainer style={props}>
       <Imagen src={'./404.png'}/>
       <Titulo> Whoops! </Titulo>
       <Descripcion>
@@ -23,7 +23,7 @@ const NotFound = ({history}) => {
         <Button onClick={() => history.push('/')}> Modo espectador </Button>
         <SecondaryButton onClick={() => history.push('/presentador')}> Modo presentacion </SecondaryButton>
       </Botonera>
-    </NotFoundContainer>
+    </PageContainer>
   );
 };
 

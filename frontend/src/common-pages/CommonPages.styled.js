@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {font, sizeBreakpoint} from "../styles/theme";
 import {animated} from 'react-spring';
 
-export const NotFoundContainer = styled(animated.div)`
+export const PageContainer = styled(animated.div)`
   display: flex;
   width: 100wh;
   height: 100vh;
