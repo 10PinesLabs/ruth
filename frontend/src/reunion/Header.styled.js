@@ -15,5 +15,8 @@ export const HeaderContainer = styled(animated.div)`
 export const Titulo = styled.h1`
   font-size: ${font.sizeH1} ;
   font-family: ${font.h1};
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `;
 

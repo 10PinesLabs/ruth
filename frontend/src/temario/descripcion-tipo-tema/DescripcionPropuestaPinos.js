@@ -9,8 +9,10 @@ const DescripcionPropuestaPinos = ({tema}) => {
     <DescripcionTemaContainer style={props}>
       <Descripcion>
         <ListaPinosPropuestos>
-          {tema.propuestas.map((propuesta, index) => <li key={`propuesta-${index}`}><b>Pino
-            propuesto:</b> {propuesta.pino}, <b>Sponsor de pino:</b> {propuesta.sponsor.name}</li>)}
+          {tema.propuestas.map((propuesta, index) =>
+            <li key={`propuesta-${index}`}>
+              <b>Pino propuesto:</b> {propuesta.pino}, <b>Sponsor de pino:</b> {propuesta.sponsor.name}
+            </li>)}
         </ListaPinosPropuestos>
       </Descripcion>
     </DescripcionTemaContainer>
