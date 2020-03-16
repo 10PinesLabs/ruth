@@ -1,6 +1,6 @@
 import React from 'react';
-import { Bar } from 'react-chartjs-2';
-import { ChartlineContainer } from './Chart.styled';
+import {Bar} from 'react-chartjs-2';
+import {ChartlineContainer} from './Chart.styled';
 
 class ChartBar extends React.Component {
   graphOptions = () => ({
@@ -48,8 +48,9 @@ class ChartBar extends React.Component {
       labels: Object.keys(reaccionesPorItem),
       datasets: [{
         data: Object.values(reaccionesPorItem),
-        backgroundColor: this.props.data.color,
-        borderColor: this.props.data.color,
+        backgroundColor: '#68a1ea',
+        borderColor: '#68a1ea',
+        hoverBackgroundColor: '#ffdfba'
       },
       ],
     };
