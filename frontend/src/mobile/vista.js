@@ -139,7 +139,7 @@ const Vista = ({
             : (temaEmpezado ? (
               !wannaTalk
                 ? <div style={talkButtonStyle(false)} onClick={onWannaTalkClick}>
-                  <FontAwesomeIcon icon={faMicrophoneAlt} color={'silver'} size={'2x'}/>
+                  <FontAwesomeIcon icon={faMicrophoneAlt} color={'gray'} size={'2x'}/>
                 </div>
                 : <div style={{
                   display: 'flex', flexDirection: '', alignItems: 'center', justifyContent: 'center',
