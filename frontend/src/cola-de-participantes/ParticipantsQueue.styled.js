@@ -26,7 +26,6 @@ export const QueuedCardsLeftContainerStyle = styled.div`
 export const QueuedCardsRightContainerStyle = styled.div`
   display: grid;
   grid-gap: 1rem;
-  padding: 0rem 0rem 0rem 0rem;
   grid-auto-flow: column;
   align-items: center;
   width: 100%;
