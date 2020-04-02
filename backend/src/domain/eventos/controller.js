@@ -1,28 +1,39 @@
+import AsyncLock from 'async-lock';
 import context from '~/context';
 import { GuardiaDeEventos } from './guardiaDeEventos';
 
-const Controller = (wss) => ({
-  publicar: async (req, res) => {
-    const evento = req.body;
-    const guardia = new GuardiaDeEventos(context.eventosRepo);
+const Controller = (wss) => {
+  const lock = new AsyncLock();
 
-    if (await guardia.esValido(evento)) {
-      const eventoNuevo = await context.eventosRepo.guardarEvento({
-        evento,
-        idTema: evento.idTema,
-        reunionId: evento.reunionId,
-      });
+  return ({
+    publicar: async (req, res) => {
+      await lock.acquire('event', async () => {
+        const evento = req.body;
+        const guardia = new GuardiaDeEventos(context.eventosRepo);
 
-      wss.clients.forEach((client) => {
-        client.send(JSON.stringify([{ ...evento, id: eventoNuevo.id }]));
+        if (await guardia.esValido(evento)) {
+          const eventoNuevo = await context.eventosRepo.guardarEvento({
+            evento,
+            idTema: evento.idTema,
+            reunionId: evento.reunionId,
+          });
+
+
+          res.status(200).send(eventoNuevo);
+
+          wss.clients.forEach((client) => {
+            client.send(JSON.stringify([{
+              ...evento,
+              id: eventoNuevo.id,
+            }]));
+          });
+        } else {
+          res.status(400)
+            .send(`Event ${evento.ultimoEventoId} is not valid`);
+        }
       });
-      res.status(200).send(eventoNuevo);
-    } else {
-      const error = new Error('falle');
-      error.status = 400;
-      throw error;
-    }
-  },
-});
+    },
+  });
+};
 
 export default Controller;

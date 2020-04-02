@@ -15,7 +15,7 @@ export default class EventosRepo {
       whereClause.id = { [Op.gt]: lastEvent };
     }
 
-    return models.Evento.findAll({ where: whereClause });
+    return models.Evento.findAll({ where: whereClause, order: [['id', 'ASC']] });
   }
 
   guardarEvento({ evento, temaId, reunionId }) {

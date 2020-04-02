@@ -1,5 +1,5 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import produce from 'immer';
+import { configureStore, createAction, getDefaultMiddleware } from '@reduxjs/toolkit';
+import produce, { setAutoFreeze } from 'immer';
 import oradoresReducer from './oradores';
 import reaccionesReducer from './reacciones';
 import Backend from '../api/backend';
@@ -11,12 +11,14 @@ const TEMA_INCIAL_STATE = {
   fin: null,
 };
 
+setAutoFreeze(false);
+
 export const temaReducer = (state = TEMA_INCIAL_STATE, action) => produce(state, (draft) => {
   draft.inicio = draft.inicio || null;
   draft.fin = draft.fin || null;
 
-  draft.oradores = oradoresReducer(state.oradores, action);
-  draft.reacciones = reaccionesReducer(state.reacciones, action);
+  draft.oradores = oradoresReducer(draft.oradores, action);
+  draft.reacciones = reaccionesReducer(draft.reacciones, action);
 });
 
 function compareTemaByPriority(tema1, tema2) {
@@ -47,10 +49,14 @@ const INITIAL_STATE = {
   temas: null,
   reunion: null,
   ultimoEventoId: null,
+  esperandoEventoId: null,
+  esperandoConfirmacionDeEvento: false,
+  eventosEncolados: [],
 };
 
-export const reducer = (state = INITIAL_STATE, action) => produce(state, (draft) => {
+export const domainReducer = (state = INITIAL_STATE, action) => produce(state, (draft) => {
   draft.ultimoEventoId = action.id;
+
   switch (action.type) {
     case 'Empezar Reunion': {
       draft.temas = action.temas.map((tema) => temaReducer(tema, action)).sort(compareTema);
@@ -74,8 +80,8 @@ export const reducer = (state = INITIAL_STATE, action) => produce(state, (draft)
           orador.fin = ahora;
         }
       }
-    }
       break;
+    }
     default:
       if (draft.temas) {
         const temaIndex = draft.temas.findIndex((tema) => tema.id === action.idTema);
@@ -85,17 +91,86 @@ export const reducer = (state = INITIAL_STATE, action) => produce(state, (draft)
   }
 });
 
+
+function applyEventosViejos(draft) {
+  const newState = draft.eventosEncolados.reduce(domainReducer, draft);
+  return { ...newState, eventosEncolados: [], esperandoConfirmacionDeEvento: false };
+}
+
+export const reducer = (state = INITIAL_STATE, action) => produce(state, (draft) => {
+  switch (action.type) {
+    case iniciarEnvioDeEvento.toString(): {
+      draft.esperandoConfirmacionDeEvento = true;
+      draft.esperandoEventoId = null;
+      break;
+    }
+    case eventoConfirmadoPorBackend.toString(): {
+      if (draft.esperandoConfirmacionDeEvento) {
+        if (draft.eventosEncolados.some((evento) => evento.id === action.payload)) {
+          // el evento ya llego antes de que el backend nos confirmara
+          return applyEventosViejos(draft);
+        }
+        draft.esperandoConfirmacionDeEvento = false;
+        draft.esperandoEventoId = action.payload;
+      }
+      break;
+    }
+    case eventoRechazadoPorBackend.toString(): {
+      return applyEventosViejos(draft);
+    }
+    default: {
+      if (draft.esperandoConfirmacionDeEvento) {
+        draft.eventosEncolados.push(action);
+        break;
+      }
+
+      let { esperandoEventoId } = draft;
+      if (draft.esperandoEventoId === action.id) {
+        esperandoEventoId = null;
+      }
+
+      const newState = domainReducer(draft, action);
+      return { ...newState, esperandoEventoId, ultimoEventoId: action.id };
+    }
+  }
+});
+
+const iniciarEnvioDeEvento = createAction('iniciarEnvioDeEvento');
+const eventoConfirmadoPorBackend = createAction('eventoConfirmadoPorBackend');
+const eventoRechazadoPorBackend = createAction('eventoRechazadoPorBackend');
+
 const wsForwarder = (ws) => (store) => (next) => (action) => {
+  console.warn(`INICIO REDUCER ${action.type || action.tipo || action.data.tipo}`);
+  console.log(action);
   if (!action.comesFromWS) {
     // We don't dispatch actions that we send to the ws since we'll
     // see them twice, in the future we could be smarter.
-    const state = store.getState();
-    Backend.publicarEvento({ reunionId: state.reunion.id, ultimoEventoId: state.ultimoEventoId, ...action })
-      .then(() => {
+    let state = store.getState();
+    console.log('esperandoConfirmacionDeEvento', state.esperandoConfirmacionDeEvento);
+    console.log('esperandoEventoId', state.esperandoEventoId);
+    console.log('ultimoEventoId', state.ultimoEventoId);
+    if (state.esperandoConfirmacionDeEvento || state.esperandoEventoId) {
+      console.log('event ignored');
+      return;
+    }
+
+    console.log('iniciar envio de evento');
+    next(iniciarEnvioDeEvento());
+    console.log('done iniciar envio de evento');
+    state = store.getState();
+    Backend.publicarEvento({
+      reunionId: state.reunion.id,
+      ultimoEventoId: state.ultimoEventoId,
+      ...action,
+    })
+      .then(({ id }) => {
         console.log('el backend me respondio bien');
+        next(eventoConfirmadoPorBackend(id));
       })
-      .catch(() => {
+      .catch((e) => {
         console.error('el backend fallo');
+        console.error(e);
+        next(eventoRechazadoPorBackend());
       });
   } else {
     next(action);
