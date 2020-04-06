@@ -8,6 +8,7 @@ import Debate from '../tipos-vista-principal/Debate';
 import Temario from '../temario/Temario';
 import Header from "./Header";
 import {useSpring} from "react-spring";
+import {Redirect} from "react-router-dom";
 
 
 const VistaTemas = ({actualizarTema, cerrarReunion, temas}) => {
@@ -127,6 +128,7 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas}) => {
 const vistas = {
   'Tema Actual': TemaActual,
   'Presentación': Presentacion,
-  'Debate': Debate
+  'Debate': Debate,
+  'Opinar': () => <Redirect to={'/'} />,
 };
 export default VistaTemas;
