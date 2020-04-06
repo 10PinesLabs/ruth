@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {toast} from 'react-toastify';
 import Sidebar from '../sidebar-reunion/Sidebar';
 import {ReunionContainer, VistaTemaContainer} from './Reunion.styled';
-import TemaActual from '../tipos-vista-principal/TemaActual';
+import Resumen from '../tipos-vista-principal/Resumen';
 import Presentacion from '../tipos-vista-principal/Presentacion';
 import Debate from '../tipos-vista-principal/Debate';
 import Temario from '../temario/Temario';
@@ -125,7 +125,7 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas}) => {
 };
 
 const vistas = {
-  'Resumen': TemaActual,
+  'Resumen': Resumen,
   'Presentación': Presentacion,
   'Debate': Debate
 };
