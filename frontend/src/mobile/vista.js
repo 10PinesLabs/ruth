@@ -3,10 +3,10 @@ import {
   faHashtag,
   faMale,
   faMicrophoneAlt,
-  faMicrophoneAltSlash,
   faSync,
   faThumbsDown,
   faThumbsUp,
+  faHandPaper,
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import ParticipantsCard from '../cola-de-participantes/ParticipantsCard';
@@ -73,7 +73,7 @@ const getFontSizeForWindow = () => {
 
 
 const Vista = ({
-                 dispatchEvent, temaEmpezado, title, usuario, queuedParticipants, participant, thumbsDown, thumbsUp, slack, redondear, wannaTalk,
+                 dispatchEvent, temaEmpezado, title, usuario, queuedParticipants, participant, thumbsDown, thumbsUp, slack, redondear, wannaTalk, isTalking
                }) => {
   const handleReaction = (nombre, estaReaccionado) => {
     const tipo = estaReaccionado ? reactionTypes.DESREACCIONAR : reactionTypes.REACCIONAR;
@@ -96,6 +96,10 @@ const Vista = ({
 
   const [showSkeleton, setShowSekelton] = useState(true);
   useEffect(() => {setTimeout(() => setShowSekelton(false), 1000)}, []);
+
+  const inQueueIcon = () => {
+    return isTalking? faMicrophoneAlt : faHandPaper;
+  };
 
   return (
     <MobileUsableArea fontSize={getFontSizeForWindow()}>
@@ -143,23 +147,23 @@ const Vista = ({
             : (temaEmpezado ? (
               !wannaTalk
                 ? <div style={talkButtonStyle(false)} onClick={onWannaTalkClick}>
-                  <FontAwesomeIcon icon={faMicrophoneAlt} color={'gray'} size={'2x'}/>
-                </div>
-                : <div style={{
-                  display: 'flex', flexDirection: '', alignItems: 'center', justifyContent: 'center',
-                }}>
-                  <div style={talkButtonStyle(true, false)} onClick={onWannaStopTalkClick}>
-                    <FontAwesomeIcon icon={faMicrophoneAltSlash} color={'black'} size={'2x'}/>
+                    <FontAwesomeIcon icon={faHandPaper} color={'gray'} size={'2x'}/>
                   </div>
-                  <QueuedParticipants>
-                    <span style={{
-                      color: 'silver', fontSize: '0.9em', marginRight: '0.3em', fontFamily: "'Poppins', sans-serif",
-                    }}> {queuedParticipants} </span>
-                    <FontAwesomeIcon icon={faMale} color={'silver'} size={'1x'}/>
-                  </QueuedParticipants>
+                :<div style={{
+                  display: 'flex', flexDirection: '', alignItems: 'center', justifyContent: 'center',
+                  }}>
+                    <div style={talkButtonStyle(true, false)} onClick={onWannaStopTalkClick}>
+                      <FontAwesomeIcon icon={inQueueIcon()} color={'black'} size={'2x'}/>
+                    </div>
+                    <QueuedParticipants>
+                      <span style={{
+                        color: 'silver', fontSize: '0.9em', marginRight: '0.3em', fontFamily: "'Poppins', sans-serif",
+                      }}> {queuedParticipants} </span>
+                      <FontAwesomeIcon icon={faMale} color={'silver'} size={'1x'}/>
+                    </QueuedParticipants>
                 </div>)
             : <div style={talkButtonStyle(false)}>
-              <FontAwesomeIcon icon={faMicrophoneAltSlash} color={'#ff3b3b8c'} size={'2x'}/>
+              <FontAwesomeIcon icon={faHandPaper} color={'#ff3b3b8c'} size={'2x'}/>
             </div>)
         }
       </ActionContainerStyle>

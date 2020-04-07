@@ -33,6 +33,7 @@ const Mobile = ({
         usuario={usuario}
              dispatchEvent={dispatchEvent}
              wannaTalk={Boolean(tema && tema.oradores.filter((orador) => orador.fin === null).find(esUsuarioActual))}
+             isTalking={Boolean(tema && tema.oradores.filter((orador) => orador.fin === null && orador.inicio != null).find(esUsuarioActual))}
              thumbsUp={reaccionoCon(reacciones.THUMBS_UP)}
              thumbsDown={reaccionoCon(reacciones.THUMBS_DOWN)}
              slack={reaccionoCon(reacciones.SLACK)}
