@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {faCaretLeft, faCaretRight} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {Botonera, BotoneraNavegacionTemas, VistaDelMedioContainer,} from './TemaActual.styled';
+import {Botonera, BotoneraNavegacionTemas, VistaDelMedioContainer,} from './Resumen.styled';
 import InfoTema from '../temario/InfoTema';
 import {Button, SecondaryButton} from '../components/Button.styled';
 import {useSpring} from "react-spring";
@@ -17,7 +17,7 @@ const tiposDeTema = {
   'proponerPinos': DescripcionPropuestaPinos,
 };
 
-const TemaActual = ({tema, retrocederTema, temaATratar, empezarTema, avanzarTema, temaActivo, terminarTema}) => {
+const Resumen = ({tema, retrocederTema, temaATratar, empezarTema, avanzarTema, temaActivo, terminarTema}) => {
   const props = useSpring({opacity: 1, from: {opacity: 0}});
   const DescripcionDelTema = tiposDeTema[tema.tipo];
   const [open, setOpen] = useState(false);
@@ -54,4 +54,4 @@ const TemaActual = ({tema, retrocederTema, temaATratar, empezarTema, avanzarTema
     </VistaDelMedioContainer>
   );
 };
-export default TemaActual;
+export default Resumen;

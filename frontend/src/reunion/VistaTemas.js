@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {toast} from 'react-toastify';
 import Sidebar from '../sidebar-reunion/Sidebar';
 import {ReunionContainer, VistaTemaContainer} from './Reunion.styled';
-import TemaActual from '../tipos-vista-principal/TemaActual';
+import Resumen from '../tipos-vista-principal/Resumen';
 import Presentacion from '../tipos-vista-principal/Presentacion';
 import Debate from '../tipos-vista-principal/Debate';
 import Temario from '../temario/Temario';
@@ -19,7 +19,7 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas}) => {
   };
 
   const [indiceTemaAMostrar, setIndiceTemaAMostrar] = useState(indiceTemaATratar());
-  const [selectedElement, setSelectedElement] = useState('Tema Actual');
+  const [selectedElement, setSelectedElement] = useState('Resumen');
 
   useEffect(() => {setIndiceTemaAMostrar(indiceTemaATratar())}, [indiceTemaATratar()]);
 
@@ -60,7 +60,7 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas}) => {
   const seleccionarTema = (temaSeleccionado) => {
     const index = temas.findIndex((tema) => tema === temaSeleccionado);
     setIndiceTemaAMostrar(index);
-    setSelectedElement('Tema Actual');
+    setSelectedElement('Resumen');
   };
 
   const avanzarTema = () => {
@@ -92,7 +92,7 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas}) => {
     return inicio !== null && fin === null;
   };
 
-  const obtenerVista = () => vistas[selectedElement] || 'Tema Actual';
+  const obtenerVista = () => vistas[selectedElement] || 'Resumen';
   const propsToAnimate = useSpring({opacity: 1, from: {opacity: 0}});
   const VistaSeleccionada = obtenerVista();
 
@@ -125,7 +125,7 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas}) => {
 };
 
 const vistas = {
-  'Tema Actual': TemaActual,
+  'Resumen': Resumen,
   'Presentación': Presentacion,
   'Debate': Debate
 };

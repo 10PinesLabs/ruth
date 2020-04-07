@@ -9,12 +9,12 @@ class Sidebar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedElement: 'Tema Actual',
+      selectedElement: 'Resumen',
     };
   }
 
   menu = [
-    { icon: faBroadcastTower, title: 'Tema Actual', habilitado: true },
+    { icon: faBroadcastTower, title: 'Resumen', habilitado: true },
     { icon: faComment, title: 'Presentación', habilitado: false },
     { icon: faChartBar, title: 'Debate', habilitado: true },
   ];
