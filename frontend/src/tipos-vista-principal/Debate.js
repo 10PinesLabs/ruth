@@ -25,9 +25,7 @@ const Debate = ({tema}) => {
         <ChartLine data={debateData.dataLine} inicioTema={tema.inicio}/>
         <ChartBar data={debateData.dataBar}/>
       </GraphsContainer>
-      <ParticipantsContainer>
         <ParticipantsQueue participants={debateData.participants} isTalking={isTalking}/>
-      </ParticipantsContainer>
     </SubDebateContainer>
   );
 };

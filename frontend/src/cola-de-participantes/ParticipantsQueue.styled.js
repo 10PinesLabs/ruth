@@ -1,32 +1,34 @@
 import styled from 'styled-components';
 
 export const QueueContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-areas: "a b c";
+  grid-template-columns: 35vw auto 35vw;
+  height: 50%;
+  gap: 1rem;
+  align-items:center;
+  justify-content:center;
 `;
 
-export const QueuedLeftCardsStyle = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 40rem;
-  align-items: center;
-`;
-
-export const QueuedRightCardsStyle = styled(QueuedLeftCardsStyle)`
-  opacity: 0.5;
-`;
 
 export const QueuedCardsLeftContainerStyle = styled.div`
+  grid-area: a;
+  justify-self: end;
+
   display: flex;
-  width: 100%;
+  flex-direction: row-reverse;
 `;
 
 export const QueuedCardsRightContainerStyle = styled.div`
-  display: grid;
-  grid-gap: 1rem;
-  grid-auto-flow: column;
-  align-items: center;
-  width: 100%;
+  grid-area: c;
+  justify-self: start;
+
+  display: flex;
+  flex-direction: row-reverse;
+  opacity: 0.5;
 `;
+
+export const CenterCard = styled.div`
+  grid-area: b;
+`;
+

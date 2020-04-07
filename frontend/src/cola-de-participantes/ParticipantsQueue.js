@@ -3,8 +3,7 @@ import {
   QueueContainer,
   QueuedCardsLeftContainerStyle,
   QueuedCardsRightContainerStyle,
-  QueuedLeftCardsStyle,
-  QueuedRightCardsStyle,
+  CenterCard,
 } from './ParticipantsQueue.styled';
 import ParticipantsCard from './ParticipantsCard';
 
@@ -18,7 +17,6 @@ const ParticipantsQueue = ({ participants = [], isTalking }) => {
 
   return (
     <QueueContainer>
-      <QueuedLeftCardsStyle>
         <QueuedCardsLeftContainerStyle>
           { getQueuedParticipants()
             .map((participant, index) => <ParticipantsCard
@@ -26,15 +24,14 @@ const ParticipantsQueue = ({ participants = [], isTalking }) => {
               key={index}/>)
           }
         </QueuedCardsLeftContainerStyle>
-      </QueuedLeftCardsStyle>
-      {getTalkingParticipant() && <ParticipantsCard participant={getTalkingParticipant()} isParticipantTalking/>}
-      <QueuedRightCardsStyle>
+        <CenterCard>
+          {getTalkingParticipant() && <ParticipantsCard participant={getTalkingParticipant()} isParticipantTalking/>}
+        </CenterCard>
         <QueuedCardsRightContainerStyle>
           { getParticipantsThatAlreadyTalked().map((participant, index) => <ParticipantsCard
 
             participant={participant} key={index}/>)}
         </QueuedCardsRightContainerStyle>
-      </QueuedRightCardsStyle>
     </QueueContainer>
   );
 };
