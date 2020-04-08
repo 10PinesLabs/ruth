@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const QueueContainer = styled.div`
   display: grid;
-  grid-template-areas: "a b c";
+  grid-template-areas: "left center right";
   grid-template-columns: 35vw auto 35vw;
   height: 50%;
   gap: 1rem;
@@ -12,15 +12,14 @@ export const QueueContainer = styled.div`
 
 
 export const QueuedCardsLeftContainerStyle = styled.div`
-  grid-area: a;
-  justify-self: end;
+  grid-area: left;
 
   display: flex;
   flex-direction: row-reverse;
 `;
 
 export const QueuedCardsRightContainerStyle = styled.div`
-  grid-area: c;
+  grid-area: right;
   justify-self: start;
 
   display: flex;
@@ -29,6 +28,6 @@ export const QueuedCardsRightContainerStyle = styled.div`
 `;
 
 export const CenterCard = styled.div`
-  grid-area: b;
+  grid-area: center;
 `;
 
