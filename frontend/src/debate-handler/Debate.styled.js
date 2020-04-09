@@ -17,12 +17,3 @@ export const GraphsContainer = styled.div`
     align-items: center;
     justify-content: space-between;
 `;
-
-export const ParticipantsContainer = styled.div`  
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    height: 50%
-    align-items: center;
-    justify-content: center;
-`;

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const CardContainer = styled.div(({isTalking}) => `
   display: flex;
+  flex-shrink: 0;
   flex-direction: column;
   align-items: center;
   background: linear-gradient(145deg, #c7c7c7, #ececec);
