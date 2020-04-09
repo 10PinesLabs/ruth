@@ -20,7 +20,7 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas}) => {
   };
 
   const [indiceTemaAMostrar, setIndiceTemaAMostrar] = useState(indiceTemaATratar());
-  const [selectedElement, setSelectedElement] = useState('Resumen');
+  const [selectedElement, setSelectedElement] = useState('Debate');
 
   useEffect(() => {setIndiceTemaAMostrar(indiceTemaATratar())}, [indiceTemaATratar()]);
 

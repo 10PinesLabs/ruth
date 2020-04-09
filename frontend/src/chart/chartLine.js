@@ -1,10 +1,31 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Line} from 'react-chartjs-2';
 import {ChartlineContainer} from './Chart.styled';
 import {reacciones} from "../mobile";
 import {colors as colores} from "../styles/theme";
 
-const ChartLine = ({data, inicioTema}) => {
+const ChartLine = ({data, inicioTema, tiempoTema = 10}) => {
+
+  function useInterval(callback, delay) {
+    const savedCallback = useRef();
+
+    // Remember the latest callback.
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+
+    // Set up the interval.
+    useEffect(() => {
+      function tick() {
+        savedCallback.current();
+      }
+      if (delay !== null) {
+        let id = setInterval(tick, delay);
+        return () => clearInterval(id);
+      }
+    }, [delay]);
+  }
+
   const graphOptions = () => ({
     layout: {
       padding: {
@@ -42,57 +63,42 @@ const ChartLine = ({data, inicioTema}) => {
     },
   });
 
-  const intervalos = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
-  const intervaloAlQuePertenece = (nombreDeReaccion) => {
-    const dataCasiCompleta = data.data
-      .filter(reaccion => reaccion.nombre === nombreDeReaccion)
-      .map(reaccion => reaccion.fecha)
-      .reduce((acc, fecha) => {
-        const intervaloReal = (fecha - Date.parse(inicioTema))/60000;
-        const intervalo = intervalos.find(int => int >= intervaloReal);
-        acc[intervalo] = (acc[intervalo] || 0) + 1;
-        return acc;
-      }, {});
-    return intervalos.map(intervalo => dataCasiCompleta[intervalo] || 0);
-  };
+  const intervaloEnSRefrescoEjeX = 5;
+
+  const [puntosEjeX, setPuntosEjeX] = useState(0);
+  const [puntosEjeY, setValorPuntosEjeY] = useState(0);
+  const [puntosThumbsUp, setPuntosThumbsUp] = useState([{x: 0, y: 0}]);
+
+  useInterval(() => {
+    setPuntosEjeX(puntosEjeX + intervaloEnSRefrescoEjeX);
+    puntosEjeX % 100 === 0 && setValorPuntosEjeY(puntosEjeY + 1);
+    setPuntosThumbsUp([...puntosThumbsUp, { x: puntosEjeX, y: puntosEjeY }]);
+    console.log(puntosThumbsUp);
+  }, intervaloEnSRefrescoEjeX * 1000);
+
+  const ejeX = Array(tiempoTema * 60 / intervaloEnSRefrescoEjeX)
+    .fill(0)
+    .map((_, index) => index % (3600) === 0 ? index.toString() + "'" : '' );
 
   const formattedData = () => {
 
     const datasets = [
       {
         label: reacciones.THUMBS_UP,
-        data: intervaloAlQuePertenece(reacciones.THUMBS_UP),
+        data: puntosThumbsUp,
         backgroundColor: '#68a1ea',
+        pointRadius: 0,
+        lineTension: 0,
         borderColor: '#68a1ea',
         fill: false
-      },
-      {
-        label: reacciones.THUMBS_DOWN,
-        data: Object.values(intervaloAlQuePertenece(reacciones.THUMBS_DOWN)),
-        backgroundColor: '#ffb3ba',
-        borderColor: '#ffb3ba',
-        fill: false
-      },
-      {
-        label: reacciones.SLACK,
-        data: intervaloAlQuePertenece(reacciones.SLACK),
-        backgroundColor: '#ffdfba',
-        borderColor: '#ffdfba',
-        fill: false
-      },
-      {
-        label: reacciones.REDONDEAR,
-        data: intervaloAlQuePertenece(reacciones.REDONDEAR),
-        backgroundColor: colores.primary,
-        borderColor: colores.primary,
-        fill: false
-      },
+      }
     ];
     return ({
-      labels: intervalos.map(intervalo => intervalo + `'`),
+      labels: ejeX,
       datasets
     })
   };
+
 
   return (
     <ChartlineContainer>
