@@ -1,5 +1,5 @@
-import { configureStore, createAction, getDefaultMiddleware } from '@reduxjs/toolkit';
-import produce, { setAutoFreeze } from 'immer';
+import {configureStore, createAction, getDefaultMiddleware} from '@reduxjs/toolkit';
+import produce, {setAutoFreeze} from 'immer';
 import oradoresReducer from './oradores';
 import reaccionesReducer from './reacciones';
 import Backend from '../api/backend';
@@ -92,45 +92,63 @@ export const domainReducer = (state = INITIAL_STATE, action) => produce(state, (
 });
 
 
-function applyEventosViejos(draft) {
-  const newState = draft.eventosEncolados.reduce(domainReducer, draft);
-  return { ...newState, eventosEncolados: [], esperandoConfirmacionDeEvento: false };
-}
-
 export const reducer = (state = INITIAL_STATE, action) => produce(state, (draft) => {
   switch (action.type) {
     case iniciarEnvioDeEvento.toString(): {
       draft.esperandoConfirmacionDeEvento = true;
       draft.esperandoEventoId = null;
+      draft.eventosEncolados = [];
       break;
     }
     case eventoConfirmadoPorBackend.toString(): {
       if (draft.esperandoConfirmacionDeEvento) {
-        if (draft.eventosEncolados.some((evento) => evento.id === action.payload)) {
-          // el evento ya llego antes de que el backend nos confirmara
-          return applyEventosViejos(draft);
+        if (draft.eventosEncolados.some((eventoId) => eventoId === action.payload)) {
+          // el evento ya llego antes de que el backend nos confirmara asi que
+          // No estamos esperando nada
+          draft.eventosEncolados = [];
+          draft.esperandoConfirmacionDeEvento = false;
+          draft.esperandoEventoId = null;
+        } else {
+          draft.esperandoConfirmacionDeEvento = false;
+          draft.esperandoEventoId = action.payload;
         }
-        draft.esperandoConfirmacionDeEvento = false;
-        draft.esperandoEventoId = action.payload;
+      } else {
+        console.warn("me llego un evento confirmado mientras no estaba esperando confirmacion...");
+        console.warn(action);
       }
       break;
     }
     case eventoRechazadoPorBackend.toString(): {
-      return applyEventosViejos(draft);
+      if (draft.esperandoConfirmacionDeEvento) {
+        draft.eventosEncolados = [];
+        draft.esperandoConfirmacionDeEvento = false;
+      } else {
+        console.warn("me llego un evento rechazado mientras no estaba esperando confirmacion...");
+        console.warn(action);
+      }
+      break;
     }
     default: {
-      if (draft.esperandoConfirmacionDeEvento) {
-        draft.eventosEncolados.push(action);
-        break;
+      let { esperandoEventoId, eventosEncolados, esperandoConfirmacionDeEvento } = draft;
+
+      if (esperandoConfirmacionDeEvento) {
+        // Estoy esperando que el backend me confirme un evento asi que agrego los
+        // ids de los mensajes que me llegan a la lista de mensajes que me llegaron
+        // por si alguno de esos es el mensaje que yo mande
+        eventosEncolados = [...eventosEncolados, action.id];
       }
 
-      let { esperandoEventoId } = draft;
-      if (draft.esperandoEventoId === action.id) {
-        esperandoEventoId = null;
+      if (draft.esperandoEventoId) {
+        // Estoy esperando que el backend me envie el mensaje que yo mande y que ya me
+        // confirmo que iba a llegar, si es ese mensaje entonces habilito de nuevo la
+        // UI para hacer cosas
+        if (draft.esperandoEventoId === action.id) {
+          esperandoEventoId = null;
+        }
       }
 
       const newState = domainReducer(draft, action);
-      return { ...newState, esperandoEventoId, ultimoEventoId: action.id };
+      return { ...newState, esperandoEventoId, eventosEncolados};
     }
   }
 });
@@ -139,32 +157,22 @@ const iniciarEnvioDeEvento = createAction('iniciarEnvioDeEvento');
 const eventoConfirmadoPorBackend = createAction('eventoConfirmadoPorBackend');
 const eventoRechazadoPorBackend = createAction('eventoRechazadoPorBackend');
 
-const wsForwarder = (ws) => (store) => (next) => (action) => {
-  console.warn(`INICIO REDUCER ${action.type || action.tipo || action.data.tipo}`);
-  console.log(action);
+const wsForwarder = (store) => (next) => (action) => {
   if (!action.comesFromWS) {
-    // We don't dispatch actions that we send to the ws since we'll
+    // We don't dispatch actions that we send to the backend since we'll
     // see them twice, in the future we could be smarter.
     let state = store.getState();
-    console.log('esperandoConfirmacionDeEvento', state.esperandoConfirmacionDeEvento);
-    console.log('esperandoEventoId', state.esperandoEventoId);
-    console.log('ultimoEventoId', state.ultimoEventoId);
     if (state.esperandoConfirmacionDeEvento || state.esperandoEventoId) {
-      console.log('event ignored');
       return;
     }
 
-    console.log('iniciar envio de evento');
     next(iniciarEnvioDeEvento());
-    console.log('done iniciar envio de evento');
     state = store.getState();
     Backend.publicarEvento({
       reunionId: state.reunion.id,
-      ultimoEventoId: state.ultimoEventoId,
       ...action,
     })
       .then(({ id }) => {
-        console.log('el backend me respondio bien');
         next(eventoConfirmadoPorBackend(id));
       })
       .catch((e) => {
@@ -177,7 +185,7 @@ const wsForwarder = (ws) => (store) => (next) => (action) => {
   }
 };
 
-export default (ws) => configureStore({
+export default () => configureStore({
   reducer,
-  middleware: [...getDefaultMiddleware(), wsForwarder(ws)],
+  middleware: [...getDefaultMiddleware(), wsForwarder],
 });
