@@ -101,6 +101,14 @@ describe('#oradoresReducer reducer', () => {
       expect(oradoresReducer(state, evento)).toEqual([]);
     });
 
+    it('si el orador esta encolado pero todavia no hablo, no hace nada', () => {
+      state = [
+        orador(otroUsuario, 1),
+        orador(unUsuario),
+      ];
+      expect(oradoresReducer(state, evento)).toEqual([orador(otroUsuario, 1), orador(unUsuario)]);
+    });
+
     it('si el orador esta encolado y ya termino de hablar, no hace nada', () => {
       state = [orador(unUsuario, 1, 2)];
       expect(oradoresReducer(state, evento)).toEqual([orador(unUsuario, 1, 2)]);
@@ -127,23 +135,35 @@ describe('#oradoresReducer reducer', () => {
       evento = {
         type: tipoDeEvento.KICKEAR,
         fecha: 2,
-        usuario: unUsuario,
+        usuario: otroUsuario,
+        kickearA: unUsuario,
       };
       state = [];
     });
 
-    it('Si hay alguien hablando y hay mas gente encolada, lo saca y pone al que sigue', () => {
+    it('Si hay alguien hablando y hay mas gente encolada, saca al orador y pone al que sigue', () => {
       state = [orador(unUsuario, 1), orador(otroUsuario)];
       expect(oradoresReducer(state, evento)).toEqual([orador(unUsuario, 1, 2), orador(otroUsuario, 2)]);
     });
 
     it('Si hay alguien hablando y no hay mas gente encolada, lo saca y la cola queda vacia', () => {
+      state = [orador(unUsuario, 1)];
+      expect(oradoresReducer(state, evento)).toEqual([orador(unUsuario, 1,2)]);
+    });
+
+    it('Si pide sacar a alguien que no estaba hablando, no hace nada', () => {
       state = [orador(otroUsuario, 1)];
-      expect(oradoresReducer(state, evento)).toEqual([orador(otroUsuario, 1,2)]);
+      expect(oradoresReducer(state, evento)).toEqual([orador(otroUsuario, 1)]);
     });
 
     it('Si no hay alguien hablando, no hace nada', () => {
       expect(oradoresReducer(state, evento)).toEqual([]);
+    });
+
+    it('Puede kickearse a si mismo', () => {
+      evento = {...evento, kickearA: unUsuario, usuario: unUsuario };
+      state = [orador(unUsuario, 1)];
+      expect(oradoresReducer(state, evento)).toEqual([orador(unUsuario, 1, 2)]);
     });
   });
 });

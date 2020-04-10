@@ -91,7 +91,7 @@ const Vista = ({
   };
 
   const kickear = () => {
-    dispatchEvent({tipo: tipoDeEvento.KICKEAR})
+    dispatchEvent({tipo: tipoDeEvento.KICKEAR, kickearA: participant.usuario})
   };
 
   const [showSkeleton, setShowSekelton] = useState(true);
