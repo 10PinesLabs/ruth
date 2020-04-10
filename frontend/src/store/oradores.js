@@ -24,7 +24,6 @@ function estaHablando(orador, nombre) {
 const yaHablo = orador => orador.fin;
 
 export default (state = [], evento) => produce(state, (draft) => {
-  debugger;
   const {usuario, fecha} = evento;
   switch (evento.type) {
     case tipoDeEvento.KICKEAR: {

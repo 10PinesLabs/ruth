@@ -11,7 +11,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export const TerminarTemaDialog = ({ open, onClose, onConfirm }) => (
+export const ModalDeConfirmacion = ({ title, open, onClose, onConfirm, cancelText="Cancelar", confirmText="Confirmar"}) => (
   <Dialog
     open={ open }
     onClose={ onClose }
@@ -22,18 +22,18 @@ export const TerminarTemaDialog = ({ open, onClose, onConfirm }) => (
   >
     <DialogTitle id="alert-dialog-title" disableTypography>
       <Typography variant="h4" className="modal-title">
-        ¿Terminar tema?
+        {title}
       </Typography>
     </DialogTitle>
     <DialogActions>
       <SecondaryButton onClick={ onClose }>
-        Cancelar
+        {cancelText}
       </SecondaryButton>
       <Button onClick={ () => {
         onClose();
         onConfirm()
       } } color="primary" autoFocus>
-        Confirmar
+        {confirmText}
       </Button>
     </DialogActions>
   </Dialog>
