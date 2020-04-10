@@ -28,7 +28,7 @@ export default (state = [], evento) => produce(state, (draft) => {
             return [...draft.filter(r => (r.nombre !== reacciones.THUMBS_UP && usuario.email === r.usuario.email) ||
               (usuario.email !== r.usuario.email)), { nombre, usuario, fecha }];
           default:
-            !yaReacciono(draft, evento) && draft.push({usuario, nombre});
+            !yaReacciono(draft, evento) && draft.push({usuario, nombre, fecha});
         }
       }
         break;

@@ -3,10 +3,12 @@ import produce, { setAutoFreeze } from 'immer';
 import oradoresReducer from './oradores';
 import reaccionesReducer from './reacciones';
 import Backend from '../api/backend';
+import historicoDeReaccionesReducer from "./historicoDeReacciones";
 
 const TEMA_INCIAL_STATE = {
   oradores: [],
   reacciones: [],
+  historicoDeReacciones: [],
   inicio: null,
   fin: null,
 };
@@ -19,6 +21,7 @@ export const temaReducer = (state = TEMA_INCIAL_STATE, action) => produce(state,
 
   draft.oradores = oradoresReducer(draft.oradores, action);
   draft.reacciones = reaccionesReducer(draft.reacciones, action);
+  draft.historicoDeReacciones = historicoDeReaccionesReducer(draft.historicoDeReacciones, action);
 });
 
 function compareTemaByPriority(tema1, tema2) {
