@@ -52,7 +52,7 @@ export const ReduxWebSocketWrapper = (props) => {
 
   useEffect(() => {
     const ws = new ReconnectingWebSocket();
-    const newStore = createStore(ws);
+    const newStore = createStore();
     const { reunion } = props;
     newStore.dispatch({
       type: 'Empezar Reunion', comesFromWS: true, reunion, temas: reunion.temas,

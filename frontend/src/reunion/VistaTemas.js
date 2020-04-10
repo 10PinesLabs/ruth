@@ -13,26 +13,28 @@ import {Redirect} from "react-router-dom";
 
 const VistaTemas = ({actualizarTema, cerrarReunion, temas}) => {
 
-  const indiceTemaATratar = () => {
-    const indiceTemaSinFinalizar = temas.findIndex((tema) => tema.fin === null);
-    const ultimoTema = temas.length - 1;
-    return indiceTemaSinFinalizar >= 0 ? indiceTemaSinFinalizar : ultimoTema;
-  };
+  const indiceTemaSinFinalizar = temas.findIndex((tema) => tema.fin === null);
+  const ultimoTema = temas.length - 1;
+  const indiceTemaATratar = indiceTemaSinFinalizar >= 0 ? indiceTemaSinFinalizar : ultimoTema;
 
-  const [indiceTemaAMostrar, setIndiceTemaAMostrar] = useState(indiceTemaATratar());
+  const [indiceTemaAMostrar, setIndiceTemaAMostrar] = useState(indiceTemaATratar);
   const [selectedElement, setSelectedElement] = useState('Resumen');
 
-  useEffect(() => {setIndiceTemaAMostrar(indiceTemaATratar())}, [indiceTemaATratar()]);
+  const temaSeleccionado = temas[indiceTemaAMostrar];
+
+  useEffect(() => {
+    setIndiceTemaAMostrar(indiceTemaATratar);
+  }, [indiceTemaATratar]);
 
   const empezarTema = () => {
-    if (temaSeleccionado().inicio !== null) {
+    if (temaSeleccionado.inicio !== null) {
       return toast.error('No se puede iniciar un tema que ya fue iniciado');
     }
-    if (indiceTemaAMostrar !== indiceTemaATratar()) {
+    if (indiceTemaAMostrar !== indiceTemaATratar) {
       return toast.error('Existe otro tema para tratar');
     }
     return actualizarTema({
-      id: temaSeleccionado().id,
+      id: temaSeleccionado.id,
       inicio: Date.now(),
       fin: null,
     });
@@ -40,8 +42,8 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas}) => {
 
   const terminarTema = () => {
     actualizarTema({
-      id: temaSeleccionado().id,
-      inicio: temaSeleccionado().inicio,
+      id: temaSeleccionado.id,
+      inicio: temaSeleccionado.inicio,
       fin: Date.now(),
     });
     toast.success('Tema finalizado');
@@ -54,12 +56,8 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas}) => {
     cerrarReunion();
   };
 
-  const temaSeleccionado = () => {
-    return temas[indiceTemaAMostrar];
-  };
-
-  const seleccionarTema = (temaSeleccionado) => {
-    const index = temas.findIndex((tema) => tema === temaSeleccionado);
+  const seleccionarTema = (nuevoTemaSeleccionado) => {
+    const index = temas.findIndex((tema) => tema === nuevoTemaSeleccionado);
     setIndiceTemaAMostrar(index);
     setSelectedElement('Resumen');
   };
@@ -76,10 +74,10 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas}) => {
     }
   };
 
-  const esElSiguienteTemaATratar = () => indiceTemaAMostrar === indiceTemaATratar();
+  const esElSiguienteTemaATratar = indiceTemaAMostrar === indiceTemaATratar;
 
   const segundosRestantes = () => {
-    const {inicio, fin, cantidadDeMinutosDelTema} = temaSeleccionado();
+    const {inicio, fin, cantidadDeMinutosDelTema} = temaSeleccionado;
     if (inicio === null) {
       return cantidadDeMinutosDelTema * 60;
     }
@@ -89,7 +87,7 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas}) => {
   };
 
   const temaActivo = () => {
-    const {inicio, fin} = temaSeleccionado();
+    const {inicio, fin} = temaSeleccionado;
     return inicio !== null && fin === null;
   };
 
@@ -102,25 +100,25 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas}) => {
       <Temario temas={temas}
                seleccionarTema={seleccionarTema}
                cerrarReunion={handleCerrarReunion}
-               temaActual={temaSeleccionado()}
+               temaActual={temaSeleccionado}
       />
-      <Header titulo={temaSeleccionado().titulo}
+      <Header titulo={temaSeleccionado.titulo}
               segundosRestantes={segundosRestantes()}
               temaActivo={temaActivo()}
       />
       <VistaTemaContainer style={propsToAnimate}>
-        <VistaSeleccionada tema={temaSeleccionado()}
+        <VistaSeleccionada tema={temaSeleccionado}
                            terminarTema={terminarTema}
                            empezarTema={empezarTema}
                            temaActivo={temaActivo()}
                            avanzarTema={avanzarTema}
                            retrocederTema={retrocederTema}
-                           temaATratar={esElSiguienteTemaATratar()}
+                           temaATratar={esElSiguienteTemaATratar}
                            handleCerrarReunion={handleCerrarReunion}/>
       </VistaTemaContainer>
       <Sidebar handleSelection={setSelectedElement}
                selectedElement={selectedElement}
-               link={temaSeleccionado().linkDePresentacion}/>
+               link={temaSeleccionado.linkDePresentacion}/>
     </ReunionContainer>
   );
 };
