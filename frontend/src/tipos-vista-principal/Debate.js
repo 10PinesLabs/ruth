@@ -1,5 +1,5 @@
 import React from 'react';
-import {GraphsContainer, ParticipantsContainer, SubDebateContainer} from "../debate-handler/Debate.styled";
+import {GraphsContainer, SubDebateContainer} from "../debate-handler/Debate.styled";
 import ParticipantsQueue from "../cola-de-participantes/ParticipantsQueue";
 import ChartBar from "../chart/chartBar";
 import ChartLine from "../chart/chartLine";

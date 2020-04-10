@@ -4,6 +4,7 @@ export const tipoDeEvento = {
   HABLAR: 'Quiero Hablar',
   DEJAR_DE_HABLAR: 'Quiero Dejar de Hablar',
   DESENCOLAR: 'Quiero Desencolarme',
+  KICKEAR: 'Kickear al que habla'
 };
 
 
@@ -20,9 +21,35 @@ function estaHablando(orador, evento) {
   return orador.usuario.nombre === evento.usuario.nombre && orador.inicio !== null;
 }
 
+function terminarTurnoDeOrador(draft, evento) {
+  let proximoOrador = null;
+  const yaHablo = orador => orador.fin;
+  const estaHablando = orador => orador.inicio && !orador.fin;
+
+  return draft.map((orador, index) => {
+    if (yaHablo(orador)) return orador;
+
+    if (index === proximoOrador) {
+      return {...orador, inicio: evento.fecha};
+    }
+
+    if (estaHablando(orador)) {
+      proximoOrador = index + 1;
+      return {...orador, fin: evento.fecha};
+    }
+
+    return orador;
+  });
+}
+
 export default (state = [], evento) => produce(state, (draft) => {
+  debugger;
   const { usuario, fecha } = evento;
   switch (evento.type) {
+    case tipoDeEvento.KICKEAR: {
+      return terminarTurnoDeOrador(draft, evento)
+    }
+
     case tipoDeEvento.HABLAR:
       hayAlguienHablando(draft) && draft.push({
         usuario, inicio: fecha, fin: null,
@@ -37,21 +64,7 @@ export default (state = [], evento) => produce(state, (draft) => {
       return draft.filter((orador) => orador.usuario.nombre !== usuario.nombre);
     }
     case tipoDeEvento.DEJAR_DE_HABLAR: {
-      let proximoOrador = null;
-      return draft.map((orador, index) => {
-        if (orador.fin) return orador;
-
-        if (index === proximoOrador) {
-          return { ...orador, inicio: fecha };
-        }
-
-        if (estaHablando(orador, evento)) {
-          proximoOrador = index + 1;
-          return { ...orador, fin: fecha };
-        }
-
-        return orador;
-      });
+      return terminarTurnoDeOrador(draft, evento);
     }
     default:
   }

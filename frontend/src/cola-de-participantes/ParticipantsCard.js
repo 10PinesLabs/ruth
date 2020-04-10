@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import ParticipantCounter from './ParticipantCounter';
 import {
-  CardContainer, CardInfoContainer, CardName, UserAvatar,
+  CardContainer, CardInfoContainer, CardName, Cerrar, UserAvatar,
 } from './ParticipantsCard.styled';
 import getGravatarUrlFor from '../api/gravatar';
 import {SkeletonBlock, SkeletonLine} from "../skeleton/Skeleton.styled";
 
-const ParticipantsCard = ({participant, isParticipantTalking, interactive, }) => {
+const ParticipantsCard = ({participant, isParticipantTalking, interactive, kickear }) => {
   const estadoOrador = () => {
     if (estaEncolado()) {
       return { detalle: 'encolado' };
@@ -23,11 +23,13 @@ const ParticipantsCard = ({participant, isParticipantTalking, interactive, }) =>
   const estaEncolado = () => {
     return participant.inicio === null;
   };
+
     const [showSkeleton, setShowSekelton] = useState(true);
     useEffect(() => {setTimeout(() => setShowSekelton(false), 1000)}, []);
 
     return showSkeleton ? <SkeletonComponent interactive isParticipantTalking /> : (participant ? (
       <CardContainer isInteractive={interactive} isTalking={isParticipantTalking}>
+        {interactive && <Cerrar onClick={kickear} />}
         <UserAvatar isTalking={isParticipantTalking} avatar={getGravatarUrlFor(participant.usuario.email)} />
         <CardInfoContainer>
           <CardName isInteractive={interactive}> {participant.usuario.nombre} </CardName>
