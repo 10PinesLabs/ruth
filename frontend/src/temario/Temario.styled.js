@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { colors, font, sizeBreakpoint, temario } from '../styles/theme';
+import {colors, font, temario} from '../styles/theme';
 
 export const TemarioContainer = styled.div(({isActive}) =>`
   z-index: 100;
@@ -60,6 +60,7 @@ export const Titulo = styled.div`
   font-size:  ${font.sizeH2};
   letter-spacing: 1px;
   color: white;
+  cursor: pointer;
 `;
 
 export const ContenidoTemario = styled.div`
