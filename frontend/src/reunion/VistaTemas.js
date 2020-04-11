@@ -91,9 +91,8 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas}) => {
     return inicio !== null && fin === null;
   };
 
-  const obtenerVista = () => vistas[selectedElement] || 'Resumen';
   const propsToAnimate = useSpring({opacity: 1, from: {opacity: 0}});
-  const VistaSeleccionada = obtenerVista();
+  const VistaSeleccionada = vistas[selectedElement] || 'Resumen';
 
   return (
     <ReunionContainer style={propsToAnimate}>

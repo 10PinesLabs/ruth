@@ -1,8 +1,8 @@
 import React from 'react';
-import {Line} from 'react-chartjs-2';
-import {ChartlineContainer} from './Chart.styled';
-import {reacciones} from "../mobile";
-import {colors as colores} from "../styles/theme";
+import { Line } from 'react-chartjs-2';
+import { ChartlineContainer } from './Chart.styled';
+import { colors as colores } from '../styles/theme';
+import { reacciones } from '../mobile/actions';
 
 const ChartLine = ({data, inicioTema}) => {
   const graphOptions = () => ({
