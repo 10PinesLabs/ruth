@@ -1,6 +1,5 @@
 import reaccionesReducer, { reactionTypes } from '../reacciones';
-import {reacciones} from "../../mobile";
-import {reacciones} from "../../mobile/actions";
+import { reacciones } from '../../mobile/actions';
 
 const unUsuario = {
   email: 'unEmail@email',

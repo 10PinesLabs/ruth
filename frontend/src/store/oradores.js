@@ -20,13 +20,13 @@ function estaHablando2(draft, nombre) {
   return draft.actual && draft.actual.usuario.nombre === nombre;
 }
 
-const INITIAL_STATE = {
+export const INITIAL_ORADORES_STATE = {
   pasados: [],
   actual: null,
   cola: [],
 };
 
-export default (state = INITIAL_STATE, evento) => produce(state, (draft) => {
+export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft) => {
   const { usuario, fecha } = evento;
   switch (evento.type) {
     case tipoDeEvento.KICKEAR: {
