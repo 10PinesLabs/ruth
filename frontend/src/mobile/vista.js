@@ -95,8 +95,6 @@ const Vista = ({
     dispatchEvent({ tipo: tipoDeEvento.LEVANTAR_MANO });
   };
 
-  const amITalking = !!(participant && participant.usuario.email === usuario.email);
-
   const onWannaStopTalkClick = () => {
     const estoyHablando = participant.usuario.email === usuario.email;
     if (estoyHablando) dispatchEvent({ tipo: tipoDeEvento.DEJAR_DE_HABLAR });
@@ -140,7 +138,7 @@ const Vista = ({
 
   let microphone;
   if (temaEmpezado) {
-    if (amITalking || wannaTalk) {
+    if (isTalking || wannaTalk) {
       microphone = <div style={{
         display: 'flex', flexDirection: '', alignItems: 'center', justifyContent: 'center',
       }}>

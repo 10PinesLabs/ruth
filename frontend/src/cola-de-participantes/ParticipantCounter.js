@@ -22,12 +22,21 @@ class ParticipantCounter extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.stopWatch();
+  }
+
   runWatch = () => {
-    this.incrementer = setInterval(() => { this.setState({ secondsElapsed: this.state.secondsElapsed + 1 }); }, 1000);
+    this.incrementer = setInterval(() => {
+      this.setState({ secondsElapsed: this.state.secondsElapsed + 1 });
+    }, 1000);
   };
 
   stopWatch = () => {
-    clearInterval(this.incrementer);
+    if (this.incrementer) {
+      clearInterval(this.incrementer);
+      this.incrementer = null;
+    }
   };
 
   render() {
