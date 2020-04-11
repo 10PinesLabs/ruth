@@ -16,7 +16,7 @@ function estaEncoladoParaHablar(draft, usuario) {
   return draft.cola.some((orador) => orador.usuario.nombre === usuario.nombre);
 }
 
-function estaHablando2(draft, nombre) {
+function estaHablando(draft, nombre) {
   return draft.actual && draft.actual.usuario.nombre === nombre;
 }
 
@@ -30,7 +30,7 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
   const { usuario, fecha } = evento;
   switch (evento.type) {
     case tipoDeEvento.KICKEAR: {
-      if (!estaHablando2(draft, evento.kickearA.nombre)) {
+      if (!estaHablando(draft, evento.kickearA.nombre)) {
         return;
       }
       const oradorActual = draft.actual;
@@ -38,7 +38,7 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
       draft.pasados.push(oradorActual);
 
       const nextOrador = draft.cola.shift();
-      if (nextOrador === undefined) {
+      if (!nextOrador) {
         draft.actual = null;
         return;
       }
@@ -49,7 +49,7 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
     }
     case tipoDeEvento.LEVANTAR_MANO: {
       // Si la persona ya esta hablando o esta encolado no hacemos nada
-      if (estaEncoladoParaHablar(draft, usuario) || estaHablando2(draft, usuario.nombre)) {
+      if (estaEncoladoParaHablar(draft, usuario) || estaHablando(draft, usuario.nombre)) {
         return;
       }
 
@@ -62,14 +62,14 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
     }
 
     case tipoDeEvento.DESENCOLAR: {
-      if (estaHablando2(draft, usuario.nombre)) {
+      if (estaHablando(draft, usuario.nombre)) {
         return;
       }
       draft.cola = draft.cola.filter((orador) => orador.usuario.nombre !== usuario.nombre);
       break;
     }
     case tipoDeEvento.DEJAR_DE_HABLAR: {
-      if (!estaHablando2(draft, usuario.nombre)) {
+      if (!estaHablando(draft, usuario.nombre)) {
         return;
       }
       const oradorActual = draft.actual;
@@ -77,7 +77,7 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
       draft.pasados.push(oradorActual);
 
       const nextOrador = draft.cola.shift();
-      if (nextOrador === undefined) {
+      if (!nextOrador) {
         draft.actual = null;
         return;
       }
