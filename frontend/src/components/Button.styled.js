@@ -4,9 +4,6 @@ import { colors, font, sizeBreakpoint } from '../styles/theme';
 export const Button = styled.button`
   font-family: ${font.p};
   font-size:  ${font.sizeP};
-  @media (min-width: ${sizeBreakpoint.bigWidth}), @media (min-height: ${sizeBreakpoint.bigHeight})  {
-    font-size: 1.75em;
-  }
   background: ${(props) => (!props.disabled ? colors.primary : colors.black30)};
   border-radius: 0.2em;
   border: none;

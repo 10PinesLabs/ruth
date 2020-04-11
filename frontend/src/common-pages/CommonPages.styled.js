@@ -14,9 +14,6 @@ export const Botonera = styled.div`
   display: flex;
   flex-direction: row;
   width: 40em;
-   @media (min-width: ${sizeBreakpoint.bigWidth}), @media (min-height: ${sizeBreakpoint.bigHeight})  {
-    width: 60em;
-  }
   margin: 2em;
   justify-content: space-between;
 `;

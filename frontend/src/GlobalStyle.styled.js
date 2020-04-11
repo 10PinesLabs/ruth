@@ -7,6 +7,7 @@ export default createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Poppins:100,200,400&display=swap');
 html {
   font-family: ${font.family};
+  font-size: 16px;
   scroll-behavior: smooth;
   scrollbar-width: none;
 }

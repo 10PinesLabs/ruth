@@ -17,7 +17,7 @@ export const Arrow = styled.img`
   background-color:${colors.viridian};
   border-radius: 0 4em 4em 0;
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: ${font.sizeP};
   height: 1.5em;
   line-height: 2em;
   overflow: visible;
@@ -43,10 +43,7 @@ export const Temas = styled.div`
 
 export const LeyendaEmpresa = styled.div`
   font-family: ${font.p};
-  font-size:  ${font.sizeH1};
-  @media (min-width: ${sizeBreakpoint.bigWidth}), @media (min-height: ${sizeBreakpoint.bigHeight})  {
-    font-size: 4rem;
-  }
+  font-size:  ${font.sizeH2};
   letter-spacing: -3px;
   color: white;
 `;
@@ -54,19 +51,13 @@ export const LeyendaEmpresa = styled.div`
 export const ExtensionLeyendaEmpresa = styled.div`
   font-family: ${font.p};
   font-size:  ${font.sizeP};
-  @media (min-width: ${sizeBreakpoint.bigWidth}), @media (min-height: ${sizeBreakpoint.bigHeight})  {
-    font-size: 1.75rem;
-  }
   color: white;
   margin-bottom: 2em;
 `;
 
 export const Titulo = styled.div`
-  font-family: ${font.h1};
+  font-family: ${font.h2};
   font-size:  ${font.sizeH2};
-  @media (min-width: ${sizeBreakpoint.bigWidth}), @media (min-height: ${sizeBreakpoint.bigHeight}) {
-    font-size: 3rem;
-  }
   letter-spacing: 1px;
   color: white;
 `;
