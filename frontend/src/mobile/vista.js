@@ -90,6 +90,10 @@ const Vista = ({
     else dispatchEvent({tipo: tipoDeEvento.DESENCOLAR});
   };
 
+  const kickear = () => {
+    dispatchEvent({tipo: tipoDeEvento.KICKEAR, kickearA: participant.usuario})
+  };
+
   const [showSkeleton, setShowSekelton] = useState(true);
   useEffect(() => {setTimeout(() => setShowSekelton(false), 1000)}, []);
 
@@ -130,7 +134,7 @@ const Vista = ({
       </TopSectionContainer>
       <ParticipantsContainer>
         <ParticipantsCard interactive isParticipantTalking
-                          dispatch={dispatchEvent}
+                          kickear={kickear}
                           participant={participant}/>
       </ParticipantsContainer>
       <ActionContainerStyle>

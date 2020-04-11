@@ -1,9 +1,10 @@
-import { produce } from 'immer';
+import {produce} from 'immer';
 
 export const tipoDeEvento = {
   HABLAR: 'Quiero Hablar',
   DEJAR_DE_HABLAR: 'Quiero Dejar de Hablar',
   DESENCOLAR: 'Quiero Desencolarme',
+  KICKEAR: 'Kickear al que habla'
 };
 
 
@@ -16,13 +17,33 @@ function estaEncoladoParaHablar(draft, usuario) {
     .some((orador) => orador.usuario.nombre === usuario.nombre);
 }
 
-function estaHablando(orador, evento) {
-  return orador.usuario.nombre === evento.usuario.nombre && orador.inicio !== null;
+function estaHablando(orador, nombre) {
+  return orador.usuario.nombre === nombre && orador.inicio !== null && orador.fin === null;
 }
 
+const yaHablo = orador => orador.fin;
+
 export default (state = [], evento) => produce(state, (draft) => {
-  const { usuario, fecha } = evento;
+  const {usuario, fecha} = evento;
   switch (evento.type) {
+    case tipoDeEvento.KICKEAR: {
+      let proximoOrador = null;
+      if(!evento.kickearA) return;
+      return draft.map((orador, index) => {
+        if (yaHablo(orador)) return orador;
+
+        if (index === proximoOrador) {
+          return {...orador, inicio: evento.fecha};
+        }
+
+        if (estaHablando(orador, evento.kickearA.nombre)) {
+          proximoOrador = index + 1;
+          return {...orador, fin: evento.fecha};
+        }
+
+        return orador;
+      });
+    }
     case tipoDeEvento.HABLAR:
       hayAlguienHablando(draft) && draft.push({
         usuario, inicio: fecha, fin: null,
@@ -33,21 +54,22 @@ export default (state = [], evento) => produce(state, (draft) => {
       break;
 
     case tipoDeEvento.DESENCOLAR: {
-      if (draft.some((orador) => estaHablando(orador, evento))) return;
+      if (draft.some((orador) => estaHablando(orador, usuario.nombre) || yaHablo(orador))) return;
       return draft.filter((orador) => orador.usuario.nombre !== usuario.nombre);
     }
     case tipoDeEvento.DEJAR_DE_HABLAR: {
       let proximoOrador = null;
+
       return draft.map((orador, index) => {
-        if (orador.fin) return orador;
+        if (yaHablo(orador)) return orador;
 
         if (index === proximoOrador) {
-          return { ...orador, inicio: fecha };
+          return {...orador, inicio: evento.fecha};
         }
 
-        if (estaHablando(orador, evento)) {
+        if (estaHablando(orador, usuario.nombre)) {
           proximoOrador = index + 1;
-          return { ...orador, fin: fecha };
+          return {...orador, fin: evento.fecha};
         }
 
         return orador;

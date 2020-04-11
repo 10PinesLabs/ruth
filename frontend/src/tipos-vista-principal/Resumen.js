@@ -8,7 +8,7 @@ import {useSpring} from "react-spring";
 import DescripcionTemaComun from "../temario/descripcion-tipo-tema/DescripcionTemaComun";
 import DescripcionActionItems from "../temario/descripcion-tipo-tema/DescripcionActionItems";
 import DescripcionPropuestaPinos from "../temario/descripcion-tipo-tema/DescripcionPropuestaPinos";
-import {TerminarTemaDialog} from "./Modal";
+import {ModalDeConfirmacion} from "./Modal";
 import Zoom from "@material-ui/core/Zoom";
 
 const tiposDeTema = {
@@ -42,7 +42,7 @@ const Resumen = ({tema, retrocederTema, temaATratar, empezarTema, avanzarTema, t
             </SecondaryButton>
           </Zoom>
           }
-          <TerminarTemaDialog open={open} onClose={() => setOpen(false)} onConfirm={terminarTema}/>
+          <ModalDeConfirmacion title={"Terminar Tema"} open={open} onClose={() => setOpen(false)} onConfirm={terminarTema}/>
 
           <FontAwesomeIcon
             icon={faCaretRight}
