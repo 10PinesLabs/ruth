@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import { colors, font, sizeBreakpoint } from '../styles/theme';
-
 export const TemaItemContainer = styled.li`
   display: flex;
   align-items: center;
@@ -10,13 +8,10 @@ export const TemaItemContainer = styled.li`
 `;
 
 export const TituloTema = styled.div`
-  font-family: ${font.p};
-  font-size:  ${font.sizeP};
-  @media (min-width: ${sizeBreakpoint.bigWidth}), @media (min-height: ${sizeBreakpoint.bigHeight})  {
-    font-size: 2rem;
-  }
+  font-family: ${({theme}) => theme.font.p};
+  font-size:  ${({theme}) => theme.font.sizeP};
   letter-spacing: 1px;
-  color: ${props => props.estaSeleccionado ? colors.black10 : colors.viridian};
+  color: ${({estaSeleccionado, theme}) => estaSeleccionado ? theme.colors.text : theme.colors.black10};
   transition: color 0.1s ease-in;
   max-width: calc(100% - 2.5rem)
   
@@ -30,16 +25,12 @@ export const ImagenTemaContainer = styled.div`
   height: 2rem;
   width: 2rem;
   overflow: hidden;
-  background: ${colors.white};
+  background: ${({theme}) => theme.colors.white};
   padding: 0.4rem;
   box-sizing: border-box;
   opacity: 0.8;
   margin-right: 2%;
-`;
-
-export const ImagenTema = styled.img`
-  src: ${(props) => props.src};
-  max-width: 100%;
-  max-height: 100%;
-  opacity: 0.8;
+  svg {
+    color: ${({theme}) => theme.colors.text};
+  }
 `;

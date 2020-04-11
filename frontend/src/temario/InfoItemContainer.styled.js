@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import {colors, font, sizeBreakpoint} from '../styles/theme';
 import {animated} from 'react-spring';
 
 export const InfoItemContainer = styled.div`
@@ -16,13 +15,14 @@ export const InfoImageContainer = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  border: 0.15rem solid ${colors.viridian};
+  border: 0.15rem solid ${({theme}) => theme.colors.viridian};
   height: 5rem;
   width: 5rem;
   overflow: hidden;
-  background: ${colors.white};
+  background: ${({theme}) => theme.colors.white};
   box-sizing: border-box;
   ${(props) => props.withPadding && 'padding: 1.25rem;'}
+   color: ${({theme}) => theme.colors.text}
 `;
 
 export const InfoImage = styled.img`
@@ -34,8 +34,8 @@ export const InfoImage = styled.img`
 
 export const Texto = styled.p`
   font-size: 1rem;
-  font-family: ${font.p};
-  color: black;;
+  font-family: ${({theme}) => theme.font.p};
+  color: ${({theme}) => theme.colors.text};
   margin-top: 1em;
   text-align: center;
   text-overflow:ellipsis;

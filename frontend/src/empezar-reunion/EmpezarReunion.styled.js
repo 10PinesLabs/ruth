@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import { font } from '../styles/theme';
-
 export const EmpezarRootsContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
@@ -26,11 +24,12 @@ export const TitleAndButton = styled.div`
   flex-direction: column;
   align-items: center;
   flex-wrap: wrap;
+  color: ${({theme}) => theme.colors.text};
 `;
 
 export const Title = styled.h1`
-  font-size: ${font.sizeH1} ;
-  font-family: ${font.h1};
+  font-size: ${({theme}) => theme.font.sizeH1} ;
+  font-family: ${({theme}) => theme.font.h1};
   text-align: center;
   max-width: 10em;
 `;

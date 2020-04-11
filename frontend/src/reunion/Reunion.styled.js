@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import {animated} from 'react-spring';
-import {header, sidebar} from "../styles/theme";
 
 // eslint-disable-next-line import/prefer-default-export
 export const ReunionContainer = styled(animated.div)`
@@ -13,6 +12,6 @@ export const ReunionContainer = styled(animated.div)`
 export const VistaTemaContainer = styled(animated.div)`  
     display: flex;
     flex: 1;
-    width: calc(100% - ${sidebar.width});
-    margin-top: ${header.height};
+    width: calc(100% - ${({theme}) => theme.sidebar.width});
+    margin-top: ${({theme}) => theme.header.height};
 `;

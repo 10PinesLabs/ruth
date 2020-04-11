@@ -5,5 +5,5 @@ export const CardInteractionsContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    background-color: #DDDDDD;
+    background-color: ${({theme}) => theme.colors.mobileBackground};
 `;

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import {font, sizeBreakpoint} from '../../styles/theme';
 import {animated} from 'react-spring';
 
 export const DescripcionTemaContainer = styled(animated.div)`
@@ -12,8 +11,9 @@ export const DescripcionTemaContainer = styled(animated.div)`
 
 export const Descripcion = styled.div`
   display: block;
-  font-family: ${font.p};
-  font-size:  ${font.sizeP};
+  font-family: ${({theme}) => theme.font.p};
+  font-size:  ${({theme}) => theme.font.sizeP};
+  color: ${({theme}) => theme.colors.text};
   white-space: pre-line;
   text-align: justify;
   margin: 0 3em;

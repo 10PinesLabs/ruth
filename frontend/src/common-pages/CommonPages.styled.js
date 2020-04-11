@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import {font, sizeBreakpoint} from "../styles/theme";
 import {animated} from 'react-spring';
 
 export const PageContainer = styled(animated.div)`
@@ -14,21 +13,18 @@ export const Botonera = styled.div`
   display: flex;
   flex-direction: row;
   width: 40em;
-   @media (min-width: ${sizeBreakpoint.bigWidth}), @media (min-height: ${sizeBreakpoint.bigHeight})  {
-    width: 60em;
-  }
   margin: 2em;
   justify-content: space-between;
 `;
 
 export const Titulo = styled.div`
-  font-size: ${font.sizeH1} ;
-  font-family: ${font.h1};
+  font-size: ${({theme}) => theme.font? theme.font.sizeH1 : '1rem'}; ;
+  font-family: ${({theme}) => theme.font? theme.font.h1 : ''};
 `;
 
 export const Descripcion = styled.div``;
 export const Parrafo = styled.p`
-  font-size: ${font.sizeP} ;
+  font-size: ${({theme}) => theme.font.sizeP} ;
 `;
 
 export const Imagen = styled.img`

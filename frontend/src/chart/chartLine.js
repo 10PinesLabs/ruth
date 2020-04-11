@@ -2,7 +2,7 @@ import React from 'react';
 import {Line} from 'react-chartjs-2';
 import {ChartlineContainer} from './Chart.styled';
 import {reacciones} from "../mobile";
-import {colors as colores} from "../styles/theme";
+import {getTheme} from "../styles/theme";
 
 const ChartLine = ({data, inicioTema}) => {
   const graphOptions = () => ({
@@ -57,7 +57,7 @@ const ChartLine = ({data, inicioTema}) => {
   };
 
   const formattedData = () => {
-
+    const colores = getTheme('light').colors; //TODO
     const datasets = [
       {
         label: reacciones.THUMBS_UP,

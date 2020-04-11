@@ -1,20 +1,19 @@
 import styled from 'styled-components';
-import { colors, font, sizeBreakpoint, temario } from '../styles/theme';
 
-export const TemarioContainer = styled.div(({isActive}) =>`
+export const TemarioContainer = styled.div(({isActive, theme}) =>`
   z-index: 100;
-  background: ${colors.downy};
-  border-right: 1em solid ${colors.viridian};
+  background: ${theme.colors.downy};
+  border-right: 1em solid ${theme.colors.viridian};
   box-sizing: border-box;
-  left: ${isActive ? '0' : `-${temario.width}`};
+  left: ${isActive ? '0' : `-${theme.temario.width}`};
   padding: 1em;
   position: fixed;
   transition: all 0.2s linear;
-  width: calc(${temario.width} + 1em);
+  width: calc(${theme.temario.width} + 1em);
 `);
 
 export const Arrow = styled.img`
-  background-color:${colors.viridian};
+  background-color:${({theme}) => theme.colors.viridian};
   border-radius: 0 4em 4em 0;
   cursor: pointer;
   font-size: 1.5rem;
@@ -42,33 +41,27 @@ export const Temas = styled.div`
 `;
 
 export const LeyendaEmpresa = styled.div`
-  font-family: ${font.p};
-  font-size:  ${font.sizeH1};
-  @media (min-width: ${sizeBreakpoint.bigWidth}), @media (min-height: ${sizeBreakpoint.bigHeight})  {
+  font-family: ${({theme}) => theme.font.p};
+  font-size:  ${({theme}) => theme.font.sizeH1};
+  @media (min-width: ${({theme}) => theme.sizeBreakpoint.bigWidth}), @media (min-height: ${({theme}) => theme.sizeBreakpoint.bigHeight})  {
     font-size: 4rem;
   }
   letter-spacing: -3px;
-  color: white;
+  color: ${({theme}) => theme.colors.text};
 `;
 
 export const ExtensionLeyendaEmpresa = styled.div`
-  font-family: ${font.p};
-  font-size:  ${font.sizeP};
-  @media (min-width: ${sizeBreakpoint.bigWidth}), @media (min-height: ${sizeBreakpoint.bigHeight})  {
-    font-size: 1.75rem;
-  }
-  color: white;
+  font-family: ${({theme}) => theme.font.p};
+  font-size:  ${({theme}) => theme.font.sizeP};
+  color: ${({theme}) => theme.colors.text};
   margin-bottom: 2em;
 `;
 
 export const Titulo = styled.div`
-  font-family: ${font.h1};
-  font-size:  ${font.sizeH2};
-  @media (min-width: ${sizeBreakpoint.bigWidth}), @media (min-height: ${sizeBreakpoint.bigHeight}) {
-    font-size: 3rem;
-  }
+  font-family: ${({theme}) => theme.font.h1};
+  font-size:  ${({theme}) => theme.font.sizeH2};
   letter-spacing: 1px;
-  color: white;
+  color: ${({theme}) => theme.colors.text};
 `;
 
 export const ContenidoTemario = styled.div`

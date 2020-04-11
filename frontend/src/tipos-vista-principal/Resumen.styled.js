@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import {colors} from '../styles/theme';
 import {animated} from 'react-spring';
 
 export const VistaDelMedioContainer = styled(animated.div)` 
@@ -18,7 +17,7 @@ export const Botonera = styled.div`
 export const BotoneraNavegacionTemas = styled.div` 
     display: flex; 
     flex-direction: row;
-    color: ${colors.black30};
+    color: ${({theme}) => theme.colors.black30};
     justify-content: space-evenly;
     align-items: center;
     padding-bottom: 2rem;

@@ -1,15 +1,12 @@
 import styled from 'styled-components';
-import {
-  colors, font, sidebar, sizeBreakpoint,
-} from '../styles/theme';
 
 export const SidebarContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: ${sidebar.width};
-  background: ${colors.black30};
-  border-left: 0.1rem solid ${colors.black30};
+  width: ${({theme}) => theme.sidebar.width};
+  background: ${({theme}) => theme.colors.black30};
+  border-left: 0.1rem solid ${({theme}) => theme.colors.black30};
 `;
 
 export const SeleccionImagen = styled.div`
@@ -19,14 +16,21 @@ export const SeleccionImagen = styled.div`
   text-align: center;
 `;
 
-export const SeleccionContainer = styled.div(({ isActive }) => `
+export const SeleccionContainer = styled.div(({ isActive, theme }) => `
   display: flex;
   flex-direction: column;
-  color: ${isActive ? colors.primary : colors.black50};
-  background: ${isActive ? colors.white : colors.background};
-  border-bottom: ${isActive ? '0.3rem' : '0.1rem'} solid ${isActive ? colors.primary : colors.black30};
+  color: ${theme.colors.black50};
+  background: ${theme.colors.background};
+  border-bottom: 0.1rem solid ${theme.colors.black30};
+  
+  ${isActive && `
+    color: ${theme.colors.primary};
+    background: ${theme.colors.white};
+    border-bottom: 0.3rem solid ${theme.colors.primary};
+  `};
+  
   &:hover {
-    background: ${isActive ? colors.white : colors.black20};
+    background: ${isActive ? theme.colors.white : theme.colors.black20};
     cursor: pointer;
   }
 `);
@@ -37,17 +41,11 @@ export const ElementoContainer = styled.div(({ habilitar }) => `
 `);
 
 export const TitulosSidebar = styled.div`
-  font-family: ${font.p};
-  font-size:  ${font.sizeP};
-  @media (min-width: ${sizeBreakpoint.bigWidth}), @media (min-height: ${sizeBreakpoint.bigHeight})  {
+  font-family: ${({theme}) => theme.font.p};
+  font-size:  ${({theme}) => theme.font.sizeP};
+  @media (min-width: ${({theme}) => theme.sizeBreakpoint.bigWidth}), @media (min-height: ${({theme}) => theme.sizeBreakpoint.bigHeight})  {
     font-size: 1.75rem;
   }
   text-align: center;
   padding-bottom: 7%;
-`;
-
-export const Titulo = styled.div`
-  font-family: ${font.h1};
-  font-size: 2rem;
-  color: black;
 `;

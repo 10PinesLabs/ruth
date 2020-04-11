@@ -2,15 +2,16 @@ import React from 'react';
 import InfoItem from './InfoItem';
 import getGravatarUrlFor from '../api/gravatar';
 import {InfoTemaContainer} from "./InfoItemContainer.styled";
+import {faClock, faLock, faLockOpen} from "@fortawesome/free-solid-svg-icons";
 
 class InfoTema extends React.Component {
 
-  imagenObligatoriedad = (obligatoriedad) => {
+  iconoObligatoriedad = (obligatoriedad) => {
     switch (obligatoriedad) {
       case 'OBLIGATORIO':
-        return './tema-obligatorio.svg';
+        return faLock;
       case 'NO_OBLIGATORIO':
-        return './tema-no-obligatorio.svg';
+        return faLockOpen;
       default:
         return null;
     }
@@ -23,8 +24,8 @@ class InfoTema extends React.Component {
     return (
       <InfoTemaContainer>
         <InfoItem src={getGravatarUrlFor(mailDelAutor)} altText="Usuarie" descripcion={autor} isAvatar={true}/>
-        <InfoItem src={'./duracion.svg'} altText="Pino" descripcion={`${cantidadDeMinutosDelTema} min.`}/>
-        <InfoItem src={this.imagenObligatoriedad(obligatoriedad)} altText="Obligatorio" descripcion={diccObligatoriedad[obligatoriedad]}/>
+        <InfoItem icon={faClock} altText="Pino" descripcion={`${cantidadDeMinutosDelTema} min.`}/>
+        <InfoItem icon={this.iconoObligatoriedad(obligatoriedad)} altText="Obligatorio" descripcion={diccObligatoriedad[obligatoriedad]}/>
       </InfoTemaContainer>
     );
   }

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React from "react";
 
-export const MobileUsableArea = styled.div(({ fontSize }) => `
+export const MobileUsableArea = styled.div(({ theme, fontSize }) => `
     width: 100%;
     overflow-y: hidden;
     height: 100%;
@@ -9,8 +9,8 @@ export const MobileUsableArea = styled.div(({ fontSize }) => `
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    background-color: #DDDDDD;
-    font-size: ${fontSize}px;
+    background-color: ${theme.colors.mobileBackground};
+    font-size: ${fontSize};
 `);
 
 export const TopSectionContainer = styled.div`
@@ -24,7 +24,7 @@ export const LogoHeader = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color: #DDDDDD;
+    background-color: ${({theme}) => theme.colors.mobileBackground};
 `;
 
 export const Logo = styled.img`
@@ -34,10 +34,11 @@ export const Logo = styled.img`
     object-fit: contain;
 `;
 
-export const LogoLabel = styled.div`
-    font-family: 'Poppins', sans-serif;
+export const LogoLabel = styled.div(({ theme }) => `
+    font-family: ${theme.font.family};
     font-weight: 100;
-`;
+    color: ${theme.colors.text};
+`);
 
 export const ParticipantsContainer = styled.div`
     display: flex;
@@ -49,7 +50,6 @@ export const ParticipantsContainer = styled.div`
     height: 100%;
     border-radius: 40px;
     max-width: 30em;
-    //background: #BBBBBB;
     background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRBvqFqZpJ08P0JcheadQG6O7Cln-SZauMu9CiqKJzHRKmcOEkY");
     box-shadow: inset 4px 4px 8px #6b6b6b, inset -4px -4px 6px #d4d2d2;
 `;
@@ -81,7 +81,7 @@ export const QueuedParticipants = styled.div`
 `;
 
 export const SubjectTitle = styled.div`
-    color: grey; 
+    color: ${({theme}) => theme.colors.text}; 
     margin: 0.5em 0 0 0;
     font-size: 2em;
     font-weight: 200; 
@@ -91,10 +91,9 @@ export const SubjectTitle = styled.div`
 
 export const TemaNoEmpezado  = styled.div`
     margin: 0.5em 0 0 0;
-    font-size: 2em;
-    font-weight: 200; 
-    text-align: center;
     font-family: 'Poppins', sans-serif;
+    font-size: 2em;
+    text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;

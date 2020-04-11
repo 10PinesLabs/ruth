@@ -1,13 +1,13 @@
 import React from 'react';
-import {
-  ImagenTema, ImagenTemaContainer,
-} from './TemaItem.styled';
+import {ImagenTema, ImagenTemaContainer,} from './TemaItem.styled';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faLeaf, faLock, faSeedling, faTree} from "@fortawesome/free-solid-svg-icons";
 
 class IconoDuracion extends React.Component {
   tipoImagen = (tema) => {
     switch (tema.obligatoriedad) {
       case 'OBLIGATORIO':
-        return './tema-obligatorio.svg';
+        return faLock;
       case 'NO_OBLIGATORIO':
         return this.tipoDuracion(tema.duracion);
       default:
@@ -18,21 +18,21 @@ class IconoDuracion extends React.Component {
   tipoDuracion = (duracion) => {
     switch (duracion) {
       case 'CORTO':
-        return './tema-corto.svg';
+        return faLeaf;
       case 'MEDIO':
-        return './tema-mediano.svg';
+        return faSeedling;
       case 'LARGO':
-        return './tema-largo.svg';
+        return faTree;
       default:
         return null;
     }
-  }
+  };
 
   render() {
     return (
-            <ImagenTemaContainer>
-                <ImagenTema src={this.tipoImagen(this.props.tema)} />
-            </ImagenTemaContainer>
+      <ImagenTemaContainer>
+        <FontAwesomeIcon icon={this.tipoImagen(this.props.tema)} size={'1x'}/>
+      </ImagenTemaContainer>
     );
   }
 }
