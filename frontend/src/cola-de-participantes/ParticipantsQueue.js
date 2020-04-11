@@ -9,11 +9,11 @@ import ParticipantsCard from './ParticipantsCard';
 
 const ParticipantsQueue = ({ participants = [], isTalking }) => {
 
-  const getQueuedParticipants = () => participants.filter((participant) => participant.inicio === null && !isTalking(participant));
+  const getQueuedParticipants = () => participants.cola;
 
-  const getParticipantsThatAlreadyTalked = () => participants.filter((participant) => participant.inicio !== null && !isTalking(participant));
+  const getParticipantsThatAlreadyTalked = () => participants.pasados;
 
-  const getTalkingParticipant = () => participants.find((participant) => isTalking(participant));
+  const getTalkingParticipant = () => participants.actual;
 
   return (
     <QueueContainer>

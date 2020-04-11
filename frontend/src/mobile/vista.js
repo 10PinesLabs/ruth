@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   faHashtag,
   faMale,
@@ -8,9 +8,9 @@ import {
   faThumbsUp,
   faHandPaper,
 } from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ParticipantsCard from '../cola-de-participantes/ParticipantsCard';
-import {ReactionButton} from './ReactionButton';
+import { ReactionButton } from './ReactionButton';
 import {
   ActionContainerStyle,
   Logo,
@@ -23,12 +23,12 @@ import {
   TemaNoEmpezado,
   TopSectionContainer,
 } from './vista.styled';
-import {ReactionsContainer} from '../components/SubjectReactionsContainer.styled';
-import {tipoDeEvento} from '../store/oradores';
-import {CardInteractionsContainer} from '../components/InteractionsContainer.styled';
-import {reactionTypes} from '../store/reacciones';
-import {reacciones} from './index';
-import {SkeletonCircle, SkeletonLine} from "../skeleton/Skeleton.styled";
+import { ReactionsContainer } from '../components/SubjectReactionsContainer.styled';
+import { tipoDeEvento } from '../store/oradores';
+import { CardInteractionsContainer } from '../components/InteractionsContainer.styled';
+import { reactionTypes } from '../store/reacciones';
+import { SkeletonCircle, SkeletonLine } from '../skeleton/Skeleton.styled';
+import { reacciones } from './actions';
 
 const talkButtonStyle = (pressed, talking) => {
   let background;
@@ -55,7 +55,7 @@ const logoImage = 'https://res-4.cloudinary.com/crunchbase-production/image/uplo
   + '256,f_auto,q_auto:eco/wuhk5weer0fkhmh2oyhv';
 
 const getFontSizeForWindow = () => {
-  const {innerHeight} = window;
+  const { innerHeight } = window;
   if (innerHeight < 590) return '12';
   if (innerHeight < 670) return '14';
   if (innerHeight < 750) return '16';
@@ -73,66 +73,118 @@ const getFontSizeForWindow = () => {
 
 
 const Vista = ({
-                 dispatchEvent, temaEmpezado, title, usuario, queuedParticipants, participant, thumbsDown, thumbsUp, slack, redondear, wannaTalk, isTalking
-               }) => {
+  dispatchEvent,
+  temaEmpezado,
+  title,
+  usuario,
+  queuedParticipants,
+  participant,
+  thumbsDown,
+  thumbsUp,
+  slack,
+  redondear,
+  wannaTalk,
+  isTalking,
+}) => {
   const handleReaction = (nombre, estaReaccionado) => {
     const tipo = estaReaccionado ? reactionTypes.DESREACCIONAR : reactionTypes.REACCIONAR;
-    dispatchEvent({tipo, nombre});
+    dispatchEvent({ tipo, nombre });
   };
 
   const onWannaTalkClick = () => {
-    dispatchEvent({tipo: tipoDeEvento.HABLAR});
+    dispatchEvent({ tipo: tipoDeEvento.LEVANTAR_MANO });
   };
+
+  const amITalking = !!(participant && participant.usuario.email === usuario.email);
 
   const onWannaStopTalkClick = () => {
     const estoyHablando = participant.usuario.email === usuario.email;
-    if (estoyHablando) dispatchEvent({tipo: tipoDeEvento.DEJAR_DE_HABLAR});
-    else dispatchEvent({tipo: tipoDeEvento.DESENCOLAR});
+    if (estoyHablando) dispatchEvent({ tipo: tipoDeEvento.DEJAR_DE_HABLAR });
+    else dispatchEvent({ tipo: tipoDeEvento.DESENCOLAR });
   };
 
   const kickear = () => {
-    dispatchEvent({tipo: tipoDeEvento.KICKEAR, kickearA: participant.usuario})
+    dispatchEvent({ tipo: tipoDeEvento.KICKEAR, kickearA: participant.usuario });
   };
 
   const [showSkeleton, setShowSekelton] = useState(true);
-  useEffect(() => {setTimeout(() => setShowSekelton(false), 1000)}, []);
+  useEffect(() => {
+    setTimeout(() => setShowSekelton(false), 1000);
+  }, []);
 
-  const inQueueIcon = () => {
-    return isTalking? faMicrophoneAlt : faHandPaper;
-  };
+  const inQueueIcon = () => (isTalking ? faMicrophoneAlt : faHandPaper);
+
+  let botonesDeReaccion;
+  if (temaEmpezado) {
+    botonesDeReaccion = (
+      <ReactionsContainer height={6}>
+        <ReactionButton
+          isBig isActive={thumbsUp}
+          isDisabled={thumbsDown} icon={faThumbsUp}
+          onClick={() => handleReaction(reacciones.THUMBS_UP, thumbsUp)}/>
+        <ReactionButton
+          isBig isActive={thumbsDown}
+          isDisabled={thumbsUp} icon={faThumbsDown}
+          onClick={() => handleReaction(reacciones.THUMBS_DOWN, thumbsDown)}/>
+        <ReactionButton
+          isBig isActive={slack} icon={faHashtag}
+          onClick={() => handleReaction(reacciones.SLACK, slack)}/>
+        <ReactionButton
+          isBig isActive={redondear} icon={faSync}
+          onClick={() => handleReaction(reacciones.REDONDEAR, redondear)}/>
+      </ReactionsContainer>
+    );
+  } else {
+    botonesDeReaccion = <TemaNoEmpezado> El tema todavia no empezo </TemaNoEmpezado>;
+  }
+
+  let microphone;
+  if (temaEmpezado) {
+    if (amITalking || wannaTalk) {
+      microphone = <div style={{
+        display: 'flex', flexDirection: '', alignItems: 'center', justifyContent: 'center',
+      }}>
+        <div style={talkButtonStyle(true, false)} onClick={onWannaStopTalkClick}>
+          <FontAwesomeIcon icon={inQueueIcon()} color={'black'} size={'2x'}/>
+        </div>
+        <QueuedParticipants>
+          <span style={{
+            color: 'silver', fontSize: '0.9em', marginRight: '0.3em', fontFamily: "'Poppins', sans-serif",
+          }}> {queuedParticipants} </span>
+          <FontAwesomeIcon icon={faMale} color={'silver'} size={'1x'}/>
+        </QueuedParticipants>
+      </div>;
+    } else {
+      microphone = <div style={talkButtonStyle(false)} onClick={onWannaTalkClick}>
+        <FontAwesomeIcon icon={faHandPaper} color={'gray'} size={'2x'}/>
+      </div>;
+    }
+  } else {
+    microphone = <div style={talkButtonStyle(false)}>
+      <FontAwesomeIcon icon={faHandPaper} color={'#ff3b3b8c'} size={'2x'}/>
+    </div>;
+  }
+
 
   return (
     <MobileUsableArea fontSize={getFontSizeForWindow()}>
       <TopSectionContainer>
         <LogoHeader>
-              <Logo src={logoImage}/>
-              <LogoLabel> Ruth </LogoLabel>
+          <Logo src={logoImage}/>
+          <LogoLabel> Ruth </LogoLabel>
         </LogoHeader>
         <CardInteractionsContainer>
           <SubjectTitle>
-            { showSkeleton ? <SkeletonLine/> : title }
+            {showSkeleton ? <SkeletonLine/> : title}
           </SubjectTitle>
-          {showSkeleton?
-            <ReactionsContainer height={6}>
-              <ReactionSkeleton />
-              <ReactionSkeleton />
-              <ReactionSkeleton />
-              <ReactionSkeleton />
-          </ReactionsContainer>:
-            (temaEmpezado
+          {showSkeleton
             ? <ReactionsContainer height={6}>
-              <ReactionButton isBig isActive={thumbsUp}
-                              isDisabled={thumbsDown} icon={faThumbsUp}
-                              onClick={() => handleReaction(reacciones.THUMBS_UP, thumbsUp)}/>
-              <ReactionButton isBig isActive={thumbsDown}
-                              isDisabled={thumbsUp} icon={faThumbsDown}
-                              onClick={() => handleReaction(reacciones.THUMBS_DOWN, thumbsDown)}/>
-              <ReactionButton isBig isActive={slack} icon={faHashtag}
-                              onClick={() => handleReaction(reacciones.SLACK, slack)}/>
-              <ReactionButton isBig isActive={redondear} icon={faSync}
-                              onClick={() => handleReaction(reacciones.REDONDEAR, redondear)}/>
+              <ReactionSkeleton/>
+              <ReactionSkeleton/>
+              <ReactionSkeleton/>
+              <ReactionSkeleton/>
             </ReactionsContainer>
-            : <TemaNoEmpezado> El tema todavia no empezo </TemaNoEmpezado>)
+            : botonesDeReaccion
           }
         </CardInteractionsContainer>
       </TopSectionContainer>
@@ -142,30 +194,7 @@ const Vista = ({
                           participant={participant}/>
       </ParticipantsContainer>
       <ActionContainerStyle>
-        {
-          showSkeleton? <MicrophoneSkeleton />
-            : (temaEmpezado ? (
-              !wannaTalk
-                ? <div style={talkButtonStyle(false)} onClick={onWannaTalkClick}>
-                    <FontAwesomeIcon icon={faHandPaper} color={'gray'} size={'2x'}/>
-                  </div>
-                :<div style={{
-                  display: 'flex', flexDirection: '', alignItems: 'center', justifyContent: 'center',
-                  }}>
-                    <div style={talkButtonStyle(true, false)} onClick={onWannaStopTalkClick}>
-                      <FontAwesomeIcon icon={inQueueIcon()} color={'black'} size={'2x'}/>
-                    </div>
-                    <QueuedParticipants>
-                      <span style={{
-                        color: 'silver', fontSize: '0.9em', marginRight: '0.3em', fontFamily: "'Poppins', sans-serif",
-                      }}> {queuedParticipants} </span>
-                      <FontAwesomeIcon icon={faMale} color={'silver'} size={'1x'}/>
-                    </QueuedParticipants>
-                </div>)
-            : <div style={talkButtonStyle(false)}>
-              <FontAwesomeIcon icon={faHandPaper} color={'#ff3b3b8c'} size={'2x'}/>
-            </div>)
-        }
+        {showSkeleton ? <MicrophoneSkeleton/> : microphone}
       </ActionContainerStyle>
     </MobileUsableArea>
   );
@@ -173,12 +202,12 @@ const Vista = ({
 
 export default Vista;
 
-const MicrophoneSkeleton = () =>
-  <div style={talkButtonStyle(false)}>
-    <SkeletonCircle />
-  </div>;
+const MicrophoneSkeleton = () => <div style={talkButtonStyle(false)}>
+  <SkeletonCircle/>
+</div>;
 
-const ReactionSkeleton = () =>
-  <div style={{...talkButtonStyle(false), height: '3.5em', width: '3.5em', marginRight: '1em'}}>
-    <SkeletonCircle />
-  </div>;
+const ReactionSkeleton = () => <div style={{
+  ...talkButtonStyle(false), height: '3.5em', width: '3.5em', marginRight: '1em',
+}}>
+  <SkeletonCircle/>
+</div>;

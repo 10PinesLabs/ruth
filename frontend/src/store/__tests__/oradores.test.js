@@ -19,10 +19,10 @@ describe('#oradoresReducer reducer', () => {
     expect(oradoresReducer(state, evento)).toEqual([]);
   });
 
-  describe(`#${tipoDeEvento.HABLAR}`, () => {
+  describe(`#${tipoDeEvento.LEVANTAR_MANO}`, () => {
     beforeEach(() => {
       evento = {
-        type: tipoDeEvento.HABLAR,
+        type: tipoDeEvento.LEVANTAR_MANO,
         fecha: 1,
         usuario: unUsuario,
       };

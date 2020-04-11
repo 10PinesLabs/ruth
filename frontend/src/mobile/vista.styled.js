@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import React from "react";
 
-export const MobileUsableArea = styled.div(({ fontSize }) => `
+export const MobileUsableArea = styled.div`
     width: 100%;
     overflow-y: hidden;
     height: 100%;
@@ -10,8 +9,8 @@ export const MobileUsableArea = styled.div(({ fontSize }) => `
     justify-content: space-between;
     align-items: center;
     background-color: #DDDDDD;
-    font-size: ${fontSize}px;
-`);
+    font-size: ${(props) => props.fontSize}px;
+`;
 
 export const TopSectionContainer = styled.div`
     min-height: 14em;
@@ -89,7 +88,7 @@ export const SubjectTitle = styled.div`
     font-family: 'Poppins', sans-serif;
 `;
 
-export const TemaNoEmpezado  = styled.div`
+export const TemaNoEmpezado = styled.div`
     margin: 0.5em 0 0 0;
     font-size: 2em;
     font-weight: 200; 

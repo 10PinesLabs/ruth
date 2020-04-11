@@ -1,80 +1,93 @@
-import {produce} from 'immer';
+import { produce } from 'immer';
 
 export const tipoDeEvento = {
-  HABLAR: 'Quiero Hablar',
+  LEVANTAR_MANO: 'Quiero Hablar',
   DEJAR_DE_HABLAR: 'Quiero Dejar de Hablar',
   DESENCOLAR: 'Quiero Desencolarme',
-  KICKEAR: 'Kickear al que habla'
+  KICKEAR: 'Kickear al que habla',
 };
 
 
 function hayAlguienHablando(state) {
-  return state.filter((orador) => !orador.fin).length === 0;
+  return state.actual !== null;
 }
 
 function estaEncoladoParaHablar(draft, usuario) {
-  return draft.filter((orador) => orador.fin === null)
-    .some((orador) => orador.usuario.nombre === usuario.nombre);
+  return draft.cola.some((orador) => orador.usuario.nombre === usuario.nombre);
 }
 
-function estaHablando(orador, nombre) {
-  return orador.usuario.nombre === nombre && orador.inicio !== null && orador.fin === null;
+function estaHablando2(draft, nombre) {
+  return draft.actual && draft.actual.usuario.nombre === nombre;
 }
 
-const yaHablo = orador => orador.fin;
+const INITIAL_STATE = {
+  pasados: [],
+  actual: null,
+  cola: [],
+};
 
-export default (state = [], evento) => produce(state, (draft) => {
-  const {usuario, fecha} = evento;
+export default (state = INITIAL_STATE, evento) => produce(state, (draft) => {
+  const { usuario, fecha } = evento;
   switch (evento.type) {
     case tipoDeEvento.KICKEAR: {
-      let proximoOrador = null;
-      if(!evento.kickearA) return;
-      return draft.map((orador, index) => {
-        if (yaHablo(orador)) return orador;
+      if (!estaHablando2(draft, evento.kickearA.nombre)) {
+        return;
+      }
+      const oradorActual = draft.actual;
+      oradorActual.fin = fecha;
+      draft.pasados.push(oradorActual);
 
-        if (index === proximoOrador) {
-          return {...orador, inicio: evento.fecha};
-        }
+      const nextOrador = draft.cola.shift();
+      if (nextOrador === undefined) {
+        draft.actual = null;
+        return;
+      }
 
-        if (estaHablando(orador, evento.kickearA.nombre)) {
-          proximoOrador = index + 1;
-          return {...orador, fin: evento.fecha};
-        }
-
-        return orador;
-      });
-    }
-    case tipoDeEvento.HABLAR:
-      hayAlguienHablando(draft) && draft.push({
-        usuario, inicio: fecha, fin: null,
-      });
-      !estaEncoladoParaHablar(draft, usuario) && draft.push({
-        usuario, inicio: null, fin: null,
-      });
+      nextOrador.inicio = fecha;
+      draft.actual = nextOrador;
       break;
+    }
+    case tipoDeEvento.LEVANTAR_MANO: {
+      // Si la persona ya esta hablando o esta encolado no hacemos nada
+      if (estaEncoladoParaHablar(draft, usuario) || estaHablando2(draft, usuario.nombre)) {
+        return;
+      }
+
+      if (!hayAlguienHablando(draft)) {
+        draft.actual = { usuario, inicio: fecha, fin: null };
+      } else {
+        draft.cola.push({ usuario, inicio: null, fin: null });
+      }
+      break;
+    }
 
     case tipoDeEvento.DESENCOLAR: {
-      if (draft.some((orador) => estaHablando(orador, usuario.nombre) || yaHablo(orador))) return;
-      return draft.filter((orador) => orador.usuario.nombre !== usuario.nombre);
+      if (estaHablando2(draft, usuario.nombre)) {
+        return;
+      }
+      draft.cola = draft.cola.filter((orador) => orador.usuario.nombre !== usuario.nombre);
+      break;
     }
     case tipoDeEvento.DEJAR_DE_HABLAR: {
-      let proximoOrador = null;
+      if (!estaHablando2(draft, usuario.nombre)) {
+        return;
+      }
+      const oradorActual = draft.actual;
+      oradorActual.fin = fecha;
+      draft.pasados.push(oradorActual);
 
-      return draft.map((orador, index) => {
-        if (yaHablo(orador)) return orador;
+      const nextOrador = draft.cola.shift();
+      if (nextOrador === undefined) {
+        draft.actual = null;
+        return;
+      }
 
-        if (index === proximoOrador) {
-          return {...orador, inicio: evento.fecha};
-        }
-
-        if (estaHablando(orador, usuario.nombre)) {
-          proximoOrador = index + 1;
-          return {...orador, fin: evento.fecha};
-        }
-
-        return orador;
-      });
+      nextOrador.inicio = fecha;
+      draft.actual = nextOrador;
+      break;
     }
-    default:
+    default: {
+      break
+    }
   }
 });

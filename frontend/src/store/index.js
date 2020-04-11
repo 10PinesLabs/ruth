@@ -1,5 +1,5 @@
-import {configureStore, createAction, getDefaultMiddleware} from '@reduxjs/toolkit';
-import produce, {setAutoFreeze} from 'immer';
+import { configureStore, createAction, getDefaultMiddleware } from '@reduxjs/toolkit';
+import produce, { setAutoFreeze } from 'immer';
 import oradoresReducer from './oradores';
 import reaccionesReducer from './reacciones';
 import Backend from '../api/backend';
@@ -74,11 +74,6 @@ export const domainReducer = (state = INITIAL_STATE, action) => produce(state, (
       const ahora = new Date(action.fecha).toISOString();
       if (tema.fin === null && tema.inicio !== null) {
         tema.fin = ahora;
-
-        const orador = tema.oradores.find((o) => o.fin === null && o.inicio !== null);
-        if (orador) {
-          orador.fin = ahora;
-        }
       }
       break;
     }
@@ -113,7 +108,7 @@ export const reducer = (state = INITIAL_STATE, action) => produce(state, (draft)
           draft.esperandoEventoId = action.payload;
         }
       } else {
-        console.warn("me llego un evento confirmado mientras no estaba esperando confirmacion...");
+        console.warn('me llego un evento confirmado mientras no estaba esperando confirmacion...');
         console.warn(action);
       }
       break;
@@ -123,7 +118,7 @@ export const reducer = (state = INITIAL_STATE, action) => produce(state, (draft)
         draft.eventosEncolados = [];
         draft.esperandoConfirmacionDeEvento = false;
       } else {
-        console.warn("me llego un evento rechazado mientras no estaba esperando confirmacion...");
+        console.warn('me llego un evento rechazado mientras no estaba esperando confirmacion...');
         console.warn(action);
       }
       break;
@@ -148,7 +143,7 @@ export const reducer = (state = INITIAL_STATE, action) => produce(state, (draft)
       }
 
       const newState = domainReducer(draft, action);
-      return { ...newState, esperandoEventoId, eventosEncolados};
+      return { ...newState, esperandoEventoId, eventosEncolados };
     }
   }
 });
