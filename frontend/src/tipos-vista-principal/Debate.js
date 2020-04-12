@@ -15,7 +15,7 @@ const Debate = ({tema}) => {
       data: tema.reacciones,
     },
     dataLine: {
-      data: tema.reacciones
+      data: tema.reacciones,
     },
   };
   const props = useSpring({opacity: 1, from: {opacity: 0}});

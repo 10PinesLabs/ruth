@@ -7,28 +7,26 @@ import {
 } from './ParticipantsQueue.styled';
 import ParticipantsCard from './ParticipantsCard';
 
-const ParticipantsQueue = ({ participants = [], isTalking }) => {
-
-  const getQueuedParticipants = () => participants.filter((participant) => participant.inicio === null && !isTalking(participant));
-
-  const getParticipantsThatAlreadyTalked = () => participants.filter((participant) => participant.inicio !== null && !isTalking(participant));
-
-  const getTalkingParticipant = () => participants.find((participant) => isTalking(participant));
+const ParticipantsQueue = ({ participants }) => {
+  const queuedParticipants = participants.cola;
+  const participantsThatAlreadyTalked = participants.pasados;
+  const talkingParticipant = participants.actual;
 
   return (
     <QueueContainer>
         <QueuedCardsLeftContainerStyle>
-          { getQueuedParticipants()
+          { queuedParticipants
             .map((participant, index) => <ParticipantsCard
               participant={participant}
               key={index}/>)
           }
         </QueuedCardsLeftContainerStyle>
         <CenterCard>
-          {getTalkingParticipant() && <ParticipantsCard participant={getTalkingParticipant()} isParticipantTalking/>}
+          {talkingParticipant
+          && <ParticipantsCard participant={talkingParticipant} isParticipantTalking/>}
         </CenterCard>
         <QueuedCardsRightContainerStyle>
-          { getParticipantsThatAlreadyTalked().map((participant, index) => <ParticipantsCard
+          { participantsThatAlreadyTalked.map((participant, index) => <ParticipantsCard
 
             participant={participant} key={index}/>)}
         </QueuedCardsRightContainerStyle>

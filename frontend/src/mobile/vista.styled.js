@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import React from "react";
 
-export const MobileUsableArea = styled.div(({ fontSize }) => `
+export const MobileUsableArea = styled.div`
     width: 100%;
     overflow-y: hidden;
     height: 100%;
@@ -10,8 +9,8 @@ export const MobileUsableArea = styled.div(({ fontSize }) => `
     justify-content: space-between;
     align-items: center;
     background-color: #DDDDDD;
-    font-size: ${fontSize}px;
-`);
+    font-size: ${(props) => props.fontSize}px;
+`;
 
 export const TopSectionContainer = styled.div`
     min-height: 14em;
@@ -78,6 +77,7 @@ export const QueuedParticipants = styled.div`
     height: 1em;
     background: linear-gradient(145deg, #c7c7c7, #ececec);
     box-shadow: rgb(130, 130, 130) 4px 4px 10px, rgb(255, 255, 255) -4px -4px 10px;
+    pointer-events: none;
 `;
 
 export const SubjectTitle = styled.div`
@@ -89,7 +89,7 @@ export const SubjectTitle = styled.div`
     font-family: 'Poppins', sans-serif;
 `;
 
-export const TemaNoEmpezado  = styled.div`
+export const TemaNoEmpezado = styled.div`
     margin: 0.5em 0 0 0;
     font-size: 2em;
     font-weight: 200; 

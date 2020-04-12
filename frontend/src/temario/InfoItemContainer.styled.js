@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import {colors, font, sizeBreakpoint} from '../styles/theme';
-import {animated} from 'react-spring';
+import { animated } from 'react-spring';
+import { colors, font } from '../styles/theme';
 
 export const InfoItemContainer = styled.div`
   display:flex;

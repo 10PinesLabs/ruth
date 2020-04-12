@@ -28,7 +28,10 @@ const ParticipantsCard = ({participant, isParticipantTalking, interactive, kicke
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => setShowSekelton(false), 1000)
+    const timeout = setTimeout(() => setShowSekelton(false), 1000)
+    return () => {
+      clearTimeout(timeout);
+    };
   }, []);
 
   return showSkeleton ? <SkeletonComponent interactive isParticipantTalking/> : (participant ? (

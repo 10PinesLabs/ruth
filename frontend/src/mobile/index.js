@@ -1,13 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Vista from './vista';
-
-export const reacciones = {
-  REDONDEAR: '🔄',
-  SLACK: '💬',
-  THUMBS_UP: '👍',
-  THUMBS_DOWN: '👎',
-};
+import { reacciones } from './actions';
 
 const Mobile = ({
   usuario, dispatch, tema, ...props
@@ -29,15 +23,17 @@ const Mobile = ({
 
   return (
     <>
-      <Vista {...props}
+      <Vista
+        {...props}
         usuario={usuario}
-             dispatchEvent={dispatchEvent}
-             wannaTalk={Boolean(tema && tema.oradores.filter((orador) => orador.fin === null).find(esUsuarioActual))}
-             thumbsUp={reaccionoCon(reacciones.THUMBS_UP)}
-             thumbsDown={reaccionoCon(reacciones.THUMBS_DOWN)}
-             slack={reaccionoCon(reacciones.SLACK)}
-             redondear={reaccionoCon(reacciones.REDONDEAR)}
-             tema={tema}/>
+        dispatchEvent={dispatchEvent}
+        wannaTalk={Boolean(tema && tema.oradores.cola.find(esUsuarioActual))}
+        isTalking={Boolean(tema && tema.oradores.actual && esUsuarioActual(tema.oradores.actual))}
+        thumbsUp={reaccionoCon(reacciones.THUMBS_UP)}
+        thumbsDown={reaccionoCon(reacciones.THUMBS_DOWN)}
+        slack={reaccionoCon(reacciones.SLACK)}
+        redondear={reaccionoCon(reacciones.REDONDEAR)}
+        tema={tema}/>
     </>
   );
 };
@@ -46,8 +42,8 @@ const Mobile = ({
 const mapStateToProps = (state) => {
   const tema = state.temas.find((t) => t.fin === null && t.inicio !== null);
   const title = tema && tema.titulo;
-  const participant = tema && tema.oradores && tema.oradores.find((orador) => orador.inicio !== null && orador.fin === null);
-  const queuedParticipants = (tema && tema.oradores && tema.oradores.filter((orador) => orador.inicio === null).length) || 0;
+  const participant = tema && tema.oradores.actual;
+  const queuedParticipants = (tema && tema.oradores.cola.length) || 0;
   return {
     title,
     participant,
