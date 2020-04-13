@@ -4,7 +4,7 @@ import Vista from './vista';
 import { reacciones } from './actions';
 
 const Mobile = ({
-  usuario, dispatch, tema, ...props
+  usuario, dispatch, tema, queuedParticipants, ...props
 }) => {
   const dispatchEvent = (data) => {
     if (tema.id) {
@@ -20,11 +20,15 @@ const Mobile = ({
   };
   const esUsuarioActual = (evento) => evento.usuario.email === usuario.email;
   const reaccionoCon = (reaccion) => Boolean(tema && tema.reacciones.filter((r) => r.nombre === reaccion).find(esUsuarioActual));
+  const remainingParticipantsUpToUser = (queuedParticipants) => {
+    return queuedParticipants.map(participant => participant.usuario.email).indexOf(usuario.email) + 1;
+  };
 
   return (
     <>
       <Vista
         {...props}
+        remainingParticipantsUpToUser={(queuedParticipants && remainingParticipantsUpToUser(queuedParticipants)) || 0}
         usuario={usuario}
         dispatchEvent={dispatchEvent}
         wannaTalk={Boolean(tema && tema.oradores.cola.find(esUsuarioActual))}
@@ -43,7 +47,7 @@ const mapStateToProps = (state) => {
   const tema = state.temas.find((t) => t.fin === null && t.inicio !== null);
   const title = tema && tema.titulo;
   const participant = tema && tema.oradores.actual;
-  const queuedParticipants = (tema && tema.oradores.cola.length) || 0;
+  const queuedParticipants = tema && tema.oradores.cola;
   return {
     title,
     participant,
