@@ -22,6 +22,10 @@ import {
   SubjectTitle,
   TemaNoEmpezado,
   TopSectionContainer,
+  MicrophoneDiv,
+  ParticipantsCounter,
+  TalkButton,
+  ReactionSkeleton,
 } from './vista.styled';
 import { ReactionsContainer } from '../components/SubjectReactionsContainer.styled';
 import { tipoDeEvento } from '../store/oradores';
@@ -29,27 +33,6 @@ import { CardInteractionsContainer } from '../components/InteractionsContainer.s
 import { reactionTypes } from '../store/reacciones';
 import { SkeletonCircle, SkeletonLine } from '../skeleton/Skeleton.styled';
 import { reacciones } from './actions';
-
-const talkButtonStyle = (pressed, talking) => {
-  let background;
-
-  background = 'linear-gradient(145deg, rgb(230, 230, 230), rgb(200, 200, 200)';
-  if (pressed) background = 'linear-gradient(145deg, rgb(114, 181, 114), rgb(205, 255, 205))';
-  if (talking) background = 'linear-gradient(145deg, rgb(114, 181, 114), rgb(205, 255, 205))';
-
-  return {
-    height: '6em',
-    width: '6em',
-    borderRadius: '50%',
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginBottom: '1em',
-    boxShadow: 'rgb(130, 130, 130) 4px 4px 10px, rgb(255, 255, 255) -4px -4px 10px',
-    background,
-  };
-};
 
 const logoImage = 'https://res-4.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_'
   + '256,f_auto,q_auto:eco/wuhk5weer0fkhmh2oyhv';
@@ -140,37 +123,35 @@ const Vista = ({
   if (temaEmpezado) {
     if (isTalking || wannaTalk) {
       if(remainingParticipantsUpToUser){
-        microphone = <div style={{
-          display: 'flex', flexDirection: '', alignItems: 'center', justifyContent: 'center',
-        }}>
-          <div style={talkButtonStyle(true, false)} onClick={onWannaStopTalkClick}>
+        microphone = 
+        <MicrophoneDiv>
+          <TalkButton pressed={true} onClick={onWannaStopTalkClick}>
             <FontAwesomeIcon icon={inQueueIcon()} color={'black'} size={'2x'}/>
-          </div>
+          </TalkButton>
           <QueuedParticipants>
-            <span style={{
-              color: 'silver', fontSize: '0.9em', marginRight: '0.3em', fontFamily: "'Poppins', sans-serif",
-            }}> {remainingParticipantsUpToUser} </span>
+            <ParticipantsCounter> 
+              {remainingParticipantsUpToUser} 
+            </ParticipantsCounter>
             <FontAwesomeIcon icon={faMale} color={'silver'} size={'1x'}/>
           </QueuedParticipants>
-        </div>;
+        </MicrophoneDiv>;
       } else {
-        microphone = <div style={{
-          display: 'flex', flexDirection: '', alignItems: 'center', justifyContent: 'center',
-        }}>
-          <div style={talkButtonStyle(true, false)} onClick={onWannaStopTalkClick}>
+        microphone = 
+        <MicrophoneDiv>
+          <TalkButton pressed={true} onClick={onWannaStopTalkClick}>
             <FontAwesomeIcon icon={inQueueIcon()} color={'black'} size={'2x'}/>
-          </div>
-        </div>;
+          </TalkButton>
+        </MicrophoneDiv>;
       }
     } else {
-      microphone = <div style={talkButtonStyle(false)} onClick={onWannaTalkClick}>
+      microphone = <TalkButton pressed={false} onClick={onWannaTalkClick}>
         <FontAwesomeIcon icon={faHandPaper} color={'gray'} size={'2x'}/>
-      </div>;
+      </TalkButton>;
     }
   } else {
-    microphone = <div style={talkButtonStyle(false)}>
+    microphone = <TalkButton pressed={false}>
       <FontAwesomeIcon icon={faHandPaper} color={'#ff3b3b8c'} size={'2x'}/>
-    </div>;
+    </TalkButton>;
   }
 
 
@@ -187,10 +168,10 @@ const Vista = ({
           </SubjectTitle>
           {showSkeleton
             ? <ReactionsContainer height={6}>
-              <ReactionSkeleton/>
-              <ReactionSkeleton/>
-              <ReactionSkeleton/>
-              <ReactionSkeleton/>
+                <ReactionSkeleton><SkeletonCircle/></ReactionSkeleton>
+                <ReactionSkeleton><SkeletonCircle/></ReactionSkeleton>
+                <ReactionSkeleton><SkeletonCircle/></ReactionSkeleton>
+                <ReactionSkeleton><SkeletonCircle/></ReactionSkeleton>
             </ReactionsContainer>
             : botonesDeReaccion
           }
@@ -202,7 +183,7 @@ const Vista = ({
                           participant={participant}/>
       </ParticipantsContainer>
       <ActionContainerStyle>
-        {showSkeleton ? <MicrophoneSkeleton/> : microphone}
+        {showSkeleton ? <TalkButton pressed={false}><SkeletonCircle/></TalkButton> : microphone}
       </ActionContainerStyle>
     </MobileUsableArea>
   );
@@ -210,12 +191,3 @@ const Vista = ({
 
 export default Vista;
 
-const MicrophoneSkeleton = () => <div style={talkButtonStyle(false)}>
-  <SkeletonCircle/>
-</div>;
-
-const ReactionSkeleton = () => <div style={{
-  ...talkButtonStyle(false), height: '3.5em', width: '3.5em', marginRight: '1em',
-}}>
-  <SkeletonCircle/>
-</div>;

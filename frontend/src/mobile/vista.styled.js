@@ -102,3 +102,46 @@ export const TemaNoEmpezado = styled.div`
     width: 70%;
     font-weight: bold;
 `;
+
+export const MicrophoneDiv = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
+export const ParticipantsCounter = styled.span`
+    color: silver;
+    font-size: 0.9em;
+    margin-right: 0.3em;
+    font-family: 'Poppins', sans-serif;
+
+`;
+
+export const ReactionSkeleton = styled.div`
+    height: 3.5em;
+    width: 3.5em;
+    margin-bottom: 1em;
+    margin-right: 1em;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: rgb(130, 130, 130) 4px 4px 10px, rgb(255, 255, 255) -4px -4px 10px;
+    background: 'linear-gradient(145deg, rgb(230, 230, 230), rgb(200, 200, 200)';
+`;
+
+export const TalkButton = styled.div(({pressed}) => `
+    height: 6em;
+    width: 6em;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1em;
+    box-shadow: rgb(130, 130, 130) 4px 4px 10px, rgb(255, 255, 255) -4px -4px 10px;
+    background: ${pressed? 'linear-gradient(145deg, rgb(114, 181, 114), rgb(205, 255, 205))' :
+    'linear-gradient(145deg, rgb(230, 230, 230), rgb(200, 200, 200))'
+    };
+`);
