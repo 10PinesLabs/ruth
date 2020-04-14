@@ -8,7 +8,7 @@ import Debate from '../tipos-vista-principal/Debate';
 import Temario from '../temario/Temario';
 import Header from "./Header";
 import {useSpring} from "react-spring";
-import Mobile from '../mobile/vista';
+import Mobile from '../mobile/index';
 
 
 const VistaTemas = ({actualizarTema, cerrarReunion, temas, usuario}) => {
