@@ -8,6 +8,7 @@ export const font = {
   p: 'Montserrat, sans-serif',
   sizeP: '1.25rem',
   sizeCountdown: '4.5rem',
+  baseSize: '12px',
 };
 
 export const colors = {
@@ -30,13 +31,12 @@ export const variables = {
   headerHeight: '3rem',
 };
 
-export const translucid = {
-  green: 'rgba(104, 201, 178, 0.7)',
-};
-
 export const sizeBreakpoint = {
-  bigWidth: '1920px',
-  bigHeight: '1080px',
+  small: '768px',
+  medium: '1024px',
+  large: '1366px',
+  xlarge: '1920px',
+  xxlarge: '2560px',
 };
 
 export const sidebar = {

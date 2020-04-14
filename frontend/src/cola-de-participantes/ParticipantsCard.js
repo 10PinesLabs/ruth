@@ -37,7 +37,7 @@ const ParticipantsCard = ({participant, isParticipantTalking, interactive, kicke
   return showSkeleton ? <SkeletonComponent interactive isParticipantTalking/> : (participant ? (
     <CardContainer isInteractive={interactive} isTalking={isParticipantTalking}>
       {interactive && <Cerrar onClick={() => setOpen(true)}/>}
-      <ModalDeConfirmacion title={`¿Estás seguro que queres kickear a ${participant.usuario.nombre}?`}
+      <ModalDeConfirmacion title={`¿Estás seguro que querés kickear a ${participant.usuario.nombre}?`}
                            open={open}
                            confirmText={"Si"}
                            cancelText={"No"}

@@ -39,15 +39,7 @@ export const ElementoContainer = styled.div(({ habilitar }) => `
 export const TitulosSidebar = styled.div`
   font-family: ${font.p};
   font-size:  ${font.sizeP};
-  @media (min-width: ${sizeBreakpoint.bigWidth}), @media (min-height: ${sizeBreakpoint.bigHeight})  {
-    font-size: 1.75rem;
-  }
   text-align: center;
   padding-bottom: 7%;
 `;
 
-export const Titulo = styled.div`
-  font-family: ${font.h1};
-  font-size: 2rem;
-  color: black;
-`;

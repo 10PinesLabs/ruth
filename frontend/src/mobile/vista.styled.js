@@ -65,8 +65,8 @@ export const ActionContainerStyle = styled.div`
 
 export const QueuedParticipants = styled.div`
     position: absolute;
-    top: 90%;
-    right: 20;
+    top: -1.3em;
+    right: -0.5em;
     margin-top: 1em;
     margin-left: 2em;
     display: flex;

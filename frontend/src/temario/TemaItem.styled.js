@@ -12,9 +12,6 @@ export const TemaItemContainer = styled.li`
 export const TituloTema = styled.div`
   font-family: ${font.p};
   font-size:  ${font.sizeP};
-  @media (min-width: ${sizeBreakpoint.bigWidth}), @media (min-height: ${sizeBreakpoint.bigHeight})  {
-    font-size: 2rem;
-  }
   letter-spacing: 1px;
   color: ${props => props.estaSeleccionado ? colors.black10 : colors.viridian};
   transition: color 0.1s ease-in;

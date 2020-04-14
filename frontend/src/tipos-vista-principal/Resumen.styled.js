@@ -12,7 +12,7 @@ export const VistaDelMedioContainer = styled(animated.div)`
 export const Botonera = styled.div` 
     display: flex; 
     flex-direction: column;
-    width: 100%;
+    width: 40%;
 `;
 
 export const BotoneraNavegacionTemas = styled.div` 

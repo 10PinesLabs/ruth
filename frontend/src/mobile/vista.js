@@ -142,15 +142,17 @@ const Vista = ({
       microphone = <div style={{
         display: 'flex', flexDirection: '', alignItems: 'center', justifyContent: 'center',
       }}>
-        <div style={talkButtonStyle(true, false)} onClick={onWannaStopTalkClick}>
-          <FontAwesomeIcon icon={inQueueIcon()} color={'black'} size={'2x'}/>
+        <div style={{ position: 'relative' }}>
+          <div style={talkButtonStyle(true, false)} onClick={onWannaStopTalkClick}>
+            <FontAwesomeIcon icon={inQueueIcon()} color={'black'} size={'2x'}/>
+          </div>
+          <QueuedParticipants>
+            <span style={{
+              color: 'silver', fontSize: '0.9em', marginRight: '0.3em', fontFamily: "'Poppins', sans-serif",
+            }}> {queuedParticipants} </span>
+            <FontAwesomeIcon icon={faMale} color={'silver'} size={'1x'}/>
+          </QueuedParticipants>
         </div>
-        <QueuedParticipants>
-          <span style={{
-            color: 'silver', fontSize: '0.9em', marginRight: '0.3em', fontFamily: "'Poppins', sans-serif",
-          }}> {queuedParticipants} </span>
-          <FontAwesomeIcon icon={faMale} color={'silver'} size={'1x'}/>
-        </QueuedParticipants>
       </div>;
     } else {
       microphone = <div style={talkButtonStyle(false)} onClick={onWannaTalkClick}>
