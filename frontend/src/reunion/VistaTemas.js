@@ -8,10 +8,10 @@ import Debate from '../tipos-vista-principal/Debate';
 import Temario from '../temario/Temario';
 import Header from "./Header";
 import {useSpring} from "react-spring";
-import {Redirect} from "react-router-dom";
+import Mobile from '../mobile/index';
 
 
-const VistaTemas = ({actualizarTema, cerrarReunion, temas}) => {
+const VistaTemas = ({actualizarTema, cerrarReunion, temas, usuario}) => {
 
   const indiceTemaSinFinalizar = temas.findIndex((tema) => tema.fin === null);
   const ultimoTema = temas.length - 1;
@@ -101,12 +101,15 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas}) => {
                cerrarReunion={handleCerrarReunion}
                temaActual={temaSeleccionado}
       />
+
+      {(selectedElement !== 'Opinar' &&
       <Header titulo={temaSeleccionado.titulo}
               segundosRestantes={segundosRestantes()}
               temaActivo={temaActivo()}
-      />
-      <VistaTemaContainer style={propsToAnimate}>
+      />)}
+      <VistaTemaContainer shouldShowHeader={selectedElement !== 'Opinar'} style={propsToAnimate}>
         <VistaSeleccionada tema={temaSeleccionado}
+                           usuario={usuario}
                            terminarTema={terminarTema}
                            empezarTema={empezarTema}
                            temaActivo={temaActivo()}
@@ -126,6 +129,6 @@ const vistas = {
   'Resumen': Resumen,
   'Presentación': Presentacion,
   'Debate': Debate,
-  'Opinar': () => <Redirect to={'/'} />,
+  'Opinar': Mobile,
 };
 export default VistaTemas;

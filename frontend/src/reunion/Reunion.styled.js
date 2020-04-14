@@ -14,5 +14,5 @@ export const VistaTemaContainer = styled(animated.div)`
     display: flex;
     flex: 1;
     width: calc(100% - ${sidebar.width});
-    margin-top: ${header.height};
+    margin-top: ${props => props.shouldShowHeader ? header.height : 0};
 `;
