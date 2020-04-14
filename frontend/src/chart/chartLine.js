@@ -63,17 +63,56 @@ const ChartLine = ({data, inicioTema, tiempoTema = 10}) => {
     },
   });
 
-  const intervaloEnSRefrescoEjeX = 5;
+  const intervaloEnSRefrescoEjeX = 1;
 
+  const [eventos, setEventos] = useState([]);
   const [puntosEjeX, setPuntosEjeX] = useState(0);
-  const [puntosEjeY, setValorPuntosEjeY] = useState(0);
-  const [puntosThumbsUp, setPuntosThumbsUp] = useState([{x: 0, y: 0}]);
+
+  const [puntosAprobaciones, setPuntosAprobaciones] = useState([{x: 0, y: 0}]);
+  const [cantidadAprobaciones, setCantidadAprobaciones] = useState(0);
+
+  const [puntosDesaprobaciones, setPuntosDesaprobaciones] = useState([{x: 0, y: 0}]);
+  const [cantidadDesaprobaciones, setCantidadDesaprobaciones] = useState(0);
+
+  const [puntosRedondeos, setPuntosRedondeos] = useState([{x: 0, y: 0}]);
+  const [cantidadRedondeos, setCantidadRedondeos] = useState(0);
+
+  const [puntosSlack, setPuntosSlack] = useState([{x: 0, y: 0}]);
+  const [cantidadSlack, setCantidadSlack] = useState(0);
+
+  useEffect(() => {
+    const idsEventos = eventos.map(evento => evento.ultimoEventoId);
+    const eventosNuevos = data.data
+      .filter(evento => !idsEventos.includes(evento.ultimoEventoId))
+      .map(evento => ({...evento, procesado: false}));
+    const newArray = eventos.concat(eventosNuevos);
+    setEventos(newArray);
+  }, [data.data]);
+
+  const mapaReacciones = {
+    [reacciones.THUMBS_UP]: {setterCantidad: setCantidadAprobaciones, setterPuntos: setPuntosAprobaciones, cantidad: cantidadAprobaciones, puntos: puntosAprobaciones},
+    [reacciones.THUMBS_DOWN]: {setterCantidad: setCantidadDesaprobaciones, setterPuntos: setPuntosDesaprobaciones, cantidad: cantidadDesaprobaciones, puntos: puntosDesaprobaciones},
+    [reacciones.REDONDEAR]: {setterCantidad: setCantidadRedondeos, setterPuntos: setPuntosRedondeos, cantidad: cantidadRedondeos, puntos: puntosRedondeos},
+    [reacciones.SLACK]: {setterCantidad: setCantidadSlack, setterPuntos: setPuntosSlack, cantidad: cantidadSlack, puntos: puntosSlack}
+  }
 
   useInterval(() => {
     setPuntosEjeX(puntosEjeX + intervaloEnSRefrescoEjeX);
-    puntosEjeX % 100 === 0 && setValorPuntosEjeY(puntosEjeY + 1);
-    setPuntosThumbsUp([...puntosThumbsUp, { x: puntosEjeX, y: puntosEjeY }]);
-    console.log(puntosThumbsUp);
+    const eventosSinProcesar = eventos.filter(evento => !evento.procesado);
+    let nuevoValor;
+    Object.keys(mapaReacciones).forEach( reaccionKey => {
+      let valorASumar = 0;
+      eventosSinProcesar.forEach(evento => {
+        if(evento.nombre === reaccionKey){
+          if(evento.type === 'Reaccionar') valorASumar++;
+          if(evento.type === 'Desreaccionar') valorASumar--;
+        }
+      });
+      nuevoValor = mapaReacciones[reaccionKey].cantidad + valorASumar;
+      mapaReacciones[reaccionKey].setterPuntos([...mapaReacciones[reaccionKey].puntos, { x: puntosEjeX, y: nuevoValor}]);
+      mapaReacciones[reaccionKey].setterCantidad(nuevoValor);
+    });
+    setEventos(eventos.map(evento => ({...evento, procesado: true})));
   }, intervaloEnSRefrescoEjeX * 1000);
 
   const ejeX = Array(tiempoTema * 60 / intervaloEnSRefrescoEjeX)
@@ -85,13 +124,40 @@ const ChartLine = ({data, inicioTema, tiempoTema = 10}) => {
     const datasets = [
       {
         label: reacciones.THUMBS_UP,
-        data: puntosThumbsUp,
+        data: puntosAprobaciones,
         backgroundColor: '#68a1ea',
         pointRadius: 0,
         lineTension: 0,
         borderColor: '#68a1ea',
         fill: false
-      }
+      },
+      {
+        label: reacciones.THUMBS_DOWN,
+        data: puntosDesaprobaciones,
+        backgroundColor: '#ffb3ba',
+        pointRadius: 0,
+        lineTension: 0,
+        borderColor: '#ffb3ba',
+        fill: false
+      },
+      {
+        label: reacciones.SLACK,
+        data: puntosSlack,
+        pointRadius: 0,
+        lineTension: 0,
+        backgroundColor: '#ffdfba',
+        borderColor: '#ffdfba',
+        fill: false
+      },
+      {
+        label: reacciones.REDONDEAR,
+        data: puntosRedondeos,
+        pointRadius: 0,
+        lineTension: 0,
+        backgroundColor: colores.primary,
+        borderColor: colores.primary,
+        fill: false
+      },
     ];
     return ({
       labels: ejeX,
@@ -99,8 +165,8 @@ const ChartLine = ({data, inicioTema, tiempoTema = 10}) => {
     })
   };
 
-
   return (
+
     <ChartlineContainer>
       <Line
         data={formattedData()}
