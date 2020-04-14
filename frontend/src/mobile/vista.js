@@ -121,9 +121,15 @@ const Vista = ({
 
   let microphone;
   if (temaEmpezado) {
-    if (isTalking || wannaTalk) {
-      if(remainingParticipantsUpToUser){
-        microphone = 
+    if (isTalking) {
+      microphone = 
+        <MicrophoneDiv>
+          <TalkButton pressed={true} onClick={onWannaStopTalkClick}>
+            <FontAwesomeIcon icon={inQueueIcon()} color={'black'} size={'2x'}/>
+          </TalkButton>
+        </MicrophoneDiv>;
+    } else if (wannaTalk) {
+      microphone = 
         <MicrophoneDiv>
           <TalkButton pressed={true} onClick={onWannaStopTalkClick}>
             <FontAwesomeIcon icon={inQueueIcon()} color={'black'} size={'2x'}/>
@@ -135,14 +141,6 @@ const Vista = ({
             <FontAwesomeIcon icon={faMale} color={'silver'} size={'1x'}/>
           </QueuedParticipants>
         </MicrophoneDiv>;
-      } else {
-        microphone = 
-        <MicrophoneDiv>
-          <TalkButton pressed={true} onClick={onWannaStopTalkClick}>
-            <FontAwesomeIcon icon={inQueueIcon()} color={'black'} size={'2x'}/>
-          </TalkButton>
-        </MicrophoneDiv>;
-      }
     } else {
       microphone = <TalkButton pressed={false} onClick={onWannaTalkClick}>
         <FontAwesomeIcon icon={faHandPaper} color={'gray'} size={'2x'}/>
