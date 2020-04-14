@@ -40,6 +40,7 @@ class TemasHandler extends React.Component {
 
   render() {
     return <VistaTemas
+      usuario={this.props.usuario}
       temas={this.props.temas}
       actualizarTema={this.requestActualizarTema}
       cerrarReunion={this.cerrarReunion}
