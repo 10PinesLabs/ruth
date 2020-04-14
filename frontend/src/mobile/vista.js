@@ -22,16 +22,15 @@ import {
   SubjectTitle,
   TemaNoEmpezado,
   TopSectionContainer,
-  MicrophoneDiv,
+  MicrophoneContainer,
   ParticipantsCounter,
   TalkButton,
-  ReactionSkeleton,
+  ReactionsContainer,
 } from './vista.styled';
-import { ReactionsContainer } from '../components/SubjectReactionsContainer.styled';
 import { tipoDeEvento } from '../store/oradores';
 import { CardInteractionsContainer } from '../components/InteractionsContainer.styled';
 import { reactionTypes } from '../store/reacciones';
-import { SkeletonCircle, SkeletonLine } from '../skeleton/Skeleton.styled';
+import { SkeletonCircle, SkeletonLine, ReactionSkeletonContainer } from '../skeleton/Skeleton.styled';
 import { reacciones } from './actions';
 
 const logoImage = 'https://res-4.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_'
@@ -123,14 +122,14 @@ const Vista = ({
   if (temaEmpezado) {
     if (isTalking) {
       microphone = 
-        <MicrophoneDiv>
+        <MicrophoneContainer>
           <TalkButton pressed={true} onClick={onWannaStopTalkClick}>
             <FontAwesomeIcon icon={inQueueIcon()} color={'black'} size={'2x'}/>
           </TalkButton>
-        </MicrophoneDiv>;
+        </MicrophoneContainer>;
     } else if (wannaTalk) {
       microphone = 
-        <MicrophoneDiv>
+        <MicrophoneContainer>
           <TalkButton pressed={true} onClick={onWannaStopTalkClick}>
             <FontAwesomeIcon icon={inQueueIcon()} color={'black'} size={'2x'}/>
           </TalkButton>
@@ -140,7 +139,7 @@ const Vista = ({
             </ParticipantsCounter>
             <FontAwesomeIcon icon={faMale} color={'silver'} size={'1x'}/>
           </QueuedParticipants>
-        </MicrophoneDiv>;
+        </MicrophoneContainer>;
     } else {
       microphone = <TalkButton pressed={false} onClick={onWannaTalkClick}>
         <FontAwesomeIcon icon={faHandPaper} color={'gray'} size={'2x'}/>
@@ -166,10 +165,10 @@ const Vista = ({
           </SubjectTitle>
           {showSkeleton
             ? <ReactionsContainer height={6}>
-                <ReactionSkeleton><SkeletonCircle/></ReactionSkeleton>
-                <ReactionSkeleton><SkeletonCircle/></ReactionSkeleton>
-                <ReactionSkeleton><SkeletonCircle/></ReactionSkeleton>
-                <ReactionSkeleton><SkeletonCircle/></ReactionSkeleton>
+                <ReactionSkeletonContainer><SkeletonCircle/></ReactionSkeletonContainer>
+                <ReactionSkeletonContainer><SkeletonCircle/></ReactionSkeletonContainer>
+                <ReactionSkeletonContainer><SkeletonCircle/></ReactionSkeletonContainer>
+                <ReactionSkeletonContainer><SkeletonCircle/></ReactionSkeletonContainer>
             </ReactionsContainer>
             : botonesDeReaccion
           }

@@ -29,7 +29,7 @@ export const SkeletonLine = styled(SSkeletonPulse)`
 `;
 
 export const SkeletonBlock = styled(SSkeletonPulse)`
-  width: 100%
+  width: 100%;
   border-radius: 5px;
 
   &::before {
@@ -46,3 +46,18 @@ export const SkeletonCircle = styled(SSkeletonPulse)`
     color:transparent;
   }
 `;
+
+export const ReactionSkeletonContainer = styled.div`
+    height: 3.5em;
+    width: 3.5em;
+    margin-bottom: 1em;
+    margin-right: 1em;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: rgb(130, 130, 130) 4px 4px 10px, rgb(255, 255, 255) -4px -4px 10px;
+    background: 'linear-gradient(145deg, rgb(230, 230, 230), rgb(200, 200, 200))';
+`;
+

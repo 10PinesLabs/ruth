@@ -103,7 +103,7 @@ export const TemaNoEmpezado = styled.div`
     font-weight: bold;
 `;
 
-export const MicrophoneDiv = styled.div`
+export const MicrophoneContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -117,18 +117,12 @@ export const ParticipantsCounter = styled.span`
 
 `;
 
-export const ReactionSkeleton = styled.div`
-    height: 3.5em;
-    width: 3.5em;
-    margin-bottom: 1em;
-    margin-right: 1em;
-    border-radius: 50%;
+export const ReactionsContainer = styled.div`
     display: flex;
-    justify-content: center;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    box-shadow: rgb(130, 130, 130) 4px 4px 10px, rgb(255, 255, 255) -4px -4px 10px;
-    background: 'linear-gradient(145deg, rgb(230, 230, 230), rgb(200, 200, 200)';
+    justify-content: center;
+    height: ${(props) => props.height}rem;
 `;
 
 export const TalkButton = styled.div(({pressed}) => `
