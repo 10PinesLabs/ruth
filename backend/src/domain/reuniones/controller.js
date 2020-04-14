@@ -13,6 +13,11 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
   },
 
   crear: async (req) => {
+    const ultimaReunion = await repoReuniones.findLastCreated();
+    if(ultimaReunion.abierta){
+      const temasUltimaReunion = await repoTemas.findTemasDeReunion(ultimaReunion.id);
+      return { ...(ultimaReunion.toJSON()), temas: temasUltimaReunion };
+    }
     const { abierta } = req.body;
     const temas = await VotacionDeRoots.getTemasRoots();
     const reunion = await repoReuniones.create({ abierta });
