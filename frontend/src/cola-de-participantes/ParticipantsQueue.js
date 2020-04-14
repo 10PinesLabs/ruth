@@ -7,7 +7,7 @@ import {
 } from './ParticipantsQueue.styled';
 import ParticipantsCard from './ParticipantsCard';
 
-const ParticipantsQueue = ({ participants }) => {
+const ParticipantsQueue = ({ participants, finTema }) => {
   const queuedParticipants = participants.cola;
   const participantsThatAlreadyTalked = participants.pasados;
   const talkingParticipant = participants.actual;
@@ -23,7 +23,7 @@ const ParticipantsQueue = ({ participants }) => {
         </QueuedCardsLeftContainerStyle>
         <CenterCard>
           {talkingParticipant
-          && <ParticipantsCard participant={talkingParticipant} isParticipantTalking/>}
+          && <ParticipantsCard participant={talkingParticipant} isParticipantTalking finTema={finTema}/>}
         </CenterCard>
         <QueuedCardsRightContainerStyle>
           { participantsThatAlreadyTalked.map((participant, index) => <ParticipantsCard
