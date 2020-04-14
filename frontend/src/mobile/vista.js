@@ -130,15 +130,15 @@ const Vista = ({
     } else if (wannaTalk) {
       microphone = 
         <MicrophoneContainer>
-          <TalkButton pressed={true} onClick={onWannaStopTalkClick}>
-            <FontAwesomeIcon icon={inQueueIcon()} color={'black'} size={'2x'}/>
-          </TalkButton>
-          <QueuedParticipants>
-            <ParticipantsCounter> 
-              {remainingParticipantsUpToUser} 
-            </ParticipantsCounter>
-            <FontAwesomeIcon icon={faMale} color={'silver'} size={'1x'}/>
-          </QueuedParticipants>
+            <TalkButton pressed={true} onClick={onWannaStopTalkClick}>
+              <FontAwesomeIcon icon={inQueueIcon()} color={'black'} size={'2x'}/>
+            </TalkButton>
+            <QueuedParticipants>
+              <ParticipantsCounter> 
+                {remainingParticipantsUpToUser} 
+              </ParticipantsCounter>
+              <FontAwesomeIcon icon={faMale} color={'silver'} size={'1x'}/>
+            </QueuedParticipants>
         </MicrophoneContainer>;
     } else {
       microphone = <TalkButton pressed={false} onClick={onWannaTalkClick}>

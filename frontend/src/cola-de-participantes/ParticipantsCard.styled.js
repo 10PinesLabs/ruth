@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {font} from "../styles/theme";
 
 export const CardContainer = styled.div(({isTalking}) => `
   display: flex;
@@ -36,7 +37,7 @@ export const UserAvatar = styled.div(({isTalking, avatar}) => `
 `);
 
 export const CardName = styled.span`
-  font-size: 1.2rem;
+  font-size: ${font.sizeP};
   text-align: center;
   color: black;
 `;

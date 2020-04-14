@@ -33,7 +33,7 @@ export const InfoImage = styled.img`
 `;
 
 export const Texto = styled.p`
-  font-size: 1rem;
+  font-size: ${font.sizeP};
   font-family: ${font.p};
   color: black;;
   margin-top: 1em;

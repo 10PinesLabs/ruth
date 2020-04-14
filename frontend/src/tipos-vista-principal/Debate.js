@@ -7,8 +7,6 @@ import {useSpring} from "react-spring";
 
 const Debate = ({tema}) => {
 
-  const isTalking = (participant) => participant.inicio !== null && participant.fin === null;
-
   const debateData = {
     participants: tema.oradores,
     dataBar: {
@@ -25,7 +23,7 @@ const Debate = ({tema}) => {
         <ChartLine data={debateData.dataLine} inicioTema={tema.inicio}/>
         <ChartBar data={debateData.dataBar}/>
       </GraphsContainer>
-        <ParticipantsQueue participants={debateData.participants} isTalking={isTalking}/>
+        <ParticipantsQueue participants={debateData.participants} finTema={tema.fin}/>
     </SubDebateContainer>
   );
 };
