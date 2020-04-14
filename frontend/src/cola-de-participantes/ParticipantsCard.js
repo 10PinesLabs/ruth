@@ -5,7 +5,7 @@ import getGravatarUrlFor from '../api/gravatar';
 import {SkeletonBlock, SkeletonLine} from "../skeleton/Skeleton.styled";
 import {ModalDeConfirmacion} from "../tipos-vista-principal/Modal";
 
-const ParticipantsCard = ({participant, isParticipantTalking, interactive, kickear}) => {
+const ParticipantsCard = ({participant, isParticipantTalking, interactive, kickear, finTema}) => {
   const estadoOrador = () => {
     if (estaEncolado()) {
       return {detalle: 'encolado'};
@@ -13,7 +13,7 @@ const ParticipantsCard = ({participant, isParticipantTalking, interactive, kicke
     if (hablo()) {
       return {detalle: 'hablo', seconds: Math.ceil((participant.fin - participant.inicio) / 1000)};
     }
-    return {detalle: 'hablando', seconds: Math.ceil((Date.now() - participant.inicio) / 1000)};
+    return {detalle: finTema? 'hablo' : 'hablando', seconds: Math.ceil(((Date.parse(finTema) || Date.now()) - participant.inicio) / 1000)};
   };
 
   const hablo = () => {
