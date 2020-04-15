@@ -5,17 +5,17 @@ import { reacciones } from '../mobile';
 import { colors as colores } from '../styles/theme';
 
 function calculateDataForReaction(data, inicioSeconds, inicioTema, now, reaccion) {
-  const thumbsUpPoints = data.data.map((dataPoint) => ({
+  const reactionPoints = data.data.map((dataPoint) => ({
     x: dataPoint.fecha - inicioSeconds,
     y: dataPoint.reacciones[reaccion] || 0,
   }));
 
-  thumbsUpPoints.unshift({ x: 0, y: 0 });
-  const lastValue = thumbsUpPoints[thumbsUpPoints.length - 1];
+  reactionPoints.unshift({ x: 0, y: 0 });
+  const lastValue = reactionPoints[reactionPoints.length - 1];
   if (lastValue && lastValue.x < (now - inicioSeconds)) {
-    thumbsUpPoints.push({ x: now - inicioSeconds, y: lastValue.y });
+    reactionPoints.push({ x: now - inicioSeconds, y: lastValue.y });
   }
-  return thumbsUpPoints;
+  return reactionPoints;
 }
 
 function colorForReaccion(reaccion) {
@@ -111,7 +111,6 @@ const ChartLine = ({ data, inicioTema, tiempoTema = 10 }) => {
   });
 
   const formattedData = {
-    labelString: 'lalal',
     datasets,
   };
 
