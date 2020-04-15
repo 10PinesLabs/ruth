@@ -1,5 +1,5 @@
-import {produce} from 'immer';
-import {reacciones} from "../mobile";
+import { produce } from 'immer';
+import { reacciones } from '../mobile';
 
 export const reactionTypes = {
   REINICIAR: 'Reiniciar reacciones',
@@ -7,41 +7,59 @@ export const reactionTypes = {
   DESREACCIONAR: 'Desreaccionar',
 };
 
-function yaReacciono(draft, {nombre, usuario}) {
-  return draft.some((reaccion) => reaccion.nombre === nombre
-    && reaccion.usuario.email === usuario.email);
+function conseguiContrapartes(nombre) {
+  switch (nombre) {
+    case reacciones.THUMBS_DOWN:
+      return [reacciones.THUMBS_UP];
+    case reacciones.THUMBS_UP:
+      return [reacciones.THUMBS_DOWN];
+    default:
+      return [];
+  }
 }
 
-export default (state = [], evento) => produce(state, (draft) => {
-    const {nombre, usuario, fecha} = evento;
-    switch (evento.type) {
-      case reactionTypes.REINICIAR: {
-        return draft = [];
-      }
-      case reactionTypes.REACCIONAR: {
+const addIfNotExists = (emails, newEmail) => {
+  const index = emails.indexOf(newEmail);
+  if (index === -1) {
+    emails.push(newEmail);
+  }
+};
 
-        switch (evento.nombre) {
-          case reacciones.THUMBS_UP:
-            return [...draft.filter(r => (r.nombre !== reacciones.THUMBS_DOWN && usuario.email === r.usuario.email)
-              || (usuario.email !== r.usuario.email)), { nombre, usuario, fecha }];
-          case reacciones.THUMBS_DOWN:
-            return [...draft.filter(r => (r.nombre !== reacciones.THUMBS_UP && usuario.email === r.usuario.email) ||
-              (usuario.email !== r.usuario.email)), { nombre, usuario, fecha }];
-          default:
-            !yaReacciono(draft, evento) && draft.push({usuario, nombre, fecha});
+const remove = (emails, newEmail) => {
+  const index = emails.indexOf(newEmail);
+  if (index !== -1) {
+    emails.splice(index, 1);
+  }
+};
+
+export default (state = {}, evento) => produce(state, (draft) => {
+  const { nombre, usuario } = evento;
+  switch (evento.type) {
+    case reactionTypes.REINICIAR: {
+      return {};
+    }
+    case reactionTypes.REACCIONAR: {
+      if (draft[nombre]) {
+        addIfNotExists(draft[nombre], usuario.email);
+      } else {
+        draft[nombre] = [usuario.email];
+      }
+
+      conseguiContrapartes(nombre).forEach((contraparte) => {
+        if (draft[contraparte]) {
+          remove(draft[contraparte], usuario.email);
         }
+      });
+      break;
+    }
+    case reactionTypes.DESREACCIONAR: {
+      if (draft[nombre]) {
+        remove(draft[nombre], usuario.email);
       }
-        break;
-      case
-      reactionTypes.DESREACCIONAR
-      : {
-        if (yaReacciono(draft, evento)) draft = draft.filter((p) => (p.usuario.email !== usuario.email && p.nombre === nombre) || p.nombre !== nombre);
-        return draft;
-      }
-      default: {
-        return draft;
-      }
+      break;
+    }
+    default: {
+      break;
     }
   }
-)
-;
+});
