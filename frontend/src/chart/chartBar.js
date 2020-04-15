@@ -1,6 +1,8 @@
 import React from 'react';
 import {Bar} from 'react-chartjs-2';
 import {ChartlineContainer} from './Chart.styled';
+import {reaccionesIniciales, coloresReacciones, coloresReaccionesHover} from '../mobile/actions';
+import {assign, keys, values} from 'lodash';
 
 class ChartBar extends React.Component {
   graphOptions = () => ({
@@ -45,12 +47,12 @@ class ChartBar extends React.Component {
       }, {});
 
     return {
-      labels: Object.keys(reaccionesPorItem),
+      labels: keys(assign({}, reaccionesIniciales, reaccionesPorItem)),
       datasets: [{
-        data: Object.values(reaccionesPorItem),
-        backgroundColor: '#68a1ea',
-        borderColor: '#68a1ea',
-        hoverBackgroundColor: '#ffdfba'
+        data: values(assign({}, reaccionesIniciales, reaccionesPorItem)),
+        backgroundColor: values(coloresReacciones),
+        borderColor: values(coloresReacciones),
+        hoverBackgroundColor: values(coloresReaccionesHover)
       },
       ],
     };

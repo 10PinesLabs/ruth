@@ -1,8 +1,7 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import { ChartlineContainer } from './Chart.styled';
-import { colors as colores } from '../styles/theme';
-import { reacciones } from '../mobile/actions';
+import { reacciones, coloresReacciones } from '../mobile/actions';
 
 const ChartLine = ({data, inicioTema}) => {
   const graphOptions = () => ({
@@ -62,29 +61,29 @@ const ChartLine = ({data, inicioTema}) => {
       {
         label: reacciones.THUMBS_UP,
         data: intervaloAlQuePertenece(reacciones.THUMBS_UP),
-        backgroundColor: '#68a1ea',
-        borderColor: '#68a1ea',
+        backgroundColor: coloresReacciones.THUMBS_UP,
+        borderColor: coloresReacciones.THUMBS_UP,
         fill: false
       },
       {
         label: reacciones.THUMBS_DOWN,
         data: Object.values(intervaloAlQuePertenece(reacciones.THUMBS_DOWN)),
-        backgroundColor: '#ffb3ba',
-        borderColor: '#ffb3ba',
+        backgroundColor: coloresReacciones.THUMBS_DOWN,
+        borderColor: coloresReacciones.THUMBS_DOWN,
         fill: false
       },
       {
         label: reacciones.SLACK,
         data: intervaloAlQuePertenece(reacciones.SLACK),
-        backgroundColor: '#ffdfba',
-        borderColor: '#ffdfba',
+        backgroundColor: coloresReacciones.SLACK,
+        borderColor: coloresReacciones.SLACK,
         fill: false
       },
       {
         label: reacciones.REDONDEAR,
         data: intervaloAlQuePertenece(reacciones.REDONDEAR),
-        backgroundColor: colores.primary,
-        borderColor: colores.primary,
+        backgroundColor: coloresReacciones.REDONDEAR,
+        borderColor: coloresReacciones.REDONDEAR,
         fill: false
       },
     ];
