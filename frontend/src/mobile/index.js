@@ -19,9 +19,20 @@ const Mobile = ({
     }
   };
   const esUsuarioActual = (evento) => evento.usuario.email === usuario.email;
-  const reaccionoCon = (reaccion) => Boolean(tema && tema.reacciones.filter((r) => r.nombre === reaccion).find(esUsuarioActual));
+
   const remainingParticipantsUpToUser = (queuedParticipants) => {
     return queuedParticipants.map(participant => participant.usuario.email).indexOf(usuario.email) + 1;
+  }
+
+  const reaccionoCon = (reaccion) => {
+    if (!tema) {
+      return false;
+    }
+
+    if (!tema.reacciones[reaccion]) {
+      return false;
+    }
+    return tema.reacciones[reaccion].indexOf(usuario.email) >= 0;
   };
 
   return (

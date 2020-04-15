@@ -6,14 +6,13 @@ import ChartLine from "../chart/chartLine";
 import {useSpring} from "react-spring";
 
 const Debate = ({tema}) => {
-
   const debateData = {
     participants: tema.oradores,
     dataBar: {
       data: tema.reacciones,
     },
     dataLine: {
-      data: tema.reacciones,
+      data: tema.historicoDeReacciones,
     },
   };
   const props = useSpring({opacity: 1, from: {opacity: 0}});
