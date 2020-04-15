@@ -7,13 +7,11 @@ import backend from './api/backend';
 import './toast.css';
 import { ReduxWebSocketWrapper } from './ReduxWebSocketWrapper';
 import Mobile from './mobile';
-import Oradores from './oradores';
-import TestChart from './chart';
 import TemasHandler from './reunion/TemasHandler';
 import NotFound from "./common-pages/NotFound";
 import Loading from "./common-pages/Loading";
 
-const App = ({ location, usuario }) => {
+const App = ({ usuario }) => {
   const [reunion, setReunion] = useState();
 
   useEffect(() => {
@@ -51,8 +49,6 @@ const App = ({ location, usuario }) => {
     <ReduxWebSocketWrapper reunion={reunion} usuario={usuario}>
       <Switch>
         <Route exact path="/" component={() => <Mobile usuario={usuario}/>}/>
-        <Route exact path="/oradores" component={Oradores}/>
-        <Route exact path="/chart" component={TestChart}/>
         <Route exact path="/presentador" component={() => <TemasHandler usuario={usuario} />} />
         <Route path="*" component={props => <NotFound {...props} />} />
       </Switch>
