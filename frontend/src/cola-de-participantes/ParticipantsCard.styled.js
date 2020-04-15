@@ -16,8 +16,15 @@ export const CardContainer = styled.div(({isTalking}) => `
   position:relative;
 `);
 
-export const CardInfoContainer = styled.div`
+export const CardInfoFooter = styled.div`
+  display: inline-flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
   position: relative;
+`;
+
+export const CardInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,16 +36,7 @@ export const CardInfoContainer = styled.div`
 
 export const TalkingAnimationContainer = styled.div`
   position: absolute;
-  left: -10%;
-  top: 55%;
-  border: 1px solid darkgray;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 3em;
-  height: 3em;
-  background-color: white;
-  border-radius: 50%;
+  left: 5%;
 `;
 
 export const UserAvatar = styled.div(({isTalking, avatar}) => `

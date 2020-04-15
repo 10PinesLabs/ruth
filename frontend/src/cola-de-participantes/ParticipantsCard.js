@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ParticipantCounter from './ParticipantCounter';
-import { CardContainer, CardInfoContainer, CardName, Cerrar, TalkingAnimationContainer, UserAvatar, } from './ParticipantsCard.styled';
+import { CardContainer, CardInfoContainer, CardInfoFooter, CardName, Cerrar, TalkingAnimationContainer, UserAvatar, } from './ParticipantsCard.styled';
 import getGravatarUrlFor from '../api/gravatar';
 import { SkeletonBlock, SkeletonLine } from "../skeleton/Skeleton.styled";
 import { ModalDeConfirmacion } from "../tipos-vista-principal/Modal";
@@ -50,8 +50,10 @@ const ParticipantsCard = ({ participant, isParticipantTalking, interactive, kick
       <UserAvatar isTalking={ isParticipantTalking } avatar={ getGravatarUrlFor(participant.usuario.email) }/>
       <CardInfoContainer>
         <CardName isInteractive={ interactive }> { participant.usuario.nombre } </CardName>
-        <ParticipantCounter isInteractive={ interactive } estadoOrador={ estadoOrador() }/>
-        { isParticipantTalking && <TalkingAnimation/> }
+        <CardInfoFooter>
+          { isParticipantTalking && <TalkingAnimation/> }
+          <ParticipantCounter isInteractive={ interactive } estadoOrador={ estadoOrador() }/>
+        </CardInfoFooter>
       </CardInfoContainer>
     </CardContainer>
   ) : <div> Nadie esta hablando</div> );
@@ -61,7 +63,7 @@ export default ParticipantsCard;
 
 const TalkingAnimation = () => (
   <TalkingAnimationContainer>
-    <BeatLoader size="0.6em" color={ colors.primary }/>
+    <BeatLoader size="0.3em" color={ colors.darkRed }/>
   </TalkingAnimationContainer>
 )
 
