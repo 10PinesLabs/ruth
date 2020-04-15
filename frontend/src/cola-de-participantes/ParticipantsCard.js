@@ -34,7 +34,7 @@ const ParticipantsCard = ({participant, isParticipantTalking, interactive, kicke
     };
   }, []);
 
-  return showSkeleton ? <SkeletonComponent interactive isParticipantTalking/> : (participant ? (
+  return showSkeleton ? <SkeletonComponent interactive isParticipantTalking={isParticipantTalking}/> : (participant ? (
     <CardContainer isInteractive={interactive} isTalking={isParticipantTalking}>
       {interactive && <Cerrar onClick={() => setOpen(true)}/>}
       <ModalDeConfirmacion title={`¿Estás seguro que querés kickear a ${participant.usuario.nombre}?`}
