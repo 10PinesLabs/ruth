@@ -1,6 +1,7 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import { ChartlineContainer } from './Chart.styled';
+import { colorForReaccion, colorForReaccionDarker, reaccionesVisibles } from '../mobile/actions';
 
 class ChartBar extends React.Component {
   graphOptions = () => ({
@@ -37,15 +38,15 @@ class ChartBar extends React.Component {
   });
 
   formattedData = () => {
-    const reacciones = Object.keys(this.props.data.data);
+    const reacciones = reaccionesVisibles;
 
     return {
       labels: reacciones,
       datasets: [{
-        data: reacciones.map((reaccion) => this.props.data.data[reaccion].length),
-        backgroundColor: '#68a1ea',
-        borderColor: '#68a1ea',
-        hoverBackgroundColor: '#ffdfba',
+        data: reacciones.map((reaccion) => (this.props.data.data[reaccion] || []).length),
+        backgroundColor: reacciones.map(colorForReaccion),
+        borderColor: reacciones.map(colorForReaccion),
+        hoverBackgroundColor: reacciones.map(colorForReaccionDarker),
       },
       ],
     };
