@@ -49,13 +49,15 @@ export class ReconnectingWebSocket {
   }
 }
 
-export const ReduxWebSocketWrapper = (props) => {
+export function useRuthConnectedStore(reunion) {
   const [store, setStore] = useState();
 
   useEffect(() => {
+    if (!reunion) {
+      return;
+    }
     const ws = new ReconnectingWebSocket();
     const newStore = createStore();
-    const { reunion } = props;
     newStore.dispatch({
       type: 'Empezar Reunion', comesFromWS: true, reunion, temas: reunion.temas,
     });
@@ -65,16 +67,6 @@ export const ReduxWebSocketWrapper = (props) => {
     };
     ws.reconnect();
     setStore(newStore);
-  }, [props]);
-
-  if (!store) {
-    return <Loading/>;
-  }
-
-
-  return (
-    <Provider store={store}>
-      {props.children}
-    </Provider>
-  );
-};
+  }, [reunion]);
+  return store;
+}

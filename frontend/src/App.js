@@ -5,11 +5,12 @@ import GlobalStyle from './GlobalStyle.styled';
 import EmpezarReunion from './empezar-reunion/EmpezarReunion';
 import backend from './api/backend';
 import './toast.css';
-import { ReduxWebSocketWrapper } from './ReduxWebSocketWrapper';
+import { useRuthConnectedStore } from './ReduxWebSocketWrapper';
 import Mobile from './mobile';
 import TemasHandler from './reunion/TemasHandler';
-import NotFound from "./common-pages/NotFound";
-import Loading from "./common-pages/Loading";
+import NotFound from './common-pages/NotFound';
+import Loading from './common-pages/Loading';
+import { Provider } from 'react-redux';
 
 const App = ({ usuario }) => {
   const [reunion, setReunion] = useState();
@@ -22,6 +23,8 @@ const App = ({ usuario }) => {
     fetchData();
   }, []);
 
+  const store = useRuthConnectedStore(reunion);
+
   const handleReunionIniciada = (nuevaReunion) => {
     setReunion(nuevaReunion);
   };
@@ -32,7 +35,7 @@ const App = ({ usuario }) => {
     transition: Slide,
   });
 
-  if (!reunion) {
+  if (!reunion || !store) {
     return <Loading />;
   }
 
@@ -46,13 +49,13 @@ const App = ({ usuario }) => {
 
   return <>
     <GlobalStyle/>
-    <ReduxWebSocketWrapper reunion={reunion} usuario={usuario}>
+    <Provider store={store}>
       <Switch>
         <Route exact path="/" component={() => <Mobile usuario={usuario}/>}/>
         <Route exact path="/presentador" component={() => <TemasHandler usuario={usuario} />} />
-        <Route path="*" component={props => <NotFound {...props} />} />
+        <Route path="*" component={NotFound} />
       </Switch>
-    </ReduxWebSocketWrapper>
+    </Provider>
   </>;
 };
 
