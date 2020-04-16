@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { ChartlineContainer } from './Chart.styled';
-import { colors as colores } from '../styles/theme';
-import { reacciones } from '../mobile/actions';
+import { colorForReaccion, reacciones } from '../mobile/actions';
 
 function calculateDataForReaction(data, inicioSeconds, inicioTema, now, reaccion) {
   const reaccionPoints = data.data.map((dataPoint) => ({
@@ -16,26 +15,6 @@ function calculateDataForReaction(data, inicioSeconds, inicioTema, now, reaccion
     reaccionPoints.push({ x: now - inicioSeconds, y: lastValue.y });
   }
   return reaccionPoints;
-}
-
-function colorForReaccion(reaccion) {
-  switch (reaccion) {
-    case reacciones.THUMBS_UP: {
-      return '#68a1ea';
-    }
-    case reacciones.THUMBS_DOWN: {
-      return '#ffb3ba';
-    }
-    case reacciones.SLACK: {
-      return '#ffdfba';
-    }
-    case reacciones.REDONDEAR: {
-      return colores.primary;
-    }
-    default: {
-      return 'black';
-    }
-  }
 }
 
 const REFRESH_RATE = 10000;
