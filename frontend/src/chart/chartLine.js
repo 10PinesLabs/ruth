@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { ChartlineContainer } from './Chart.styled';
-import { colors as colores } from '../styles/theme';
-import { reacciones } from '../mobile/actions';
+import { colorForReaccion, reacciones } from '../mobile/actions';
 
-const ChartLine = ({data, inicioTema}) => {
+function calculateDataForReaction(data, inicioSeconds, inicioTema, now, reaccion) {
+  const reaccionPoints = data.data.map((dataPoint) => ({
+    x: dataPoint.fecha - inicioSeconds,
+    y: dataPoint.reacciones[reaccion] || 0,
+  }));
+
+  reaccionPoints.unshift({ x: 0, y: 0 });
+  const lastValue = reaccionPoints[reaccionPoints.length - 1];
+  if (lastValue && lastValue.x < (now - inicioSeconds)) {
+    reaccionPoints.push({ x: now - inicioSeconds, y: lastValue.y });
+  }
+  return reaccionPoints;
+}
+
+const REFRESH_RATE = 10000;
+const ChartLine = ({ data, inicioTema, tiempoTema = 10 }) => {
   const graphOptions = () => ({
     layout: {
       padding: {
@@ -18,13 +32,18 @@ const ChartLine = ({data, inicioTema}) => {
       display: true,
       position: 'bottom',
       labels: {
-        fontSize: 20
+        fontSize: 20,
       },
     },
     scales: {
       xAxes: [{
+        type: 'linear',
+        position: 'bottom',
         ticks: {
-          fontSize: 20,
+          callback: (value, index, values) => {
+            const minutosDesdeInicio = Math.floor(value / 1000 / 60);
+            return `${minutosDesdeInicio}m`;
+          },
         },
       }],
       yAxes: [
@@ -42,62 +61,42 @@ const ChartLine = ({data, inicioTema}) => {
     },
   });
 
-  const intervalos = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
-  const intervaloAlQuePertenece = (nombreDeReaccion) => {
-    const dataCasiCompleta = data.data
-      .filter(reaccion => reaccion.nombre === nombreDeReaccion)
-      .map(reaccion => reaccion.fecha)
-      .reduce((acc, fecha) => {
-        const intervaloReal = (fecha - Date.parse(inicioTema))/60000;
-        const intervalo = intervalos.find(int => int >= intervaloReal);
-        acc[intervalo] = (acc[intervalo] || 0) + 1;
-        return acc;
-      }, {});
-    return intervalos.map(intervalo => dataCasiCompleta[intervalo] || 0);
-  };
+  const inicioSeconds = new Date(inicioTema).valueOf();
 
-  const formattedData = () => {
+  const [now, setNow] = useState(new Date().valueOf());
 
-    const datasets = [
-      {
-        label: reacciones.THUMBS_UP,
-        data: intervaloAlQuePertenece(reacciones.THUMBS_UP),
-        backgroundColor: '#68a1ea',
-        borderColor: '#68a1ea',
-        fill: false
-      },
-      {
-        label: reacciones.THUMBS_DOWN,
-        data: Object.values(intervaloAlQuePertenece(reacciones.THUMBS_DOWN)),
-        backgroundColor: '#ffb3ba',
-        borderColor: '#ffb3ba',
-        fill: false
-      },
-      {
-        label: reacciones.SLACK,
-        data: intervaloAlQuePertenece(reacciones.SLACK),
-        backgroundColor: '#ffdfba',
-        borderColor: '#ffdfba',
-        fill: false
-      },
-      {
-        label: reacciones.REDONDEAR,
-        data: intervaloAlQuePertenece(reacciones.REDONDEAR),
-        backgroundColor: colores.primary,
-        borderColor: colores.primary,
-        fill: false
-      },
-    ];
-    return ({
-      labels: intervalos.map(intervalo => intervalo + `'`),
-      datasets
-    })
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setNow(new Date().valueOf());
+    }, REFRESH_RATE);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  const datasets = Object.values(reacciones).map((reaccion) => {
+    const rawData = calculateDataForReaction(data, inicioSeconds, inicioTema, now, reaccion);
+    const color = colorForReaccion(reaccion);
+    return {
+      label: reaccion,
+      data: rawData,
+      backgroundColor: color,
+      borderColor: color,
+      pointRadius: 0,
+      lineTension: 0,
+      fill: false,
+      steppedLine: 'before',
+    };
+  });
+
+  const formattedData = {
+    datasets,
   };
 
   return (
     <ChartlineContainer>
       <Line
-        data={formattedData()}
+        data={formattedData}
         options={graphOptions()}
       />
     </ChartlineContainer>
