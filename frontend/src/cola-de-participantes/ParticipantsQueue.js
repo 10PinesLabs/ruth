@@ -27,7 +27,6 @@ const ParticipantsQueue = ({ participants, finTema }) => {
         </CenterCard>
         <QueuedCardsRightContainerStyle>
           { participantsThatAlreadyTalked.map((participant, index) => <ParticipantsCard
-
             participant={participant} key={index}/>)}
         </QueuedCardsRightContainerStyle>
     </QueueContainer>

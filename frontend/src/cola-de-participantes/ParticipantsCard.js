@@ -39,15 +39,15 @@ const ParticipantsCard = ({ participant, isParticipantTalking, interactive, kick
     };
   }, []);
 
-  return showSkeleton ? <SkeletonComponent interactive isParticipantTalking/> : ( participant ? (
-    <CardContainer isInteractive={ interactive } isTalking={ isParticipantTalking }>
-      { interactive && <Cerrar onClick={ () => setOpen(true) }/> }
-      <ModalDeConfirmacion title={ `¿Estás seguro que querés kickear a ${ participant.usuario.nombre }?` }
-                           open={ open }
-                           confirmText={ "Si" }
-                           cancelText={ "No" }
-                           onClose={ () => setOpen(false) } onConfirm={ kickear }/>
-      <UserAvatar isTalking={ isParticipantTalking } avatar={ getGravatarUrlFor(participant.usuario.email) }/>
+  return showSkeleton ? <SkeletonComponent interactive isParticipantTalking={isParticipantTalking}/> : (participant ? (
+    <CardContainer isInteractive={interactive} isTalking={isParticipantTalking}>
+      {interactive && <Cerrar onClick={() => setOpen(true)}/>}
+      <ModalDeConfirmacion title={`¿Estás seguro que querés kickear a ${participant.usuario.nombre}?`}
+                           open={open}
+                           confirmText={"Si"}
+                           cancelText={"No"}
+                           onClose={() => setOpen(false)} onConfirm={kickear}/>
+      <UserAvatar isTalking={isParticipantTalking} avatar={getGravatarUrlFor(participant.usuario.email)}/>
       <CardInfoContainer>
         <CardName isInteractive={ interactive }> { participant.usuario.nombre } </CardName>
         <CardInfoFooter>

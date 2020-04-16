@@ -1,8 +1,8 @@
 // eslint-disable no-console
 import React, { useEffect, useState } from 'react';
-import { Provider } from 'react-redux';
+import { batch, Provider } from 'react-redux';
 import createStore from './store';
-import Loading from "./common-pages/Loading";
+import Loading from './common-pages/Loading';
 
 function getWebSocket(lastEvent) {
   const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
@@ -29,31 +29,35 @@ export class ReconnectingWebSocket {
     };
 
     this.websocket.onmessage = (mensaje) => {
-      JSON.parse(mensaje.data).forEach((rawEvento) => {
-        const { data, ...evento } = rawEvento;
-        const { tipo, ...rawEvent } = data;
-        const nextEvent = {
-          ...evento, ...rawEvent, comesFromWS: true, type: tipo,
-        };
+      batch(() => {
+        JSON.parse(mensaje.data).forEach((rawEvento) => {
+          const { data, ...evento } = rawEvento;
+          const { tipo, ...rawEvent } = data;
+          const nextEvent = {
+            ...evento, ...rawEvent, comesFromWS: true, type: tipo,
+          };
 
-        if (this.onmessage) {
-          this.onmessage(nextEvent);
-        } else {
-          console.error('got message but onmessage was not set');
-        }
-        this.lastEvent = nextEvent.id;
+          if (this.onmessage) {
+            this.onmessage(nextEvent);
+          } else {
+            console.error('got message but onmessage was not set');
+          }
+          this.lastEvent = nextEvent.id;
+        });
       });
     };
   }
 }
 
-export const ReduxWebSocketWrapper = (props) => {
+export function useRuthConnectedStore(reunion) {
   const [store, setStore] = useState();
 
   useEffect(() => {
+    if (!reunion) {
+      return;
+    }
     const ws = new ReconnectingWebSocket();
     const newStore = createStore();
-    const { reunion } = props;
     newStore.dispatch({
       type: 'Empezar Reunion', comesFromWS: true, reunion, temas: reunion.temas,
     });
@@ -63,16 +67,6 @@ export const ReduxWebSocketWrapper = (props) => {
     };
     ws.reconnect();
     setStore(newStore);
-  }, [props]);
-
-  if (!store) {
-    return <Loading/>;
-  }
-
-
-  return (
-    <Provider store={store}>
-      {props.children}
-    </Provider>
-  );
-};
+  }, [reunion]);
+  return store;
+}
