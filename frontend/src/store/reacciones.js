@@ -32,11 +32,13 @@ const remove = (emails, newEmail) => {
   }
 };
 
-export default (state = {}, evento) => produce(state, (draft) => {
+export const INITIAL_REACCIONES_STATE = {};
+
+export default (state = INITIAL_REACCIONES_STATE, evento) => produce(state, (draft) => {
   const { nombre, usuario } = evento;
   switch (evento.type) {
     case reactionTypes.REINICIAR: {
-      return {};
+      return INITIAL_REACCIONES_STATE;
     }
     case reactionTypes.REACCIONAR: {
       if (draft[nombre]) {

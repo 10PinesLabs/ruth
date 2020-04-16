@@ -1,107 +1,125 @@
-import reaccionesReducer, { reactionTypes } from '../reacciones';
+import reaccionesReducer, { INITIAL_REACCIONES_STATE, reactionTypes } from '../reacciones';
 import { reacciones } from '../../mobile/actions';
 
-const unUsuario = {
-  email: 'unEmail@email',
-  nombre: 'Un Email',
-};
-const reaccion = (reaccion, usuario) => ({ nombre: reaccion, usuario });
+const elEmail = (n) => `unEmail${n || ''}`;
+
+const elUsuario = (n) => ({
+  nombre: `Alguien${` ${n}` || ''}`,
+  email: elEmail(n),
+});
+
 
 describe('reaccionesReducer', () => {
   let state;
-  let evento;
+  let fakeFecha;
+
+  beforeEach(() => {
+    fakeFecha = 1;
+    state = INITIAL_REACCIONES_STATE;
+  });
+  const applyEvento = (ev) => {
+    state = reaccionesReducer(state, ev);
+    fakeFecha += 1;
+  };
+
+  const conseguirFecha = () => fakeFecha;
+
+  const reaccionar = (nombre, usuario, fecha) => ({
+    type: reactionTypes.REACCIONAR,
+    fecha: fecha || conseguirFecha(),
+    usuario,
+    nombre,
+  });
+
+  const desreaccionar = (nombre, usuario, fecha) => ({
+    type: reactionTypes.DESREACCIONAR,
+    fecha: fecha || conseguirFecha(),
+    usuario,
+    nombre,
+  });
+
+  const reiniciar = (usuario, fecha) => ({
+    type: reactionTypes.REINICIAR,
+    fecha: fecha || conseguirFecha(),
+    usuario,
+  });
 
   describe(`#${reactionTypes.REINICIAR}`, () => {
-    beforeEach(() => {
-      evento = {
-        type: reactionTypes.REINICIAR,
-      };
-      state = [reaccion('unaReaccion', unUsuario), reaccion('otraReaccion', unUsuario)];
-    });
-
     it('reinicia todas las acciones', () => {
-      expect(reaccionesReducer(state, evento)).toEqual([]);
+      applyEvento(reiniciar(elUsuario(1)));
+
+      expect(state).toEqual(INITIAL_REACCIONES_STATE);
     });
   });
 
   describe(`#${reactionTypes.REACCIONAR}`, () => {
-    beforeEach(() => {
-      evento = {
-        type: reactionTypes.REACCIONAR,
-        nombre: 'unaReaccion',
-        usuario: unUsuario,
-      };
-      state = [];
-    });
-
     it('si el usuario no envio esa reaccion, la agrega', () => {
-      expect(reaccionesReducer(state, evento)).toEqual([reaccion('unaReaccion', unUsuario)]);
+      applyEvento(reaccionar('x', elUsuario()));
+
+      expect(state).toEqual({
+        x: [elEmail()],
+      });
     });
 
     it('si el usuario reacciona mas de una vez, no hace nada', () => {
-      state = reaccionesReducer(state, evento);
-      expect(reaccionesReducer(state, evento)).toEqual([reaccion('unaReaccion', unUsuario)]);
+      applyEvento(reaccionar('x', elUsuario()));
+      const oldState = state;
+      applyEvento(reaccionar('x', elUsuario()));
+
+      expect(state).toEqual(oldState);
     });
 
     describe(`#${reacciones.THUMBS_UP}`, () => {
-      beforeEach(() => {
-        evento = {
-          type: reactionTypes.REACCIONAR,
-          nombre: reacciones.THUMBS_UP,
-          usuario: unUsuario,
-        };
-        state = reaccionesReducer([], {...evento, nombre: reacciones.THUMBS_DOWN});
-      });
-
       it('si hay un thumbs down previamenete, deberia sacarlo', () => {
-        expect(reaccionesReducer(state, evento)).toEqual([reaccion(reacciones.THUMBS_UP, unUsuario)]);
+        applyEvento(reaccionar(reacciones.THUMBS_DOWN, elUsuario()));
+        applyEvento(reaccionar(reacciones.THUMBS_UP, elUsuario()));
+
+        expect(state).toEqual({
+          [reacciones.THUMBS_DOWN]: [],
+          [reacciones.THUMBS_UP]: [elEmail()],
+        });
       });
 
       it('si un usuario reacciona y habia reacciones de otros usuarios, no deberian ser borradas', () => {
-        state = reaccionesReducer(state, {...evento, usuario: {nombre: 'otro', email: 'reotro'}});
-        state = reaccionesReducer(state, {...evento, usuario: {nombre: 'otroV', email: 'reotro2'}});
-        expect(reaccionesReducer(state, evento)).toEqual([
-          reaccion(reacciones.THUMBS_UP, {nombre: 'otro', email: 'reotro'} ),
-          reaccion(reacciones.THUMBS_UP, {nombre: 'otroV', email: 'reotro2'}),
-          reaccion(reacciones.THUMBS_UP, unUsuario)]);
+        applyEvento(reaccionar(reacciones.THUMBS_UP, elUsuario(2)));
+
+        applyEvento(reaccionar(reacciones.THUMBS_UP, elUsuario(3)));
+
+        expect(state).toEqual({
+          [reacciones.THUMBS_UP]: [elEmail(2), elEmail(3)],
+        });
       });
     });
 
     describe(`#${reacciones.THUMBS_DOWN}`, () => {
-      beforeEach(() => {
-        evento = {
-          type: reactionTypes.REACCIONAR,
-          nombre: reacciones.THUMBS_DOWN,
-          usuario: unUsuario,
-        };
-        state = reaccionesReducer([], {...evento, nombre: reacciones.THUMBS_UP});
-      });
-
       it('si hay un thumbs up previamenete, deberia sacarlo', () => {
-        expect(reaccionesReducer(state, evento)).toEqual([reaccion(reacciones.THUMBS_DOWN, unUsuario)]);
-      });
+        applyEvento(reaccionar(reacciones.THUMBS_UP, elUsuario()));
 
+        applyEvento(reaccionar(reacciones.THUMBS_DOWN, elUsuario()));
+
+        expect(state).toEqual({
+          [reacciones.THUMBS_UP]: [],
+          [reacciones.THUMBS_DOWN]: [elEmail()],
+        });
+      });
     });
   });
 
   describe(`#${reactionTypes.DESREACCIONAR}`, () => {
-    beforeEach(() => {
-      evento = {
-        type: reactionTypes.DESREACCIONAR,
-        usuario: unUsuario,
-        nombre: 'unaReaccion',
-      };
-      state = [];
-    });
-
     it('si el usuario ya habia reaccionado, quita la reaccion', () => {
-      state = [reaccion('unaReaccion', unUsuario), reaccion('otraReaccion', unUsuario)];
-      expect(reaccionesReducer(state, evento)).toEqual([reaccion('otraReaccion', unUsuario)]);
+      applyEvento(reaccionar(reacciones.SLACK, elUsuario()));
+
+      applyEvento(desreaccionar(reacciones.SLACK, elUsuario()));
+
+      expect(state).toEqual({
+        [reacciones.SLACK]: [],
+      });
     });
 
     it('si el usuario no habia reaccionado, no hace nada', () => {
-      state = [reaccion('unaReaccion', { nombre: 'alguien', email: 'otroEmail' })];
-      expect(reaccionesReducer(state, evento)).toEqual([reaccion('unaReaccion', { nombre: 'alguien', email: 'otroEmail' })]);
+      applyEvento(desreaccionar(reacciones.SLACK, elUsuario()));
+
+      expect(state).toEqual({});
     });
   });
 });
