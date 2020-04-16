@@ -29,22 +29,27 @@ const App = ({ usuario }) => {
     setReunion(nuevaReunion);
   };
 
-  toast.configure({
-    position: toast.POSITION.BOTTOM_CENTER,
-    autoClose: 5000,
-    transition: Slide,
-  });
+  useEffect(() => {
+    toast.configure({
+      position: toast.POSITION.BOTTOM_CENTER,
+      autoClose: 5000,
+      transition: Slide,
+    });
+  }, []);
 
-  if (!reunion || !store) {
+  if (!reunion) {
     return <Loading />;
   }
-
 
   if (reunion.abierta !== true) {
     return <>
       <GlobalStyle/>
       <EmpezarReunion {...reunion} handleReunionIniciada={handleReunionIniciada}/>)}/>
     </>;
+  }
+
+  if (!store) {
+    return <Loading />;
   }
 
   return <>
