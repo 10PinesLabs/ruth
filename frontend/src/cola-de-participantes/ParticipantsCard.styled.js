@@ -14,6 +14,7 @@ export const CardContainer = styled.div(({isTalking}) => `
   box-shadow: 5px 5px 10px #828282, -5px -5px 10px #ffffff;
   border-radius: 20px;
   position:relative;
+  overflow: hidden;
 `);
 
 export const CardInfoContainer = styled.div`
@@ -37,9 +38,9 @@ export const UserAvatar = styled.div(({isTalking, avatar}) => `
 `);
 
 export const CardName = styled.span`
-  font-size: ${font.sizeP};
   text-align: center;
   color: black;
+  max-width: 95%;
 `;
 
 export const Cerrar = styled.div`
