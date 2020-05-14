@@ -41,6 +41,10 @@ export const CardName = styled.span`
   text-align: center;
   color: black;
   max-width: 95%;
+  overflow: hidden;
+  display: -webkit-box;
+   -webkit-line-clamp: 2;
+   -webkit-box-orient: vertical;
 `;
 
 export const Cerrar = styled.div`
