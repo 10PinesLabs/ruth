@@ -17,3 +17,13 @@ export const GraphsContainer = styled.div`
     align-items: center;
     justify-content: space-between;
 `;
+
+export const ChartWrapperContainer = styled.div`  
+    display: flex;
+    flex-direction: column;
+`;
+
+export const IconListContainer = styled.div`  
+    display: flex;
+    justify-content: space-between;
+`;

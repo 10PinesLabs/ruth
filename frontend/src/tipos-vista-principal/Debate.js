@@ -4,6 +4,7 @@ import ParticipantsQueue from "../cola-de-participantes/ParticipantsQueue";
 import ChartBar from "../chart/chartBar";
 import ChartLine from "../chart/chartLine";
 import {useSpring} from "react-spring";
+import { ChartWrapper } from "../chart/ChartWrapper";
 
 const Debate = ({tema}) => {
   const debateData = {
@@ -20,9 +21,11 @@ const Debate = ({tema}) => {
     <SubDebateContainer style={props}>
       <GraphsContainer>
         <ChartLine data={debateData.dataLine} inicioTema={tema.inicio}/>
-        <ChartBar data={debateData.dataBar}/>
+        <ChartWrapper>
+          <ChartBar data={debateData.dataBar}/>
+        </ChartWrapper>
       </GraphsContainer>
-        <ParticipantsQueue participants={debateData.participants} finTema={tema.fin}/>
+      <ParticipantsQueue participants={debateData.participants} finTema={tema.fin}/>
     </SubDebateContainer>
   );
 };

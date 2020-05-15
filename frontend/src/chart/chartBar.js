@@ -41,7 +41,7 @@ class ChartBar extends React.Component {
     const reacciones = reaccionesVisibles;
 
     return {
-      labels: reacciones,
+      //labels: reacciones,
       datasets: [{
         data: reacciones.map((reaccion) => (this.props.data.data[reaccion] || []).length),
         backgroundColor: reacciones.map(colorForReaccion),
