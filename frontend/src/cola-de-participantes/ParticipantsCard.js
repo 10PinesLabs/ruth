@@ -26,6 +26,7 @@ const ParticipantsCard = ({participant, isParticipantTalking, interactive, kicke
 
   const [showSkeleton, setShowSekelton] = useState(true);
   const [open, setOpen] = useState(false);
+  const [oradorAKickear, setOradorAKickear] = useState(null)
 
   useEffect(() => {
     const timeout = setTimeout(() => setShowSekelton(false), 1000)
@@ -36,12 +37,12 @@ const ParticipantsCard = ({participant, isParticipantTalking, interactive, kicke
 
   return showSkeleton ? <SkeletonComponent interactive isParticipantTalking={isParticipantTalking}/> : (participant ? (
     <CardContainer isInteractive={interactive} isTalking={isParticipantTalking}>
-      {interactive && <Cerrar onClick={() => setOpen(true)}/>}
-      <ModalDeConfirmacion title={`¿Estás seguro que querés kickear a ${participant.usuario.nombre}?`}
-                           open={open}
+      {interactive && <Cerrar onClick={() => setOradorAKickear(participant.usuario)}/>}
+      <ModalDeConfirmacion title={`¿Estás seguro que querés kickear a ${oradorAKickear && oradorAKickear.nombre || ''}?`}
+                           open={Boolean(oradorAKickear)}
                            confirmText={"Si"}
                            cancelText={"No"}
-                           onClose={() => setOpen(false)} onConfirm={kickear}/>
+                           onClose={() => setOradorAKickear(null)} onConfirm={() => kickear(oradorAKickear)}/>
       <UserAvatar isTalking={isParticipantTalking} avatar={getGravatarUrlFor(participant.usuario.email)}/>
       <CardInfoContainer>
         <CardName isInteractive={interactive}> {participant.usuario.nombre} </CardName>
