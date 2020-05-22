@@ -13,13 +13,20 @@ app.use(morgan('combined', { stream: logger.stream }));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 
-app.use(cookieSession({
+const cookieOptions = {
   name: 'ruth_session',
-  secret: process.env.SESSION_SECRET,
-  secure: process.env.NODE_ENV === 'production',
-
   maxAge: 24 * 60 * 60 * 1000, // 24 hours
-}));
+};
+
+if (process.env.NODE_ENV === 'production') {
+  cookieOptions.secure = true;
+  cookieOptions.secret = process.env.SESSION_SECRET;
+} else {
+  cookieOptions.secure = false;
+  cookieOptions.secret = process.env.SESSION_SECRET || 'secret';
+}
+
+app.use(cookieSession(cookieOptions));
 
 app.use('/api', apiRouter());
 if (process.env.NODE_ENV === 'production') {
