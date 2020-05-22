@@ -12,11 +12,11 @@ function getCurrentTimestamp() {
   return new Date().valueOf();
 }
 
-export default function (wss) {
+export default function () {
   return async (ws, req) => {
     const timeoutHandler = setInterval(() => {
       ws.ping(getCurrentTimestamp().toString());
-    }, 20000)
+    }, 20000);
     ws.on('close', (code, reason) => {
       clearInterval(timeoutHandler);
       console.log(`closed connection (${code}) with reason: '${reason}'`)
