@@ -1,7 +1,7 @@
 import AsyncLock from 'async-lock';
 import context from '~/context';
 
-const Controller = (wss) => {
+const Controller = () => {
   const lock = new AsyncLock();
 
   return ({
