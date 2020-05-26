@@ -35,6 +35,7 @@ export const Temas = styled.div`
   flex-direction: column;
   height: 100vh;
   overflow-y: scroll;
+  scrollbar-width: none;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
