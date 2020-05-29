@@ -32,3 +32,6 @@ frontend/.idea/*
 
 # Base de datos en docker
 db-data/
+
+# Default ignored files
+/workspace.xml
