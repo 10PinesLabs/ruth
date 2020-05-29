@@ -5,6 +5,7 @@ import {ReunionContainer, VistaTemaContainer} from './Reunion.styled';
 import Resumen from '../tipos-vista-principal/Resumen';
 import Presentacion from '../tipos-vista-principal/Presentacion';
 import Debate from '../tipos-vista-principal/Debate';
+import Minuta from "../tipos-vista-principal/Minuta";
 import Temario from '../temario/Temario';
 import Header from "./Header";
 import {useSpring} from "react-spring";
@@ -130,5 +131,6 @@ const vistas = {
   'Presentación': Presentacion,
   'Debate': Debate,
   'Opinar': Mobile,
+  'Minuta': Minuta
 };
 export default VistaTemas;
