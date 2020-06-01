@@ -1,29 +1,30 @@
 import React from 'react';
-import { TablaPinos, FilaTitulosWrapper, Td } from './ListaPinosQueHablaro.styled';
+import {TablaPinos, FilaTitulosWrapper, Td} from './ListaPinosQueHablaro.styled';
+import FilaPinoHablando from "./FilaPinoHablando";
 
 const FilaTitulos = () => {
   return <FilaTitulosWrapper>
-      <th>
-        Nº
-      </th>
-      <th>
-        Pino
-      </th>
-      <th>
-        Tiempo
-      </th>
-      <th>
-        De acuerdo
-      </th>
-      <th>
-        Redondeando
-      </th>
-      <th>
-        No de acuerdo
-      </th>
-      <th>
-        Resumen
-      </th>
+    <th>
+      Nº
+    </th>
+    <th>
+      Pino
+    </th>
+    <th>
+      Tiempo
+    </th>
+    <th>
+      De acuerdo
+    </th>
+    <th>
+      Redondeando
+    </th>
+    <th>
+      No de acuerdo
+    </th>
+    <th>
+      Resumen
+    </th>
   </FilaTitulosWrapper>;
 };
 
@@ -57,6 +58,7 @@ const FilaPino = (props) => <tr>
   </td>
 </tr>;
 
+
 const ListaPinosQueHablaron = (props) => (
   <TablaPinos>
     <FilaTitulos/>
@@ -70,9 +72,9 @@ const ListaPinosQueHablaron = (props) => (
     }
 
     {props.oradores.actual
-      ? <FilaPino pino={props.oradores.actual} orden={props.oradores.pasados.length + 1}
-                  tiempo={getMinutes(Date.now() - props.oradores.actual.inicio)}/> : null
+      ? <FilaPinoHablando pino={props.oradores.actual} orden={props.oradores.pasados.length + 1}/> : null
     }
+
     </tbody>
   </TablaPinos>
 );

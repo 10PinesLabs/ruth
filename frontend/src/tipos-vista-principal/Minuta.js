@@ -8,7 +8,7 @@ const Minuta = ({tema, retrocederTema, temaATratar, empezarTema, avanzarTema, te
 
   return (
     <VistaDelMedioContainer style={useSpring({opacity: 1, from: {opacity: 0}})}>
-      <ListaPinosQueHablaron tema={tema} oradores={tema.oradores}/>
+      <ListaPinosQueHablaron oradores={tema.oradores}/>
     </VistaDelMedioContainer>
   );
 };
