@@ -4,6 +4,15 @@ import {CardContainer, CardInfoContainer, CardName, Cerrar, UserAvatar,} from '.
 import getGravatarUrlFor from '../api/gravatar';
 import {SkeletonBlock, SkeletonLine} from "../skeleton/Skeleton.styled";
 import {ModalDeConfirmacion} from "../tipos-vista-principal/Modal";
+import {
+  faHashtag,
+  faThumbsDown,
+  faThumbsUp,
+} from '@fortawesome/free-solid-svg-icons';
+import {reacciones} from "../mobile/actions";
+import {ReactionButton} from "../mobile/ReactionButton";
+import Grid from "@material-ui/core/Grid";
+import {green, yellow} from "@material-ui/core/colors";
 
 const ParticipantsCard = ({participant, isParticipantTalking, interactive, kickear, finTema}) => {
   const estadoOrador = () => {
@@ -35,6 +44,13 @@ const ParticipantsCard = ({participant, isParticipantTalking, interactive, kicke
     };
   }, []);
 
+  let centerReactionBtn = {
+    display: "flex",
+    paddingLeft: 0,
+    paddingRight: 0
+  };
+
+  let reactionColor = 'linear-gradient(90deg, rgba(220,223,3,1) 0%, rgba(255,252,184,1) 100%)';
   return showSkeleton ? <SkeletonComponent interactive isParticipantTalking={isParticipantTalking}/> : (participant ? (
     <CardContainer isInteractive={interactive} isTalking={isParticipantTalking}>
       {interactive && <Cerrar onClick={() => setOradorAKickear(participant.usuario)}/>}
@@ -47,6 +63,26 @@ const ParticipantsCard = ({participant, isParticipantTalking, interactive, kicke
       <CardInfoContainer>
         <CardName isInteractive={interactive}> {participant.usuario.nombre} </CardName>
         <ParticipantCounter isInteractive={interactive} estadoOrador={estadoOrador()}/>
+        <Grid container spacing={3}>
+          <Grid item xs={4} justify="center" alignItems="center" style={centerReactionBtn}>
+            <ReactionButton
+                background={reactionColor}
+                isActive={true} icon={faThumbsUp}
+                onClick={() => console.log("lol")}/>
+          </Grid>
+          <Grid item xs={4} justify="center" alignItems="center" style={centerReactionBtn}>
+            <ReactionButton
+                background={reactionColor}
+                isActive={true} icon={faThumbsDown}
+                onClick={() => console.log("lol")}/>
+          </Grid>
+          <Grid item xs={4} justify="center" alignItems="center" style={centerReactionBtn}>
+            <ReactionButton
+                background={reactionColor}
+                isActive={true} icon={faHashtag}
+                onClick={() => console.log("lol")}/>
+          </Grid>
+        </Grid>
       </CardInfoContainer>
     </CardContainer>
   ) : <div> Nadie esta hablando</div>);
