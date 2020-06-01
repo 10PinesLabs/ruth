@@ -1,76 +1,80 @@
 import React from 'react';
+import { TablaPinos, FilaTitulosWrapper, Td } from './ListaPinosQueHablaro.styled';
 
-function FilaTitulos() {
-  return <thead>
-  <tr>
-    <th>
-      Nº
-    </th>
-    <th>
-      Pino
-    </th>
-    <th>
-      Tiempo
-    </th>
-    <th>
-      De acuerdo
-    </th>
-    <th>
-      Redondeando
-    </th>
-    <th>
-      No de acuerdo
-    </th>
-    <th>
-      Resumen
-    </th>
-  </tr>
-
-  </thead>;
-}
+const FilaTitulos = () => {
+  return <FilaTitulosWrapper>
+      <th>
+        Nº
+      </th>
+      <th>
+        Pino
+      </th>
+      <th>
+        Tiempo
+      </th>
+      <th>
+        De acuerdo
+      </th>
+      <th>
+        Redondeando
+      </th>
+      <th>
+        No de acuerdo
+      </th>
+      <th>
+        Resumen
+      </th>
+  </FilaTitulosWrapper>;
+};
 
 function getMinutes(timestamp) {
   const date = new Date(timestamp);
   return `${date.getMinutes()}:${date.getSeconds()}`;
 }
 
-const FilaPino = (props) => <tbody>
-<tr>
-  <th>
+const FilaPino = (props) => <tr>
+  <td>
     {props.orden}
-  </th>
-  <th>
+  </td>
+  <Td>
     {props.pino.usuario.nombre}
-  </th>
-  <th>
-    {getMinutes(props.pino.fin - props.pino.inicio)}
-  </th>
-  <th>
+  </Td>
+  <Td>
+    {props.tiempo}
+  </Td>
+  <Td>
     7
-  </th>
-  <th>
+  </Td>
+  <Td>
     12
-  </th>
-  <th>
+  </Td>
+  <Td>
     3
-  </th>
-  <th>
-    <p>Cualquier yerba dijo el pibe</p>
+  </Td>
+  <td>
+    <p>Un resumen</p>
     <button>EDITAR</button>
-  </th>
-</tr>
-
-</tbody>;
+  </td>
+</tr>;
 
 const ListaPinosQueHablaron = (props) => (
-  <table>
+  <TablaPinos>
     <FilaTitulos/>
-    {props.tema.oradores.pasados
+    <tbody>
+
+    {props.oradores.pasados
       .map((pino, index) => <FilaPino
         pino={pino}
-        orden={index + 1}/>)
+        orden={index + 1}
+        tiempo={getMinutes(pino.fin - pino.inicio)}/>)
     }
-  </table>
+
+    {props.oradores.actual
+      ? <FilaPino pino={props.oradores.actual} orden={props.oradores.pasados.length + 1}
+                  tiempo={getMinutes(Date.now() - props.oradores.actual.inicio)}/> : null
+    }
+    </tbody>
+  </TablaPinos>
 );
 
 export default ListaPinosQueHablaron;
