@@ -1,5 +1,5 @@
 import React from 'react';
-import { faChartBar, faBroadcastTower, faComment, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faChartBar, faBroadcastTower, faComment, faUsers, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 
 import SidebarElement from './SidebarElement';
@@ -18,6 +18,7 @@ class Sidebar extends React.Component {
     { icon: faComment, title: 'Presentación', habilitado: false },
     { icon: faChartBar, title: 'Debate', habilitado: true },
     { icon: faUsers, title: 'Opinar', habilitado: true },
+    { icon: faEdit, title: 'Minuta', habilitado: true }
   ];
 
   habilitarPresentacion = () => this.props.link !== null
