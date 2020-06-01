@@ -25,7 +25,13 @@ yarn-error.log*
 #idea
 backend/.idea/*
 frontend/.idea/*
-.idea/*
+.idea/
+
+#vscode
+.vscode/
 
 # Base de datos en docker
 db-data/
+
+# Default ignored files
+/workspace.xml
