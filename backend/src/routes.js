@@ -9,7 +9,7 @@ import logger from '~/logger';
 import eventosRouter from './domain/eventos/router';
 import webSocketRouter from '~/webSocket';
 
-export default () => {
+export default (wss) => {
   const router = Router({ promise: true });
 
   router.use('/auth', loginRouter);
@@ -30,7 +30,7 @@ export default () => {
 
   router.use('/', reunionRouter);
 
-  router.use('/eventos', eventosRouter());
+  router.use('/eventos', eventosRouter(wss));
   router.use('/temas', temasRouter);
   router.use('/perfil', perfilRouter);
   router.ws('/ws', webSocketRouter());
