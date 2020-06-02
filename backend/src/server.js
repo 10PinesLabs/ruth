@@ -2,12 +2,13 @@ import express, { json, urlencoded } from 'express';
 import morgan from 'morgan';
 import * as path from 'path';
 import cookieSession from 'cookie-session';
+import webSocketRouter from './webSocket';
 
 import apiRouter from './routes';
 import logger from '~/logger';
 
 const app = express();
-require('express-ws')(app);
+const expressWs = require('express-ws')(app);
 
 const cookieOptions = {
   name: 'ruth_session',
@@ -35,8 +36,9 @@ app.use(json());
 app.use(urlencoded({ extended: false }));
 
 app.use(cookieSession(cookieOptions));
+app.ws('/ws', webSocketRouter(expressWs.getWss()));
 
-app.use('/api', apiRouter());
+app.use('/api', apiRouter(expressWs.getWss()));
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, './frontend')));
   app.use('*', (req, res) => {
