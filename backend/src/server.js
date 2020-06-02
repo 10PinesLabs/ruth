@@ -2,7 +2,6 @@ import express, { json, urlencoded } from 'express';
 import morgan from 'morgan';
 import * as path from 'path';
 import cookieSession from 'cookie-session';
-import webSocketRouter from './webSocket';
 
 import apiRouter from './routes';
 import logger from '~/logger';
@@ -36,7 +35,6 @@ app.use(json());
 app.use(urlencoded({ extended: false }));
 
 app.use(cookieSession(cookieOptions));
-app.ws('/ws', webSocketRouter(expressWs.getWss()));
 
 app.use('/api', apiRouter(expressWs.getWss()));
 if (process.env.NODE_ENV === 'production') {
