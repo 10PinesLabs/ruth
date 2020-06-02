@@ -4,25 +4,32 @@ import oradoresReducer from './oradores';
 import reaccionesReducer from './reacciones';
 import Backend from '../api/backend';
 import historicoDeReaccionesReducer from './historicoDeReacciones';
+import {reaccionesAPersonaReducer} from "./reaccionesAPersona";
 
 const TEMA_INCIAL_STATE = {
   oradores: [],
   reacciones: [],
+  reaccionesAPersona: [],
   inicio: null,
   fin: null,
 };
 
 setAutoFreeze(false);
 
-export const temaReducer = (state = TEMA_INCIAL_STATE, action) => produce(state, (draft) => {
-  draft.inicio = draft.inicio || null;
-  draft.fin = draft.fin || null;
+export const temaReducer = (state = TEMA_INCIAL_STATE, nuevoEvento) => produce(state, (nuevoEstado) => {
+  nuevoEstado.inicio = nuevoEstado.inicio || null;
+  nuevoEstado.fin = nuevoEstado.fin || null;
 
-  draft.oradores = oradoresReducer(draft.oradores, action);
-  const oldReacciones = draft.reacciones;
-  draft.reacciones = reaccionesReducer(draft.reacciones, action);
-  if (draft.reacciones !== oldReacciones) {
-    draft.historicoDeReacciones = historicoDeReaccionesReducer(draft.historicoDeReacciones, draft.reacciones, action);
+  nuevoEstado.oradores = oradoresReducer(nuevoEstado.oradores, nuevoEvento);
+  const oldReacciones = nuevoEstado.reacciones;
+  nuevoEstado.reacciones = reaccionesReducer(nuevoEstado.reacciones, nuevoEvento);
+
+  if(nuevoEvento.type === 'ReaccionAPersona'){
+    nuevoEstado.reaccionesAPersona = reaccionesAPersonaReducer(nuevoEstado.reaccionesAPersona,nuevoEvento);
+  }
+
+  if (nuevoEstado.reacciones !== oldReacciones) {
+    nuevoEstado.historicoDeReacciones = historicoDeReaccionesReducer(nuevoEstado.historicoDeReacciones, nuevoEstado.reacciones, nuevoEvento);
   }
 });
 

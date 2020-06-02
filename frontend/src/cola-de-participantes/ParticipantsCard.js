@@ -4,48 +4,10 @@ import {CardContainer, CardInfoContainer, CardName, Cerrar, UserAvatar,} from '.
 import getGravatarUrlFor from '../api/gravatar';
 import {SkeletonBlock, SkeletonLine} from "../skeleton/Skeleton.styled";
 import {ModalDeConfirmacion} from "../tipos-vista-principal/Modal";
-import {
-  faHashtag,
-  faThumbsDown,
-  faThumbsUp,
-} from '@fortawesome/free-solid-svg-icons';
-import {reacciones} from "../mobile/actions";
-import {ReactionButton} from "../mobile/ReactionButton";
-import Grid from "@material-ui/core/Grid";
-import {green, yellow} from "@material-ui/core/colors";
-import * as PropTypes from "prop-types";
+import {TalkingReactions} from "./TalkingReactions";
 
-function TalkingReactions(props) {
-  return <Grid container direction="column" spacing={3} style={{width: "30%",alignItems: "center",alignSelf:"flex-start"}}>
-    <Grid item xs={4} justify="center" alignItems="center" style={props.style}>
-      <ReactionButton
-          background={props.background}
-          isBig
-          isActive={true} icon={faThumbsUp}
-          onClick={props.onClick}/>
-    </Grid>
-    <Grid item xs={4} justify="center" alignItems="center" style={props.style}>
-      <ReactionButton
-          background={props.background}
-          isBig
-          isActive={true} icon={faThumbsDown}
-          onClick={props.onClick}/>
-    </Grid>
-    <Grid item xs={4} justify="center" alignItems="center" style={props.style}>
-      <ReactionButton
-          background={props.background}
-          isBig
-          isActive={true} icon={faHashtag}
-          onClick={props.onClick}/>
-    </Grid>
-  </Grid>;
-}
-TalkingReactions.propTypes = {
-  style: PropTypes.shape({display: PropTypes.string, paddingRight: PropTypes.number, paddingLeft: PropTypes.number}),
-  background: PropTypes.string,
-  onClick: PropTypes.func
-};
-const ParticipantsCard = ({participant, isParticipantTalking, interactive, kickear, finTema}) => {
+
+const ParticipantsCard = ({dispatchEvent,participant, isParticipantTalking, interactive, kickear, finTema}) => {
   const estadoOrador = () => {
     if (estaEncolado()) {
       return {detalle: 'encolado'};
@@ -75,14 +37,6 @@ const ParticipantsCard = ({participant, isParticipantTalking, interactive, kicke
     };
   }, []);
 
-  let centerReactionBtn = {
-    display: "flex",
-    paddingLeft: 0,
-    paddingRight: 0,
-    maxWidth: "none"
-  };
-
-  let reactionColor = 'linear-gradient(90deg, rgba(220,223,3,1) 0%, rgba(255,252,184,1) 100%)';
   return showSkeleton ? <SkeletonComponent interactive isParticipantTalking={isParticipantTalking}/> : (participant ? (
 
       <CardContainer style={{flexDirection: "row", width: "70%"}} isInteractive={interactive} isTalking={isParticipantTalking}>
@@ -93,7 +47,10 @@ const ParticipantsCard = ({participant, isParticipantTalking, interactive, kicke
             confirmText={"Si"}
             cancelText={"No"}
             onClose={() => setOradorAKickear(null)} onConfirm={() => kickear(oradorAKickear)}/>
-        <TalkingReactions style={centerReactionBtn} background={reactionColor} onClick={() => console.log("lol")}/>
+        <TalkingReactions
+            dispatchEvent={dispatchEvent}
+            participant={participant}
+        />
         <div style={{width: "70%"}}>
           <UserAvatar isTalking={isParticipantTalking} avatar={getGravatarUrlFor(participant.usuario.email)}/>
           <CardInfoContainer>
