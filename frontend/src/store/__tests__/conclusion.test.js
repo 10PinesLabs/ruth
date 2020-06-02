@@ -16,6 +16,12 @@ describe(`#${tipoDeEvento.GUARDAR_CONCLUSION}`, ()=>{
         expect(state.actual).toEqual('')
     })
 
+    it('con un evento desconocido, no hace nada', () => {
+        applyEvento({ type: 'UNKNOWN' });
+        expect(state).toEqual(CONCLUSION_INITIAL_STATE);
+      });
+    
+
     it('cuando alguien guarda una conclusion se actualiza',()=>{
         const textoDeConclusion = "soy una bonita conclusion";
         applyEvento(guardarConclusion(textoDeConclusion));
