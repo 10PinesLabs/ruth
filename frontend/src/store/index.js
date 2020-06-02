@@ -1,6 +1,7 @@
 import { configureStore, createAction, getDefaultMiddleware } from '@reduxjs/toolkit';
 import produce, { setAutoFreeze } from 'immer';
 import oradoresReducer from './oradores';
+import conclusionReducer from './conclusion'
 import reaccionesReducer from './reacciones';
 import Backend from '../api/backend';
 import historicoDeReaccionesReducer from './historicoDeReacciones';
@@ -8,6 +9,7 @@ import historicoDeReaccionesReducer from './historicoDeReacciones';
 const TEMA_INCIAL_STATE = {
   oradores: [],
   reacciones: [],
+  conclusion: '',
   inicio: null,
   fin: null,
 };
@@ -19,6 +21,7 @@ export const temaReducer = (state = TEMA_INCIAL_STATE, action) => produce(state,
   draft.fin = draft.fin || null;
 
   draft.oradores = oradoresReducer(draft.oradores, action);
+  draft.conclusion = conclusionReducer(draft.conclusion, action);
   const oldReacciones = draft.reacciones;
   draft.reacciones = reaccionesReducer(draft.reacciones, action);
   if (draft.reacciones !== oldReacciones) {
