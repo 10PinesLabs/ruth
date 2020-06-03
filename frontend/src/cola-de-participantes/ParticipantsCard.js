@@ -5,9 +5,26 @@ import getGravatarUrlFor from '../api/gravatar';
 import {SkeletonBlock, SkeletonLine} from "../skeleton/Skeleton.styled";
 import {ModalDeConfirmacion} from "../tipos-vista-principal/Modal";
 import {TalkingReactions} from "./TalkingReactions";
+import * as PropTypes from "prop-types";
 
 
-const ParticipantsCard = ({dispatchEvent,participant, isParticipantTalking, interactive, kickear, finTema, usuario}) => {
+function ParticipantData(props) {
+    return <>
+        <UserAvatar isTalking={props.talking} avatar={getGravatarUrlFor(props.usuario.email)}/>
+        <CardInfoContainer>
+            <CardName isInteractive={props.interactive}> {props.usuario.nombre} </CardName>
+            <ParticipantCounter isInteractive={props.interactive} estadoOrador={props.estadoOrador}/>
+        </CardInfoContainer>
+    </>;
+}
+
+ParticipantData.propTypes = {
+    talking: PropTypes.any,
+    usuario: PropTypes.any,
+    interactive: PropTypes.any,
+    estadoOrador: PropTypes.any
+};
+const ParticipantsCard = ({sePuedeReaccionar = false,dispatchEvent,participant, isParticipantTalking, interactive, kickear, finTema, usuario}) => {
   const estadoOrador = () => {
     if (estaEncolado()) {
       return {detalle: 'encolado'};
@@ -39,26 +56,32 @@ const ParticipantsCard = ({dispatchEvent,participant, isParticipantTalking, inte
 
   return showSkeleton ? <SkeletonComponent interactive isParticipantTalking={isParticipantTalking}/> : (participant ? (
 
-      <CardContainer style={{flexDirection: "row", width: "70%"}} isInteractive={interactive} isTalking={isParticipantTalking}>
-        {interactive && <Cerrar onClick={() => setOradorAKickear(participant.usuario)}/>}
-        <ModalDeConfirmacion
-            title={`¿Estás seguro que querés kickear a ${oradorAKickear && oradorAKickear.nombre || ''}?`}
-            open={Boolean(oradorAKickear)}
-            confirmText={"Si"}
-            cancelText={"No"}
-            onClose={() => setOradorAKickear(null)} onConfirm={() => kickear(oradorAKickear)}/>
-        <TalkingReactions
-            usuario={usuario}
-            dispatchEvent={dispatchEvent}
-            participant={participant}
-        />
-        <div style={{width: "70%"}}>
-          <UserAvatar isTalking={isParticipantTalking} avatar={getGravatarUrlFor(participant.usuario.email)}/>
-          <CardInfoContainer>
-            <CardName isInteractive={interactive}> {participant.usuario.nombre} </CardName>
-            <ParticipantCounter isInteractive={interactive} estadoOrador={estadoOrador()}/>
-          </CardInfoContainer>
-        </div>
+      <CardContainer style={(sePuedeReaccionar) ? {flexDirection: "row", width: "70%"} : null}
+                     isInteractive={interactive} isTalking={isParticipantTalking}>
+          {interactive && <Cerrar onClick={() => setOradorAKickear(participant.usuario)}/>}
+          <ModalDeConfirmacion
+              title={`¿Estás seguro que querés kickear a ${oradorAKickear && oradorAKickear.nombre || ''}?`}
+              open={Boolean(oradorAKickear)}
+              confirmText={"Si"}
+              cancelText={"No"}
+              onClose={() => setOradorAKickear(null)} onConfirm={() => kickear(oradorAKickear)}/>
+
+          {(sePuedeReaccionar) ? <TalkingReactions
+              usuario={usuario}
+              dispatchEvent={dispatchEvent}
+              participant={participant}
+          /> : null}
+
+
+          {(sePuedeReaccionar)?
+              <div style={{width: "70%"}}>
+                  <ParticipantData talking={isParticipantTalking} usuario={participant.usuario} interactive={interactive}
+                                   estadoOrador={estadoOrador()}/>
+              </div> :
+              <ParticipantData talking={isParticipantTalking} usuario={participant.usuario} interactive={interactive}
+                               estadoOrador={estadoOrador()}/>
+          }
+
       </CardContainer>
   ) : <div> Nadie esta hablando</div>);
 };

@@ -176,6 +176,7 @@ const Vista = ({
             </TopSectionContainer>
             <ParticipantsContainer>
                 <ParticipantsCard
+                    sePuedeReaccionar={true}
                     usuario={usuario}
                     interactive
                     isParticipantTalking
