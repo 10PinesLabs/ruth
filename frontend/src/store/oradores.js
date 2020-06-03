@@ -108,9 +108,9 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
       );
 
       const tipoReaccion = {
-        'thumbsUp' :  () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== 'thumbsDown'),
-        'thumbsDown' : () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== 'thumbsUp'),
-        'redondeando' : () => reaccionesDeUsuarioReaccionando
+        'thumbsUp' :  () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== 'thumbsUp' && reaccion !== 'thumbsDown'),
+        'thumbsDown' : () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== 'thumbsUp' && reaccion !== 'thumbsDown'),
+        'redondeando' : () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== 'redondeando'),
       }
 
       draft.actual.reacciones = [...tipoReaccion[evento.reaccion](), ...reaccionesDeOtrosUsuarios,{
