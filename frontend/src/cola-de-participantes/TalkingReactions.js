@@ -23,8 +23,9 @@ export function TalkingReactions({dispatchEvent, participant}) {
                 tipo: "ReaccionAPersona",
                 usuarioOrador: {
                     nombre: participant.usuario.nombre,
-                    email: participant.usuario.email
+                    email: participant.usuario.email,
                 },
+                instanciaDeHabla: participant.instanciaDeHabla,
                 reaccion: reactionString
             });
         }

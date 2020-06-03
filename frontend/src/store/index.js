@@ -4,12 +4,10 @@ import oradoresReducer from './oradores';
 import reaccionesReducer from './reacciones';
 import Backend from '../api/backend';
 import historicoDeReaccionesReducer from './historicoDeReacciones';
-import {reaccionesAPersonaReducer} from "./reaccionesAPersona";
 
 const TEMA_INCIAL_STATE = {
   oradores: [],
   reacciones: [],
-  reaccionesAPersona: [],
   inicio: null,
   fin: null,
 };
@@ -23,10 +21,6 @@ export const temaReducer = (state = TEMA_INCIAL_STATE, nuevoEvento) => produce(s
   nuevoEstado.oradores = oradoresReducer(nuevoEstado.oradores, nuevoEvento);
   const oldReacciones = nuevoEstado.reacciones;
   nuevoEstado.reacciones = reaccionesReducer(nuevoEstado.reacciones, nuevoEvento);
-
-  if(nuevoEvento.type === 'ReaccionAPersona'){
-    nuevoEstado.reaccionesAPersona = reaccionesAPersonaReducer(nuevoEstado.reaccionesAPersona,nuevoEvento);
-  }
 
   if (nuevoEstado.reacciones !== oldReacciones) {
     nuevoEstado.historicoDeReacciones = historicoDeReaccionesReducer(nuevoEstado.historicoDeReacciones, nuevoEstado.reacciones, nuevoEvento);

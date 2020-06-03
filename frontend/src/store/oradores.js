@@ -5,6 +5,7 @@ export const tipoDeEvento = {
   DEJAR_DE_HABLAR: 'Quiero Dejar de Hablar',
   DESENCOLAR: 'Quiero Desencolarme',
   KICKEAR: 'Kickear al que habla',
+  REACCIONARAPERSONA: 'ReaccionAPersona'
 };
 
 
@@ -28,6 +29,9 @@ export const INITIAL_ORADORES_STATE = {
 
 export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft) => {
   const { usuario, fecha } = evento;
+
+
+
   switch (evento.type) {
     case tipoDeEvento.KICKEAR: {
       if (!estaHablando(draft, evento.kickearA.nombre)) {
@@ -53,10 +57,14 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
         return;
       }
 
+      function contarVecesQueHablo() {
+        return draft.pasados.filter((usuarioPasado) => usuarioPasado.usuario.email === usuario.email).length;
+      }
+
       if (!hayAlguienHablando(draft)) {
-        draft.actual = { usuario, inicio: fecha, fin: null };
+        draft.actual = { usuario, inicio: fecha, fin: null , reacciones: [], instanciaDeHabla: contarVecesQueHablo()} ;
       } else {
-        draft.cola.push({ usuario, inicio: null, fin: null });
+        draft.cola.push({ usuario, inicio: null, fin: null, reacciones: [],instanciaDeHabla: contarVecesQueHablo()});
       }
       break;
     }
@@ -81,11 +89,34 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
         draft.actual = null;
         return;
       }
-
       nextOrador.inicio = fecha;
       draft.actual = nextOrador;
       break;
     }
+    case tipoDeEvento.REACCIONARAPERSONA: {
+
+      // todo añadir reacciones a oradores pasados
+
+      let ultimasReaccionesEnEstaInstanciaDeHabla = draft.actual.reacciones.filter(({usuarioQueReacciona,reaccion}) =>
+          usuarioQueReacciona.email === evento.usuario.email &&
+          reaccion !== evento.reaccion &&
+          draft.actual.instanciaDeHabla === evento.instanciaDeHabla
+      );
+
+      const tipoReaccion = {
+        'thumbsUp' :  () => ultimasReaccionesEnEstaInstanciaDeHabla.filter(({reaccion})=> reaccion !== 'thumbsDown'),
+        'thumbsDown' : () => ultimasReaccionesEnEstaInstanciaDeHabla.filter(({reaccion})=> reaccion !== 'thumbsUp'),
+        'redondeando' : () => ultimasReaccionesEnEstaInstanciaDeHabla
+      }
+      draft.actual.reacciones = [...tipoReaccion[evento.reaccion](),{
+        usuarioQueReacciona: evento.usuario,
+        reaccion: evento.reaccion,
+        instanciaDeHabla: evento.instanciaDeHabla
+      }]
+
+      break;
+    }
+
     default: {
       break
     }
