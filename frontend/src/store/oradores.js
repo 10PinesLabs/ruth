@@ -1,11 +1,13 @@
-import { produce } from 'immer';
+import {produce} from 'immer';
+import {TiposReaccionAlHablar} from "../cola-de-participantes/TalkingReactions";
 
 export const tipoDeEvento = {
   LEVANTAR_MANO: 'Quiero Hablar',
   DEJAR_DE_HABLAR: 'Quiero Dejar de Hablar',
   DESENCOLAR: 'Quiero Desencolarme',
   KICKEAR: 'Kickear al que habla',
-  REACCIONARAPERSONA: 'ReaccionAPersona'
+  REACCIONARAPERSONA: 'ReaccionAPersona',
+  DESREACCIONARAPERSONA: 'DesreaccionAPersona'
 };
 
 
@@ -31,6 +33,19 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
   const { usuario, fecha } = evento;
 
 
+  function reaccionesDelQueReacciona() {
+    return draft.actual.reacciones.filter(({usuarioQueReacciona, reaccion}) =>
+        usuarioQueReacciona.email === evento.usuario.email &&
+        draft.actual.instanciaDeHabla === evento.instanciaDeHabla
+    );
+  }
+
+  function reaccionesDeUsuariosQueNoSonElQueReacciona() {
+    return draft.actual.reacciones.filter(({usuarioQueReacciona, reaccion}) =>
+        usuarioQueReacciona.email !== evento.usuario.email &&
+        draft.actual.instanciaDeHabla === evento.instanciaDeHabla
+    );
+  }
 
   switch (evento.type) {
     case tipoDeEvento.KICKEAR: {
@@ -93,30 +108,40 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
       draft.actual = nextOrador;
       break;
     }
-    case tipoDeEvento.REACCIONARAPERSONA: {
+    case tipoDeEvento.DESREACCIONARAPERSONA: {
 
-      // todo añadir reacciones a oradores pasados
+      let reaccionesDeUsuarioReaccionando = reaccionesDelQueReacciona();
 
-      let reaccionesDeUsuarioReaccionando = draft.actual.reacciones.filter(({usuarioQueReacciona,reaccion}) =>
-          usuarioQueReacciona.email === evento.usuario.email &&
-          draft.actual.instanciaDeHabla === evento.instanciaDeHabla
-      );
-
-      let reaccionesDeOtrosUsuarios = draft.actual.reacciones.filter(({usuarioQueReacciona, reaccion}) =>
-          usuarioQueReacciona.email !== evento.usuario.email &&
-          draft.actual.instanciaDeHabla === evento.instanciaDeHabla
-      );
-
-      const tipoReaccion = {
-        'thumbsUp' :  () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== 'thumbsUp' && reaccion !== 'thumbsDown'),
-        'thumbsDown' : () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== 'thumbsUp' && reaccion !== 'thumbsDown'),
-        'redondeando' : () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== 'redondeando'),
+      const filterOnReactionType = {
+        'thumbsUp' :  () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== TiposReaccionAlHablar.THUMBS_UP ),
+        'thumbsDown' : () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== TiposReaccionAlHablar.THUMBS_DOWN),
+        'redondeando' : () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== TiposReaccionAlHablar.REDONDEAR),
       }
 
-      draft.actual.reacciones = [...tipoReaccion[evento.reaccion](), ...reaccionesDeOtrosUsuarios,{
+      draft.actual.reacciones = [...filterOnReactionType[evento.reaccion](), ...(reaccionesDeUsuariosQueNoSonElQueReacciona()),{
         usuarioQueReacciona: evento.usuario,
         reaccion: evento.reaccion,
-        instanciaDeHabla: evento.instanciaDeHabla
+        instanciaDeHabla: evento.instanciaDeHabla,
+        tipo: evento.type
+      }]
+
+      break;
+    }
+    case tipoDeEvento.REACCIONARAPERSONA: {
+
+      let reaccionesDeUsuarioReaccionando = reaccionesDelQueReacciona();
+
+      const filterOnReactionType = {
+        'thumbsUp' :  () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== TiposReaccionAlHablar.THUMBS_UP && reaccion !== TiposReaccionAlHablar.THUMBS_DOWN),
+        'thumbsDown' : () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== TiposReaccionAlHablar.THUMBS_UP && reaccion !== TiposReaccionAlHablar.THUMBS_DOWN),
+        'redondeando' : () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== TiposReaccionAlHablar.REDONDEAR),
+      }
+
+      draft.actual.reacciones = [...filterOnReactionType[evento.reaccion](), ...(reaccionesDeUsuariosQueNoSonElQueReacciona()),{
+        usuarioQueReacciona: evento.usuario,
+        reaccion: evento.reaccion,
+        instanciaDeHabla: evento.instanciaDeHabla,
+        tipo: evento.type
       }]
 
       break;
