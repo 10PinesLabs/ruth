@@ -7,7 +7,7 @@ import {ModalDeConfirmacion} from "../tipos-vista-principal/Modal";
 import {TalkingReactions} from "./TalkingReactions";
 
 
-const ParticipantsCard = ({dispatchEvent,participant, isParticipantTalking, interactive, kickear, finTema}) => {
+const ParticipantsCard = ({dispatchEvent,participant, isParticipantTalking, interactive, kickear, finTema, usuario}) => {
   const estadoOrador = () => {
     if (estaEncolado()) {
       return {detalle: 'encolado'};
@@ -48,6 +48,7 @@ const ParticipantsCard = ({dispatchEvent,participant, isParticipantTalking, inte
             cancelText={"No"}
             onClose={() => setOradorAKickear(null)} onConfirm={() => kickear(oradorAKickear)}/>
         <TalkingReactions
+            usuario={usuario}
             dispatchEvent={dispatchEvent}
             participant={participant}
         />

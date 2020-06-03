@@ -4,7 +4,9 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 export class ReactionButton extends React.Component {
   getReactionButtonStyle = () => {
 
-    let defaultColorOrPassedColor = this.props.background? this.props.background: 'linear-gradient(145deg, rgb(114, 181, 114), rgb(205, 255, 205))';
+    let defaultColorOrPassedColor = this.props.background? this.props.background:  'linear-gradient(145deg, rgb(230, 230, 230), rgb(200, 200, 200)';
+
+    let defaultOrPassedActiveColor = this.props.activeBackground? this.props.activeBackground: 'linear-gradient(145deg, rgb(114, 181, 114), rgb(205, 255, 205))';
 
     return ({
       height: this.props.isBig ? '3.5em' : '2.5em',
@@ -17,8 +19,8 @@ export class ReactionButton extends React.Component {
       alignItems: 'center',
       justifyContent: 'center',
       opacity: this.props.isDisabled ? '0.5' : (this.props.isActive ? '1' : '0.7'),
-      background: this.props.isActive ? defaultColorOrPassedColor
-          : 'linear-gradient(145deg, rgb(230, 230, 230), rgb(200, 200, 200)',
+      background: this.props.isActive ? defaultOrPassedActiveColor
+          : defaultColorOrPassedColor,
       boxShadow: '4px 4px 10px #828282, -4px -4px 10px #ffffff',
       transition: 'opacity 0.1s ease-in',
     });

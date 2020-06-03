@@ -176,6 +176,7 @@ const Vista = ({
             </TopSectionContainer>
             <ParticipantsContainer>
                 <ParticipantsCard
+                    usuario={usuario}
                     interactive
                     isParticipantTalking
                     dispatchEvent={dispatchEvent}

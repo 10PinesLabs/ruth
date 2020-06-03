@@ -97,18 +97,23 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
 
       // todo añadir reacciones a oradores pasados
 
-      let ultimasReaccionesEnEstaInstanciaDeHabla = draft.actual.reacciones.filter(({usuarioQueReacciona,reaccion}) =>
+      let reaccionesDeUsuarioReaccionando = draft.actual.reacciones.filter(({usuarioQueReacciona,reaccion}) =>
           usuarioQueReacciona.email === evento.usuario.email &&
-          reaccion !== evento.reaccion &&
+          draft.actual.instanciaDeHabla === evento.instanciaDeHabla
+      );
+
+      let reaccionesDeOtrosUsuarios = draft.actual.reacciones.filter(({usuarioQueReacciona, reaccion}) =>
+          usuarioQueReacciona.email !== evento.usuario.email &&
           draft.actual.instanciaDeHabla === evento.instanciaDeHabla
       );
 
       const tipoReaccion = {
-        'thumbsUp' :  () => ultimasReaccionesEnEstaInstanciaDeHabla.filter(({reaccion})=> reaccion !== 'thumbsDown'),
-        'thumbsDown' : () => ultimasReaccionesEnEstaInstanciaDeHabla.filter(({reaccion})=> reaccion !== 'thumbsUp'),
-        'redondeando' : () => ultimasReaccionesEnEstaInstanciaDeHabla
+        'thumbsUp' :  () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== 'thumbsDown'),
+        'thumbsDown' : () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== 'thumbsUp'),
+        'redondeando' : () => reaccionesDeUsuarioReaccionando
       }
-      draft.actual.reacciones = [...tipoReaccion[evento.reaccion](),{
+
+      draft.actual.reacciones = [...tipoReaccion[evento.reaccion](), ...reaccionesDeOtrosUsuarios,{
         usuarioQueReacciona: evento.usuario,
         reaccion: evento.reaccion,
         instanciaDeHabla: evento.instanciaDeHabla
