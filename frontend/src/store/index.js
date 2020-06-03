@@ -6,35 +6,26 @@ import reaccionesReducer from './reacciones';
 import Backend from '../api/backend';
 import historicoDeReaccionesReducer from './historicoDeReacciones';
 
-const TEMA_INCIAL_STATE = {
-  oradores: [],
-  reacciones: [],
-  conclusion: null,
-  inicio: null,
-  fin: null,
-};
-
 setAutoFreeze(false);
 
-export const temaReducer = (state = TEMA_INCIAL_STATE, action) => produce(state, (draft) => {
+export const temaReducer = (state, action) => produce(state, (draft) => {
+
   draft.inicio = draft.inicio || null;
   draft.fin = draft.fin || null;
   
   draft.oradores = oradoresReducer(draft.oradores, action);
 
-  if(tipoDeEvento.GUARDAR_CONCLUSION==action.type){
-    //console.log("se guarda una conclusions", action)
-  }
-  let asd = conclusionReducer(draft.conclusion, action)
-  debugger
-
-  draft.conclusion = asd
   
+  draft.conclusion = conclusionReducer(draft.conclusion,action)
+  
+
   const oldReacciones = draft.reacciones;
   draft.reacciones = reaccionesReducer(draft.reacciones, action);
+  debugger
   if (draft.reacciones !== oldReacciones) {
     draft.historicoDeReacciones = historicoDeReaccionesReducer(draft.historicoDeReacciones, draft.reacciones, action);
   }
+  return draft;
 });
 
 function compareTemaByPriority(tema1, tema2) {
@@ -72,7 +63,7 @@ const INITIAL_STATE = {
 
 export const domainReducer = (state = INITIAL_STATE, action) => produce(state, (draft) => {
   draft.ultimoEventoId = action.id;
-
+  debugger
   switch (action.type) {
     case 'Empezar Reunion': {
       draft.temas = action.temas.map((tema) => temaReducer(tema, action)).sort(compareTema);
@@ -96,6 +87,10 @@ export const domainReducer = (state = INITIAL_STATE, action) => produce(state, (
     default:
       if (draft.temas) {
         const temaIndex = draft.temas.findIndex((tema) => tema.id === action.idTema);
+        if(temaIndex===-1){
+          console.error("Se recibio una accion con un idTema desconocido")
+          return;
+        };
         draft.temas[temaIndex] = temaReducer(state.temas[temaIndex], action);
       }
       break;
