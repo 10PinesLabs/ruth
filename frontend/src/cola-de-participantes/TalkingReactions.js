@@ -13,8 +13,6 @@ export const TiposReaccionAlHablar = {
 
 class TalkingReactionButton extends React.Component {
 
-    state = {selected: false}
-
     estiloGrilla = {
         display: "flex",
         paddingLeft: 0,
@@ -37,9 +35,7 @@ class TalkingReactionButton extends React.Component {
     }
 
     handleReaction = () => {
-        const tipoReaccion = this.state.selected ? tipoDeEvento.DESREACCIONARAPERSONA : tipoDeEvento.REACCIONARAPERSONA;
-
-        this.setState({selected: !this.state.selected});
+        const tipoReaccion = this.props.active ? tipoDeEvento.DESREACCIONARAPERSONA : tipoDeEvento.REACCIONARAPERSONA;
 
         return this.props.onClick(tipoReaccion);
     }
