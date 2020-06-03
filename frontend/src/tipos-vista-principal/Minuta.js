@@ -6,12 +6,14 @@ import {tipoDeEvento} from '../store/conclusion'
 
 const Minuta = ({dispatch, tema, temaActivo}) => {
 
-    const [conclusion, setConclusion] = useState('')
+    const [conclusion, setConclusion] = useState(tema.conclusion)
     
     const dispatchMinuta = (data) => {
+      console.log(tema)
       const evento = {
         autor: 'MINUTEADOR',
         fecha: Date.now(),
+        idTema:tema.id,
         data,
       };
       console.log(evento)
