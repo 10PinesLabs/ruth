@@ -31,7 +31,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
   function userStoppedWriting(event) {
     setUpdateConclusionTimeOut(setTimeout(function () {
       setIsWriting(false);
-    }, 2000))
+    }, 1000))
   }
 
   function userStartedWriting(){
