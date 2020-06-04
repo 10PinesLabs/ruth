@@ -33,7 +33,7 @@ class TalkingReactionButton extends React.Component {
     }
 
     handleReaction = () => {
-        const tipoReaccion = this.props.active ? tipoDeEvento.DESREACCIONARAPERSONA : tipoDeEvento.REACCIONARAPERSONA;
+        const tipoReaccion = this.props.active ? tipoDeEvento.DESREACCIONAR_A_PERSONA : tipoDeEvento.REACCIONAR_A_PERSONA;
         return this.props.onClick(tipoReaccion);
     }
 }
@@ -58,7 +58,7 @@ export function TalkingReactions({dispatchEvent, participant, usuario}) {
         return participant.reacciones.some(({usuarioQueReacciona,reaccion, tipo}) =>
             usuarioQueReacciona.email === usuario.email &&
             reaccion === tipoReaccion &&
-            tipo === tipoDeEvento.REACCIONARAPERSONA
+            tipo === tipoDeEvento.REACCIONAR_A_PERSONA
         )
     }
 
