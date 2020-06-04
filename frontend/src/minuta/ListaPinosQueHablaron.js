@@ -1,6 +1,8 @@
 import React from 'react';
 import {TablaPinos, FilaTitulosWrapper, Td} from './ListaPinosQueHablaron.styled';
 import FilaPinoHablando from "./FilaPinoHablando";
+import {TiposReaccionAlHablar} from "../cola-de-participantes/TalkingReactions";
+import {tipoDeEvento} from "../store/oradores";
 
 const FilaTitulos = () => {
   return <FilaTitulosWrapper>
@@ -33,30 +35,39 @@ function getMinutes(timestamp) {
   return `${date.getMinutes()}:${date.getSeconds()}`;
 }
 
-const FilaPino = (props) => <tr>
-  <td>
-    {props.orden}
-  </td>
-  <Td>
-    {props.pino.usuario.nombre}
-  </Td>
-  <Td>
-    {props.tiempo}
-  </Td>
-  <Td>
-    7
-  </Td>
-  <Td>
-    12
-  </Td>
-  <Td>
-    3
-  </Td>
-  <td>
-    <p>Un resumen</p>
-    <button>EDITAR</button>
-  </td>
-</tr>;
+const FilaPino = (props) => {
+
+  function reaccionesDelPino(filtro) {
+    return props.pino.reacciones.filter((reaccion) =>
+      reaccion.reaccion === filtro &&
+      reaccion.tipo === tipoDeEvento.REACCIONAR_A_ORADOR).length;
+  }
+
+  return <tr>
+    <td>
+      {props.orden}
+    </td>
+    <Td>
+      {props.pino.usuario.nombre}
+    </Td>
+    <Td>
+      {props.tiempo}
+    </Td>
+    <Td>
+      {reaccionesDelPino(TiposReaccionAlHablar.THUMBS_UP)}
+    </Td>
+    <Td>
+      {reaccionesDelPino(TiposReaccionAlHablar.THUMBS_DOWN)}
+    </Td>
+    <Td>
+      {reaccionesDelPino(TiposReaccionAlHablar.REDONDEAR)}
+    </Td>
+    <td>
+      <p>Un resumen</p>
+      <button>EDITAR</button>
+    </td>
+  </tr>
+};
 
 
 const ListaPinosQueHablaron = (props) => (
