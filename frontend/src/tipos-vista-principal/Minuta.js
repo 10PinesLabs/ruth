@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import { VistaDelMedioContainer } from "./Resumen.styled";
 import { useSpring } from "react-spring";
 import { connect } from "react-redux";
-import { tipoDeEvento } from "../store/conclusion";
+import { tipoDeEvento, conclusionReducer } from "../store/conclusion";
 import { toast } from "react-toastify";
 import {Button, SecondaryButton} from '../components/Button.styled';
 
 const Minuta = ({ dispatch, tema, temaActivo }) => {
+  let [lastKnowConclusion, setLastKnowConclusion] = useState(tema.conclusion)
   let [conclusion, setConclusion] = useState(tema.conclusion);
   let [isEditingConclusion, setIsEditingConclusion] = useState(false)
-
+  
   const dispatchMinuta = (data) => {
     console.log(tema);
     const evento = {
@@ -18,11 +19,19 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
       idTema: tema.id,
       data,
     };
-    console.log(evento);
     dispatch(evento);
   };
 
 
+  useEffect(()=>{
+
+    if(!isEditingConclusion && tema.conclusion != lastKnowConclusion){
+      setLastKnowConclusion(tema.conclusion)
+      setConclusion(tema.conclusion)
+    }
+  })
+
+  
   function actualizarConclusion() {
     if(!tema.id){
       toast.error("No hay tema seleccionado")
@@ -34,6 +43,8 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
       tipo: tipoDeEvento.GUARDAR_CONCLUSION,
       conclusion: conclusion,
     });
+
+
   }
 
   function resetearConclusion(){
