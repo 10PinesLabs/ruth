@@ -4,11 +4,11 @@ import { useSpring } from "react-spring";
 import { connect } from "react-redux";
 import { tipoDeEvento } from "../store/conclusion";
 import { toast } from "react-toastify";
+import {Button, SecondaryButton} from '../components/Button.styled';
 
 const Minuta = ({ dispatch, tema, temaActivo }) => {
   let [conclusion, setConclusion] = useState(tema.conclusion);
-  const [isWriting, setIsWriting] = useState(false);
-  const [updateConclusionTimeOut, setUpdateConclusionTimeOut] = useState(null)
+  let [isEditingConclusion, setIsEditingConclusion] = useState(false)
 
   const dispatchMinuta = (data) => {
     console.log(tema);
@@ -22,48 +22,51 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     dispatch(evento);
   };
 
-  useEffect(() => {
-    if (!isWriting && tema.conclusion != conclusion) {
-      setConclusion(tema.conclusion);
-    }
-  });
-
-  function userStoppedWriting(event) {
-    setUpdateConclusionTimeOut(setTimeout(function () {
-      setIsWriting(false);
-    }, 1000))
-  }
-
-  function userStartedWriting(){
-    clearTimeout(updateConclusionTimeOut)
-    setIsWriting(true)
-  }
 
   function actualizarConclusion() {
-
+    setIsEditingConclusion(false)
+    if(tema.inicio===null){
+      toast.error("El tema no empezo")
+      conclusion = ""
+    }
     dispatchMinuta({
       tipo: tipoDeEvento.GUARDAR_CONCLUSION,
       conclusion: conclusion,
     });
   }
+
+  function resetearConclusion(){
+    console.log("resetear")
+    setConclusion(tema.conclusion)
+    setIsEditingConclusion(false)
+  }
+
+  function userChangedConclusionInput(inputValue){
+    setConclusion(inputValue)
+    setIsEditingConclusion(true)
+  }
+
   return (
     <VistaDelMedioContainer
       style={useSpring({ opacity: 1, from: { opacity: 0 } })}
     >
       Proximamente!
-      <form
-        onBlur={(event) => {
-          userStoppedWriting(event);
-        }}
-        onFocus={() => userStartedWriting()}
-      >
+      <form>
         <textarea
           value={conclusion}
-          onChange={(event) => setConclusion(event.target.value)}
+          onChange={(event) => {userChangedConclusionInput(event.target.value)}}
         ></textarea>
-        <button type="button" onClick={() => actualizarConclusion()}>
-          Guardar!
-        </button>
+
+        { isEditingConclusion ? 
+        <div>
+          <SecondaryButton type="button" onClick={() => resetearConclusion()}>
+            Borrar
+          </SecondaryButton>
+          <Button type="button" onClick={() => actualizarConclusion()}>
+            Guardar
+          </Button>        
+        </div>
+        : null }
       </form>
     </VistaDelMedioContainer>
   );
