@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import {VistaDelMedioContainer,} from './Resumen.styled';
 import {useSpring} from "react-spring";
 import ListaPinosQueHablaron from "../minuta/ListaPinosQueHablaron";
-import React, { useState, useEffect } from "react";
-import { VistaDelMedioContainer } from "./Resumen.styled";
 import { connect } from "react-redux";
-import { useSpring } from "react-spring";
+import {Button, SecondaryButton} from "../components/Button.styled";
+import {toast} from "react-toastify";
+import {tipoDeEvento} from "../store/conclusion";
 
 const Minuta = ({ dispatch, tema, temaActivo }) => {
 
@@ -26,7 +26,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
 
   useEffect(()=>{
 
-    if(!isEditingConclusion && tema.conclusion != lastKnowConclusion){
+    if(!isEditingConclusion && tema.conclusion !== lastKnowConclusion){
       setLastKnowConclusion(tema.conclusion)
       setConclusion(tema.conclusion)
     }
@@ -35,23 +35,30 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
   return (
     <VistaDelMedioContainer style={useSpring({opacity: 1, from: {opacity: 0}})}>
       <ListaPinosQueHablaron oradores={tema.oradores}/>
-      <form>
+      <div style={{width: "90%", marginTop:"10px"}}>
+        <form>
         <textarea
+          style={{width: "70%", height: "70px"}}
+          placeholder={"Conclusión"}
           value={conclusion}
-          onChange={(event) => {userChangedConclusionInput(event.target.value)}}
-        ></textarea>
+          onChange={(event) => {
+            userChangedConclusionInput(event.target.value)
+          }}
+        />
 
-        { isEditingConclusion ?
-          <div>
-            <SecondaryButton type="button" onClick={() => resetearConclusion()}>
-              Borrar
-            </SecondaryButton>
-            <Button type="button" onClick={() => actualizarConclusion()}>
-              Guardar
-            </Button>
-          </div>
-          : null }
-      </form>
+          { isEditingConclusion ?
+            <div>
+              <SecondaryButton type="button" onClick={() => resetearConclusion()}>
+                Borrar
+              </SecondaryButton>
+              <Button type="button" onClick={() => actualizarConclusion()}>
+                Guardar
+              </Button>
+            </div>
+            : null }
+        </form>
+      </div>
+
     </VistaDelMedioContainer>
   );
 
