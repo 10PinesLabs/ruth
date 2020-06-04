@@ -14,17 +14,13 @@ export const temaReducer = (state, action) => produce(state, (draft) => {
   draft.fin = draft.fin || null;
   
   draft.oradores = oradoresReducer(draft.oradores, action);
-
-  
   draft.conclusion = conclusionReducer(draft.conclusion,action)
   
-
   const oldReacciones = draft.reacciones;
   draft.reacciones = reaccionesReducer(draft.reacciones, action);
   if (draft.reacciones !== oldReacciones) {
     draft.historicoDeReacciones = historicoDeReaccionesReducer(draft.historicoDeReacciones, draft.reacciones, action);
   }
-  return draft;
 });
 
 function compareTemaByPriority(tema1, tema2) {

@@ -6,7 +6,10 @@ export const tipoDeEvento = {
 
 export const conclusionReducer = (state = '', evento) => produce(state, (estadoAnterior) => {
 
-    if(evento.type === tipoDeEvento.GUARDAR_CONCLUSION){  
-      return evento.conclusion
-    }
+  switch(evento.type){
+    case(tipoDeEvento.GUARDAR_CONCLUSION):
+      return evento.conclusion;
+      
+  }
+
 });
