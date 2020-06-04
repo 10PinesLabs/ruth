@@ -1,30 +1,25 @@
-import conclusionReducer, { CONCLUSION_INITIAL_STATE, tipoDeEvento } from '../conclusion';
+import {conclusionReducer, tipoDeEvento } from '../conclusion';
 
 const guardarConclusion = (conclusion) => ({
     type:tipoDeEvento.GUARDAR_CONCLUSION,
-    actual:conclusion
+    conclusion:conclusion
 })
 describe(`#${tipoDeEvento.GUARDAR_CONCLUSION}`, ()=>{
 
-    let state = CONCLUSION_INITIAL_STATE
+    let state = ''
 
     const applyEvento = (ev) => {
-        state = conclusionReducer(state, ev);
+        return conclusionReducer(state, ev);
     };
-
-    it('la conclusion en su estado inicial es texto vacio', ()=>{
-        expect(state.actual).toEqual('')
-    })
 
     it('con un evento desconocido, no hace nada', () => {
         applyEvento({ type: 'UNKNOWN' });
-        expect(state).toEqual(CONCLUSION_INITIAL_STATE);
+        expect(state).toEqual('');
       });
     
 
-    it('cuando alguien guarda una conclusion se actualiza',()=>{
+    it('cuando el evento es de tipo guardar conlcusion, se devuelve la conclusion',()=>{
         const textoDeConclusion = "soy una bonita conclusion";
-        applyEvento(guardarConclusion(textoDeConclusion));
-        expect(state.actual).toEqual(textoDeConclusion);
+        expect(applyEvento(guardarConclusion(textoDeConclusion))).toEqual(textoDeConclusion);
     })
 })
