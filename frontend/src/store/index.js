@@ -14,16 +14,16 @@ const TEMA_INCIAL_STATE = {
 
 setAutoFreeze(false);
 
-export const temaReducer = (state = TEMA_INCIAL_STATE, nuevoEvento) => produce(state, (nuevoEstado) => {
-  nuevoEstado.inicio = nuevoEstado.inicio || null;
-  nuevoEstado.fin = nuevoEstado.fin || null;
+export const temaReducer = (state = TEMA_INCIAL_STATE, action) => produce(state, (draft) => {
+  draft.inicio = draft.inicio || null;
+  draft.fin = draft.fin || null;
 
-  nuevoEstado.oradores = oradoresReducer(nuevoEstado.oradores, nuevoEvento);
-  const oldReacciones = nuevoEstado.reacciones;
-  nuevoEstado.reacciones = reaccionesReducer(nuevoEstado.reacciones, nuevoEvento);
+  draft.oradores = oradoresReducer(draft.oradores, action);
+  const oldReacciones = draft.reacciones;
+  draft.reacciones = reaccionesReducer(draft.reacciones, action);
 
-  if (nuevoEstado.reacciones !== oldReacciones) {
-    nuevoEstado.historicoDeReacciones = historicoDeReaccionesReducer(nuevoEstado.historicoDeReacciones, nuevoEstado.reacciones, nuevoEvento);
+  if (draft.reacciones !== oldReacciones) {
+    draft.historicoDeReacciones = historicoDeReaccionesReducer(draft.historicoDeReacciones, draft.reacciones, action);
   }
 });
 

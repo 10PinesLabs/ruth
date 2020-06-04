@@ -5,10 +5,8 @@ import getGravatarUrlFor from '../api/gravatar';
 import {SkeletonBlock, SkeletonLine} from "../skeleton/Skeleton.styled";
 import {ModalDeConfirmacion} from "../tipos-vista-principal/Modal";
 import {TalkingReactions} from "./TalkingReactions";
-import * as PropTypes from "prop-types";
 
-
-function ParticipantData(props) {
+const ParticipantData = (props) => {
     return <>
         <UserAvatar isTalking={props.talking} avatar={getGravatarUrlFor(props.usuario.email)}/>
         <CardInfoContainer>
@@ -18,81 +16,86 @@ function ParticipantData(props) {
     </>;
 }
 
-ParticipantData.propTypes = {
-    talking: PropTypes.any,
-    usuario: PropTypes.any,
-    interactive: PropTypes.any,
-    estadoOrador: PropTypes.any
-};
-const ParticipantsCard = ({sePuedeReaccionar = false,dispatchEvent,participant, isParticipantTalking, interactive, kickear, finTema, usuario}) => {
-  const estadoOrador = () => {
-    if (estaEncolado()) {
-      return {detalle: 'encolado'};
-    }
-    if (hablo()) {
-      return {detalle: 'hablo', seconds: Math.ceil((participant.fin - participant.inicio) / 1000)};
-    }
-    return {detalle: finTema? 'hablo' : 'hablando', seconds: Math.ceil(((Date.parse(finTema) || Date.now()) - participant.inicio) / 1000)};
-  };
-
-  const hablo = () => {
-    return participant.fin !== null;
-  };
-
-  const estaEncolado = () => {
-    return participant.inicio === null;
-  };
-
-  const [showSkeleton, setShowSekelton] = useState(true);
-  const [open, setOpen] = useState(false);
-  const [oradorAKickear, setOradorAKickear] = useState(null)
-
-  useEffect(() => {
-    const timeout = setTimeout(() => setShowSekelton(false), 1000)
-    return () => {
-      clearTimeout(timeout);
+const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant, isParticipantTalking, interactive, kickear, finTema, usuario}) => {
+    const estadoOrador = () => {
+        if (estaEncolado()) {
+            return {detalle: 'encolado'};
+        }
+        if (hablo()) {
+            return {detalle: 'hablo', seconds: Math.ceil((participant.fin - participant.inicio) / 1000)};
+        }
+        return {
+            detalle: finTema ? 'hablo' : 'hablando',
+            seconds: Math.ceil(((Date.parse(finTema) || Date.now()) - participant.inicio) / 1000)
+        };
     };
-  }, []);
 
-  return showSkeleton ? <SkeletonComponent interactive isParticipantTalking={isParticipantTalking}/> : (participant ? (
+    const hablo = () => {
+        return participant.fin !== null;
+    };
 
-      <CardContainer style={(sePuedeReaccionar) ? {flexDirection: "row", width: "70%"} : null}
-                     isInteractive={interactive} isTalking={isParticipantTalking}>
-          {interactive && <Cerrar onClick={() => setOradorAKickear(participant.usuario)}/>}
-          <ModalDeConfirmacion
-              title={`¿Estás seguro que querés kickear a ${oradorAKickear && oradorAKickear.nombre || ''}?`}
-              open={Boolean(oradorAKickear)}
-              confirmText={"Si"}
-              cancelText={"No"}
-              onClose={() => setOradorAKickear(null)} onConfirm={() => kickear(oradorAKickear)}/>
+    const estaEncolado = () => {
+        return participant.inicio === null;
+    };
 
-          {(sePuedeReaccionar) ? <TalkingReactions
-              usuario={usuario}
-              dispatchEvent={dispatchEvent}
-              participant={participant}
-          /> : null}
+    const [showSkeleton, setShowSekelton] = useState(true);
+    const [open, setOpen] = useState(false);
+    const [oradorAKickear, setOradorAKickear] = useState(null)
 
+    useEffect(() => {
+        const timeout = setTimeout(() => setShowSekelton(false), 1000)
+        return () => {
+            clearTimeout(timeout);
+        };
+    }, []);
 
-          {(sePuedeReaccionar)?
-              <div style={{width: "70%"}}>
-                  <ParticipantData talking={isParticipantTalking} usuario={participant.usuario} interactive={interactive}
-                                   estadoOrador={estadoOrador()}/>
-              </div> :
-              <ParticipantData talking={isParticipantTalking} usuario={participant.usuario} interactive={interactive}
-                               estadoOrador={estadoOrador()}/>
-          }
+    return showSkeleton ?
+        <SkeletonComponent interactive isParticipantTalking={isParticipantTalking}/> : (participant ? (
 
-      </CardContainer>
-  ) : <div> Nadie esta hablando</div>);
+            <CardContainer style={(sePuedeReaccionar) ? {flexDirection: "row", width: "70%"} : null}
+                           isInteractive={interactive} isTalking={isParticipantTalking}>
+                {interactive && <Cerrar onClick={() => setOradorAKickear(participant.usuario)}/>}
+                <ModalDeConfirmacion
+                    title={`¿Estás seguro que querés kickear a ${oradorAKickear && oradorAKickear.nombre || ''}?`}
+                    open={Boolean(oradorAKickear)}
+                    confirmText={"Si"}
+                    cancelText={"No"}
+                    onClose={() => setOradorAKickear(null)} onConfirm={() => kickear(oradorAKickear)}/>
+
+                {(sePuedeReaccionar) ?
+                    <>
+                        <TalkingReactions
+                            usuario={usuario}
+                            dispatchEvent={dispatchEvent}
+                            participant={participant}
+                        />
+                        <div style={{width: "70%"}}>
+                            <ParticipantData
+                                talking={isParticipantTalking}
+                                usuario={participant.usuario}
+                                interactive={interactive}
+                                estadoOrador={estadoOrador()}/>
+                        </div>
+                    </> :
+                    <ParticipantData
+                        talking={isParticipantTalking}
+                        usuario={participant.usuario}
+                        interactive={interactive}
+                        estadoOrador={estadoOrador()}
+                    />
+                }
+
+            </CardContainer>
+        ) : <div> Nadie esta hablando</div>);
 };
 
 export default ParticipantsCard;
 
 const SkeletonComponent = ({interactive, isParticipantTalking}) =>
-  <CardContainer isInteractive={interactive} isTalking={isParticipantTalking}>
-    <UserAvatar><SkeletonBlock/></UserAvatar>
-    <CardInfoContainer style={{display: 'flex', alignItems: 'space-between'}}>
-      <SkeletonLine/>
-      <SkeletonLine/>
-    </CardInfoContainer>
-  </CardContainer>;
+    <CardContainer isInteractive={interactive} isTalking={isParticipantTalking}>
+        <UserAvatar><SkeletonBlock/></UserAvatar>
+        <CardInfoContainer style={{display: 'flex', alignItems: 'space-between'}}>
+            <SkeletonLine/>
+            <SkeletonLine/>
+        </CardInfoContainer>
+    </CardContainer>;

@@ -4,8 +4,7 @@ import { reacciones } from '../mobile/actions';
 export const reactionTypes = {
   REINICIAR: 'Reiniciar reacciones',
   REACCIONAR: 'Reaccionar',
-  DESREACCIONAR: 'Desreaccionar',
-  REACCIONAPERSONA: 'ReaccionAPersona'
+  DESREACCIONAR: 'Desreaccionar'
 };
 
 function conseguiContrapartes(nombre) {
@@ -36,14 +35,12 @@ const remove = (emails, newEmail) => {
 export const INITIAL_REACCIONES_STATE = {};
 
 export default (state = INITIAL_REACCIONES_STATE, evento) => produce(state, (draft) => {
-
+  const { nombre, usuario } = evento;
   switch (evento.type) {
     case reactionTypes.REINICIAR: {
       return INITIAL_REACCIONES_STATE;
     }
     case reactionTypes.REACCIONAR: {
-      const { nombre, usuario } = evento;
-
       if (draft[nombre]) {
         addIfNotExists(draft[nombre], usuario.email);
       } else {
@@ -58,7 +55,6 @@ export default (state = INITIAL_REACCIONES_STATE, evento) => produce(state, (dra
       break;
     }
     case reactionTypes.DESREACCIONAR: {
-      const { nombre, usuario } = evento;
       if (draft[nombre]) {
         remove(draft[nombre], usuario.email);
       }

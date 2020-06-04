@@ -1,7 +1,6 @@
 import Grid from "@material-ui/core/Grid";
 import {ReactionButton} from "../mobile/ReactionButton";
 import {faSync, faThumbsDown, faThumbsUp} from "@fortawesome/free-solid-svg-icons";
-import * as PropTypes from "prop-types";
 import React from "react";
 import {tipoDeEvento} from "../store/oradores";
 
@@ -14,7 +13,6 @@ export const TiposReaccionAlHablar = {
 class TalkingReactionButton extends React.Component {
 
     estiloGrilla = {
-        display: "flex",
         paddingLeft: 0,
         paddingRight: 0,
         maxWidth: "none"
@@ -26,7 +24,7 @@ class TalkingReactionButton extends React.Component {
     render() {
         return <Grid item xs={4} justify="center" alignItems="center" style={this.estiloGrilla}>
             <ReactionButton
-                background={this.backgroundInactivo}
+                inactiveBackground={this.backgroundInactivo}
                 activeBackground={this.backgroundActivo}
                 isBig
                 isActive={this.props.active} icon={this.props.icon}
@@ -36,23 +34,22 @@ class TalkingReactionButton extends React.Component {
 
     handleReaction = () => {
         const tipoReaccion = this.props.active ? tipoDeEvento.DESREACCIONARAPERSONA : tipoDeEvento.REACCIONARAPERSONA;
-
         return this.props.onClick(tipoReaccion);
     }
 }
 
 export function TalkingReactions({dispatchEvent, participant, usuario}) {
 
-    function onReaction(reactionString) {
-        return (tipoReaccion) => {
+    function onReaction(tipoReaccion) {
+        return (tipoEvento) => {
             dispatchEvent({
-                tipo: tipoReaccion,
+                tipo: tipoEvento,
                 usuarioOrador: {
                     nombre: participant.usuario.nombre,
                     email: participant.usuario.email,
                 },
                 instanciaDeHabla: participant.instanciaDeHabla,
-                reaccion: reactionString
+                reaccion: tipoReaccion
             });
         }
     }
@@ -84,9 +81,3 @@ export function TalkingReactions({dispatchEvent, participant, usuario}) {
         />
     </Grid>;
 }
-
-TalkingReactions.propTypes = {
-    style: PropTypes.shape({display: PropTypes.string, paddingRight: PropTypes.number, paddingLeft: PropTypes.number}),
-    background: PropTypes.string,
-    onClick: PropTypes.func
-};

@@ -4,7 +4,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 export class ReactionButton extends React.Component {
   getReactionButtonStyle = () => {
 
-    let defaultColorOrPassedColor = this.props.background? this.props.background:  'linear-gradient(145deg, rgb(230, 230, 230), rgb(200, 200, 200)';
+    // no me pareció mal dejarle estilos default, por si se quiere usar el boton con la misma gama de colores original
+    let defaultColorOrPassedColor = this.props.inactiveBackground? this.props.inactiveBackground:  'linear-gradient(145deg, rgb(230, 230, 230), rgb(200, 200, 200)';
 
     let defaultOrPassedActiveColor = this.props.activeBackground? this.props.activeBackground: 'linear-gradient(145deg, rgb(114, 181, 114), rgb(205, 255, 205))';
 

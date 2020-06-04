@@ -6,8 +6,8 @@ export const tipoDeEvento = {
   DEJAR_DE_HABLAR: 'Quiero Dejar de Hablar',
   DESENCOLAR: 'Quiero Desencolarme',
   KICKEAR: 'Kickear al que habla',
-  REACCIONARAPERSONA: 'ReaccionAPersona',
-  DESREACCIONARAPERSONA: 'DesreaccionAPersona'
+  REACCIONARAPERSONA: 'ReaccionAOrador',
+  DESREACCIONARAPERSONA: 'DesreaccionAOrador'
 };
 
 
@@ -31,21 +31,6 @@ export const INITIAL_ORADORES_STATE = {
 
 export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft) => {
   const { usuario, fecha } = evento;
-
-
-  function reaccionesDelQueReacciona() {
-    return draft.actual.reacciones.filter(({usuarioQueReacciona, reaccion}) =>
-        usuarioQueReacciona.email === evento.usuario.email &&
-        draft.actual.instanciaDeHabla === evento.instanciaDeHabla
-    );
-  }
-
-  function reaccionesDeUsuariosQueNoSonElQueReacciona() {
-    return draft.actual.reacciones.filter(({usuarioQueReacciona, reaccion}) =>
-        usuarioQueReacciona.email !== evento.usuario.email &&
-        draft.actual.instanciaDeHabla === evento.instanciaDeHabla
-    );
-  }
 
   switch (evento.type) {
     case tipoDeEvento.KICKEAR: {
@@ -112,18 +97,13 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
 
       let reaccionesDeUsuarioReaccionando = reaccionesDelQueReacciona();
 
-      const filterOnReactionType = {
+      const filtrarReaccionesContradictorias = {
         'thumbsUp' :  () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== TiposReaccionAlHablar.THUMBS_UP ),
         'thumbsDown' : () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== TiposReaccionAlHablar.THUMBS_DOWN),
         'redondeando' : () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== TiposReaccionAlHablar.REDONDEAR),
       }
 
-      draft.actual.reacciones = [...filterOnReactionType[evento.reaccion](), ...(reaccionesDeUsuariosQueNoSonElQueReacciona()),{
-        usuarioQueReacciona: evento.usuario,
-        reaccion: evento.reaccion,
-        instanciaDeHabla: evento.instanciaDeHabla,
-        tipo: evento.type
-      }]
+      draft.actual.reacciones = nuevasReaccionesSegunFiltro(filtrarReaccionesContradictorias);
 
       break;
     }
@@ -131,18 +111,13 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
 
       let reaccionesDeUsuarioReaccionando = reaccionesDelQueReacciona();
 
-      const filterOnReactionType = {
+      const filtrarReaccionesContradictorias = {
         'thumbsUp' :  () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== TiposReaccionAlHablar.THUMBS_UP && reaccion !== TiposReaccionAlHablar.THUMBS_DOWN),
         'thumbsDown' : () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== TiposReaccionAlHablar.THUMBS_UP && reaccion !== TiposReaccionAlHablar.THUMBS_DOWN),
         'redondeando' : () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== TiposReaccionAlHablar.REDONDEAR),
       }
 
-      draft.actual.reacciones = [...filterOnReactionType[evento.reaccion](), ...(reaccionesDeUsuariosQueNoSonElQueReacciona()),{
-        usuarioQueReacciona: evento.usuario,
-        reaccion: evento.reaccion,
-        instanciaDeHabla: evento.instanciaDeHabla,
-        tipo: evento.type
-      }]
+      draft.actual.reacciones = nuevasReaccionesSegunFiltro(filtrarReaccionesContradictorias);
 
       break;
     }
@@ -150,5 +125,32 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
     default: {
       break
     }
+  }
+
+  function reaccionesDelQueReacciona() {
+    return draft.actual.reacciones.filter(({usuarioQueReacciona, reaccion}) =>
+        usuarioQueReacciona.email === evento.usuario.email &&
+        draft.actual.instanciaDeHabla === evento.instanciaDeHabla
+    );
+  }
+
+  function reaccionesDeUsuariosQueNoSonElQueReacciona() {
+    return draft.actual.reacciones.filter(({usuarioQueReacciona, reaccion}) =>
+        usuarioQueReacciona.email !== evento.usuario.email &&
+        draft.actual.instanciaDeHabla === evento.instanciaDeHabla
+    );
+  }
+
+  function nuevasReaccionesSegunFiltro(filtrarReaccionesContradictorias) {
+    return [
+      ...filtrarReaccionesContradictorias[evento.reaccion](),
+      ...(reaccionesDeUsuariosQueNoSonElQueReacciona()),
+      {
+        usuarioQueReacciona: evento.usuario,
+        reaccion: evento.reaccion,
+        instanciaDeHabla: evento.instanciaDeHabla,
+        tipo: evento.type
+      }
+    ];
   }
 });

@@ -1,4 +1,4 @@
-import React, {useDebugValue} from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import Vista from './vista';
 import { reacciones } from './actions';
