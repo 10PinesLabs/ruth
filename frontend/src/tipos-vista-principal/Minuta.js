@@ -25,10 +25,6 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
 
   function actualizarConclusion() {
     setIsEditingConclusion(false)
-    if(tema.inicio===null){
-      toast.error("El tema no empezo")
-      conclusion = ""
-    }
     dispatchMinuta({
       tipo: tipoDeEvento.GUARDAR_CONCLUSION,
       conclusion: conclusion,
