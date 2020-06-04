@@ -16,7 +16,6 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
   const dispatchMinuta = (data) => {
     const evento = {
       autor: "MINUTEADOR",
-      fecha: Date.now(),
       idTema: tema.id,
       data,
     };

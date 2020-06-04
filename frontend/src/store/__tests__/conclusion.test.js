@@ -1,14 +1,14 @@
-import { conclusionReducer, tipoDeEvento } from "../conclusion";
+import { conclusionReducer, tipoDeEvento, INITIAL_CONCLUSION } from "../conclusion";
 
 const eventoConclusion = (conclusion) => ({
   type: tipoDeEvento.GUARDAR_CONCLUSION,
   conclusion: conclusion,
 });
 describe(`#${tipoDeEvento.GUARDAR_CONCLUSION}`, () => {
-  let state = "";
+  let state;
 
   beforeEach(() => {
-    state = "";
+    state = INITIAL_CONCLUSION;
   });
 
   const applyEvento = (ev) => {
