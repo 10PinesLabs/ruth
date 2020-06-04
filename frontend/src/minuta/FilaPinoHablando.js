@@ -1,7 +1,6 @@
 import React from 'react';
-import { Td } from './ListaPinosQueHablaro.styled';
+import { Td } from './ListaPinosQueHablaron.styled';
 import Clock from "../clock/Clock";
-import {ClockContainer} from "../clock/Clock.styled";
 
 class FilaPinoHablando extends React.Component {
   constructor(props) {
@@ -37,9 +36,7 @@ class FilaPinoHablando extends React.Component {
           {this.props.pino.usuario.nombre}
         </Td>
         <Td>
-          {/*<ClockContainer>
-            <Clock secondsElapsed={Math.ceil(((Date.now()) - this.props.pino.inicio) / 1000)}/>
-          </ClockContainer>*/}
+
           {<Clock seconds={this.state.secondsElapsed}/>}
         </Td>
         <Td>
