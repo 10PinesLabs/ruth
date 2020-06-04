@@ -127,18 +127,20 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
     }
   }
 
-  function reaccionesDelQueReacciona() {
+
+  function obtenerReaccionesActuales(criterio) {
     return draft.actual.reacciones.filter(({usuarioQueReacciona, reaccion}) =>
-        usuarioQueReacciona.email === evento.usuario.email &&
+        criterio(usuarioQueReacciona) &&
         draft.actual.instanciaDeHabla === evento.instanciaDeHabla
     );
   }
 
+  function reaccionesDelQueReacciona() {
+    return obtenerReaccionesActuales((usuarioQueReacciona) => usuarioQueReacciona.email === evento.usuario.email);
+  }
+
   function reaccionesDeUsuariosQueNoSonElQueReacciona() {
-    return draft.actual.reacciones.filter(({usuarioQueReacciona, reaccion}) =>
-        usuarioQueReacciona.email !== evento.usuario.email &&
-        draft.actual.instanciaDeHabla === evento.instanciaDeHabla
-    );
+    return obtenerReaccionesActuales((usuarioQueReacciona) => usuarioQueReacciona.email !== evento.usuario.email);
   }
 
   function nuevasReaccionesSegunFiltro(filtrarReaccionesContradictorias) {
