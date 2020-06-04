@@ -21,7 +21,6 @@ export const temaReducer = (state, action) => produce(state, (draft) => {
 
   const oldReacciones = draft.reacciones;
   draft.reacciones = reaccionesReducer(draft.reacciones, action);
-  debugger
   if (draft.reacciones !== oldReacciones) {
     draft.historicoDeReacciones = historicoDeReaccionesReducer(draft.historicoDeReacciones, draft.reacciones, action);
   }
@@ -63,7 +62,6 @@ const INITIAL_STATE = {
 
 export const domainReducer = (state = INITIAL_STATE, action) => produce(state, (draft) => {
   draft.ultimoEventoId = action.id;
-  debugger
   switch (action.type) {
     case 'Empezar Reunion': {
       draft.temas = action.temas.map((tema) => temaReducer(tema, action)).sort(compareTema);
