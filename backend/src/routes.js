@@ -36,6 +36,7 @@ export default (wss) => {
   router.ws('/ws', webSocketRouter());
 
   if (process.env.NODE_ENV !== 'production') {
+    console.log('Utilizando ambiente de pruebas!!');
     router.use('/pruebas', pruebasRouter);
   }
 
