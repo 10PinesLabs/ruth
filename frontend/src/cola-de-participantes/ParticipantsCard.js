@@ -1,6 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import ParticipantCounter from './ParticipantCounter';
-import {CardContainer, CardInfoContainer, CardName, Cerrar, UserAvatar,} from './ParticipantsCard.styled';
+import {
+    CardContainer,
+    CardInfoContainer,
+    CardName,
+    Cerrar,
+    ParticipantDataReactableContainer,
+    UserAvatar,
+} from './ParticipantsCard.styled';
 import getGravatarUrlFor from '../api/gravatar';
 import {SkeletonBlock, SkeletonLine} from "../skeleton/Skeleton.styled";
 import {ModalDeConfirmacion} from "../tipos-vista-principal/Modal";
@@ -52,8 +59,11 @@ const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant
     return showSkeleton ?
         <SkeletonComponent interactive isParticipantTalking={isParticipantTalking}/> : (participant ? (
 
-            <CardContainer style={(sePuedeReaccionar) ? {flexDirection: "row", width: "70%"} : null}
-                           isInteractive={interactive} isTalking={isParticipantTalking}>
+            <CardContainer
+                sePuedeReaccionar={sePuedeReaccionar}
+                isInteractive={interactive}
+                isTalking={isParticipantTalking}
+            >
                 {interactive && <Cerrar onClick={() => setOradorAKickear(participant.usuario)}/>}
                 <ModalDeConfirmacion
                     title={`¿Estás seguro que querés kickear a ${oradorAKickear && oradorAKickear.nombre || ''}?`}
@@ -69,13 +79,13 @@ const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant
                             dispatchEvent={dispatchEvent}
                             participant={participant}
                         />
-                        <div style={{width: "70%"}}>
+                        <ParticipantDataReactableContainer>
                             <ParticipantData
                                 talking={isParticipantTalking}
                                 usuario={participant.usuario}
                                 interactive={interactive}
                                 estadoOrador={estadoOrador()}/>
-                        </div>
+                        </ParticipantDataReactableContainer>
                     </> :
                     <ParticipantData
                         talking={isParticipantTalking}
