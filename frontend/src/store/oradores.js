@@ -109,7 +109,9 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
     }
     case tipoDeEvento.REACCIONAR_A_ORADOR: {
 
-      let reaccionesDeUsuarioReaccionando = reaccionesDelQueReacciona();
+      const reaccionesDeUsuarioReaccionando = reaccionesDelQueReacciona();
+
+      //todo refactorizar los filtros ya que se repite logica
 
       const filtrarReaccionesContradictorias = {
         'thumbsUp' :  () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== TiposReaccionAlHablar.THUMBS_UP && reaccion !== TiposReaccionAlHablar.THUMBS_DOWN),
