@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { tipoDeEvento, conclusionReducer } from "../store/conclusion";
 import { toast } from "react-toastify";
 import { Button, SecondaryButton } from "../components/Button.styled";
+import ListaPinosQueHablaron from "../minuta/ListaPinosQueHablaron";
+
 
 const Minuta = ({ dispatch, tema, temaActivo }) => {
   let [lastKnowConclusion, setLastKnowConclusion] = useState(tema.conclusion);
@@ -20,6 +22,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     };
     dispatch(evento);
   };
+
 
   useEffect(() => {
     if (!isEditingConclusion && tema.conclusion != lastKnowConclusion) {
@@ -55,7 +58,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     <VistaDelMedioContainer
       style={useSpring({ opacity: 1, from: { opacity: 0 } })}
     >
-      Proximamente!
+      <ListaPinosQueHablaron oradores={tema.oradores}/>
       <form>
         <textarea
           value={conclusion}
