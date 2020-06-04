@@ -6,8 +6,8 @@ export const tipoDeEvento = {
   DEJAR_DE_HABLAR: 'Quiero Dejar de Hablar',
   DESENCOLAR: 'Quiero Desencolarme',
   KICKEAR: 'Kickear al que habla',
-  REACCIONAR_A_PERSONA: 'ReaccionAOrador',
-  DESREACCIONAR_A_PERSONA: 'DesreaccionAOrador'
+  REACCIONAR_A_ORADOR: 'ReaccionAOrador',
+  DESREACCIONAR_A_ORADOR: 'DesreaccionAOrador'
 };
 
 
@@ -93,7 +93,7 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
       draft.actual = nextOrador;
       break;
     }
-    case tipoDeEvento.DESREACCIONAR_A_PERSONA: {
+    case tipoDeEvento.DESREACCIONAR_A_ORADOR: {
 
       let reaccionesDeUsuarioReaccionando = reaccionesDelQueReacciona();
 
@@ -107,7 +107,7 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
 
       break;
     }
-    case tipoDeEvento.REACCIONAR_A_PERSONA: {
+    case tipoDeEvento.REACCIONAR_A_ORADOR: {
 
       let reaccionesDeUsuarioReaccionando = reaccionesDelQueReacciona();
 
