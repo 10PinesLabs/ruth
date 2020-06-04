@@ -34,7 +34,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
   function actualizarConclusion() {
     if (!tema.id) {
       toast.error("No hay tema seleccionado");
-      conclusion = "";
+      setConclusion('')
       return;
     }
     setIsEditingConclusion(false);
