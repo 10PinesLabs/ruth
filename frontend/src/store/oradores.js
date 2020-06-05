@@ -1,4 +1,4 @@
-import {produce} from 'immer';
+import { produce } from 'immer';
 import {TiposReaccionAlHablar} from "../cola-de-participantes/TalkingReactions";
 
 export const tipoDeEvento = {
