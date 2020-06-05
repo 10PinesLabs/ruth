@@ -57,10 +57,10 @@ const FilaPino = (props) => {
       {reaccionesDelPino(TiposReaccionAlHablar.THUMBS_UP)}
     </Td>
     <Td>
-      {reaccionesDelPino(TiposReaccionAlHablar.THUMBS_DOWN)}
+      {reaccionesDelPino(TiposReaccionAlHablar.REDONDEAR)}
     </Td>
     <Td>
-      {reaccionesDelPino(TiposReaccionAlHablar.REDONDEAR)}
+      {reaccionesDelPino(TiposReaccionAlHablar.THUMBS_DOWN)}
     </Td>
     <td>
       <p>Un resumen</p>

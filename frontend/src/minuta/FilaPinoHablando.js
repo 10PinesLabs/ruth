@@ -53,10 +53,10 @@ class FilaPinoHablando extends React.Component {
           {this.reaccionesDelPino(TiposReaccionAlHablar.THUMBS_UP)}
         </Td>
         <Td>
-          {this.reaccionesDelPino(TiposReaccionAlHablar.THUMBS_DOWN)}
+          {this.reaccionesDelPino(TiposReaccionAlHablar.REDONDEAR)}
         </Td>
         <Td>
-          {this.reaccionesDelPino(TiposReaccionAlHablar.REDONDEAR)}
+          {this.reaccionesDelPino(TiposReaccionAlHablar.THUMBS_DOWN)}
         </Td>
         <td>
           <p>Estoy hablando</p>
