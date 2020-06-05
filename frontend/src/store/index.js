@@ -1,24 +1,21 @@
 import { configureStore, createAction, getDefaultMiddleware } from '@reduxjs/toolkit';
 import produce, { setAutoFreeze } from 'immer';
 import oradoresReducer from './oradores';
+import {tipoDeEvento, conclusionReducer} from './conclusion'
 import reaccionesReducer from './reacciones';
 import Backend from '../api/backend';
 import historicoDeReaccionesReducer from './historicoDeReacciones';
 
-const TEMA_INCIAL_STATE = {
-  oradores: [],
-  reacciones: [],
-  inicio: null,
-  fin: null,
-};
-
 setAutoFreeze(false);
 
-export const temaReducer = (state = TEMA_INCIAL_STATE, action) => produce(state, (draft) => {
+export const temaReducer = (state, action) => produce(state, (draft) => {
+
   draft.inicio = draft.inicio || null;
   draft.fin = draft.fin || null;
-
+  
   draft.oradores = oradoresReducer(draft.oradores, action);
+  draft.conclusion = conclusionReducer(draft.conclusion,action)
+  
   const oldReacciones = draft.reacciones;
   draft.reacciones = reaccionesReducer(draft.reacciones, action);
   if (draft.reacciones !== oldReacciones) {
@@ -61,7 +58,6 @@ const INITIAL_STATE = {
 
 export const domainReducer = (state = INITIAL_STATE, action) => produce(state, (draft) => {
   draft.ultimoEventoId = action.id;
-
   switch (action.type) {
     case 'Empezar Reunion': {
       draft.temas = action.temas.map((tema) => temaReducer(tema, action)).sort(compareTema);
@@ -85,6 +81,10 @@ export const domainReducer = (state = INITIAL_STATE, action) => produce(state, (
     default:
       if (draft.temas) {
         const temaIndex = draft.temas.findIndex((tema) => tema.id === action.idTema);
+        if(temaIndex===-1){
+          console.error("Se recibio una accion con un idTema desconocido")
+          return;
+        };
         draft.temas[temaIndex] = temaReducer(state.temas[temaIndex], action);
       }
       break;
