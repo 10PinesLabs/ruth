@@ -121,21 +121,21 @@ const Vista = ({
   let microphone;
   if (temaEmpezado) {
     if (isTalking) {
-      microphone =
+      microphone = 
         <MicrophoneContainer>
           <TalkButton pressed={true} onClick={onWannaStopTalkClick}>
             <FontAwesomeIcon icon={inQueueIcon()} color={'black'} size={'2x'}/>
           </TalkButton>
         </MicrophoneContainer>;
     } else if (wannaTalk) {
-      microphone =
+      microphone = 
         <MicrophoneContainer>
             <TalkButton pressed={true} onClick={onWannaStopTalkClick}>
               <FontAwesomeIcon icon={inQueueIcon()} color={'black'} size={'2x'}/>
             </TalkButton>
             <QueuedParticipants>
-              <ParticipantsCounter>
-                {remainingParticipantsUpToUser}
+              <ParticipantsCounter> 
+                {remainingParticipantsUpToUser} 
               </ParticipantsCounter>
               <FontAwesomeIcon icon={faMale} color={'silver'} size={'1x'}/>
             </QueuedParticipants>

@@ -208,7 +208,7 @@ describe('#oradoresReducer reducer', () => {
       expect(state).toEqual({
         cola: [],
         actual: null,
-        pasados: [orador(elUsuario(1), 1, 2), orador(elUsuario(1), 3, 4,1)],
+        pasados: [orador(elUsuario(1), 1, 2), orador(elUsuario(1), 3, 4, 1)],
       });
     });
   });
