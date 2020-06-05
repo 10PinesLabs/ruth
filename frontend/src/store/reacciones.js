@@ -4,7 +4,7 @@ import { reacciones } from '../mobile/actions';
 export const reactionTypes = {
   REINICIAR: 'Reiniciar reacciones',
   REACCIONAR: 'Reaccionar',
-  DESREACCIONAR: 'Desreaccionar'
+  DESREACCIONAR: 'Desreaccionar',
 };
 
 function conseguiContrapartes(nombre) {

@@ -31,7 +31,6 @@ export const INITIAL_ORADORES_STATE = {
 
 export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft) => {
   const { usuario, fecha } = evento;
-
   switch (evento.type) {
     case tipoDeEvento.KICKEAR: {
       if (!estaHablando(draft, evento.kickearA.nombre)) {
@@ -61,10 +60,16 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
         return draft.pasados.filter((usuarioPasado) => usuarioPasado.usuario.email === usuario.email).length;
       }
 
+      const reacciones = {
+        [TiposReaccionAlHablar.THUMBS_UP]: [],
+        [TiposReaccionAlHablar.THUMBS_DOWN]: [],
+        [TiposReaccionAlHablar.REDONDEAR]: []
+      };
+
       if (!hayAlguienHablando(draft)) {
-        draft.actual = { usuario, inicio: fecha, fin: null , reacciones: [], instanciaDeHabla: contarVecesQueHablo()} ;
+        draft.actual = {usuario, inicio: fecha, fin: null, reacciones, instanciaDeHabla: contarVecesQueHablo()};
       } else {
-        draft.cola.push({ usuario, inicio: null, fin: null, reacciones: [],instanciaDeHabla: contarVecesQueHablo()});
+        draft.cola.push({usuario, inicio: null, fin: null, reacciones, instanciaDeHabla: contarVecesQueHablo()});
       }
       break;
     }
@@ -89,37 +94,42 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
         draft.actual = null;
         return;
       }
+
       nextOrador.inicio = fecha;
       draft.actual = nextOrador;
       break;
     }
     case tipoDeEvento.DESREACCIONAR_A_ORADOR: {
 
-      let reaccionesDeUsuarioReaccionando = reaccionesDelQueReacciona();
-
-      const filtrarReaccionesContradictorias = {
-        'thumbsUp' :  () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== TiposReaccionAlHablar.THUMBS_UP ),
-        'thumbsDown' : () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== TiposReaccionAlHablar.THUMBS_DOWN),
-        'redondeando' : () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== TiposReaccionAlHablar.REDONDEAR),
-      }
-
-      draft.actual.reacciones = nuevasReaccionesSegunFiltro(filtrarReaccionesContradictorias);
+      ({
+        [TiposReaccionAlHablar.THUMBS_UP]: () => {
+          draft.actual.reacciones.thumbsUp = listaDeReaccionSinUsuarioReaccionante(evento.reaccion)
+        },
+        [TiposReaccionAlHablar.THUMBS_DOWN]: () => {
+          draft.actual.reacciones.thumbsDown = listaDeReaccionSinUsuarioReaccionante(evento.reaccion)
+        },
+        [TiposReaccionAlHablar.REDONDEAR]: () => {
+          draft.actual.reacciones.redondeando = listaDeReaccionSinUsuarioReaccionante(evento.reaccion)
+        }
+      })[evento.reaccion]()
 
       break;
     }
     case tipoDeEvento.REACCIONAR_A_ORADOR: {
 
-      const reaccionesDeUsuarioReaccionando = reaccionesDelQueReacciona();
+      const nuevaReaccion = {email: usuario.email, instanciaDeHabla: evento.instanciaDeHabla};
 
-      //todo refactorizar los filtros ya que se repite logica
-
-      const filtrarReaccionesContradictorias = {
-        'thumbsUp' :  () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== TiposReaccionAlHablar.THUMBS_UP && reaccion !== TiposReaccionAlHablar.THUMBS_DOWN),
-        'thumbsDown' : () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== TiposReaccionAlHablar.THUMBS_UP && reaccion !== TiposReaccionAlHablar.THUMBS_DOWN),
-        'redondeando' : () => reaccionesDeUsuarioReaccionando.filter(({reaccion})=> reaccion !== TiposReaccionAlHablar.REDONDEAR),
-      }
-
-      draft.actual.reacciones = nuevasReaccionesSegunFiltro(filtrarReaccionesContradictorias);
+      ({
+        [TiposReaccionAlHablar.THUMBS_UP]: () => {
+          draft.actual.reacciones.thumbsUp.push(nuevaReaccion)
+          draft.actual.reacciones.thumbsDown = listaDeReaccionSinUsuarioReaccionante(TiposReaccionAlHablar.THUMBS_DOWN)
+        },
+        [TiposReaccionAlHablar.THUMBS_DOWN]: () => {
+          draft.actual.reacciones.thumbsDown.push(nuevaReaccion)
+          draft.actual.reacciones.thumbsUp = listaDeReaccionSinUsuarioReaccionante(TiposReaccionAlHablar.THUMBS_UP)
+        },
+        [TiposReaccionAlHablar.REDONDEAR]: () => draft.actual.reacciones.redondeando.push(nuevaReaccion)
+      })[evento.reaccion]()
 
       break;
     }
@@ -129,32 +139,11 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
     }
   }
 
-
-  function obtenerReaccionesActuales(criterio) {
-    return draft.actual.reacciones.filter(({usuarioQueReacciona, reaccion}) =>
-        criterio(usuarioQueReacciona) &&
-        draft.actual.instanciaDeHabla === evento.instanciaDeHabla
+  function listaDeReaccionSinUsuarioReaccionante(tipoReaccion){
+    return draft.actual.reacciones[tipoReaccion].filter((reaccion) =>
+      reaccion.email !== evento.usuario.email &&
+      reaccion.instanciaDeHabla !== evento.instanciaDeHabla
     );
-  }
+}
 
-  function reaccionesDelQueReacciona() {
-    return obtenerReaccionesActuales((usuarioQueReacciona) => usuarioQueReacciona.email === evento.usuario.email);
-  }
-
-  function reaccionesDeUsuariosQueNoSonElQueReacciona() {
-    return obtenerReaccionesActuales((usuarioQueReacciona) => usuarioQueReacciona.email !== evento.usuario.email);
-  }
-
-  function nuevasReaccionesSegunFiltro(filtrarReaccionesContradictorias) {
-    return [
-      ...filtrarReaccionesContradictorias[evento.reaccion](),
-      ...(reaccionesDeUsuariosQueNoSonElQueReacciona()),
-      {
-        usuarioQueReacciona: evento.usuario,
-        reaccion: evento.reaccion,
-        instanciaDeHabla: evento.instanciaDeHabla,
-        tipo: evento.type
-      }
-    ];
-  }
 });

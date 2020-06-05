@@ -1,13 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import ParticipantCounter from './ParticipantCounter';
-import {
-  CardContainer,
-  CardInfoContainer,
-  CardName,
-  Cerrar,
-  ParticipantDataReactableContainer,
-  UserAvatar,
-} from './ParticipantsCard.styled';
+import {CardContainer, CardInfoContainer, CardName, Cerrar, UserAvatar,} from './ParticipantsCard.styled';
 import getGravatarUrlFor from '../api/gravatar';
 import {SkeletonBlock, SkeletonLine} from "../skeleton/Skeleton.styled";
 import {ModalDeConfirmacion} from "../tipos-vista-principal/Modal";
@@ -31,10 +24,7 @@ const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant
     if (hablo()) {
       return {detalle: 'hablo', seconds: Math.ceil((participant.fin - participant.inicio) / 1000)};
     }
-    return {
-      detalle: finTema ? 'hablo' : 'hablando',
-      seconds: Math.ceil(((Date.parse(finTema) || Date.now()) - participant.inicio) / 1000)
-    };
+    return {detalle: finTema? 'hablo' : 'hablando', seconds: Math.ceil(((Date.parse(finTema) || Date.now()) - participant.inicio) / 1000)};
   };
 
   const hablo = () => {
@@ -95,8 +85,8 @@ const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant
           />
         }
 
-      </CardContainer>
-    ) : <div> Nadie esta hablando</div>);
+    </CardContainer>
+  ) : <div> Nadie esta hablando</div>);
 };
 
 export default ParticipantsCard;

@@ -55,10 +55,8 @@ export function TalkingReactions({dispatchEvent, participant, usuario}) {
     }
 
     function didReact(tipoReaccion) {
-        return participant.reacciones.some(({usuarioQueReacciona,reaccion, tipo}) =>
-            usuarioQueReacciona.email === usuario.email &&
-            reaccion === tipoReaccion &&
-            tipo === tipoDeEvento.REACCIONAR_A_ORADOR
+        return participant.reacciones[tipoReaccion].some(({email}) =>
+            usuario.email === email
         )
     }
 
