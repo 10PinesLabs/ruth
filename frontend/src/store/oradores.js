@@ -1,5 +1,5 @@
 import { produce } from 'immer';
-import {TiposReaccionAlHablar} from "../cola-de-participantes/TalkingReactions";
+import { TiposReaccionAlHablar } from "../cola-de-participantes/TalkingReactions";
 
 export const tipoDeEvento = {
   LEVANTAR_MANO: 'Quiero Hablar',
@@ -117,7 +117,7 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
     }
     case tipoDeEvento.REACCIONAR_A_ORADOR: {
 
-      const nuevaReaccion = {email: usuario.email, instanciaDeHabla: evento.instanciaDeHabla};
+      const nuevaReaccion = {email: evento.usuario.email, instanciaDeHabla: evento.instanciaDeHabla};
 
       ({
         [TiposReaccionAlHablar.THUMBS_UP]: () => {
@@ -142,7 +142,7 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
   function listaDeReaccionSinUsuarioReaccionante(tipoReaccion){
     return draft.actual.reacciones[tipoReaccion].filter((reaccion) =>
       reaccion.email !== evento.usuario.email &&
-      reaccion.instanciaDeHabla !== evento.instanciaDeHabla
+      reaccion.instanciaDeHabla === evento.instanciaDeHabla
     );
 }
 

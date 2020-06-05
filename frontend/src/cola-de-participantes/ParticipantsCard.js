@@ -1,6 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import ParticipantCounter from './ParticipantCounter';
-import {CardContainer, CardInfoContainer, CardName, Cerrar, UserAvatar,} from './ParticipantsCard.styled';
+import {
+  CardContainer,
+  CardInfoContainer,
+  CardName,
+  Cerrar,
+  ParticipantDataReactableContainer,
+  UserAvatar,
+} from './ParticipantsCard.styled';
 import getGravatarUrlFor from '../api/gravatar';
 import {SkeletonBlock, SkeletonLine} from "../skeleton/Skeleton.styled";
 import {ModalDeConfirmacion} from "../tipos-vista-principal/Modal";
