@@ -4,7 +4,7 @@
 ### Desarrollo
 1. Instalar `node`. Ver la versión en el archivo `.nvmrc` (o hacer directamente `$ nvm use` y seguir las instruncciones).
 1. Instalar las dependencias con `$ npm install`.
-1. Levantar la DB con Docker en el directorio /backend con `$ docker-compose up --detach --no-recreate`.
+1. Levantar la DB con Docker en el directorio /backend con `$ docker-compose up -d --no-recreate`.
 1. Configurar las variables de ambiente del front move el archivo frontend/env.example a frontend/.env
 1. Configurar las variables de ambiente del back move el archivo backend/env.example a backend/.env, aun asi hay
    algunar variables de ambiente que son secretas, podes preguntar en #ruth para que otro dev te los pase.
