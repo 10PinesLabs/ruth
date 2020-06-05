@@ -1,7 +1,7 @@
 import oradoresReducer, { INITIAL_ORADORES_STATE, tipoDeEvento } from '../oradores';
 
 const orador = (usuario, inicio, fin, instancia) => ({
-  usuario, inicio: inicio || null, fin: fin || null, instanciaDeHabla: instancia || 0, reacciones: []
+  usuario, inicio: inicio || null, fin: fin || null, instanciaDeHabla: instancia || 0, reacciones: { "redondeando": [], "thumbsDown": [], "thumbsUp": []}
 });
 
 const elUsuario = (n) => ({
