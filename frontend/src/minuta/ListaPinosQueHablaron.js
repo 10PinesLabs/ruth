@@ -1,5 +1,5 @@
 import React from 'react';
-import {TablaPinos, FilaTitulosWrapper, Td} from './ListaPinosQueHablaron.styled';
+import {TablaPinos, FilaTitulosWrapper, Td} from './Minuta.styled';
 import FilaPinoHablando from "./FilaPinoHablando";
 
 const FilaTitulos = () => {

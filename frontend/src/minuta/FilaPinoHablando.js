@@ -1,5 +1,5 @@
 import React from 'react';
-import { Td } from './ListaPinosQueHablaron.styled';
+import { Td } from './Minuta.styled';
 import Clock from "../clock/Clock";
 
 class FilaPinoHablando extends React.Component {
