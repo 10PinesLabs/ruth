@@ -1,8 +1,11 @@
 import React from 'react';
 import {TextButton} from '../components/TextButton'
 import styled from 'styled-components'
+import { withStyles } from '@material-ui/core/styles';
+
 import { colors, font} from '../styles/theme';
-import OButton from '@material-ui/core/Button';
+
+import Button from '@material-ui/core/Button';
 
 export const MinutaWriter = ()=>{
 
@@ -20,15 +23,44 @@ export const MinutaWriter = ()=>{
     display:flex;
     width:100%;
     justify-content: space-between;
+    margin-top: 15px;
     `
 
+    const TextButton = withStyles({
+        root:{
+            color: colors.primary,
+            fontFamily: font.family,
+            fontWeight:600
+        },
+        label:{
+            textTransform:"none"    
+        }
+        })(Button);
+
+    const ThemedButton = withStyles({
+        root:{
+            color: colors.white,
+            background:colors.primary,
+            fontFamily: font.family,
+            fontWeight:600,
+            '&:hover': {
+                background: colors.primaryConstrast,
+             },
+        },
+        label:{
+            textTransform:"none"    
+        },
+        
+        })(Button);
+
+        
     return(
         <MinutaContainer>
         <MinutaActionTitle>Hablando pino</MinutaActionTitle>
         <textarea/>
         <MinutaButtons>
           <TextButton>Descartar cambios</TextButton>
-          <OButton  variant="contained" color={colors.primary} disableElevation>Guardar</OButton>
+          <ThemedButton  disableElevation="true">Guardar</ThemedButton>
         </MinutaButtons>
         </MinutaContainer>
     );

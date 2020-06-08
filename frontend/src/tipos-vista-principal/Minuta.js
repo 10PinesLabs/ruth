@@ -4,8 +4,10 @@ import { useSpring } from "react-spring";
 import { connect } from "react-redux";
 import { tipoDeEvento, conclusionReducer } from "../store/conclusion";
 import { toast } from "react-toastify";
-import { Button, SecondaryButton } from "../components/Button.styled";
+import { Button, SecondaryButton} from "../components/Button.styled";
 import ListaPinosQueHablaron from "../minuta/ListaPinosQueHablaron";
+import { MinutaWriter } from "../minuta/MinutaWriter";
+
 
 
 const Minuta = ({ dispatch, tema, temaActivo }) => {
@@ -53,10 +55,14 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     setIsEditingConclusion(true);
   }
 
+
+
   return (
     <VistaDelMedioContainer
       style={useSpring({ opacity: 1, from: { opacity: 0 } })}
     >
+    
+      <MinutaWriter/>
       <ListaPinosQueHablaron oradores={tema.oradores}/>
       <form>
         <textarea
