@@ -175,9 +175,14 @@ const Vista = ({
         </CardInteractionsContainer>
       </TopSectionContainer>
       <ParticipantsContainer>
-        <ParticipantsCard interactive isParticipantTalking
-                          kickear={kickear}
-                          participant={participant}/>
+        <ParticipantsCard
+          sePuedeReaccionar={true}
+          usuario={usuario}
+          interactive
+          isParticipantTalking
+          dispatchEvent={dispatchEvent}
+          kickear={kickear}
+          participant={participant}/>
       </ParticipantsContainer>
       <ActionContainerStyle>
         {showSkeleton ? <TalkButton pressed={false}><SkeletonCircle/></TalkButton> : microphone}
