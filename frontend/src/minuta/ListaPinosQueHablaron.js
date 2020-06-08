@@ -3,8 +3,8 @@ import {TablaPinos, FilaTitulosWrapper, Td} from './ListaPinosQueHablaron.styled
 import FilaPinoHablando from "./FilaPinoHablando";
 import {TiposReaccionAlHablar} from "../cola-de-participantes/TalkingReactions";
 
-export const cantidadReaccionesDelPino = (tipoReaccion,props) => {
-  return props.pino.reacciones[tipoReaccion].length;
+export const cantidadReaccionesDelPino = (tipoReaccion,pino) => {
+  return pino.reacciones[tipoReaccion].length;
 }
 
 const FilaTitulos = () => {
@@ -49,13 +49,13 @@ const FilaPino = (props) => <tr>
     {props.tiempo}
   </Td>
   <Td>
-    {cantidadReaccionesDelPino(TiposReaccionAlHablar.THUMBS_UP,props)}
+    {cantidadReaccionesDelPino(TiposReaccionAlHablar.THUMBS_UP,props.pino)}
   </Td>
   <Td>
-    {cantidadReaccionesDelPino(TiposReaccionAlHablar.REDONDEAR,props)}
+    {cantidadReaccionesDelPino(TiposReaccionAlHablar.REDONDEAR,props.pino)}
   </Td>
   <Td>
-    {cantidadReaccionesDelPino(TiposReaccionAlHablar.THUMBS_DOWN,props)}
+    {cantidadReaccionesDelPino(TiposReaccionAlHablar.THUMBS_DOWN,props.pino)}
   </Td>
   <td>
     <p>Un resumen</p>

@@ -42,13 +42,13 @@ class FilaPinoHablando extends React.Component {
           {<Clock seconds={this.state.secondsElapsed}/>}
         </Td>
         <Td>
-          {cantidadReaccionesDelPino(TiposReaccionAlHablar.THUMBS_UP,this.props)}
+          {cantidadReaccionesDelPino(TiposReaccionAlHablar.THUMBS_UP,this.props.pino)}
         </Td>
         <Td>
-          {cantidadReaccionesDelPino(TiposReaccionAlHablar.REDONDEAR,this.props)}
+          {cantidadReaccionesDelPino(TiposReaccionAlHablar.REDONDEAR,this.props.pino)}
         </Td>
         <Td>
-          {cantidadReaccionesDelPino(TiposReaccionAlHablar.THUMBS_DOWN,this.props)}
+          {cantidadReaccionesDelPino(TiposReaccionAlHablar.THUMBS_DOWN,this.props.pino)}
         </Td>
         <td>
           <p>Estoy hablando</p>
