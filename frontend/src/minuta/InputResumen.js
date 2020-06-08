@@ -5,14 +5,24 @@ import React, { useState } from 'react';
 const InputResumen = ({ tema }) => {
   const [isRecapVisible, setIsRecapCollapsed] = useState(false);
 
+  function selected() {
+    return tema.oradores.actual
+      ? tema.oradores.actual.usuario.nombre
+      : tema.oradores.pasados[tema.oradores.pasados.length - 1].usuario.nombre;
+  }
+
+  function shouldBeVisible() {
+    return tema.oradores.actual || tema.oradores.pasados.length > 0;
+  }
+
   return (<div>
     <button onClick={() => setIsRecapCollapsed(!isRecapVisible)}>Editar resumen</button>
     <Collapse in={isRecapVisible}>
       <Card>
         <CardContent>
-          {tema.oradores.actual ? <p>Estas editando el resumen de: {tema.oradores.actual.usuario.nombre}</p>
-            : <p>Nadie esta hablando</p>}
-          <TextField label="Resumen" variant="outlined" disabled={tema.oradores.actual == null}/>
+          {shouldBeVisible() ? <p>Estas editando el resumen de: {selected()}</p>
+            : <p>Nadie habló</p>}
+          <TextField label="Resumen" variant="outlined" disabled={!shouldBeVisible()}/>
         </CardContent>
       </Card>
     </Collapse>
