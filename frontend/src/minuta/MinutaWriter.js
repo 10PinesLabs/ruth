@@ -11,6 +11,7 @@ export const MinutaWriter = ()=>{
     const MinutaContainer = styled.div`
     display:flex;
     flex-direction: column;
+    width:60%;
     `
 
     const MinutaActionTitle = styled.span`
@@ -52,11 +53,15 @@ export const MinutaWriter = ()=>{
         
         })(Button);
 
+    const MinutaInput = styled.textarea`
+        width:100%;
+        resize:vertical;
+        `
         
     return(
         <MinutaContainer>
-        <MinutaActionTitle>Hablando pino</MinutaActionTitle>
-        <textarea/>
+        <MinutaActionTitle>Elige un participante para poder editar tu resumen</MinutaActionTitle>
+        <MinutaInput rows={10}/>
         <MinutaButtons>
           <TextButton>Descartar cambios</TextButton>
           <ThemedButton  disableElevation="true">Guardar</ThemedButton>
