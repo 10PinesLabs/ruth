@@ -1,5 +1,6 @@
 import { produce } from 'immer';
 import { TiposReaccionAlHablar } from "../cola-de-participantes/TalkingReactions";
+const _ = require('lodash');
 
 export const tipoDeEvento = {
   LEVANTAR_MANO: 'Quiero Hablar',
@@ -101,18 +102,8 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
     }
     case tipoDeEvento.DESREACCIONAR_A_ORADOR: {
 
-      ({
-        [TiposReaccionAlHablar.THUMBS_UP]: () => {
-          draft.actual.reacciones.thumbsUp = listaDeReaccionSinUsuarioReaccionante(evento.reaccion)
-        },
-        [TiposReaccionAlHablar.THUMBS_DOWN]: () => {
-          draft.actual.reacciones.thumbsDown = listaDeReaccionSinUsuarioReaccionante(evento.reaccion)
-        },
-        [TiposReaccionAlHablar.REDONDEAR]: () => {
-          draft.actual.reacciones.redondeando = listaDeReaccionSinUsuarioReaccionante(evento.reaccion)
-        }
-      })[evento.reaccion]()
-
+      _.set(draft, `actual.reacciones.${evento.reaccion}`,listaDeReaccionSinUsuarioReaccionante(evento.reaccion));
+      
       break;
     }
     case tipoDeEvento.REACCIONAR_A_ORADOR: {
