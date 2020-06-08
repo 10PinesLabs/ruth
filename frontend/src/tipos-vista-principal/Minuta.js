@@ -6,15 +6,14 @@ import {tipoDeEvento, conclusionReducer} from "../store/conclusion";
 import {toast} from "react-toastify";
 import {Button, SecondaryButton} from "../components/Button.styled";
 import ListaPinosQueHablaron from "../minuta/ListaPinosQueHablaron";
-import {Card, CardContent} from "@material-ui/core";
-import Collapse from "@material-ui/core/Collapse";
+import InputResumen from "../minuta/InputResumen";
 
 
 const Minuta = ({dispatch, tema, temaActivo}) => {
   let [lastKnowConclusion, setLastKnowConclusion] = useState(tema.conclusion);
   let [conclusion, setConclusion] = useState(tema.conclusion);
   let [isEditingConclusion, setIsEditingConclusion] = useState(false);
-  const [isRecapCollapsed, setIsRecapCollapsed] = useState(true);
+
 
   const dispatchMinuta = (data) => {
     const evento = {
@@ -60,14 +59,7 @@ const Minuta = ({dispatch, tema, temaActivo}) => {
     <VistaDelMedioContainer
       style={useSpring({opacity: 1, from: {opacity: 0}})}
     >
-      <button onClick={() => setIsRecapCollapsed(!isRecapCollapsed)}>Desplegar</button>
-      <Collapse in={isRecapCollapsed}>
-        <Card>
-          <CardContent>
-            Aca va a ir lo de la conclusion
-          </CardContent>
-        </Card>
-      </Collapse>
+      <InputResumen tema={tema}/>
 
       <ListaPinosQueHablaron oradores={tema.oradores}/>
 
