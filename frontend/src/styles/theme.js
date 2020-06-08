@@ -16,6 +16,7 @@ export const colors = {
   secondary: '#448495',
   lightGrey: '#E0E0E0',
   darkRed: '#FF7F7F',
+  black:'#000000',
   black50: '#7F7F7F',
   black40: '#AFAFAF',
   black30: '#DADADA',
