@@ -74,7 +74,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
 
       <InputResumen oradores={tema.oradores} isRecapVisible={isRecapVisible}/>
 
-      <ListaPinosQueHablaron oradores={tema.oradores} tema={tema}/>
+      <ListaPinosQueHablaron oradores={tema.oradores} finTema={tema.fin}/>
       <form>
         <textarea
           value={conclusion}

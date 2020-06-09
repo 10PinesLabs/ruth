@@ -78,8 +78,8 @@ const ListaPinosQueHablaron = (props) => (
       ? <FilaPino
           pino={props.oradores.actual}
           orden={props.oradores.pasados.length + 1}
-          tiempo={Math.ceil(((Date.parse(props.tema.fin) || Date.now()) - props.oradores.actual.inicio) / 1000)}
-          finTema={props.tema.fin}
+          tiempo={Math.ceil(((Date.parse(props.finTema) || Date.now()) - props.oradores.actual.inicio) / 1000)}
+          finTema={props.finTema}
       />
       : null
     }
