@@ -73,22 +73,12 @@ function ListaPinosQueHablaron({oradores}) {
     <>
       <OrdenesTabla>
         <Button
-          style={(ordenAscendiente)? {display: "none"} : null}
           variant="outlined"
           color="primary"
-          startIcon={<ExpandMore/>}
-          onClick={() => setOrdenAscendiente(true)}
+          startIcon={(ordenAscendiente)? <Timer/> : <ExpandMore/>}
+          onClick={() => setOrdenAscendiente(!ordenAscendiente)}
         >
-          Mas recientes
-        </Button>
-        <Button
-          style={(ordenAscendiente)? null : {display: "none"}}
-          variant="outlined"
-          color="primary"
-          startIcon={<Timer/>}
-          onClick={() => setOrdenAscendiente(false)}
-        >
-          Orden cronolgico
+          {(ordenAscendiente)? "Orden cronolgico" :"Mas recientes"}
         </Button>
       </OrdenesTabla>
       <TablaPinos>
