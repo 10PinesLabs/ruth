@@ -1,7 +1,10 @@
-import React from 'react';
-import {TablaPinos, FilaTitulosWrapper, Td} from './Minuta.styled';
+import React, {useState} from 'react';
+import {TablaPinos, FilaTitulosWrapper, Td, OrdenesTabla} from './Minuta.styled';
 import {TiposReaccionAlHablar} from "../cola-de-participantes/TalkingReactions";
 import ClockContainer from "../clock/ClockContainer";
+import Button from "@material-ui/core/Button";
+import {ExpandMore, Timer} from "@material-ui/icons";
+
 
 export const cantidadReaccionesDelPino = (tipoReaccion,pino) => {
   return pino.reacciones[tipoReaccion].length;
@@ -79,7 +82,7 @@ const ListaPinosQueHablaron = ({oradores}) => {
       <TablaPinos>
         <FilaTitulos/>
         <tbody>
-        {(ordenAscendiente)? OradoresEnOrdenAscendiente({oradores}) : OradoresEnOrdenDescendiente({oradores})}
+          {(ordenAscendiente)? OradoresEnOrdenAscendiente({oradores}) : OradoresEnOrdenDescendiente({oradores})}
         </tbody>
       </TablaPinos>
     </>
