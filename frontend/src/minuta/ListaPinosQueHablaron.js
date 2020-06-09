@@ -1,7 +1,7 @@
 import React from 'react';
 import {TablaPinos, FilaTitulosWrapper, Td} from './Minuta.styled';
-import FilaPinoHablando from "./FilaPinoHablando";
 import {TiposReaccionAlHablar} from "../cola-de-participantes/TalkingReactions";
+import ParticipantCounter from "../cola-de-participantes/ParticipantCounter";
 
 export const cantidadReaccionesDelPino = (tipoReaccion,pino) => {
   return pino.reacciones[tipoReaccion].length;
@@ -32,11 +32,23 @@ const FilaTitulos = () => {
     </th>
   </FilaTitulosWrapper>;
 };
+const generarEstadoPara = (pino, finTema) => {
+  if (estaEncolado(pino)) {
+    return {detalle: 'encolado'};
+  }
+  if (hablo(pino)) {
+    return {detalle: 'hablo', seconds: Math.ceil((pino.fin - pino.inicio) / 1000)};
+  }
+  return {detalle: finTema? 'hablo' : 'hablando', seconds: Math.ceil(((Date.parse(finTema) || Date.now()) - pino.inicio) / 1000)};
+};
 
-function getMinutes(timestamp) {
-  const date = new Date(timestamp);
-  return `${date.getMinutes()}:${date.getSeconds()}`;
+const hablo = (pino) => {
+  return pino.fin !== null;
 }
+
+const estaEncolado = (pino) => {
+  return pino.inicio === null;
+};
 
 const FilaPino = (props) => <tr>
   <td>
@@ -46,7 +58,7 @@ const FilaPino = (props) => <tr>
     {props.pino.usuario.nombre}
   </Td>
   <Td>
-    {props.tiempo}
+    <ParticipantCounter estadoOrador={generarEstadoPara(props.pino, props.tema.finTema)}/>
   </Td>
   <Td>
     {cantidadReaccionesDelPino(TiposReaccionAlHablar.THUMBS_UP,props.pino)}
@@ -73,11 +85,16 @@ const ListaPinosQueHablaron = (props) => (
       .map((pino, index) => <FilaPino
         pino={pino}
         orden={index + 1}
-        tiempo={getMinutes(pino.fin - pino.inicio)}/>)
+        tema={props.tema}
+        />)
     }
 
     {props.oradores.actual
-      ? <FilaPinoHablando pino={props.oradores.actual} orden={props.oradores.pasados.length + 1}/> : null
+      ? <FilaPino
+          pino={props.oradores.actual}
+          orden={props.oradores.pasados.length + 1}
+          tema={props.tema}/>
+      : null
     }
 
     </tbody>
