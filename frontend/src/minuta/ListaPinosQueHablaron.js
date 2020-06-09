@@ -1,6 +1,11 @@
 import React from 'react';
 import {TablaPinos, FilaTitulosWrapper, Td} from './ListaPinosQueHablaron.styled';
 import FilaPinoHablando from "./FilaPinoHablando";
+import {TiposReaccionAlHablar} from "../cola-de-participantes/TalkingReactions";
+
+export const cantidadReaccionesDelPino = (tipoReaccion,pino) => {
+  return pino.reacciones[tipoReaccion].length;
+}
 
 const FilaTitulos = () => {
   return <FilaTitulosWrapper>
@@ -44,13 +49,13 @@ const FilaPino = (props) => <tr>
     {props.tiempo}
   </Td>
   <Td>
-    7
+    {cantidadReaccionesDelPino(TiposReaccionAlHablar.THUMBS_UP,props.pino)}
   </Td>
   <Td>
-    12
+    {cantidadReaccionesDelPino(TiposReaccionAlHablar.REDONDEAR,props.pino)}
   </Td>
   <Td>
-    3
+    {cantidadReaccionesDelPino(TiposReaccionAlHablar.THUMBS_DOWN,props.pino)}
   </Td>
   <td>
     <p>Un resumen</p>

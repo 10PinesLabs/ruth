@@ -1,7 +1,7 @@
 import oradoresReducer, { INITIAL_ORADORES_STATE, tipoDeEvento } from '../oradores';
 
-const orador = (usuario, inicio, fin) => ({
-  usuario, inicio: inicio || null, fin: fin || null,
+const orador = (usuario, inicio, fin, instancia) => ({
+  usuario, inicio: inicio || null, fin: fin || null, instanciaDeHabla: instancia || 0, reacciones: { "redondeando": [], "thumbsDown": [], "thumbsUp": []}
 });
 
 const elUsuario = (n) => ({
@@ -87,7 +87,7 @@ describe('#oradoresReducer reducer', () => {
       applyEvento(levantarMano(elUsuario(1)));
 
       expect(state).toEqual({
-        cola: [orador(elUsuario(1))],
+        cola: [orador(elUsuario(1),null,null, 1)],
         actual: orador(elUsuario(2), 3),
         pasados: [orador(elUsuario(1), 1, 2)],
       });
@@ -208,7 +208,7 @@ describe('#oradoresReducer reducer', () => {
       expect(state).toEqual({
         cola: [],
         actual: null,
-        pasados: [orador(elUsuario(1), 1, 2), orador(elUsuario(1), 3, 4)],
+        pasados: [orador(elUsuario(1), 1, 2), orador(elUsuario(1), 3, 4, 1)],
       });
     });
   });

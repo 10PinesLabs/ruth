@@ -70,7 +70,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
           onChange={(event) => {
             userChangedConclusionInput(event.target.value);
           }}
-        ></textarea>
+        />
 
         {isEditingConclusion ? (
           <div>
