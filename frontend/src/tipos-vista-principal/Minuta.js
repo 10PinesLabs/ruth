@@ -63,8 +63,12 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     setExpositionSelected(null)
   }
 
-  const onMinutaSave = ()=>{
-    console.log("save");
+  const onMinutaSave = (minuta)=>{
+    dispatchMinuta({
+      tipo: tipoDeEvento.GUARDAR_MINUTA,
+      expositionNumber: expositionSelected.number,
+      minuta:minuta
+    });
   }
 
   return (

@@ -2,6 +2,7 @@ import produce from "immer";
 
 export const tipoDeEvento = {
   GUARDAR_CONCLUSION: "Actualizar conclusion",
+  GUARDAR_MINUTA:"Actualizar resumen de lo que dijo un pine"
 };
 
 export const INITIAL_CONCLUSION = ''
