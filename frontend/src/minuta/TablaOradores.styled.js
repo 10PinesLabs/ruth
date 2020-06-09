@@ -1,8 +1,8 @@
-import {TableCell, TableRow} from "@material-ui/core";
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import {TableCell} from "@material-ui/core";
+import { withStyles} from '@material-ui/core/styles';
 import styled from "styled-components";
 
-export const StyledTableCell = withStyles(theme => ({
+export const StyledTableCell = withStyles(() => ({
   head: {
     backgroundColor: "#d2d2d2",
     color: "#5c5c5c",
@@ -19,8 +19,14 @@ export const StyledTableCell = withStyles(theme => ({
 }))(TableCell);
 
 export const OradorActualContainer = styled.div`
-  display:flex;
-  justify-content: space-between;
-  align-items:center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   min-width:150px !important;
+`;
+
+export const OrdenPinoDiv = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 `;

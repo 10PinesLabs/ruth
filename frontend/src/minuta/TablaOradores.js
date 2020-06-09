@@ -3,12 +3,14 @@ import FilaPinoHablando from "./FilaPinoHablando";
 import {TiposReaccionAlHablar} from "../cola-de-participantes/TalkingReactions";
 import {cantidadReaccionesDelPino} from "./ListaPinosQueHablaron";
 import {makeStyles, Paper, Table, TableHead, TableRow, TableBody} from "@material-ui/core";
-import {StyledTableCell} from "./TablaOradores.styled";
-import {ThumbDown, ThumbUp, Update} from "@material-ui/icons";
+import {OrdenPinoDiv, StyledTableCell} from "./TablaOradores.styled";
+import {ExpandMore, ThumbDown, ThumbUp, Timer, Update} from "@material-ui/icons";
+import IconButton from "@material-ui/core/IconButton";
 
-export function TablaOradores({ordenAscendiente, oradores}) {
+export function TablaOradores({ oradores}) {
 
   const [nroPinoHighlighteado, setNroPinoHighlighteado] = useState(0)
+  const [ordenAscendiente, setOrdenAscendiente] = useState(true);
   
   const classes = makeStyles(theme => ({
     root: {
@@ -26,7 +28,18 @@ export function TablaOradores({ordenAscendiente, oradores}) {
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>#</StyledTableCell>
+            <StyledTableCell>
+              <OrdenPinoDiv>
+                #
+                <IconButton
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => setOrdenAscendiente(!ordenAscendiente)}
+                >
+                  {(ordenAscendiente) ? <Timer/> : <ExpandMore/>}
+                </IconButton>  
+              </OrdenPinoDiv>
+            </StyledTableCell>
             <StyledTableCell>Participante</StyledTableCell>
             <StyledTableCell>Tiempo</StyledTableCell>
             <StyledTableCell><ThumbUp/></StyledTableCell>
@@ -40,6 +53,7 @@ export function TablaOradores({ordenAscendiente, oradores}) {
           {(ordenAscendiente)? 
             OradoresEnOrdenAscendiente({oradores,nroPinoHighlighteado,setNroPinoHighlighteado}): 
             OradoresEnOrdenDescendiente({oradores,nroPinoHighlighteado,setNroPinoHighlighteado})}
+            
         </TableBody>
       </Table>
     </Paper>
@@ -104,7 +118,6 @@ const FilaPino = ({orden,tiempo,pino,seleccion}) => {
       align={"center"}>{cantidadReaccionesDelPino(TiposReaccionAlHablar.THUMBS_DOWN, pino)}</StyledTableCell>
     <StyledTableCell>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-      magna aliqua. Ex soleat habemus usu, te nec eligendi deserunt vituperata. Nam tempor utamur gubergren no.
     </StyledTableCell>
   </TableRow>)
 
@@ -115,5 +128,5 @@ const FilaPino = ({orden,tiempo,pino,seleccion}) => {
     } else {
       setNroDeOrdenSeleccionadoEnTabla(orden)
     }
-  };
+  }
 };

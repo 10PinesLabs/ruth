@@ -11,23 +11,23 @@ export const TablaPinos = styled.table`
   border-bottom: 2px solid rgba(0, 0, 0, 0.2)
 `;
 
-export const OrdenesTabla = styled.div`
+export const ConclusionTitle = styled.h1 `
+  align-self: flex-start;
+  margin-block-end: 0
+`
+
+export const ConclusionTextarea = styled.textarea`
   width: 100%;
-  margin-top: 5%
-  margin-bottom: 1%;
-  display:flex;
-  justify-content:center;
-`;
-
-export const FilaTitulosWrapper = styled.tr`
-  border-top: 2px solid rgba(0, 0, 0, 0.2);
-  border-bottom: 2px solid rgba(0, 0, 0, 0.2)  
-`;
-
-export const Td = styled.td`
-  border-right: 2px solid rgba(0, 0, 0, 0.2);
-  text-align: center
-`;
+  margin-bottom: 10px;
+`
+export const ConclusionForm = styled.form `
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 100px;
+`
 
 export const BotonParaAbrirResumen = styled(Button)`
   && { 

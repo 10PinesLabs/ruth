@@ -2,17 +2,17 @@ import React, { useState, useEffect } from "react";
 import { VistaDelMedioContainer } from "./Resumen.styled";
 import { useSpring } from "react-spring";
 import { connect } from "react-redux";
-import { tipoDeEvento, conclusionReducer } from "../store/conclusion";
+import { tipoDeEvento } from "../store/conclusion";
 import { toast } from "react-toastify";
 import { Button, SecondaryButton } from "../components/Button.styled";
 import ListaPinosQueHablaron from "../minuta/ListaPinosQueHablaron";
 import InputResumen from "../minuta/InputResumen";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
-import {BotonParaAbrirResumen} from "../minuta/Minuta.styled";
+import {BotonParaAbrirResumen, ConclusionForm, ConclusionTitle, ConclusionTextarea} from "../minuta/Minuta.styled";
 
 
-const Minuta = ({ dispatch, tema, temaActivo }) => {
+const Minuta = ({ dispatch, tema}) => {
   let [lastKnowConclusion, setLastKnowConclusion] = useState(tema.conclusion);
   let [conclusion, setConclusion] = useState(tema.conclusion);
   let [isEditingConclusion, setIsEditingConclusion] = useState(false);
@@ -29,7 +29,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
 
 
   useEffect(() => {
-    if (!isEditingConclusion && tema.conclusion != lastKnowConclusion) {
+    if (!isEditingConclusion && tema.conclusion !== lastKnowConclusion) {
       setLastKnowConclusion(tema.conclusion);
       setConclusion(tema.conclusion);
     }
@@ -75,14 +75,21 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
       <InputResumen oradores={tema.oradores} isRecapVisible={isRecapVisible}/>
 
       <ListaPinosQueHablaron oradores={tema.oradores}/>
-      <form>
-        <textarea
+      <ConclusionForm>
+
+        <ConclusionTitle>
+            CONCLUSION
+        </ConclusionTitle>
+        
+        <ConclusionTextarea
+          id={"conclusion"}
           value={conclusion}
+          rows={6}
+          placeholder={"wrap up del tema..."}
           onChange={(event) => {
             userChangedConclusionInput(event.target.value);
           }}
         />
-
         {isEditingConclusion ? (
           <div>
             <SecondaryButton type="button" onClick={() => resetearConclusion()}>
@@ -92,8 +99,9 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
               Guardar
             </Button>
           </div>
-        ) : null}
-      </form>
+        ) : null}  
+      </ConclusionForm>
+      
     </VistaDelMedioContainer>
   );
 };
