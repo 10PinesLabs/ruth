@@ -64,7 +64,7 @@ export const MinutaWriter = ()=>{
         <MinutaInput rows={10}/>
         <MinutaButtons>
           <TextButton>Descartar cambios</TextButton>
-          <ThemedButton  disableElevation="true">Guardar</ThemedButton>
+          <ThemedButton>Guardar</ThemedButton>
         </MinutaButtons>
         </MinutaContainer>
     );
