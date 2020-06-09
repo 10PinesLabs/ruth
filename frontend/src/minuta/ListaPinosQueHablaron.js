@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {TablaPinos, FilaTitulosWrapper, Td,  OrdenesTabla} from './ListaPinosQueHablaron.styled';
+import {TablaPinos, FilaTitulosWrapper, Td, OrdenesTabla} from './Minuta.styled';
 import FilaPinoHablando from "./FilaPinoHablando";
 import {TiposReaccionAlHablar} from "../cola-de-participantes/TalkingReactions";
 import Button from "@material-ui/core/Button";

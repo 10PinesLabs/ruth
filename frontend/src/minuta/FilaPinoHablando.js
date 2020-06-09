@@ -1,5 +1,5 @@
 import React from 'react';
-import { Td } from './ListaPinosQueHablaron.styled';
+import { Td } from './Minuta.styled';
 import Clock from "../clock/Clock";
 import {TiposReaccionAlHablar} from "../cola-de-participantes/TalkingReactions";
 import {cantidadReaccionesDelPino} from "./ListaPinosQueHablaron";
