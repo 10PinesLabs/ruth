@@ -7,12 +7,16 @@ import { toast } from "react-toastify";
 import { Button, SecondaryButton } from "../components/Button.styled";
 import ListaPinosQueHablaron from "../minuta/ListaPinosQueHablaron";
 import InputResumen from "../minuta/InputResumen";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
+import {BotonParaAbrirResumen} from "../minuta/Minuta.styled";
 
 
 const Minuta = ({ dispatch, tema, temaActivo }) => {
   let [lastKnowConclusion, setLastKnowConclusion] = useState(tema.conclusion);
   let [conclusion, setConclusion] = useState(tema.conclusion);
   let [isEditingConclusion, setIsEditingConclusion] = useState(false);
+  let [isRecapVisible, setIsRecapCollapsed] = useState(false);
 
   const dispatchMinuta = (data) => {
     const evento = {
@@ -54,11 +58,21 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     setIsEditingConclusion(true);
   }
 
+  const buttonText = () => (isRecapVisible ? 'CERRAR EDICION' : 'ABRIR EDICION');
+
   return (
     <VistaDelMedioContainer
       style={useSpring({ opacity: 1, from: { opacity: 0 } })}
     >
-      <InputResumen tema={tema}/>
+      <BotonParaAbrirResumen
+        variant="outlined"
+        endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
+        onClick={() => setIsRecapCollapsed(!isRecapVisible)}
+      >
+        {buttonText()}
+      </BotonParaAbrirResumen>
+
+      <InputResumen oradores={tema.oradores} isRecapVisible={isRecapVisible}/>
 
       <ListaPinosQueHablaron oradores={tema.oradores}/>
       <form>
