@@ -6,7 +6,7 @@ import { colors, font} from '../styles/theme';
 
 import Button from '@material-ui/core/Button';
 
-export const MinutaWriter = ({exposition})=>{
+export const MinutaWriter = ({exposition, onDiscard, onSave})=>{
 
     const MinutaContainer = styled.div`
     display:flex;
@@ -65,13 +65,17 @@ export const MinutaWriter = ({exposition})=>{
         return 'Elige un participante para poder editar tu resumen'
     }
 
+    const isButtonDisabled = () => {
+        return exposition==null
+    }
+
     return(
         <MinutaContainer>
         <MinutaActionTitle>{TitleText()}</MinutaActionTitle>
         <MinutaInput rows={10}/>
         <MinutaButtons>
-          <TextButton>Descartar cambios</TextButton>
-          <ThemedButton>Guardar</ThemedButton>
+          <TextButton onClick={onDiscard} disabled={isButtonDisabled()}>Descartar cambios</TextButton>
+          <ThemedButton onClick={onSave} disabled={isButtonDisabled()}>Guardar</ThemedButton>
         </MinutaButtons>
         </MinutaContainer>
     );

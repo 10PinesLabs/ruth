@@ -56,8 +56,15 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
   }
 
   const onExpositionSelected = (exposition) => {
-    console.log("se selecciono el orador:", exposition)
     setExpositionSelected(exposition)
+  }
+
+  const onMinutaDiscard = ()=>{
+    setExpositionSelected(null)
+  }
+
+  const onMinutaSave = ()=>{
+    console.log("save");
   }
 
   return (
@@ -65,7 +72,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
       style={useSpring({ opacity: 1, from: { opacity: 0 } })}
     >
     
-      <MinutaWriter exposition={expositionSelected}/>
+      <MinutaWriter exposition={expositionSelected} onDiscard={onMinutaDiscard} onSave={onMinutaSave}/>
       <ListaPinosQueHablaron oradores={tema.oradores} onExposicionSeleccionada={(exposition)=>onExpositionSelected(exposition)}/>
       <form>
         <textarea
