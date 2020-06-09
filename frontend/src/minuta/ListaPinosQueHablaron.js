@@ -1,7 +1,9 @@
-import React from 'react';
-import {TablaPinos, FilaTitulosWrapper, Td} from './ListaPinosQueHablaron.styled';
+import React, {useState} from 'react';
+import {TablaPinos, FilaTitulosWrapper, Td, OrdenesTabla} from './Minuta.styled';
 import FilaPinoHablando from "./FilaPinoHablando";
 import {TiposReaccionAlHablar} from "../cola-de-participantes/TalkingReactions";
+import Button from "@material-ui/core/Button";
+import {ExpandMore, Timer} from "@material-ui/icons";
 
 export const cantidadReaccionesDelPino = (tipoReaccion,pino) => {
   return pino.reacciones[tipoReaccion].length;
@@ -70,24 +72,48 @@ const exposition = (speaker, expositionNumber)=>{
   }
 }
 
-const ListaPinosQueHablaron = (props) => (
-  <TablaPinos onClick={()=>{props.onExposicionSeleccionada(exposition(props.oradores.actual.usuario.nombre,1))}}>
-    <FilaTitulos/>
-    <tbody>
+const ListaPinosQueHablaron = ({oradores}) => {
+  let [ordenAscendiente, setOrdenAscendiente] = useState(true);
+  
+  return (
+    <>
+      <OrdenesTabla>
+        <Button
+          variant="outlined"
+          color="primary"
+          startIcon={(ordenAscendiente)? <Timer/> : <ExpandMore/>}
+          onClick={() => setOrdenAscendiente(!ordenAscendiente)}
+        >
+          {(ordenAscendiente)? "Orden cronolgico" :"Mas recientes"}
+        </Button>
+      </OrdenesTabla>
+      <TablaPinos>
+        <FilaTitulos/>
+        <tbody>
+          {(ordenAscendiente)? OradoresEnOrdenAscendiente({oradores}) : OradoresEnOrdenDescendiente({oradores})}
+        </tbody>
+      </TablaPinos>
+    </>
+  );
+}
 
-    {props.oradores.pasados
-      .map((pino, index) => <FilaPino
+const OradoresEnOrdenDescendiente = ({oradores}) => {
+  return [...oradores.pasados
+    .map((pino, index) =>
+      <FilaPino
         pino={pino}
         orden={index + 1}
-        tiempo={getMinutes(pino.fin - pino.inicio)}/>)
-    }
+        tiempo={getMinutes(pino.fin - pino.inicio)}
+      />),
+    oradores.actual
+      ? <FilaPinoHablando
+        pino={oradores.actual}
+        orden={oradores.pasados.length + 1}
+      /> : null];
+}
 
-    {props.oradores.actual
-      ? <FilaPinoHablando pino={props.oradores.actual} orden={props.oradores.pasados.length + 1}/> : null
-    }
-
-    </tbody>
-  </TablaPinos>
-);
+const OradoresEnOrdenAscendiente = ({oradores}) => {
+  return OradoresEnOrdenDescendiente({oradores}).reverse();
+}
 
 export default ListaPinosQueHablaron;

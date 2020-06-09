@@ -4,12 +4,14 @@ import { useSpring } from "react-spring";
 import { connect } from "react-redux";
 import { tipoDeEvento } from "../store/conclusion";
 import { tipoDeEvento as tipoDeEventoOradores} from "../store/oradores";
-
 import { toast } from "react-toastify";
 import { Button, SecondaryButton} from "../components/Button.styled";
 import ListaPinosQueHablaron from "../minuta/ListaPinosQueHablaron";
 import { MinutaWriter } from "../minuta/MinutaWriter";
-
+import InputResumen from "../minuta/InputResumen";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
+import {BotonParaAbrirResumen} from "../minuta/Minuta.styled";
 
 
 const Minuta = ({ dispatch, tema, temaActivo }) => {
@@ -17,6 +19,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
   let [conclusion, setConclusion] = useState(tema.conclusion);
   let [isEditingConclusion, setIsEditingConclusion] = useState(false);
   let [expositionSelected, setExpositionSelected] = useState(null);
+  let [isRecapVisible, setIsRecapCollapsed] = useState(false);
 
   const dispatchMinuta = (data) => {
     const evento = {
@@ -73,6 +76,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
       minuta:minuta
     });
   }
+  const buttonText = () => (isRecapVisible ? 'CERRAR EDICION' : 'ABRIR EDICION');
 
   return (
     <VistaDelMedioContainer
@@ -80,6 +84,16 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     >
     
       <MinutaWriter exposition={expositionSelected} onDiscard={onMinutaDiscard} onSave={onMinutaSave}/>
+      <BotonParaAbrirResumen
+        variant="outlined"
+        endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
+        onClick={() => setIsRecapCollapsed(!isRecapVisible)}
+      >
+        {buttonText()}
+      </BotonParaAbrirResumen>
+
+      <InputResumen oradores={tema.oradores} isRecapVisible={isRecapVisible}/>
+
       <ListaPinosQueHablaron oradores={tema.oradores} onExposicionSeleccionada={(exposition)=>onExpositionSelected(exposition)}/>
       <form>
         <textarea
