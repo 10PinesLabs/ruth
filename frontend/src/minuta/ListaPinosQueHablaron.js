@@ -1,30 +1,11 @@
 import React from 'react';
 import {TablaPinos, FilaTitulosWrapper, Td} from './Minuta.styled';
 import {TiposReaccionAlHablar} from "../cola-de-participantes/TalkingReactions";
-import ParticipantCounter from "../cola-de-participantes/ParticipantCounter";
+import ClockContainer from "../clock/ClockContainer";
 
 export const cantidadReaccionesDelPino = (tipoReaccion,pino) => {
   return pino.reacciones[tipoReaccion].length;
 }
-
-const generarEstadoPara = (pino, finTema) => {
-  debugger
-  if (estaEncolado(pino)) {
-    return {detalle: 'encolado'};
-  }
-  if (hablo(pino)) {
-    return {detalle: 'hablo', seconds: Math.ceil((pino.fin - pino.inicio) / 1000)};
-  }
-  return {detalle: finTema? 'hablo' : 'hablando', seconds: Math.ceil(((Date.parse(finTema) || Date.now()) - pino.inicio) / 1000)};
-};
-
-const hablo = (pino) => {
-  return pino.fin !== null;
-}
-
-const estaEncolado = (pino) => {
-  return pino.inicio === null;
-};
 
 const FilaTitulos = () => {
   return <FilaTitulosWrapper>
@@ -60,7 +41,9 @@ const FilaPino = (props) => <tr>
     {props.pino.usuario.nombre}
   </Td>
   <Td>
-    <ParticipantCounter estadoOrador={generarEstadoPara(props.pino, props.tema.fin)}/>
+    <ClockContainer
+      secondsElapsed={props.tiempo}
+      shouldBeRunning={props.pino.fin == null && props.finTema == null}/>
   </Td>
   <Td>
     {cantidadReaccionesDelPino(TiposReaccionAlHablar.THUMBS_UP,props.pino)}
@@ -87,7 +70,7 @@ const ListaPinosQueHablaron = (props) => (
       .map((pino, index) => <FilaPino
         pino={pino}
         orden={index + 1}
-        tema={props.tema}
+        tiempo={Math.ceil((pino.fin - pino.inicio) / 1000)}
         />)
     }
 
@@ -95,7 +78,9 @@ const ListaPinosQueHablaron = (props) => (
       ? <FilaPino
           pino={props.oradores.actual}
           orden={props.oradores.pasados.length + 1}
-          tema={props.tema}/>
+          tiempo={Math.ceil(((Date.parse(props.tema.fin) || Date.now()) - props.oradores.actual.inicio) / 1000)}
+          finTema={props.tema.fin}
+      />
       : null
     }
 
