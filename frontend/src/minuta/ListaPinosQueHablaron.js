@@ -66,7 +66,7 @@ const FilaPino = (props) => <tr>
 </tr>;
 
 class ListaPinosQueHablaron extends React.Component {
-  oradoresEnOrdenDecendiente = () => {
+  oradoresEnOrdenDescendiente = () => {
     return [...this.props.oradores.pasados
       .map((pino, index) =>
         <FilaPino
@@ -82,7 +82,7 @@ class ListaPinosQueHablaron extends React.Component {
   }
   
   oradoresEnOrdenAscendente = () => {
-    return this.oradoresEnOrdenDecendiente().reverse();
+    return this.oradoresEnOrdenDescendiente().reverse();
   }
   
   state = {oradoresOrdenados: this.oradoresEnOrdenAscendente}
@@ -103,7 +103,7 @@ class ListaPinosQueHablaron extends React.Component {
           variant="outlined"
           color="primary"
           startIcon={<ExpandMore/>}
-          onClick={() => this.setState({oradoresOrdenados: this.oradoresEnOrdenDecendiente})}
+          onClick={() => this.setState({oradoresOrdenados: this.oradoresEnOrdenDescendiente})}
         >
           Orden cronolgico
         </Button>
