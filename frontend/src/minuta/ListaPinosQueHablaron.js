@@ -1,7 +1,9 @@
 import React from 'react';
-import {TablaPinos, FilaTitulosWrapper, Td} from './ListaPinosQueHablaron.styled';
+import {FilaTitulosWrapper, OrdenesTabla, TablaPinos, Td} from './ListaPinosQueHablaron.styled';
 import FilaPinoHablando from "./FilaPinoHablando";
 import {TiposReaccionAlHablar} from "../cola-de-participantes/TalkingReactions";
+import Button from "@material-ui/core/Button";
+import {ExpandLess, ExpandMore} from "@material-ui/icons";
 
 export const cantidadReaccionesDelPino = (tipoReaccion,pino) => {
   return pino.reacciones[tipoReaccion].length;
@@ -63,25 +65,61 @@ const FilaPino = (props) => <tr>
   </td>
 </tr>;
 
+class ListaPinosQueHablaron extends React.Component {
 
-const ListaPinosQueHablaron = (props) => (
-  <TablaPinos>
-    <FilaTitulos/>
-    <tbody>
+  oradoresEnOrdenDecendiente = () => {
+    return [...this.props.oradores.pasados
+      .map((pino, index) =>
+        <FilaPino
+          pino={pino}
+          orden={index + 1}
+          tiempo={getMinutes(pino.fin - pino.inicio)}
+        />),
+      this.props.oradores.actual
+        ? <FilaPinoHablando
+          pino={this.props.oradores.actual}
+          orden={this.props.oradores.pasados.length + 1}
+        /> : null];
+  }
+  
+  oradoresEnOrdenAscendente = () => {
+    return this.oradoresEnOrdenDecendiente().reverse();
+  }
+  
+  state = {oradoresOrdenados: this.oradoresEnOrdenAscendente}
 
-    {props.oradores.pasados
-      .map((pino, index) => <FilaPino
-        pino={pino}
-        orden={index + 1}
-        tiempo={getMinutes(pino.fin - pino.inicio)}/>)
-    }
+  render() {
+    return (<>
+      <OrdenesTabla>
+        <Button
+          variant="outlined"
+          color="primary"
+          startIcon={<ExpandMore/>}
+          onClick={() => this.setState({oradoresOrdenados: this.oradoresEnOrdenAscendente})}
+        >
+          Mas recientes
+        </Button>
+        <Button
+          variant="outlined"
+          color="primary"
+          startIcon={<ExpandLess/>}
+          onClick={() => this.setState({oradoresOrdenados: this.oradoresEnOrdenDecendiente})}
+        >
+          Orden cronolgico
+        </Button>
+      </OrdenesTabla>
+      <TablaPinos>
+        <FilaTitulos/>
+        <tbody>
+        
+        {this.state.oradoresOrdenados()}
 
-    {props.oradores.actual
-      ? <FilaPinoHablando pino={props.oradores.actual} orden={props.oradores.pasados.length + 1}/> : null
-    }
-
-    </tbody>
-  </TablaPinos>
-);
+        </tbody>
+      </TablaPinos>
+      </>
+    );
+  }
+  
+}
 
 export default ListaPinosQueHablaron;

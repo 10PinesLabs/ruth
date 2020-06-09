@@ -2,11 +2,15 @@ import styled from 'styled-components';
 
 export const TablaPinos = styled.table`
   width: 60%
-  align-self: flex-start
-  margin-left: 5%
-  margin-top: 5%
   border-collapse: collapse
   border-bottom: 2px solid rgba(0, 0, 0, 0.2)
+`;
+
+export const OrdenesTabla = styled.div`
+  width: 100%;
+  margin-bottom: 1%;
+  display:flex;
+  justify-content:center;
 `;
 
 export const FilaTitulosWrapper = styled.tr`
