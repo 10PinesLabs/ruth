@@ -58,9 +58,15 @@ const FilaPino = (props) => <tr>
   </td>
 </tr>;
 
+const exposition = (speaker, expositionNumber)=>{
+  return  {
+    speaker:speaker,
+    number:expositionNumber,
+  }
+}
 
 const ListaPinosQueHablaron = (props) => (
-  <TablaPinos>
+  <TablaPinos onClick={()=>{props.onExposicionSeleccionada(exposition(props.oradores.actual.usuario.nombre,4))}}>
     <FilaTitulos/>
     <tbody>
 
