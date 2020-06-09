@@ -69,12 +69,17 @@ export const MinutaWriter = ({exposition, onDiscard, onSave})=>{
         return exposition==null
     }
 
+    const onDiscardMinuta = ()=>{
+        setMinuta('')
+        onDiscard()
+    }
+
     return(
         <MinutaContainer key="container">
         <MinutaActionTitle>{TitleText()}</MinutaActionTitle>
         <MinutaInput value={minuta} onChange={(e)=>setMinuta(e.target.value)} disabled={isButtonDisabled()} rows={10}/>
         <MinutaButtons>
-          <TextButton onClick={onDiscard} disabled={isButtonDisabled()}>Descartar cambios</TextButton>
+          <TextButton onClick={onDiscardMinuta} disabled={isButtonDisabled()}>Descartar cambios</TextButton>
           <ThemedButton onClick={()=>onSave(minuta)} disabled={isButtonDisabled()}>Guardar</ThemedButton>
         </MinutaButtons>
         </MinutaContainer>
