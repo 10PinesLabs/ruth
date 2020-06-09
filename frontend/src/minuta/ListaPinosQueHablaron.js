@@ -94,7 +94,7 @@ class ListaPinosQueHablaron extends React.Component {
         <Button
           variant="outlined"
           color="primary"
-          startIcon={<ExpandMore/>}
+          startIcon={<ExpandLess/>}
           onClick={() => this.setState({oradoresOrdenados: this.oradoresEnOrdenAscendente})}
         >
           Mas recientes
@@ -102,7 +102,7 @@ class ListaPinosQueHablaron extends React.Component {
         <Button
           variant="outlined"
           color="primary"
-          startIcon={<ExpandLess/>}
+          startIcon={<ExpandMore/>}
           onClick={() => this.setState({oradoresOrdenados: this.oradoresEnOrdenDecendiente})}
         >
           Orden cronolgico
