@@ -12,7 +12,7 @@ resize:vertical;
 const MinutaContainer = styled.div`
 display:flex;
 flex-direction: column;
-width:60%;
+margin-top:15px;
 `
 
 const MinutaActionTitle = styled.span`

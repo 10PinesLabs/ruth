@@ -1,8 +1,11 @@
 import Collapse from '@material-ui/core/Collapse';
-import { Card, CardContent, TextField } from '@material-ui/core';
 import React from 'react';
+import styled from 'styled-components'
 
-const InputResumen = ({ oradores, isRecapVisible }) => {
+const Container = styled.div`
+width:60%`
+
+const InputResumen = ({ oradores, isRecapVisible, children}) => {
 
   const selected = () => (oradores.actual
     ? oradores.actual.usuario.nombre
@@ -12,18 +15,11 @@ const InputResumen = ({ oradores, isRecapVisible }) => {
 
   return (
     <>
-
-      <div>
+    <Container>
         <Collapse in={isRecapVisible}>
-          <Card>
-            <CardContent>
-              {!shouldBeDisabled() ? <p>Estas editando el resumen de: {selected()}</p>
-                : <p>Nadie habló</p>}
-              <TextField label="Resumen" variant="outlined" disabled={shouldBeDisabled()}/>
-            </CardContent>
-          </Card>
+          {children}
         </Collapse>
-      </div>
+      </Container>
     </>);
 };
 

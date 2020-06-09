@@ -83,7 +83,6 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
       style={useSpring({ opacity: 1, from: { opacity: 0 } })}
     >
     
-      <MinutaWriter exposition={expositionSelected} onDiscard={onMinutaDiscard} onSave={onMinutaSave}/>
       <BotonParaAbrirResumen
         variant="outlined"
         endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
@@ -92,7 +91,9 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
         {buttonText()}
       </BotonParaAbrirResumen>
 
-      <InputResumen oradores={tema.oradores} isRecapVisible={isRecapVisible}/>
+      <InputResumen oradores={tema.oradores} isRecapVisible={isRecapVisible}>
+        <MinutaWriter exposition={expositionSelected} onDiscard={onMinutaDiscard} onSave={onMinutaSave}/>
+      </InputResumen>
 
       <ListaPinosQueHablaron oradores={tema.oradores} onSelect={(exposition)=>onExpositionSelected(exposition)}/>
       <form>
