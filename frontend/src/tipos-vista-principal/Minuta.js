@@ -1,19 +1,18 @@
-import React, {useState, useEffect} from "react";
-import {VistaDelMedioContainer} from "./Resumen.styled";
-import {useSpring} from "react-spring";
-import {connect} from "react-redux";
-import {tipoDeEvento, conclusionReducer} from "../store/conclusion";
-import {toast} from "react-toastify";
-import {Button, SecondaryButton} from "../components/Button.styled";
+import React, { useState, useEffect } from "react";
+import { VistaDelMedioContainer } from "./Resumen.styled";
+import { useSpring } from "react-spring";
+import { connect } from "react-redux";
+import { tipoDeEvento, conclusionReducer } from "../store/conclusion";
+import { toast } from "react-toastify";
+import { Button, SecondaryButton } from "../components/Button.styled";
 import ListaPinosQueHablaron from "../minuta/ListaPinosQueHablaron";
 import InputResumen from "../minuta/InputResumen";
 
 
-const Minuta = ({dispatch, tema, temaActivo}) => {
+const Minuta = ({ dispatch, tema, temaActivo }) => {
   let [lastKnowConclusion, setLastKnowConclusion] = useState(tema.conclusion);
   let [conclusion, setConclusion] = useState(tema.conclusion);
   let [isEditingConclusion, setIsEditingConclusion] = useState(false);
-
 
   const dispatchMinuta = (data) => {
     const evento = {
@@ -57,12 +56,11 @@ const Minuta = ({dispatch, tema, temaActivo}) => {
 
   return (
     <VistaDelMedioContainer
-      style={useSpring({opacity: 1, from: {opacity: 0}})}
+      style={useSpring({ opacity: 1, from: { opacity: 0 } })}
     >
       <InputResumen tema={tema}/>
 
       <ListaPinosQueHablaron oradores={tema.oradores}/>
-
       <form>
         <textarea
           value={conclusion}

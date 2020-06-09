@@ -21,7 +21,10 @@ const InputResumen = ({ tema }) => {
       <BotonParaAbrirResumen
         variant="outlined"
         endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
-        onClick={() => setIsRecapCollapsed(!isRecapVisible)}>{buttonText()}</BotonParaAbrirResumen>
+        onClick={() => setIsRecapCollapsed(!isRecapVisible)}
+      >
+        {buttonText()}
+      </BotonParaAbrirResumen>
       <div>
         <Collapse in={isRecapVisible}>
           <Card>
