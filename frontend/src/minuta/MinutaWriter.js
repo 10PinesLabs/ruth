@@ -1,63 +1,63 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components'
 import { withStyles } from '@material-ui/core/styles';
-
 import { colors, font} from '../styles/theme';
-
 import Button from '@material-ui/core/Button';
+
+const MinutaInput = styled.textarea`
+width:100%;
+resize:vertical;
+`
+
+const MinutaContainer = styled.div`
+display:flex;
+flex-direction: column;
+width:60%;
+`
+
+const MinutaActionTitle = styled.span`
+color: ${colors.black40};
+font-weight: 700;
+`
+
+const MinutaButtons = styled.div`
+display:flex;
+width:100%;
+justify-content: space-between;
+margin-top: 15px;
+`
+
+const TextButton = withStyles({
+    root:{
+        color: colors.primary,
+        fontFamily: font.family,
+        fontWeight:600
+    },
+    label:{
+        textTransform:"none"    
+    }
+    })(Button);
+
+const ThemedButton = withStyles({
+    root:{
+        color: colors.white,
+        background:colors.primary,
+        fontFamily: font.family,
+        fontWeight:600,
+        '&:hover': {
+            background: colors.primaryConstrast,
+         },
+    },
+    label:{
+        textTransform:"none"    
+    },
+    
+    })(Button);
 
 export const MinutaWriter = ({exposition, onDiscard, onSave})=>{
 
-    const MinutaContainer = styled.div`
-    display:flex;
-    flex-direction: column;
-    width:60%;
-    `
+    let [minuta, setMinuta] = useState('')
 
-    const MinutaActionTitle = styled.span`
-    color: ${colors.black40};
-    font-weight: 700;
-    `
-
-    const MinutaButtons = styled.div`
-    display:flex;
-    width:100%;
-    justify-content: space-between;
-    margin-top: 15px;
-    `
-
-    const TextButton = withStyles({
-        root:{
-            color: colors.primary,
-            fontFamily: font.family,
-            fontWeight:600
-        },
-        label:{
-            textTransform:"none"    
-        }
-        })(Button);
-
-    const ThemedButton = withStyles({
-        root:{
-            color: colors.white,
-            background:colors.primary,
-            fontFamily: font.family,
-            fontWeight:600,
-            '&:hover': {
-                background: colors.primaryConstrast,
-             },
-        },
-        label:{
-            textTransform:"none"    
-        },
-        
-        })(Button);
-
-    const MinutaInput = styled.textarea`
-        width:100%;
-        resize:vertical;
-        `
-        
     const TitleText = () => {
         if(exposition){
             return `Editar resumen de la exposicion #${exposition.number} de ${exposition.speaker}`
@@ -70,9 +70,9 @@ export const MinutaWriter = ({exposition, onDiscard, onSave})=>{
     }
 
     return(
-        <MinutaContainer>
+        <MinutaContainer key="container">
         <MinutaActionTitle>{TitleText()}</MinutaActionTitle>
-        <MinutaInput rows={10}/>
+        <MinutaInput value={minuta} onChange={(e)=>setMinuta(e.target.value)}  rows={10}/>
         <MinutaButtons>
           <TextButton onClick={onDiscard} disabled={isButtonDisabled()}>Descartar cambios</TextButton>
           <ThemedButton onClick={onSave} disabled={isButtonDisabled()}>Guardar</ThemedButton>
