@@ -1,6 +1,8 @@
 import React from 'react';
 import { Td } from './ListaPinosQueHablaron.styled';
 import Clock from "../clock/Clock";
+import {TiposReaccionAlHablar} from "../cola-de-participantes/TalkingReactions";
+import {cantidadReaccionesDelPino} from "./ListaPinosQueHablaron";
 
 class FilaPinoHablando extends React.Component {
   constructor(props) {
@@ -40,13 +42,13 @@ class FilaPinoHablando extends React.Component {
           {<Clock seconds={this.state.secondsElapsed}/>}
         </Td>
         <Td>
-          7
+          {cantidadReaccionesDelPino(TiposReaccionAlHablar.THUMBS_UP,this.props.pino)}
         </Td>
         <Td>
-          12
+          {cantidadReaccionesDelPino(TiposReaccionAlHablar.REDONDEAR,this.props.pino)}
         </Td>
         <Td>
-          3
+          {cantidadReaccionesDelPino(TiposReaccionAlHablar.THUMBS_DOWN,this.props.pino)}
         </Td>
         <td>
           <p>Estoy hablando</p>
