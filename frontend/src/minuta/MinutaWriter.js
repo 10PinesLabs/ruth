@@ -60,7 +60,7 @@ export const MinutaWriter = ({exposition, onDiscard, onSave})=>{
 
     const TitleText = () => {
         if(exposition){
-            return `Editar resumen de la exposicion #${exposition.number} de ${exposition.speaker}`
+            return `Editar resumen de la exposicion #${exposition.number+1} de ${exposition.speaker}`
         }
         return 'Elige un participante para poder editar tu resumen'
     }

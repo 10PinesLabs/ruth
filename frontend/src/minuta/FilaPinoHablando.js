@@ -30,7 +30,7 @@ class FilaPinoHablando extends React.Component {
   }
 
   render() {
-    return (<tr>
+    return (<tr onClick={this.props.onClick}>
         <td>
           {this.props.orden}
         </td>

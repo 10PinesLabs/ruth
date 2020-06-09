@@ -126,7 +126,6 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
       break;
     }
     case tipoDeEvento.MINUTEAR_A_ORADOR:{
-      debugger
       if(draft.pasados.length>evento.expositionNumber){
         console.log(draft.pasados[evento.expositionNumber])
         draft.pasados[evento.expositionNumber].minuta = evento.minuta

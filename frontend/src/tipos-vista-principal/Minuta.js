@@ -72,7 +72,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
   const onMinutaSave = (minuta)=>{
     dispatchMinuta({
       tipo: tipoDeEventoOradores.MINUTEAR_A_ORADOR,
-      expositionNumber: expositionSelected.number-1,
+      expositionNumber: expositionSelected.number,
       minuta:minuta
     });
   }
@@ -94,7 +94,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
 
       <InputResumen oradores={tema.oradores} isRecapVisible={isRecapVisible}/>
 
-      <ListaPinosQueHablaron oradores={tema.oradores} onExposicionSeleccionada={(exposition)=>onExpositionSelected(exposition)}/>
+      <ListaPinosQueHablaron oradores={tema.oradores} onSelect={(exposition)=>onExpositionSelected(exposition)}/>
       <form>
         <textarea
           value={conclusion}
