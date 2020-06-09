@@ -14,7 +14,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
   let [lastKnowConclusion, setLastKnowConclusion] = useState(tema.conclusion);
   let [conclusion, setConclusion] = useState(tema.conclusion);
   let [isEditingConclusion, setIsEditingConclusion] = useState(false);
-  let [speakerSelected, setSpeakerSelected] = useState('');
+  let [expositionSelected, setExpositionSelected] = useState(null);
   const dispatchMinuta = (data) => {
     const evento = {
       autor: "MINUTEADOR",
@@ -55,9 +55,9 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     setIsEditingConclusion(true);
   }
 
-  const onSpeakerSelected = (pine) => {
-    console.log("se selecciono el orador:", pine)
-    setSpeakerSelected(pine.nombre)
+  const onExpositionSelected = (exposition) => {
+    console.log("se selecciono el orador:", exposition)
+    setExpositionSelected(exposition)
   }
 
   return (
@@ -65,8 +65,8 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
       style={useSpring({ opacity: 1, from: { opacity: 0 } })}
     >
     
-      <MinutaWriter speaker={speakerSelected}/>
-      <ListaPinosQueHablaron oradores={tema.oradores} onOradorSeleccionado={(orador)=>onSpeakerSelected(orador)}/>
+      <MinutaWriter exposition={expositionSelected}/>
+      <ListaPinosQueHablaron oradores={tema.oradores} onExposicionSeleccionada={(exposition)=>onExpositionSelected(exposition)}/>
       <form>
         <textarea
           value={conclusion}

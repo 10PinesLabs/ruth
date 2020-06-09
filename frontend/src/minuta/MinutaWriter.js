@@ -6,7 +6,7 @@ import { colors, font} from '../styles/theme';
 
 import Button from '@material-ui/core/Button';
 
-export const MinutaWriter = ()=>{
+export const MinutaWriter = ({exposition})=>{
 
     const MinutaContainer = styled.div`
     display:flex;
@@ -58,9 +58,16 @@ export const MinutaWriter = ()=>{
         resize:vertical;
         `
         
+    const TitleText = () => {
+        if(exposition){
+            return `Editar resumen de la exposicion #${exposition.number} de ${exposition.speaker}`
+        }
+        return 'Elige un participante para poder editar tu resumen'
+    }
+
     return(
         <MinutaContainer>
-        <MinutaActionTitle>Elige un participante para poder editar tu resumen</MinutaActionTitle>
+        <MinutaActionTitle>{TitleText()}</MinutaActionTitle>
         <MinutaInput rows={10}/>
         <MinutaButtons>
           <TextButton>Descartar cambios</TextButton>
