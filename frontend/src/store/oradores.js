@@ -8,7 +8,8 @@ export const tipoDeEvento = {
   DESENCOLAR: 'Quiero Desencolarme',
   KICKEAR: 'Kickear al que habla',
   REACCIONAR_A_ORADOR: 'ReaccionAOrador',
-  DESREACCIONAR_A_ORADOR: 'DesreaccionAOrador'
+  DESREACCIONAR_A_ORADOR: 'DesreaccionAOrador',
+  MINUTEAR_A_ORADOR: 'Actualizar minuta de orador'
 };
 
 
@@ -124,6 +125,15 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
 
       break;
     }
+    case tipoDeEvento.MINUTEAR_A_ORADOR:{
+      debugger
+      if(draft.pasados.length>evento.expositionNumber){
+        console.log(draft.pasados[evento.expositionNumber])
+        draft.pasados[evento.expositionNumber].minuta = evento.minuta
+      }else
+      draft.actual.minuta = evento.minuta
+    }
+
 
     default: {
       break

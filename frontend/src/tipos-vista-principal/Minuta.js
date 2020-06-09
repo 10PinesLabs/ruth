@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import { VistaDelMedioContainer } from "./Resumen.styled";
 import { useSpring } from "react-spring";
 import { connect } from "react-redux";
-import { tipoDeEvento, conclusionReducer } from "../store/conclusion";
+import { tipoDeEvento } from "../store/conclusion";
+import { tipoDeEvento as tipoDeEventoOradores} from "../store/oradores";
+
 import { toast } from "react-toastify";
 import { Button, SecondaryButton} from "../components/Button.styled";
 import ListaPinosQueHablaron from "../minuta/ListaPinosQueHablaron";
@@ -15,6 +17,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
   let [conclusion, setConclusion] = useState(tema.conclusion);
   let [isEditingConclusion, setIsEditingConclusion] = useState(false);
   let [expositionSelected, setExpositionSelected] = useState(null);
+
   const dispatchMinuta = (data) => {
     const evento = {
       autor: "MINUTEADOR",
@@ -65,8 +68,8 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
 
   const onMinutaSave = (minuta)=>{
     dispatchMinuta({
-      tipo: tipoDeEvento.GUARDAR_MINUTA,
-      expositionNumber: expositionSelected.number,
+      tipo: tipoDeEventoOradores.MINUTEAR_A_ORADOR,
+      expositionNumber: expositionSelected.number-1,
       minuta:minuta
     });
   }

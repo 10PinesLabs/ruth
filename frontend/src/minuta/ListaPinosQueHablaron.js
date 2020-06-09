@@ -71,7 +71,7 @@ const exposition = (speaker, expositionNumber)=>{
 }
 
 const ListaPinosQueHablaron = (props) => (
-  <TablaPinos onClick={()=>{props.onExposicionSeleccionada(exposition(props.oradores.actual.usuario.nombre,4))}}>
+  <TablaPinos onClick={()=>{props.onExposicionSeleccionada(exposition(props.oradores.actual.usuario.nombre,1))}}>
     <FilaTitulos/>
     <tbody>
 
