@@ -66,7 +66,6 @@ const FilaPino = (props) => <tr>
 </tr>;
 
 class ListaPinosQueHablaron extends React.Component {
-
   oradoresEnOrdenDecendiente = () => {
     return [...this.props.oradores.pasados
       .map((pino, index) =>
@@ -89,7 +88,8 @@ class ListaPinosQueHablaron extends React.Component {
   state = {oradoresOrdenados: this.oradoresEnOrdenAscendente}
 
   render() {
-    return (<>
+    return (
+  <>
       <OrdenesTabla>
         <Button
           variant="outlined"
@@ -111,15 +111,12 @@ class ListaPinosQueHablaron extends React.Component {
       <TablaPinos>
         <FilaTitulos/>
         <tbody>
-        
-        {this.state.oradoresOrdenados()}
-
+          {this.state.oradoresOrdenados()}
         </tbody>
       </TablaPinos>
-      </>
+  </>
     );
   }
-  
 }
 
 export default ListaPinosQueHablaron;
