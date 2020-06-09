@@ -61,31 +61,50 @@ const FilaPino = (props) => <tr>
 </tr>;
 
 
-const ListaPinosQueHablaron = (props) => (
-  <TablaPinos>
-    <FilaTitulos/>
-    <tbody>
+const ListaPinosQueHablaron = ({oradores}) => {
+  let [ordenAscendiente, setOrdenAscendiente] = useState(true);
 
-    {props.oradores.pasados
-      .map((pino, index) => <FilaPino
+  return (
+    <>
+      <OrdenesTabla>
+        <Button
+          variant="outlined"
+          color="primary"
+          startIcon={(ordenAscendiente)? <Timer/> : <ExpandMore/>}
+          onClick={() => setOrdenAscendiente(!ordenAscendiente)}
+        >
+          {(ordenAscendiente)? "Orden cronolgico" :"Mas recientes"}
+        </Button>
+      </OrdenesTabla>
+      <TablaPinos>
+        <FilaTitulos/>
+        <tbody>
+        {(ordenAscendiente)? OradoresEnOrdenAscendiente({oradores}) : OradoresEnOrdenDescendiente({oradores})}
+        </tbody>
+      </TablaPinos>
+    </>
+  );
+}
+
+const OradoresEnOrdenDescendiente = ({oradores, finTema}) => {
+  return [...oradores.pasados
+    .map((pino, index) =>
+      <FilaPino
         pino={pino}
         orden={index + 1}
         tiempo={Math.ceil((pino.fin - pino.inicio) / 1000)}
-        />)
-    }
-
-    {props.oradores.actual
+      />),
+    oradores.actual
       ? <FilaPino
-          pino={props.oradores.actual}
-          orden={props.oradores.pasados.length + 1}
-          tiempo={Math.ceil(((Date.parse(props.finTema) || Date.now()) - props.oradores.actual.inicio) / 1000)}
-          finTema={props.finTema}
-      />
-      : null
-    }
+        pino={oradores.actual}
+        orden={oradores.pasados.length + 1}
+        tiempo={Math.ceil(((Date.parse(finTema) || Date.now()) - oradores.actual.inicio) / 1000)}
+        finTema={finTema}
+      /> : null];
+}
 
-    </tbody>
-  </TablaPinos>
-);
+const OradoresEnOrdenAscendiente = ({oradores}) => {
+  return OradoresEnOrdenDescendiente({oradores}).reverse();
+}
 
 export default ListaPinosQueHablaron;
