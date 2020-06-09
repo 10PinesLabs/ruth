@@ -1,9 +1,9 @@
-import React from 'react';
-import {FilaTitulosWrapper, OrdenesTabla, TablaPinos, Td} from './ListaPinosQueHablaron.styled';
+import React, {useState} from 'react';
+import {TablaPinos, FilaTitulosWrapper, Td,  OrdenesTabla} from './ListaPinosQueHablaron.styled';
 import FilaPinoHablando from "./FilaPinoHablando";
 import {TiposReaccionAlHablar} from "../cola-de-participantes/TalkingReactions";
 import Button from "@material-ui/core/Button";
-import {ExpandLess, ExpandMore} from "@material-ui/icons";
+import {ExpandMore, Timer} from "@material-ui/icons";
 
 export const cantidadReaccionesDelPino = (tipoReaccion,pino) => {
   return pino.reacciones[tipoReaccion].length;
@@ -65,45 +65,28 @@ const FilaPino = (props) => <tr>
   </td>
 </tr>;
 
-class ListaPinosQueHablaron extends React.Component {
-  oradoresEnOrdenDescendiente = () => {
-    return [...this.props.oradores.pasados
-      .map((pino, index) =>
-        <FilaPino
-          pino={pino}
-          orden={index + 1}
-          tiempo={getMinutes(pino.fin - pino.inicio)}
-        />),
-      this.props.oradores.actual
-        ? <FilaPinoHablando
-          pino={this.props.oradores.actual}
-          orden={this.props.oradores.pasados.length + 1}
-        /> : null];
-  }
-  
-  oradoresEnOrdenAscendente = () => {
-    return this.oradoresEnOrdenDescendiente().reverse();
-  }
-  
-  state = {oradoresOrdenados: this.oradoresEnOrdenAscendente}
+function ListaPinosQueHablaron({oradores}) {
 
-  render() {
-    return (
-  <>
+  let [ordenAscendiente, setOrdenAscendiente] = useState(true);
+  
+  return (
+    <>
       <OrdenesTabla>
         <Button
+          style={(ordenAscendiente)? {display: "none"} : null}
           variant="outlined"
           color="primary"
-          startIcon={<ExpandLess/>}
-          onClick={() => this.setState({oradoresOrdenados: this.oradoresEnOrdenAscendente})}
+          startIcon={<ExpandMore/>}
+          onClick={() => setOrdenAscendiente(true)}
         >
           Mas recientes
         </Button>
         <Button
+          style={(ordenAscendiente)? null : {display: "none"}}
           variant="outlined"
           color="primary"
-          startIcon={<ExpandMore/>}
-          onClick={() => this.setState({oradoresOrdenados: this.oradoresEnOrdenDescendiente})}
+          startIcon={<Timer/>}
+          onClick={() => setOrdenAscendiente(false)}
         >
           Orden cronolgico
         </Button>
@@ -111,12 +94,31 @@ class ListaPinosQueHablaron extends React.Component {
       <TablaPinos>
         <FilaTitulos/>
         <tbody>
-          {this.state.oradoresOrdenados()}
+          {(ordenAscendiente)? OradoresEnOrdenAscendiente({oradores}) : OradoresEnOrdenDescendiente({oradores})}
         </tbody>
       </TablaPinos>
-  </>
-    );
-  }
+    </>
+  );
 }
+
+const OradoresEnOrdenDescendiente = ({oradores}) => {
+  return [...oradores.pasados
+    .map((pino, index) =>
+      <FilaPino
+        pino={pino}
+        orden={index + 1}
+        tiempo={getMinutes(pino.fin - pino.inicio)}
+      />),
+    oradores.actual
+      ? <FilaPinoHablando
+        pino={oradores.actual}
+        orden={oradores.pasados.length + 1}
+      /> : null];
+}
+
+const OradoresEnOrdenAscendiente = ({oradores}) => {
+  return OradoresEnOrdenDescendiente({oradores}).reverse();
+}
+
 
 export default ListaPinosQueHablaron;

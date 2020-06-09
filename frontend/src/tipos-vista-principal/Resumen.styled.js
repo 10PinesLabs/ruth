@@ -7,7 +7,6 @@ export const VistaDelMedioContainer = styled(animated.div)`
     flex-direction: column;
     flex: 1;
     align-items: center;
-    margin-top: 20px;
 `;
 
 export const Botonera = styled.div` 
