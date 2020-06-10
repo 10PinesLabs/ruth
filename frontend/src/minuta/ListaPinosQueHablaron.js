@@ -36,7 +36,7 @@ const FilaTitulos = () => {
   </FilaTitulosWrapper>;
 };
 
-const FilaPino = (props) => <tr>
+const FilaPino = (props) => <tr onClick={props.onClick}>
   <td>
     {props.orden}
   </td>
@@ -58,12 +58,19 @@ const FilaPino = (props) => <tr>
     {cantidadReaccionesDelPino(TiposReaccionAlHablar.THUMBS_DOWN,props.pino)}
   </Td>
   <td>
-    <p>Un resumen</p>
+    <p>{props.resumen}</p>
     <button>EDITAR</button>
   </td>
 </tr>;
 
-const ListaPinosQueHablaron = ({oradores, finTema}) => {
+const pinoQueHablo = (speaker, indexExposicion)=>{
+  return  {
+    orador:speaker,
+    index:indexExposicion,
+  }
+}
+
+const ListaPinosQueHablaron = ({oradores, finTema, onSelect}) => {
   let [ordenAscendiente, setOrdenAscendiente] = useState(true);
 
   return (
@@ -81,32 +88,35 @@ const ListaPinosQueHablaron = ({oradores, finTema}) => {
       <TablaPinos>
         <FilaTitulos/>
         <tbody>
-          {(ordenAscendiente)? OradoresEnOrdenAscendiente(oradores, finTema) : OradoresEnOrdenDescendiente(oradores, finTema)}
+          {(ordenAscendiente)? OradoresEnOrdenAscendiente({oradores,finTema ,onSelect}) : OradoresEnOrdenDescendiente({oradores,finTema ,onSelect})}
         </tbody>
       </TablaPinos>
     </>
   );
 }
 
-const OradoresEnOrdenDescendiente = (oradores, finTema) => {
+const OradoresEnOrdenDescendiente = ({oradores, finTema, onSelect}) => {
   return [...oradores.pasados
-    .map((pino, index) =>
+    .map((orador, index) =>
       <FilaPino
-        pino={pino}
+        pino={orador}
         orden={index + 1}
-        tiempo={Math.ceil((pino.fin - pino.inicio) / 1000)}
+        tiempo={Math.ceil((orador.fin - orador.inicio) / 1000)}
+        resumen={orador.resumen || "Sin resumen"}
+        onClick={()=>onSelect(pinoQueHablo(orador.usuario.nombre, index))}
       />),
     oradores.actual
       ? <FilaPino
         pino={oradores.actual}
         orden={oradores.pasados.length + 1}
+        onClick={(pino, index)=>onSelect(pinoQueHablo(oradores.actual.usuario.nombre, oradores.pasados.length))}
         tiempo={Math.ceil(((Date.parse(finTema) || Date.now()) - oradores.actual.inicio) / 1000)}
         finTema={finTema}
       /> : null];
 }
 
-const OradoresEnOrdenAscendiente = (oradores, finTema) => {
-  return OradoresEnOrdenDescendiente(oradores, finTema).reverse();
+const OradoresEnOrdenAscendiente = (oradores, finTema, onSelect) => {
+  return OradoresEnOrdenDescendiente(oradores, finTema, onSelect).reverse();
 }
 
 export default ListaPinosQueHablaron;
