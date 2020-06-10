@@ -7,7 +7,7 @@ import { tipoDeEvento as tipoDeEventoOradores} from "../store/oradores";
 import { toast } from "react-toastify";
 import { Button, SecondaryButton} from "../components/Button.styled";
 import ListaPinosQueHablaron from "../minuta/ListaPinosQueHablaron";
-import { MinutaWriter } from "../minuta/MinutaWriter";
+import { SummaryWriter } from "../minuta/SummaryWriter";
 import InputResumen from "../minuta/InputResumen";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
@@ -92,7 +92,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
       </BotonParaAbrirResumen>
 
       <InputResumen oradores={tema.oradores} isRecapVisible={isRecapVisible}>
-        <MinutaWriter exposition={expositionSelected} onDiscard={onMinutaDiscard} onSave={onMinutaSave}/>
+        <SummaryWriter exposition={expositionSelected} onDiscard={onMinutaDiscard} onSave={onMinutaSave}/>
       </InputResumen>
 
       <ListaPinosQueHablaron oradores={tema.oradores} onSelect={(exposition)=>onExpositionSelected(exposition)}/>
