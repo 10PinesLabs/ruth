@@ -69,18 +69,17 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     setIsEditingConclusion(true);
   }
 
-  const isSomeoneExposing = () =>{
+  const hayAlguienExponiendo = () =>{
     return tema.oradores.actual;
   }
 
-  const isExposing = (idOfExposition) => {
+  const estaExponiendo = (idOfExposition) => {
     return idOfExposition==tema.oradores.actual.instanciaDeHabla
   }
 
   const seleccionarExposicion = (exposicion) => {
     setExposicionSeleccionada(exposicion)
-    console.log(isSomeoneExposing() && isExposing(exposicion.index))
-    setIsExpositionSelectedUpdating(isSomeoneExposing() && isExposing(exposicion.index))
+    setIsExpositionSelectedUpdating(hayAlguienExponiendo() && estaExponiendo(exposicion.index))
     
   }
 
@@ -98,7 +97,6 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     setExposicionSeleccionada(null)
     let oradores = [...tema.oradores.pasados, tema.oradores.actual]
     let siguienteOrador = oradores[exposicionSeleccionada.index+1]
-    debugger
     if(isExpositionSelectedUpdating && siguienteOrador){
       let selectObject = exposicion(siguienteOrador.usuario.nombre, siguienteOrador.instanciaDeHabla)
       setExposicionSeleccionada(selectObject)
