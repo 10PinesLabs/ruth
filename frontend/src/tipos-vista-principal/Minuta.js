@@ -72,7 +72,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
 
   const onExposicionSeleccionada = (exposicion) => {
     setExposicionSeleccionada(exposicion)
-      (isSomeoneExposing() && isExposing(exposicion.index))
+    setIsExpositionSelectedUpdating(isSomeoneExposing() && isExposing(exposicion.index))
     
   }
 
