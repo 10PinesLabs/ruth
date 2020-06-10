@@ -11,8 +11,9 @@ import { SummaryWriter } from "../minuta/SummaryWriter";
 import InputResumen from "../minuta/InputResumen";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
-import {BotonParaAbrirResumen} from "../minuta/Minuta.styled";
-
+import {BotonParaAbrirResumen, SummaryCollapseContainer} from "../minuta/Minuta.styled";
+import styled from 'styled-components'
+import Collapse from '@material-ui/core/Collapse';
 
 const Minuta = ({ dispatch, tema, temaActivo }) => {
   let [lastKnowConclusion, setLastKnowConclusion] = useState(tema.conclusion);
@@ -90,9 +91,11 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
         {buttonText()}
       </BotonParaAbrirResumen>
 
-      <InputResumen oradores={tema.oradores} isRecapVisible={isRecapVisible}>
-        <SummaryWriter exposition={expositionSelected} onDiscard={onMinutaDiscard} onSave={onMinutaSave}/>
-      </InputResumen>
+      <SummaryCollapseContainer>
+        <Collapse in={isRecapVisible}>
+          <SummaryWriter exposition={expositionSelected} onDiscard={onMinutaDiscard} onSave={onMinutaSave}/>
+        </Collapse>
+      </SummaryCollapseContainer>
 
       <ListaPinosQueHablaron oradores={tema.oradores} onSelect={(exposition)=>onExpositionSelected(exposition)}/>
       <form>

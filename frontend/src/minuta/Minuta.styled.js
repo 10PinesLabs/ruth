@@ -36,3 +36,7 @@ export const BotonParaAbrirResumen = styled(Button)`
     margin-left: 10%;
   }
 `;
+
+export const SummaryCollapseContainer = styled.div`
+width:60%
+`;
