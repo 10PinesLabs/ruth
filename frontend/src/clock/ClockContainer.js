@@ -20,6 +20,17 @@ class ClockContainer extends React.Component {
         secondsElapsed: this.props.secondsElapsed,
       });
     }
+    if (this.shouldStopWatchAfterUpdate(prevProps)) this.stopWatch();
+
+    if (this.shouldStartWatchAfterUpdate(prevProps)) this.runWatch();
+  }
+
+  shouldStartWatchAfterUpdate(prevProps) {
+    return this.props.shouldBeRunning && !prevProps.shouldBeRunning;
+  }
+
+  shouldStopWatchAfterUpdate(prevProps) {
+    return !this.props.shouldBeRunning && prevProps.shouldBeRunning;
   }
 
   componentWillUnmount() {
