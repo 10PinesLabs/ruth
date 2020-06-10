@@ -3,23 +3,23 @@ import styled from 'styled-components'
 import { colors, font} from '../styles/theme';
 import Button from '@material-ui/core/Button';
 
-export const SummaryInput = styled.textarea`
+export const ResumenInput = styled.textarea`
 width:100%;
 resize:vertical;
 `
 
-export const SummaryContainer = styled.div`
+export const ContenedorResumen = styled.div`
 display:flex;
 flex-direction: column;
 margin-top:15px;
 `
 
-export const SummaryActionTitle = styled.span`
+export const TituloDeResumen = styled.span`
 color: ${props => props.disabled ? colors.black40 : colors.black50};
 font-weight: 700;
 `
 
-export const SummaryButtons = styled.div`
+export const BotonesDeResumen = styled.div`
 display:flex;
 width:100%;
 justify-content: space-between;
@@ -44,7 +44,7 @@ export const ThemedButton = withStyles({
         fontFamily: font.family,
         fontWeight:600,
         '&:hover': {
-            background: colors.primaryConstrast,
+            background: colors.secondary,
          },
         '&:disabled': {
             background: colors.black20,

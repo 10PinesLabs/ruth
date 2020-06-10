@@ -58,7 +58,7 @@ const FilaPino = (props) => <tr onClick={props.onClick}>
     {cantidadReaccionesDelPino(TiposReaccionAlHablar.THUMBS_DOWN,props.pino)}
   </Td>
   <td>
-    <p>{props.minuta}</p>
+    <p>{props.resumen}</p>
     <button>EDITAR</button>
   </td>
 </tr>;
@@ -102,7 +102,7 @@ const OradoresEnOrdenDescendiente = ({oradores, finTema, onSelect}) => {
         pino={orador}
         orden={index + 1}
         tiempo={Math.ceil((orador.fin - orador.inicio) / 1000)}
-        minuta={orador.minuta || "Sin resumen"}
+        resumen={orador.resumen || "Sin resumen"}
         onClick={()=>onSelect(pinoQueHablo(orador.usuario.nombre, index))}
       />),
     oradores.actual

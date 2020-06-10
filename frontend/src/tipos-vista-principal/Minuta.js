@@ -7,10 +7,10 @@ import { tipoDeEvento as tipoDeEventoOradores} from "../store/oradores";
 import { toast } from "react-toastify";
 import { Button, SecondaryButton } from "../components/Button.styled";
 import ListaPinosQueHablaron from "../minuta/ListaPinosQueHablaron";
-import { SummaryWriter } from "../minuta/SummaryWriter";
+import { CredorDeResumenOrador } from "../minuta/CredorDeResumenOrador";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
-import {BotonParaAbrirResumen, SummaryCollapseContainer} from "../minuta/Minuta.styled";
+import {BotonParaAbrirResumen, ResumenOradorCollapseContainer} from "../minuta/Minuta.styled";
 import styled from 'styled-components'
 import Collapse from '@material-ui/core/Collapse';
 
@@ -21,7 +21,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
   let [expositionSelected, setExpositionSelected] = useState(null);
   let [isRecapVisible, setIsRecapCollapsed] = useState(false);
 
-  const dispatchMinuta = (data) => {
+  const dispatchMinuteador = (data) => {
     const evento = {
       autor: "MINUTEADOR",
       idTema: tema.id,
@@ -45,7 +45,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
       return;
     }
     setIsEditingConclusion(false);
-    dispatchMinuta({
+    dispatchMinuteador({
       tipo: tipoDeEvento.GUARDAR_CONCLUSION,
       conclusion: conclusion,
     });
@@ -65,15 +65,15 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     setExpositionSelected(exposition)
   }
 
-  const onSummaryDiscard = ()=>{
+  const onDescartarResumen = ()=>{
     setExpositionSelected(null)
   }
 
-  const onSummarySave = (minuta)=>{
-    dispatchMinuta({
-      tipo: tipoDeEventoOradores.MINUTEAR_A_ORADOR,
+  const onGuardarResumen = (resumen)=>{
+    dispatchMinuteador({
+      tipo: tipoDeEventoOradores.RESUMIR_A_ORADOR,
       expositionNumber: expositionSelected.index,
-      minuta:minuta
+      resumen:resumen
     });
   }
   const buttonText = () => (isRecapVisible ? 'CERRAR EDICION' : 'ABRIR EDICION');
@@ -90,11 +90,11 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
         {buttonText()}
       </BotonParaAbrirResumen>
 
-      <SummaryCollapseContainer>
+      <ResumenOradorCollapseContainer>
         <Collapse in={isRecapVisible}>
-          <SummaryWriter exposition={expositionSelected} onDiscard={onSummaryDiscard} onSave={onSummarySave}/>
+          <CredorDeResumenOrador exposicion={expositionSelected} onDiscard={onDescartarResumen} onSave={onGuardarResumen}/>
         </Collapse>
-      </SummaryCollapseContainer>
+      </ResumenOradorCollapseContainer>
 
       <ListaPinosQueHablaron oradores={tema.oradores}  finTema={tema.fin} onSelect={(exposition)=>onExpositionSelected(exposition)}/>
       <form>

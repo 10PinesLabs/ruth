@@ -37,6 +37,6 @@ export const BotonParaAbrirResumen = styled(Button)`
   }
 `;
 
-export const SummaryCollapseContainer = styled.div`
+export const ResumenOradorCollapseContainer = styled.div`
 width:60%
 `;
