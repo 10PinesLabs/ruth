@@ -75,6 +75,9 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
       expositionNumber: expositionSelected.number,
       minuta:minuta
     });
+    let oradores = [...tema.oradores.pasados, tema.oradores.actual]
+    console.log(oradores)
+    
   }
   const buttonText = () => (isRecapVisible ? 'CERRAR EDICION' : 'ABRIR EDICION');
 
