@@ -37,3 +37,7 @@ export const BotonParaAbrirResumen = styled(Button)`
     margin-left: 10%;
   }
 `;
+
+export const ResumenOradorCollapseContainer = styled.div`
+width:60%
+`;

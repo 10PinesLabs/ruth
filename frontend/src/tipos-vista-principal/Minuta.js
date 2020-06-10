@@ -3,22 +3,24 @@ import { VistaDelMedioContainer } from "./Resumen.styled";
 import { useSpring } from "react-spring";
 import { connect } from "react-redux";
 import { tipoDeEvento } from "../store/conclusion";
+import { tipoDeEvento as tipoDeEventoOradores} from "../store/oradores";
 import { toast } from "react-toastify";
 import { Button, SecondaryButton } from "../components/Button.styled";
 import ListaPinosQueHablaron from "../minuta/ListaPinosQueHablaron";
-import InputResumen from "../minuta/InputResumen";
+import { CreadorDeResumenOrador } from "../minuta/CreadorDeResumenOrador";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
-import {BotonParaAbrirResumen, ConclusionForm, ConclusionTitle, ConclusionTextarea} from "../minuta/Minuta.styled";
-
+import {BotonParaAbrirResumen, ConclusionForm, ConclusionTitle, ConclusionTextarea, ResumenOradorCollapseContainer} from "../minuta/Minuta.styled";
+import Collapse from '@material-ui/core/Collapse';
 
 const Minuta = ({ dispatch, tema }) => {
   let [lastKnowConclusion, setLastKnowConclusion] = useState(tema.conclusion);
   let [conclusion, setConclusion] = useState(tema.conclusion);
   let [isEditingConclusion, setIsEditingConclusion] = useState(false);
+  let [exposicionSeleccionada, setExposicionSeleccionada] = useState(null);
   let [isRecapVisible, setIsRecapCollapsed] = useState(false);
 
-  const dispatchMinuta = (data) => {
+  const dispatchMinuteador = (data) => {
     const evento = {
       autor: "MINUTEADOR",
       idTema: tema.id,
@@ -42,7 +44,7 @@ const Minuta = ({ dispatch, tema }) => {
       return;
     }
     setIsEditingConclusion(false);
-    dispatchMinuta({
+    dispatchMinuteador({
       tipo: tipoDeEvento.GUARDAR_CONCLUSION,
       conclusion: conclusion,
     });
@@ -58,6 +60,21 @@ const Minuta = ({ dispatch, tema }) => {
     setIsEditingConclusion(true);
   }
 
+  const onExposicionSeleccionada = (exposicion) => {
+    setExposicionSeleccionada(exposicion)
+  }
+
+  const onDescartarResumen = ()=>{
+    setExposicionSeleccionada(null)
+  }
+
+  const onGuardarResumen = (resumen)=>{
+    dispatchMinuteador({
+      tipo: tipoDeEventoOradores.RESUMIR_A_ORADOR,
+      indexExposicion: exposicionSeleccionada.index,
+      resumen
+    });
+  }
   const buttonText = () => (isRecapVisible ? 'CERRAR EDICION' : 'ABRIR EDICION');
 
   return (
@@ -72,22 +89,26 @@ const Minuta = ({ dispatch, tema }) => {
         {buttonText()}
       </BotonParaAbrirResumen>
 
-      <InputResumen oradores={tema.oradores} isRecapVisible={isRecapVisible}/>
+      <ResumenOradorCollapseContainer>
+        <Collapse in={isRecapVisible}>
+          <CreadorDeResumenOrador exposicion={exposicionSeleccionada} onDiscard={onDescartarResumen} onSave={onGuardarResumen}/>
+        </Collapse>
+      </ResumenOradorCollapseContainer>
 
-      <ListaPinosQueHablaron oradores={tema.oradores}/>
+      <ListaPinosQueHablaron oradores={tema.oradores} finTema={tema.fin} onSelect={(exposicion)=>onExposicionSeleccionada(exposicion)}/>
       <ConclusionForm>
         <ConclusionTitle>
-            CONCLUSION
+          CONCLUSION
         </ConclusionTitle>
         <ConclusionTextarea
-          id={"conclusion"}
           value={conclusion}
           rows={6}
-          placeholder={"wrap up del tema..."}
+          placeholder={"Aqui va la conclusión general del tema..."}
           onChange={(event) => {
             userChangedConclusionInput(event.target.value);
           }}
         />
+
         {isEditingConclusion ? (
           <div>
             <SecondaryButton type="button" onClick={() => resetearConclusion()}>

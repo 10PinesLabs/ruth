@@ -87,6 +87,7 @@ class FilaPinoHablando extends React.Component {
     } else {
       this.setNroDeOrdenSeleccionadoEnTabla(this.props.orden);
     }
+    this.props.onClick();
   }
 }
 
