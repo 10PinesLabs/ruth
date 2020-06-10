@@ -7,7 +7,7 @@ import {colors} from "../styles/theme";
 import {ExpandMore, ThumbDown, ThumbUp, Timer, Update} from "@material-ui/icons";
 import {FilaPino} from "./FilaPino";
 
-export function TablaOradores({ oradores, finTema, pinoSeleccionado, onSelect}) {
+export function TablaOradores({oradores, finTema, pinoSeleccionado, onSelect}) {
 
   const [ordenAscendiente, setOrdenAscendiente] = useState(true);
 
@@ -29,16 +29,16 @@ export function TablaOradores({ oradores, finTema, pinoSeleccionado, onSelect}) 
           pino={orador}
           orden={index + 1}
           tiempo={Math.ceil((orador.fin - orador.inicio) / 1000)}
-          pinoSeleccionado = {pinoSeleccionado}
-          onSelect = {onSelect}
+          pinoSeleccionado={pinoSeleccionado}
+          onSelect={onSelect}
           resumen={orador.resumen || ""}
         />),
       oradores.actual
         ? <FilaPino
           pino={oradores.actual}
           orden={oradores.pasados.length + 1}
-          pinoSeleccionado = {pinoSeleccionado}
-          onSelect = {onSelect}
+          pinoSeleccionado={pinoSeleccionado}
+          onSelect={onSelect}
           tiempo={Math.ceil(((Date.parse(finTema) || Date.now()) - oradores.actual.inicio) / 1000)}
           finTema={finTema}
           isTalking={true}
@@ -89,14 +89,14 @@ export function TablaOradores({ oradores, finTema, pinoSeleccionado, onSelect}) 
             </TableRow>
           </TableHead>
           <TableBody>
-            {(ordenAscendiente)?
-              OradoresEnOrdenAscendiente({oradores, pinoSeleccionado, finTema ,onSelect}):
-              OradoresEnOrdenDescendiente({oradores, pinoSeleccionado, finTema ,onSelect})}
+            {(ordenAscendiente) ?
+              OradoresEnOrdenAscendiente({oradores, pinoSeleccionado, finTema, onSelect}) :
+              OradoresEnOrdenDescendiente({oradores, pinoSeleccionado, finTema, onSelect})}
           </TableBody>
         </Table>
       </Paper>
     </TablaPinos>
   </>);
 }
-        
+
 export default TablaOradores;

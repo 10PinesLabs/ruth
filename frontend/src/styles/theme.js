@@ -12,11 +12,11 @@ export const font = {
 };
 
 export const colors = {
-  primary: '#68c9b2',
+  primary: '#68C9B2',
   secondary: '#448495',
-  lightGrey: '#e0e0e0',
-  darkRed: '#ff7f7f',
-  black50: '#7f7f7f',
+  lightGrey: '#E0E0E0',
+  darkRed: '#FF7F7F',
+  black50: '#7F7F7F',
   black40: '#AFAFAF',
   black30: '#DADADA',
   black20: '#E6E6E6',

@@ -1,4 +1,4 @@
-import {makeStyles, TableCell} from "@material-ui/core";
+import {TableCell} from "@material-ui/core";
 import { withStyles} from '@material-ui/core/styles';
 import styled from "styled-components";
 
@@ -26,7 +26,7 @@ export const OradorActualContainer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  min-width:150px !important;
+  width: 157px;
 `;
 
 export const FlexVerticalCenterSpaceAround = styled.div`
