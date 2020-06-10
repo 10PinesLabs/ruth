@@ -62,11 +62,18 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     setIsEditingConclusion(true);
   }
 
+  const isSomeoneExposing = () =>{
+    return tema.oradores.actual;
+  }
+
+  const isExposing = (idOfExposition) => {
+    return idOfExposition==tema.oradores.actual.instanciaDeHabla
+  }
+
   const onExpositionSelected = (exposition) => {
-    if(exposition.number===tema.oradores.actual.instanciaDeHabla){
-      setIsExpositionSelectedUpdating(true)
-    }
     setExpositionSelected(exposition)
+    setIsExpositionSelectedUpdating(isSomeoneExposing() && isExposing(exposition.number))
+    
   }
 
   const onMinutaDiscard = ()=>{
@@ -79,13 +86,13 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
       expositionNumber: expositionSelected.number,
       minuta:minuta
     });
+
+    setExpositionSelected(null)
     let oradores = [...tema.oradores.pasados, tema.oradores.actual]
     let siguienteOrador = oradores[expositionSelected.number+1]
     if(isExpositionSelectedUpdating && siguienteOrador){
-      let selectObject = onSelectEventObject(siguienteOrador.nombre, siguienteOrador.instanciaDeHabla)
-      console.log(siguienteOrador,selectObject)
+      let selectObject = onSelectEventObject(siguienteOrador.usuario.nombre, siguienteOrador.instanciaDeHabla)
       setExpositionSelected(selectObject)
-      setIsExpositionSelectedUpdating(false)
     }
     
     
