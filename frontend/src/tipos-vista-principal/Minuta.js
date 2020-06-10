@@ -65,11 +65,11 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     setExpositionSelected(exposition)
   }
 
-  const onMinutaDiscard = ()=>{
+  const onSummaryDiscard = ()=>{
     setExpositionSelected(null)
   }
 
-  const onMinutaSave = (minuta)=>{
+  const onSummarySave = (minuta)=>{
     dispatchMinuta({
       tipo: tipoDeEventoOradores.MINUTEAR_A_ORADOR,
       expositionNumber: expositionSelected.index,
@@ -92,7 +92,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
 
       <SummaryCollapseContainer>
         <Collapse in={isRecapVisible}>
-          <SummaryWriter exposition={expositionSelected} onDiscard={onMinutaDiscard} onSave={onMinutaSave}/>
+          <SummaryWriter exposition={expositionSelected} onDiscard={onSummaryDiscard} onSave={onSummarySave}/>
         </Collapse>
       </SummaryCollapseContainer>
 

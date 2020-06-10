@@ -8,7 +8,7 @@ import {SummaryInput,
 
 export const SummaryWriter = ({exposition, onDiscard, onSave})=>{
 
-    let [minuta, setMinuta] = useState('')
+    let [summary, setSummary] = useState('')
 
     const TitleText = () => {
         if(exposition){
@@ -21,18 +21,18 @@ export const SummaryWriter = ({exposition, onDiscard, onSave})=>{
         return exposition==null
     }
 
-    const onDiscardMinuta = ()=>{
-        setMinuta('')
+    const onDiscardSummary = ()=>{
+        setSummary('')
         onDiscard()
     }
 
     return(
         <SummaryContainer key="container">
         <SummaryActionTitle  disabled={isButtonDisabled()}>{TitleText()}</SummaryActionTitle>
-        <SummaryInput value={minuta} onChange={(e)=>setMinuta(e.target.value)} disabled={isButtonDisabled()} rows={10}/>
+        <SummaryInput value={summary} onChange={(e)=>setSummary(e.target.value)} disabled={isButtonDisabled()} rows={10}/>
         <SummaryButtons>
-          <TextButton onClick={onDiscardMinuta} disabled={isButtonDisabled()}>Descartar cambios</TextButton>
-          <ThemedButton onClick={()=>onSave(minuta)} disabled={isButtonDisabled()}>Guardar</ThemedButton>
+          <TextButton onClick={onDiscardSummary} disabled={isButtonDisabled()}>Descartar cambios</TextButton>
+          <ThemedButton onClick={()=>onSave(summary)} disabled={isButtonDisabled()}>Guardar</ThemedButton>
         </SummaryButtons>
         </SummaryContainer>
     );
