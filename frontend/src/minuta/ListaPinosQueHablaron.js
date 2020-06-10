@@ -5,6 +5,13 @@ import {TiposReaccionAlHablar} from "../cola-de-participantes/TalkingReactions";
 import Button from "@material-ui/core/Button";
 import {ExpandMore, Timer} from "@material-ui/icons";
 
+export const onSelectEventObject = (speaker, expositionNumber)=>{
+  return  {
+    speaker:speaker,
+    number:expositionNumber,
+  }
+}
+
 export const cantidadReaccionesDelPino = (tipoReaccion,pino) => {
   return pino.reacciones[tipoReaccion].length;
 }
@@ -64,13 +71,6 @@ const FilaPino = (props) => <tr onClick={props.onClick}>
     <button>EDITAR</button>
   </td>
 </tr>;
-
-const onSelectEventObject = (speaker, expositionNumber)=>{
-  return  {
-    speaker:speaker,
-    number:expositionNumber,
-  }
-}
 
 const ListaPinosQueHablaron = ({oradores, onSelect}) => {
   let [ordenAscendiente, setOrdenAscendiente] = useState(true);

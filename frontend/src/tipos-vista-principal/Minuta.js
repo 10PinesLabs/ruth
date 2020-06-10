@@ -12,7 +12,7 @@ import InputResumen from "../minuta/InputResumen";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
 import {BotonParaAbrirResumen} from "../minuta/Minuta.styled";
-
+import {onSelectEventObject} from '../minuta/ListaPinosQueHablaron'
 
 const Minuta = ({ dispatch, tema, temaActivo }) => {
   let [lastKnowConclusion, setLastKnowConclusion] = useState(tema.conclusion);
@@ -20,7 +20,8 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
   let [isEditingConclusion, setIsEditingConclusion] = useState(false);
   let [expositionSelected, setExpositionSelected] = useState(null);
   let [isRecapVisible, setIsRecapCollapsed] = useState(false);
-
+  let [isExpositionSelectedUpdating, setIsExpositionSelectedUpdating] = useState(false)
+  
   const dispatchMinuta = (data) => {
     const evento = {
       autor: "MINUTEADOR",
@@ -62,6 +63,9 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
   }
 
   const onExpositionSelected = (exposition) => {
+    if(exposition.number===tema.oradores.actual.instanciaDeHabla){
+      setIsExpositionSelectedUpdating(true)
+    }
     setExpositionSelected(exposition)
   }
 
@@ -76,7 +80,14 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
       minuta:minuta
     });
     let oradores = [...tema.oradores.pasados, tema.oradores.actual]
-    console.log(oradores)
+    let siguienteOrador = oradores[expositionSelected.number+1]
+    if(isExpositionSelectedUpdating && siguienteOrador){
+      let selectObject = onSelectEventObject(siguienteOrador.nombre, siguienteOrador.instanciaDeHabla)
+      console.log(siguienteOrador,selectObject)
+      setExpositionSelected(selectObject)
+      setIsExpositionSelectedUpdating(false)
+    }
+    
     
   }
   const buttonText = () => (isRecapVisible ? 'CERRAR EDICION' : 'ABRIR EDICION');
