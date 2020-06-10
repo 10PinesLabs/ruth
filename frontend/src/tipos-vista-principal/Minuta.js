@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { tipoDeEvento } from "../store/conclusion";
 import { tipoDeEvento as tipoDeEventoOradores} from "../store/oradores";
 import { toast } from "react-toastify";
-import { Button, SecondaryButton} from "../components/Button.styled";
+import { Button, SecondaryButton } from "../components/Button.styled";
 import ListaPinosQueHablaron from "../minuta/ListaPinosQueHablaron";
 import { SummaryWriter } from "../minuta/SummaryWriter";
 import InputResumen from "../minuta/InputResumen";
@@ -82,7 +82,6 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     <VistaDelMedioContainer
       style={useSpring({ opacity: 1, from: { opacity: 0 } })}
     >
-    
       <BotonParaAbrirResumen
         variant="outlined"
         endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
