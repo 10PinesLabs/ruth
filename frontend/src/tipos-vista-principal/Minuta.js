@@ -72,6 +72,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
 
   const onExposicionSeleccionada = (exposicion) => {
     setExposicionSeleccionada(exposicion)
+    console.log(isSomeoneExposing() && isExposing(exposicion.index))
     setIsExpositionSelectedUpdating(isSomeoneExposing() && isExposing(exposicion.index))
     
   }
@@ -89,13 +90,14 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
 
     setExposicionSeleccionada(null)
     let oradores = [...tema.oradores.pasados, tema.oradores.actual]
-    let siguienteOrador = oradores[exposicionSeleccionada.number+1]
+    let siguienteOrador = oradores[exposicionSeleccionada.index+1]
+    debugger
     if(isExpositionSelectedUpdating && siguienteOrador){
       let selectObject = filaDeTabla(siguienteOrador.usuario.nombre, siguienteOrador.instanciaDeHabla)
       setExposicionSeleccionada(selectObject)
     }
     
-    
+
   }
   const buttonText = () => (isRecapVisible ? 'CERRAR EDICION' : 'ABRIR EDICION');
 
@@ -117,7 +119,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
         </Collapse>
       </ResumenOradorCollapseContainer>
 
-      <ListaPinosQueHablaron oradores={tema.oradores}  finTema={tema.fin} onSelect={(exposicion)=>onExposicionSeleccionada(exposicion)}/>
+      <ListaPinosQueHablaron oradores={tema.oradores}  finTema={tema.fin} pinoSeleccionado={exposicionSeleccionada} onSelect={(exposicion)=>onExposicionSeleccionada(exposicion)}/>
       <form>
         <textarea
           value={conclusion}
