@@ -14,6 +14,14 @@ class ClockContainer extends React.Component {
     }
   }
 
+  componentDidUpdate = (prevProps) => {
+    if (this.props !== prevProps) {
+      this.setState({
+        secondsElapsed: this.props.secondsElapsed,
+      });
+    }
+  }
+
   componentWillUnmount() {
     this.stopWatch();
   }

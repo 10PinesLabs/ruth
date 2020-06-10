@@ -63,8 +63,7 @@ const FilaPino = (props) => <tr>
   </td>
 </tr>;
 
-
-const ListaPinosQueHablaron = ({oradores}) => {
+const ListaPinosQueHablaron = ({oradores, finTema}) => {
   let [ordenAscendiente, setOrdenAscendiente] = useState(true);
 
   return (
@@ -82,7 +81,7 @@ const ListaPinosQueHablaron = ({oradores}) => {
       <TablaPinos>
         <FilaTitulos/>
         <tbody>
-          {(ordenAscendiente)? OradoresEnOrdenAscendiente({oradores}) : OradoresEnOrdenDescendiente({oradores})}
+          {(ordenAscendiente)? OradoresEnOrdenAscendiente({oradores, finTema}) : OradoresEnOrdenDescendiente({oradores, finTema})}
         </tbody>
       </TablaPinos>
     </>
@@ -106,8 +105,8 @@ const OradoresEnOrdenDescendiente = ({oradores, finTema}) => {
       /> : null];
 }
 
-const OradoresEnOrdenAscendiente = ({oradores}) => {
-  return OradoresEnOrdenDescendiente({oradores}).reverse();
+const OradoresEnOrdenAscendiente = ({oradores, finTema}) => {
+  return OradoresEnOrdenDescendiente({oradores, finTema}).reverse();
 }
 
 export default ListaPinosQueHablaron;
