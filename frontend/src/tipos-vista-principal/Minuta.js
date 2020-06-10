@@ -96,7 +96,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
         </Collapse>
       </SummaryCollapseContainer>
 
-      <ListaPinosQueHablaron oradores={tema.oradores} onSelect={(exposition)=>onExpositionSelected(exposition)}/>
+      <ListaPinosQueHablaron oradores={tema.oradores}  finTema={tema.fin} onSelect={(exposition)=>onExpositionSelected(exposition)}/>
       <form>
         <textarea
           value={conclusion}
