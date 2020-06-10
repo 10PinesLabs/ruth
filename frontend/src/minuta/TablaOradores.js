@@ -3,9 +3,10 @@ import FilaPinoHablando from "./FilaPinoHablando";
 import {TiposReaccionAlHablar} from "../cola-de-participantes/TalkingReactions";
 import {cantidadReaccionesDelPino} from "./ListaPinosQueHablaron";
 import {makeStyles, Paper, Table, TableHead, TableRow, TableBody} from "@material-ui/core";
-import {OrdenPinoDiv, StyledTableCell} from "./TablaOradores.styled";
+import {FlexVerticalCenterSpaceAround, StyledTableCell} from "./TablaOradores.styled";
 import {ExpandMore, ThumbDown, ThumbUp, Timer, Update} from "@material-ui/icons";
 import IconButton from "@material-ui/core/IconButton";
+import {colors} from "../styles/theme";
 
 export function TablaOradores({ oradores}) {
 
@@ -29,22 +30,34 @@ export function TablaOradores({ oradores}) {
         <TableHead>
           <TableRow>
             <StyledTableCell>
-              <OrdenPinoDiv>
+              <FlexVerticalCenterSpaceAround>
                 #
                 <IconButton
+                  style={{color: colors.viridian}}
                   variant="outlined"
-                  color="primary"
                   onClick={() => setOrdenAscendiente(!ordenAscendiente)}
                 >
                   {(ordenAscendiente) ? <Timer/> : <ExpandMore/>}
                 </IconButton>  
-              </OrdenPinoDiv>
+              </FlexVerticalCenterSpaceAround>
             </StyledTableCell>
             <StyledTableCell>Participante</StyledTableCell>
             <StyledTableCell>Tiempo</StyledTableCell>
-            <StyledTableCell><ThumbUp/></StyledTableCell>
-            <StyledTableCell><ThumbDown/></StyledTableCell>
-            <StyledTableCell><Update/></StyledTableCell>
+            <StyledTableCell>
+              <FlexVerticalCenterSpaceAround>
+                <ThumbUp/>
+              </FlexVerticalCenterSpaceAround>
+            </StyledTableCell>
+            <StyledTableCell>
+              <FlexVerticalCenterSpaceAround>
+                <ThumbDown/>
+              </FlexVerticalCenterSpaceAround>
+            </StyledTableCell>
+            <StyledTableCell>
+              <FlexVerticalCenterSpaceAround>
+                <Update/>
+              </FlexVerticalCenterSpaceAround>
+            </StyledTableCell>
             <StyledTableCell>Resumen de su exposición</StyledTableCell>
           </TableRow>
         </TableHead>
@@ -73,6 +86,7 @@ const OradoresEnOrdenDescendiente = ({oradores, nroPinoHighlighteado, setNroPino
       ? <FilaPinoHablando
         pino={oradores.actual}
         orden={oradores.pasados.length + 1}
+        seleccion = {[nroPinoHighlighteado,setNroPinoHighlighteado]}
       /> : null];
 }
 
@@ -91,9 +105,9 @@ const FilaPino = ({orden,tiempo,pino,seleccion}) => {
 
   const [pointerCursor, setPointerCursor] = useState(false);
   
-  const style = {
+  const rowStyle = {
       ...(nroDeOrdenSeleccionadoEnTabla === orden) ? 
-        {background: "#B0FFD5"} : 
+        {backgroundColor: "#B0FFD5"} : 
         {backgroundColor: "#F2F2F2"},
       ...(pointerCursor) ?
         {cursor: "pointer"}:
@@ -101,7 +115,7 @@ const FilaPino = ({orden,tiempo,pino,seleccion}) => {
   };
   
   return (<TableRow
-        style={style}
+        style={rowStyle}
         onMouseEnter={() => setPointerCursor(true)}
         onClick={onOrdenSeleccionado}
       >

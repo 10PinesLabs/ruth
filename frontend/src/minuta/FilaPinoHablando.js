@@ -6,12 +6,26 @@ import {OradorActualContainer, StyledTableCell} from "./TablaOradores.styled";
 import {RecordVoiceOver} from "@material-ui/icons";
 import {green} from "@material-ui/core/colors";
 import {TableRow} from "@material-ui/core";
+import {colors} from "../styles/theme";
 
 class FilaPinoHablando extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { secondsElapsed: Math.ceil(((Date.now()) - this.props.pino.inicio) / 1000) };
-  }
+  
+  state = {
+    secondsElapsed: Math.ceil(((Date.now()) - this.props.pino.inicio) / 1000),
+    pointerCursor: false
+  };
+  
+  nroDeOrdenSeleccionadoEnTabla = this.props.seleccion[0];
+  setNroDeOrdenSeleccionadoEnTabla = this.props.seleccion[1];
+
+  rowStyle = {
+      ...(this.nroDeOrdenSeleccionadoEnTabla === this.props.orden) ?
+        {backgroundColor: colors.primary} :
+        {backgroundColor: colors.background},
+      ...(this.state.pointerCursor) ?
+        {cursor: "pointer"}:
+        {cursor: "auto"}
+    };
 
   componentDidMount() {
     this.runWatch();
@@ -33,13 +47,18 @@ class FilaPinoHablando extends React.Component {
   }
 
   render() {
-    return (<TableRow>
+    return (<TableRow
+        style={this.rowStyle}
+        onMouseEnter={() => this.setState({pointerCursor: true})}
+        onMouseLeave={() => this.setState({pointerCursor: false})}
+        onClick={this.onOrdenSeleccionado}
+      >
         <StyledTableCell align={"center"}>
           {this.props.orden}
         </StyledTableCell>
         <StyledTableCell>
           <OradorActualContainer>
-            <RecordVoiceOver style={{ color: green[500], marginRight: "10px"}}/>
+            <RecordVoiceOver style={{ color: colors.viridian, marginRight: "10px"}}/>
             <strong>
               {this.props.pino.usuario.nombre}
             </strong>
@@ -61,6 +80,13 @@ class FilaPinoHablando extends React.Component {
         </StyledTableCell>
       </TableRow>
     );
+  }
+  onOrdenSeleccionado = () => {
+    if(this.nroDeOrdenSeleccionadoEnTabla === this.props.orden) {
+      this.setNroDeOrdenSeleccionadoEnTabla(0);
+    } else {
+      this.setNroDeOrdenSeleccionadoEnTabla(this.props.orden);
+    }
   }
 }
 
