@@ -6,7 +6,7 @@ import {tipoDeEvento} from "../store/conclusion";
 import {tipoDeEvento as tipoDeEventoOradores} from "../store/oradores";
 import {toast} from "react-toastify";
 import {Button, SecondaryButton} from "../components/Button.styled";
-import ListaPinosQueHablaron from "../minuta/ListaPinosQueHablaron";
+import TablaOradores from "../minuta/TablaOradores";
 import {CreadorDeResumenOrador} from "../minuta/CreadorDeResumenOrador";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
@@ -97,7 +97,7 @@ const Minuta = ({ dispatch, tema }) => {
         </Collapse>
       </ResumenOradorCollapseContainer>
 
-      <ListaPinosQueHablaron oradores={tema.oradores} finTema={tema.fin} onSelect={(exposicion)=> setExposicionSeleccionada(exposicion)}/>
+      <TablaOradores oradores={tema.oradores} finTema={tema.fin} pinoSeleccionado={exposicionSeleccionada} onSelect={setExposicionSeleccionada}/>
       <ConclusionForm>
         <ConclusionTitle>
           CONCLUSION
