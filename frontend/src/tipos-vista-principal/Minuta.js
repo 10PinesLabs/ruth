@@ -72,7 +72,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     dispatchMinuteador({
       tipo: tipoDeEventoOradores.RESUMIR_A_ORADOR,
       indexExposicion: exposicionSeleccionada.index,
-      resumen:resumen
+      resumen
     });
   }
   const buttonText = () => (isRecapVisible ? 'CERRAR EDICION' : 'ABRIR EDICION');
