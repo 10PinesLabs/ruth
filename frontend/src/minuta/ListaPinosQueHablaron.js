@@ -65,7 +65,7 @@ const FilaPino = (props) => <tr onClick={props.onClick}>
   </td>
 </tr>;
 
-const onSelectEventObject = (speaker, expositionNumber)=>{
+const pinoQueHablo = (speaker, expositionNumber)=>{
   return  {
     speaker:speaker,
     number:expositionNumber,
@@ -105,13 +105,13 @@ const OradoresEnOrdenDescendiente = ({oradores, onSelect}) => {
         orden={index + 1}
         tiempo={getMinutes(orador.fin - orador.inicio)}
         minuta={orador.minuta || "Sin resumen"}
-        onClick={()=>onSelect(onSelectEventObject(orador.usuario.nombre, index))}
+        onClick={()=>onSelect(pinoQueHablo(orador.usuario.nombre, index))}
       />),
     oradores.actual
       ? <FilaPinoHablando
         pino={oradores.actual}
         orden={oradores.pasados.length + 1}
-        onClick={(pino, index)=>onSelect(onSelectEventObject(oradores.actual.usuario.nombre, oradores.pasados.length))}
+        onClick={(pino, index)=>onSelect(pinoQueHablo(oradores.actual.usuario.nombre, oradores.pasados.length))}
       /> : null];
 }
 
