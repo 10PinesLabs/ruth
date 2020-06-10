@@ -39,6 +39,13 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     }
   });
 
+  useEffect(()=>{
+    let orador = tema.oradores.actual;
+    if(!exposicionSeleccionada && orador){
+      seleccionarExposicion(filaDeTabla(orador.usuario.nombre, orador.instanciaDeHabla))
+    } 
+  }, tema.oradores.actual)
+
   function actualizarConclusion() {
     if (!tema.id) {
       toast.error("No hay tema seleccionado");
@@ -70,7 +77,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     return idOfExposition==tema.oradores.actual.instanciaDeHabla
   }
 
-  const onExposicionSeleccionada = (exposicion) => {
+  const seleccionarExposicion = (exposicion) => {
     setExposicionSeleccionada(exposicion)
     console.log(isSomeoneExposing() && isExposing(exposicion.index))
     setIsExpositionSelectedUpdating(isSomeoneExposing() && isExposing(exposicion.index))
@@ -119,7 +126,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
         </Collapse>
       </ResumenOradorCollapseContainer>
 
-      <ListaPinosQueHablaron oradores={tema.oradores}  finTema={tema.fin} pinoSeleccionado={exposicionSeleccionada} onSelect={(exposicion)=>onExposicionSeleccionada(exposicion)}/>
+      <ListaPinosQueHablaron oradores={tema.oradores}  finTema={tema.fin} pinoSeleccionado={exposicionSeleccionada} onSelect={(exposicion)=>seleccionarExposicion(exposicion)}/>
       <form>
         <textarea
           value={conclusion}
