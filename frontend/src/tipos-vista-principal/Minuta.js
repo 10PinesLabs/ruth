@@ -11,14 +11,13 @@ import { CredorDeResumenOrador } from "../minuta/CredorDeResumenOrador";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
 import {BotonParaAbrirResumen, ResumenOradorCollapseContainer} from "../minuta/Minuta.styled";
-import styled from 'styled-components'
 import Collapse from '@material-ui/core/Collapse';
 
 const Minuta = ({ dispatch, tema, temaActivo }) => {
   let [lastKnowConclusion, setLastKnowConclusion] = useState(tema.conclusion);
   let [conclusion, setConclusion] = useState(tema.conclusion);
   let [isEditingConclusion, setIsEditingConclusion] = useState(false);
-  let [expositionSelected, setExpositionSelected] = useState(null);
+  let [exposicionSeleccionada, setExposicionSeleccionada] = useState(null);
   let [isRecapVisible, setIsRecapCollapsed] = useState(false);
 
   const dispatchMinuteador = (data) => {
@@ -61,18 +60,18 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     setIsEditingConclusion(true);
   }
 
-  const onExpositionSelected = (exposition) => {
-    setExpositionSelected(exposition)
+  const onExposicionSeleccionada = (exposicion) => {
+    setExposicionSeleccionada(exposicion)
   }
 
   const onDescartarResumen = ()=>{
-    setExpositionSelected(null)
+    setExposicionSeleccionada(null)
   }
 
   const onGuardarResumen = (resumen)=>{
     dispatchMinuteador({
       tipo: tipoDeEventoOradores.RESUMIR_A_ORADOR,
-      expositionNumber: expositionSelected.index,
+      indexExposicion: exposicionSeleccionada.index,
       resumen:resumen
     });
   }
@@ -92,11 +91,11 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
 
       <ResumenOradorCollapseContainer>
         <Collapse in={isRecapVisible}>
-          <CredorDeResumenOrador exposicion={expositionSelected} onDiscard={onDescartarResumen} onSave={onGuardarResumen}/>
+          <CredorDeResumenOrador exposicion={exposicionSeleccionada} onDiscard={onDescartarResumen} onSave={onGuardarResumen}/>
         </Collapse>
       </ResumenOradorCollapseContainer>
 
-      <ListaPinosQueHablaron oradores={tema.oradores}  finTema={tema.fin} onSelect={(exposition)=>onExpositionSelected(exposition)}/>
+      <ListaPinosQueHablaron oradores={tema.oradores}  finTema={tema.fin} onSelect={(exposicion)=>onExposicionSeleccionada(exposicion)}/>
       <form>
         <textarea
           value={conclusion}

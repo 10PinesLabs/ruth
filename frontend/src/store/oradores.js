@@ -126,8 +126,8 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
       break;
     }
     case tipoDeEvento.RESUMIR_A_ORADOR:{
-      if(draft.pasados.length>evento.expositionNumber){
-        draft.pasados[evento.expositionNumber].resumen = evento.resumen
+      if(draft.pasados.length>evento.indexExposicion){
+        draft.pasados[evento.indexExposicion].resumen = evento.resumen
       }else
       draft.actual.resumen = evento.resumen
     }

@@ -63,10 +63,10 @@ const FilaPino = (props) => <tr onClick={props.onClick}>
   </td>
 </tr>;
 
-const pinoQueHablo = (speaker, expositionNumber)=>{
+const pinoQueHablo = (speaker, indexExposicion)=>{
   return  {
     orador:speaker,
-    index:expositionNumber,
+    index:indexExposicion,
   }
 }
 
