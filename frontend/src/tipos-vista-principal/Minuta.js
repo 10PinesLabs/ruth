@@ -11,7 +11,7 @@ import { CreadorDeResumenOrador } from "../minuta/CreadorDeResumenOrador";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
 import {BotonParaAbrirResumen, ResumenOradorCollapseContainer} from "../minuta/Minuta.styled";
-import {pinoQueHablo as filaDeTabla} from '../minuta/ListaPinosQueHablaron'
+import {pinoQueHablo as exposicion} from '../minuta/ListaPinosQueHablaron'
 import Collapse from '@material-ui/core/Collapse';
 
 const Minuta = ({ dispatch, tema, temaActivo }) => {
@@ -42,7 +42,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
   useEffect(()=>{
     let orador = tema.oradores.actual;
     if(!exposicionSeleccionada && orador){
-      seleccionarExposicion(filaDeTabla(orador.usuario.nombre, orador.instanciaDeHabla))
+      seleccionarExposicion(exposicion(orador.usuario.nombre, orador.instanciaDeHabla))
     } 
   }, tema.oradores.actual)
 
@@ -100,7 +100,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     let siguienteOrador = oradores[exposicionSeleccionada.index+1]
     debugger
     if(isExpositionSelectedUpdating && siguienteOrador){
-      let selectObject = filaDeTabla(siguienteOrador.usuario.nombre, siguienteOrador.instanciaDeHabla)
+      let selectObject = exposicion(siguienteOrador.usuario.nombre, siguienteOrador.instanciaDeHabla)
       setExposicionSeleccionada(selectObject)
     }
     
