@@ -1,14 +1,14 @@
 import React, {useState} from "react";
-import FilaPinoHablando from "./FilaPinoHablando";
 import {TiposReaccionAlHablar} from "../cola-de-participantes/TalkingReactions";
 import {cantidadReaccionesDelPino} from "./ListaPinosQueHablaron";
 import {makeStyles, Paper, Table, TableHead, TableRow, TableBody} from "@material-ui/core";
-import {FlexVerticalCenterSpaceAround, StyledTableCell} from "./TablaOradores.styled";
-import {ExpandMore, ThumbDown, ThumbUp, Timer, Update} from "@material-ui/icons";
+import {FlexVerticalCenterSpaceAround, OradorActualContainer, StyledTableCell} from "./TablaOradores.styled";
+import {ExpandMore, RecordVoiceOver, ThumbDown, ThumbUp, Timer, Update} from "@material-ui/icons";
 import IconButton from "@material-ui/core/IconButton";
 import {colors} from "../styles/theme";
+import ClockContainer from "../clock/ClockContainer";
 
-export function TablaOradores({ oradores}) {
+export function TablaOradores({ oradores, finTema, onSelect}) {
 
   const [nroPinoHighlighteado, setNroPinoHighlighteado] = useState(0)
   const [ordenAscendiente, setOrdenAscendiente] = useState(true);
@@ -64,47 +64,55 @@ export function TablaOradores({ oradores}) {
         <TableBody>
           
           {(ordenAscendiente)? 
-            OradoresEnOrdenAscendiente({oradores,nroPinoHighlighteado,setNroPinoHighlighteado}): 
-            OradoresEnOrdenDescendiente({oradores,nroPinoHighlighteado,setNroPinoHighlighteado})}
-            
+            OradoresEnOrdenAscendiente({oradores,nroPinoHighlighteado,setNroPinoHighlighteado, finTema ,onSelect}): 
+            OradoresEnOrdenDescendiente({oradores,nroPinoHighlighteado,setNroPinoHighlighteado, finTema ,onSelect})}
         </TableBody>
       </Table>
     </Paper>
   </>;
 }
 
-const OradoresEnOrdenDescendiente = ({oradores, nroPinoHighlighteado, setNroPinoHighlighteado}) => {
+const OradoresEnOrdenDescendiente = ({oradores, nroPinoHighlighteado, setNroPinoHighlighteado, finTema, onSelect}) => {
   return [...oradores.pasados
-    .map((pino, index) =>
+    .map((orador, index) =>
       <FilaPino
-        pino={pino}
+        pino={orador}
         orden={index + 1}
-        tiempo={getMinutes(pino.fin - pino.inicio)}
+        tiempo={Math.ceil((orador.fin - orador.inicio) / 1000)}
         seleccion = {[nroPinoHighlighteado,setNroPinoHighlighteado]}
+        resumen={orador.resumen || "Sin resumen"}
+        onClick={()=>onSelect(pinoQueHablo(orador.usuario.nombre, index))}
       />),
     oradores.actual
-      ? <FilaPinoHablando
+      ? <FilaPino
         pino={oradores.actual}
         orden={oradores.pasados.length + 1}
+        onClick={(pino, index)=>onSelect(pinoQueHablo(oradores.actual.usuario.nombre, oradores.pasados.length))}
         seleccion = {[nroPinoHighlighteado,setNroPinoHighlighteado]}
+        tiempo={Math.ceil(((Date.parse(finTema) || Date.now()) - oradores.actual.inicio) / 1000)}
+        finTema={finTema}
+        isTalking={true}
       /> : null];
 }
 
-const OradoresEnOrdenAscendiente = ({oradores, nroPinoHighlighteado, setNroPinoHighlighteado}) => {
-  return OradoresEnOrdenDescendiente({oradores, nroPinoHighlighteado, setNroPinoHighlighteado}).reverse();
+const OradoresEnOrdenAscendiente = ({oradores, nroPinoHighlighteado, setNroPinoHighlighteado, finTema, onSelect}) => {
+  return OradoresEnOrdenDescendiente({oradores, nroPinoHighlighteado, setNroPinoHighlighteado, finTema, onSelect}).reverse();
 }
 
-function getMinutes(timestamp) {
-  const date = new Date(timestamp);
-  return `${date.getMinutes()}:${date.getSeconds()}`;
+const pinoQueHablo = (speaker, indexExposicion)=>{
+  return  {
+    orador:speaker,
+    index:indexExposicion,
+  }
 }
 
-const FilaPino = ({orden,tiempo,pino,seleccion}) => {
+const FilaPino = ({orden,tiempo,pino,seleccion,finTema, isTalking=false, onClick}) => {
   
   const [nroDeOrdenSeleccionadoEnTabla,setNroDeOrdenSeleccionadoEnTabla] = seleccion
 
   const [pointerCursor, setPointerCursor] = useState(false);
   
+  // todo fijarse si el hover de pointer cursor peude añadirse aca 
   const rowStyle = {
       ...(nroDeOrdenSeleccionadoEnTabla === orden) ? 
         {backgroundColor: "#B0FFD5"} : 
@@ -121,9 +129,20 @@ const FilaPino = ({orden,tiempo,pino,seleccion}) => {
       >
     <StyledTableCell align={"center"}>{orden}</StyledTableCell>
     <StyledTableCell>
-      <strong>{pino.usuario.nombre}</strong>
+        {(isTalking)?<>
+        <OradorActualContainer>
+          <RecordVoiceOver style={{ color: colors.viridian, marginRight: "10px"}}/>
+          <strong>
+            {pino.usuario.nombre}
+          </strong>
+        </OradorActualContainer>
+          </> : <strong>{pino.usuario.nombre}</strong>}
     </StyledTableCell>
-    <StyledTableCell align={"center"}>{tiempo}</StyledTableCell>
+    <StyledTableCell align={"center"}>
+      <ClockContainer
+        secondsElapsed={tiempo}
+        shouldBeRunning={pino.fin == null && finTema == null}/>
+    </StyledTableCell>
     <StyledTableCell
       align={"center"}>{cantidadReaccionesDelPino(TiposReaccionAlHablar.THUMBS_UP, pino)}</StyledTableCell>
     <StyledTableCell
@@ -131,7 +150,7 @@ const FilaPino = ({orden,tiempo,pino,seleccion}) => {
     <StyledTableCell
       align={"center"}>{cantidadReaccionesDelPino(TiposReaccionAlHablar.THUMBS_DOWN, pino)}</StyledTableCell>
     <StyledTableCell>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+      {pino.resumen}
     </StyledTableCell>
   </TableRow>)
 
@@ -141,6 +160,7 @@ const FilaPino = ({orden,tiempo,pino,seleccion}) => {
       setNroDeOrdenSeleccionadoEnTabla(0)
     } else {
       setNroDeOrdenSeleccionadoEnTabla(orden)
+      onClick(pinoQueHablo(pino,orden));
     }
   }
 };

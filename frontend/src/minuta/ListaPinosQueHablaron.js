@@ -6,13 +6,15 @@ export const cantidadReaccionesDelPino = (tipoReaccion,pino) => {
   return pino.reacciones[tipoReaccion].length;
 }
 
-const ListaPinosQueHablaron = ({oradores}) => {
+const ListaPinosQueHablaron = ({oradores, finTema, onSelect}) => {
   
   return (
     <>
       <TablaPinos>
         <TablaOradores
           oradores={oradores}
+          finTema={finTema}
+          onSelect={onSelect}
         />
       </TablaPinos>
     </>

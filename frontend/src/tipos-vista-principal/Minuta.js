@@ -1,16 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { VistaDelMedioContainer } from "./Resumen.styled";
-import { useSpring } from "react-spring";
-import { connect } from "react-redux";
-import { tipoDeEvento } from "../store/conclusion";
-import { tipoDeEvento as tipoDeEventoOradores} from "../store/oradores";
-import { toast } from "react-toastify";
-import { Button, SecondaryButton } from "../components/Button.styled";
+import React, {useEffect, useState} from "react";
+import {VistaDelMedioContainer} from "./Resumen.styled";
+import {useSpring} from "react-spring";
+import {connect} from "react-redux";
+import {tipoDeEvento} from "../store/conclusion";
+import {tipoDeEvento as tipoDeEventoOradores} from "../store/oradores";
+import {toast} from "react-toastify";
+import {Button, SecondaryButton} from "../components/Button.styled";
 import ListaPinosQueHablaron from "../minuta/ListaPinosQueHablaron";
-import { CreadorDeResumenOrador } from "../minuta/CreadorDeResumenOrador";
+import {CreadorDeResumenOrador} from "../minuta/CreadorDeResumenOrador";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
-import {BotonParaAbrirResumen, ConclusionForm, ConclusionTitle, ConclusionTextarea, ResumenOradorCollapseContainer} from "../minuta/Minuta.styled";
+import {
+  BotonParaAbrirResumen,
+  ConclusionForm,
+  ConclusionTextarea,
+  ConclusionTitle,
+  ResumenOradorCollapseContainer
+} from "../minuta/Minuta.styled";
 import Collapse from '@material-ui/core/Collapse';
 
 const Minuta = ({ dispatch, tema }) => {
@@ -60,10 +66,6 @@ const Minuta = ({ dispatch, tema }) => {
     setIsEditingConclusion(true);
   }
 
-  const onExposicionSeleccionada = (exposicion) => {
-    setExposicionSeleccionada(exposicion)
-  }
-
   const onDescartarResumen = ()=>{
     setExposicionSeleccionada(null)
   }
@@ -95,7 +97,7 @@ const Minuta = ({ dispatch, tema }) => {
         </Collapse>
       </ResumenOradorCollapseContainer>
 
-      <ListaPinosQueHablaron oradores={tema.oradores} finTema={tema.fin} onSelect={(exposicion)=>onExposicionSeleccionada(exposicion)}/>
+      <ListaPinosQueHablaron oradores={tema.oradores} finTema={tema.fin} onSelect={(exposicion)=> setExposicionSeleccionada(exposicion)}/>
       <ConclusionForm>
         <ConclusionTitle>
           CONCLUSION
