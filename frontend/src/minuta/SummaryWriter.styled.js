@@ -15,7 +15,7 @@ margin-top:15px;
 `
 
 export const SummaryActionTitle = styled.span`
-color: ${colors.black40};
+color: ${props => props.disabled ? colors.black40 : colors.black50};
 font-weight: 700;
 `
 

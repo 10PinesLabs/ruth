@@ -28,7 +28,7 @@ export const SummaryWriter = ({exposition, onDiscard, onSave})=>{
 
     return(
         <SummaryContainer key="container">
-        <SummaryActionTitle>{TitleText()}</SummaryActionTitle>
+        <SummaryActionTitle  disabled={isButtonDisabled()}>{TitleText()}</SummaryActionTitle>
         <SummaryInput value={minuta} onChange={(e)=>setMinuta(e.target.value)} disabled={isButtonDisabled()} rows={10}/>
         <SummaryButtons>
           <TextButton onClick={onDiscardMinuta} disabled={isButtonDisabled()}>Descartar cambios</TextButton>
