@@ -127,7 +127,6 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
     }
     case tipoDeEvento.MINUTEAR_A_ORADOR:{
       if(draft.pasados.length>evento.expositionNumber){
-        console.log(draft.pasados[evento.expositionNumber])
         draft.pasados[evento.expositionNumber].minuta = evento.minuta
       }else
       draft.actual.minuta = evento.minuta
