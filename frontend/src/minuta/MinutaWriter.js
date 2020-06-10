@@ -54,19 +54,19 @@ const ThemedButton = withStyles({
     
     })(Button);
 
-export const MinutaWriter = ({exposition, onDiscard, onSave})=>{
+export const MinutaWriter = ({exposicion, onDiscard, onSave})=>{
 
     let [minuta, setMinuta] = useState('')
 
     const TitleText = () => {
-        if(exposition){
-            return `Editar resumen de la exposicion #${exposition.number+1} de ${exposition.speaker}`
+        if(exposicion){
+            return `Editar resumen de la exposicion #${exposicion.number+1} de ${exposicion.speaker}`
         }
         return 'Elige un participante para poder editar tu resumen'
     }
 
     const isButtonDisabled = () => {
-        return exposition==null
+        return exposicion==null
     }
 
     const resetSummaryInput = () => {

@@ -9,7 +9,7 @@ export const tipoDeEvento = {
   KICKEAR: 'Kickear al que habla',
   REACCIONAR_A_ORADOR: 'ReaccionAOrador',
   DESREACCIONAR_A_ORADOR: 'DesreaccionAOrador',
-  MINUTEAR_A_ORADOR: 'Actualizar minuta de orador'
+  RESUMIR_A_ORADOR: 'Actualizar resumen de orador'
 };
 
 
@@ -125,12 +125,11 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
 
       break;
     }
-    case tipoDeEvento.MINUTEAR_A_ORADOR:{
-      if(draft.pasados.length>evento.expositionNumber){
-        console.log(draft.pasados[evento.expositionNumber])
-        draft.pasados[evento.expositionNumber].minuta = evento.minuta
+    case tipoDeEvento.RESUMIR_A_ORADOR:{
+      if(draft.pasados.length>evento.indexExposicion){
+        draft.pasados[evento.indexExposicion].resumen = evento.resumen
       }else
-      draft.actual.minuta = evento.minuta
+      draft.actual.resumen = evento.resumen
     }
 
 

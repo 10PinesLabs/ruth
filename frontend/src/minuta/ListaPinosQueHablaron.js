@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
 import {TablaPinos, FilaTitulosWrapper, Td, OrdenesTabla} from './Minuta.styled';
-import FilaPinoHablando from "./FilaPinoHablando";
 import {TiposReaccionAlHablar} from "../cola-de-participantes/TalkingReactions";
+import ClockContainer from "../clock/ClockContainer";
 import Button from "@material-ui/core/Button";
 import {ExpandMore, Timer} from "@material-ui/icons";
 
-export const onSelectEventObject = (speaker, expositionNumber)=>{
+export const pinoQueHablo = (speaker, indexExposicion)=>{
   return  {
-    speaker:speaker,
-    number:expositionNumber,
+    orador:speaker,
+    index:indexExposicion,
   }
 }
 
@@ -42,11 +42,6 @@ const FilaTitulos = () => {
   </FilaTitulosWrapper>;
 };
 
-function getMinutes(timestamp) {
-  const date = new Date(timestamp);
-  return `${date.getMinutes()}:${date.getSeconds()}`;
-}
-
 const FilaPino = (props) => <tr onClick={props.onClick}>
   <td>
     {props.orden}
@@ -55,7 +50,9 @@ const FilaPino = (props) => <tr onClick={props.onClick}>
     {props.pino.usuario.nombre}
   </Td>
   <Td>
-    {props.tiempo}
+    <ClockContainer
+      secondsElapsed={props.tiempo}
+      shouldBeRunning={props.pino.fin == null && props.finTema == null}/>
   </Td>
   <Td>
     {cantidadReaccionesDelPino(TiposReaccionAlHablar.THUMBS_UP,props.pino)}
@@ -67,14 +64,14 @@ const FilaPino = (props) => <tr onClick={props.onClick}>
     {cantidadReaccionesDelPino(TiposReaccionAlHablar.THUMBS_DOWN,props.pino)}
   </Td>
   <td>
-    <p>{props.minuta}</p>
+    <p>{props.resumen}</p>
     <button>EDITAR</button>
   </td>
 </tr>;
 
-const ListaPinosQueHablaron = ({oradores, onSelect}) => {
+const ListaPinosQueHablaron = ({oradores, finTema, onSelect}) => {
   let [ordenAscendiente, setOrdenAscendiente] = useState(true);
-  
+
   return (
     <>
       <OrdenesTabla>
@@ -90,33 +87,35 @@ const ListaPinosQueHablaron = ({oradores, onSelect}) => {
       <TablaPinos>
         <FilaTitulos/>
         <tbody>
-          {(ordenAscendiente)? OradoresEnOrdenAscendiente({oradores,onSelect}) : OradoresEnOrdenDescendiente({oradores,onSelect})}
+          {(ordenAscendiente)? OradoresEnOrdenAscendiente({oradores,finTema ,onSelect}) : OradoresEnOrdenDescendiente({oradores,finTema ,onSelect})}
         </tbody>
       </TablaPinos>
     </>
   );
 }
 
-const OradoresEnOrdenDescendiente = ({oradores, onSelect}) => {
+const OradoresEnOrdenDescendiente = ({oradores, finTema, onSelect}) => {
   return [...oradores.pasados
     .map((orador, index) =>
       <FilaPino
         pino={orador}
         orden={index + 1}
-        tiempo={getMinutes(orador.fin - orador.inicio)}
-        minuta={orador.minuta || "Sin resumen"}
-        onClick={()=>onSelect(onSelectEventObject(orador.usuario.nombre, index))}
+        tiempo={Math.ceil((orador.fin - orador.inicio) / 1000)}
+        resumen={orador.resumen || "Sin resumen"}
+        onClick={()=>onSelect(pinoQueHablo(orador.usuario.nombre, index))}
       />),
     oradores.actual
-      ? <FilaPinoHablando
+      ? <FilaPino
         pino={oradores.actual}
         orden={oradores.pasados.length + 1}
-        onClick={(pino, index)=>onSelect(onSelectEventObject(oradores.actual.usuario.nombre, oradores.pasados.length))}
+        onClick={(pino, index)=>onSelect(pinoQueHablo(oradores.actual.usuario.nombre, oradores.pasados.length))}
+        tiempo={Math.ceil(((Date.parse(finTema) || Date.now()) - oradores.actual.inicio) / 1000)}
+        finTema={finTema}
       /> : null];
 }
 
-const OradoresEnOrdenAscendiente = ({oradores, onSelect}) => {
-  return OradoresEnOrdenDescendiente({oradores, onSelect}).reverse();
+const OradoresEnOrdenAscendiente = (oradores, finTema, onSelect) => {
+  return OradoresEnOrdenDescendiente(oradores, finTema, onSelect).reverse();
 }
 
 export default ListaPinosQueHablaron;

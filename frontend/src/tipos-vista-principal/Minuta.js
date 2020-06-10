@@ -5,24 +5,24 @@ import { connect } from "react-redux";
 import { tipoDeEvento } from "../store/conclusion";
 import { tipoDeEvento as tipoDeEventoOradores} from "../store/oradores";
 import { toast } from "react-toastify";
-import { Button, SecondaryButton} from "../components/Button.styled";
+import { Button, SecondaryButton } from "../components/Button.styled";
 import ListaPinosQueHablaron from "../minuta/ListaPinosQueHablaron";
-import { MinutaWriter } from "../minuta/MinutaWriter";
-import InputResumen from "../minuta/InputResumen";
+import { CreadorDeResumenOrador } from "../minuta/CreadorDeResumenOrador";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
-import {BotonParaAbrirResumen} from "../minuta/Minuta.styled";
-import {onSelectEventObject} from '../minuta/ListaPinosQueHablaron'
+import {BotonParaAbrirResumen, ResumenOradorCollapseContainer} from "../minuta/Minuta.styled";
+import {pinoQueHablo as filaDeTabla} from '../minuta/ListaPinosQueHablaron'
+import Collapse from '@material-ui/core/Collapse';
 
 const Minuta = ({ dispatch, tema, temaActivo }) => {
   let [lastKnowConclusion, setLastKnowConclusion] = useState(tema.conclusion);
   let [conclusion, setConclusion] = useState(tema.conclusion);
   let [isEditingConclusion, setIsEditingConclusion] = useState(false);
-  let [expositionSelected, setExpositionSelected] = useState(null);
+  let [exposicionSeleccionada, setExposicionSeleccionada] = useState(null);
   let [isRecapVisible, setIsRecapCollapsed] = useState(false);
   let [isExpositionSelectedUpdating, setIsExpositionSelectedUpdating] = useState(false)
-  
-  const dispatchMinuta = (data) => {
+
+    const dispatchMinuteador = (data) => {
     const evento = {
       autor: "MINUTEADOR",
       idTema: tema.id,
@@ -46,7 +46,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
       return;
     }
     setIsEditingConclusion(false);
-    dispatchMinuta({
+    dispatchMinuteador({
       tipo: tipoDeEvento.GUARDAR_CONCLUSION,
       conclusion: conclusion,
     });
@@ -70,29 +70,29 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     return idOfExposition==tema.oradores.actual.instanciaDeHabla
   }
 
-  const onExpositionSelected = (exposition) => {
-    setExpositionSelected(exposition)
-    setIsExpositionSelectedUpdating(isSomeoneExposing() && isExposing(exposition.number))
+  const onExposicionSeleccionada = (exposicion) => {
+    setExposicionSeleccionada(exposicion)
+      (isSomeoneExposing() && isExposing(exposicion.index))
     
   }
 
-  const onMinutaDiscard = ()=>{
-    setExpositionSelected(null)
+  const onDescartarResumen = ()=>{
+    setExposicionSeleccionada(null)
   }
 
-  const onMinutaSave = (minuta)=>{
-    dispatchMinuta({
-      tipo: tipoDeEventoOradores.MINUTEAR_A_ORADOR,
-      expositionNumber: expositionSelected.number,
-      minuta:minuta
+  const onGuardarResumen = (resumen)=>{
+    dispatchMinuteador({
+      tipo: tipoDeEventoOradores.RESUMIR_A_ORADOR,
+      indexExposicion: exposicionSeleccionada.index,
+      resumen
     });
 
-    setExpositionSelected(null)
+    setExposicionSeleccionada(null)
     let oradores = [...tema.oradores.pasados, tema.oradores.actual]
-    let siguienteOrador = oradores[expositionSelected.number+1]
+    let siguienteOrador = oradores[exposicionSeleccionada.number+1]
     if(isExpositionSelectedUpdating && siguienteOrador){
-      let selectObject = onSelectEventObject(siguienteOrador.usuario.nombre, siguienteOrador.instanciaDeHabla)
-      setExpositionSelected(selectObject)
+      let selectObject = filaDeTabla(siguienteOrador.usuario.nombre, siguienteOrador.instanciaDeHabla)
+      setExposicionSeleccionada(selectObject)
     }
     
     
@@ -103,7 +103,6 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     <VistaDelMedioContainer
       style={useSpring({ opacity: 1, from: { opacity: 0 } })}
     >
-    
       <BotonParaAbrirResumen
         variant="outlined"
         endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
@@ -112,11 +111,13 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
         {buttonText()}
       </BotonParaAbrirResumen>
 
-      <InputResumen oradores={tema.oradores} isRecapVisible={isRecapVisible}>
-        <MinutaWriter exposition={expositionSelected} onDiscard={onMinutaDiscard} onSave={onMinutaSave}/>
-      </InputResumen>
+      <ResumenOradorCollapseContainer>
+        <Collapse in={isRecapVisible}>
+          <CreadorDeResumenOrador exposicion={exposicionSeleccionada} onDiscard={onDescartarResumen} onSave={onGuardarResumen}/>
+        </Collapse>
+      </ResumenOradorCollapseContainer>
 
-      <ListaPinosQueHablaron oradores={tema.oradores} onSelect={(exposition)=>onExpositionSelected(exposition)}/>
+      <ListaPinosQueHablaron oradores={tema.oradores}  finTema={tema.fin} onSelect={(exposicion)=>onExposicionSeleccionada(exposicion)}/>
       <form>
         <textarea
           value={conclusion}
