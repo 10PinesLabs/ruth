@@ -72,7 +72,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
   const onMinutaSave = (minuta)=>{
     dispatchMinuta({
       tipo: tipoDeEventoOradores.MINUTEAR_A_ORADOR,
-      expositionNumber: expositionSelected.number,
+      expositionNumber: expositionSelected.index,
       minuta:minuta
     });
   }

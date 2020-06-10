@@ -67,8 +67,8 @@ const FilaPino = (props) => <tr onClick={props.onClick}>
 
 const pinoQueHablo = (speaker, expositionNumber)=>{
   return  {
-    speaker:speaker,
-    number:expositionNumber,
+    orador:speaker,
+    index:expositionNumber,
   }
 }
 

@@ -12,7 +12,7 @@ export const SummaryWriter = ({exposition, onDiscard, onSave})=>{
 
     const TitleText = () => {
         if(exposition){
-            return `Editar resumen de la exposicion #${exposition.number+1} de ${exposition.speaker}`
+            return `Editar resumen de la exposicion #${exposition.index+1} de ${exposition.orador}`
         }
         return 'Elige un participante para poder editar tu resumen'
     }
