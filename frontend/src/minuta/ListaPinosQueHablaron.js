@@ -81,14 +81,14 @@ const ListaPinosQueHablaron = ({oradores, finTema}) => {
       <TablaPinos>
         <FilaTitulos/>
         <tbody>
-          {(ordenAscendiente)? OradoresEnOrdenAscendiente({oradores, finTema}) : OradoresEnOrdenDescendiente({oradores, finTema})}
+          {(ordenAscendiente)? OradoresEnOrdenAscendiente(oradores, finTema) : OradoresEnOrdenDescendiente(oradores, finTema)}
         </tbody>
       </TablaPinos>
     </>
   );
 }
 
-const OradoresEnOrdenDescendiente = ({oradores, finTema}) => {
+const OradoresEnOrdenDescendiente = (oradores, finTema) => {
   return [...oradores.pasados
     .map((pino, index) =>
       <FilaPino
@@ -105,8 +105,8 @@ const OradoresEnOrdenDescendiente = ({oradores, finTema}) => {
       /> : null];
 }
 
-const OradoresEnOrdenAscendiente = ({oradores, finTema}) => {
-  return OradoresEnOrdenDescendiente({oradores, finTema}).reverse();
+const OradoresEnOrdenAscendiente = (oradores, finTema) => {
+  return OradoresEnOrdenDescendiente(oradores, finTema).reverse();
 }
 
 export default ListaPinosQueHablaron;
