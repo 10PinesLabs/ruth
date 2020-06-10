@@ -20,7 +20,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
   let [isEditingConclusion, setIsEditingConclusion] = useState(false);
   let [exposicionSeleccionada, setExposicionSeleccionada] = useState(null);
   let [isRecapVisible, setIsRecapCollapsed] = useState(false);
-  let [isExpositionSelectedUpdating, setIsExpositionSelectedUpdating] = useState(false)
+  let [seActualizaExposicionSeleccionada, setActualizarExposicionSeleccionada] = useState(false)
 
     const dispatchMinuteador = (data) => {
     const evento = {
@@ -39,6 +39,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     }
   });
 
+  //handle Cambio orador
   useEffect(()=>{
     let orador = tema.oradores.actual;
     if(!exposicionSeleccionada && orador){
@@ -79,7 +80,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
 
   const seleccionarExposicion = (exposicion) => {
     setExposicionSeleccionada(exposicion)
-    setIsExpositionSelectedUpdating(hayAlguienExponiendo() && estaExponiendo(exposicion.index))
+    setActualizarExposicionSeleccionada(hayAlguienExponiendo() && estaExponiendo(exposicion.index))
     
   }
 
@@ -97,7 +98,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     setExposicionSeleccionada(null)
     let oradores = [...tema.oradores.pasados, tema.oradores.actual]
     let siguienteOrador = oradores[exposicionSeleccionada.index+1]
-    if(isExpositionSelectedUpdating && siguienteOrador){
+    if(seActualizaExposicionSeleccionada && siguienteOrador){
       let selectObject = exposicion(siguienteOrador.usuario.nombre, siguienteOrador.instanciaDeHabla)
       setExposicionSeleccionada(selectObject)
     }
