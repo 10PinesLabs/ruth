@@ -2,7 +2,7 @@ import React from 'react';
 import Clock from "../clock/Clock";
 import {TiposReaccionAlHablar} from "../cola-de-participantes/TalkingReactions";
 import {cantidadReaccionesDelPino} from "./ListaPinosQueHablaron";
-import {OradorActualContainer, StyledTableCell, StyledTableRow} from "./TablaOradores.styled";
+import {OradorActualContainer, StyledTableCell} from "./TablaOradores.styled";
 import {RecordVoiceOver} from "@material-ui/icons";
 import {green} from "@material-ui/core/colors";
 import {TableRow} from "@material-ui/core";

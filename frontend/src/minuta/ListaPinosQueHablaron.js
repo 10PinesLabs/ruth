@@ -11,7 +11,6 @@ const ListaPinosQueHablaron = ({oradores}) => {
   return (
     <>
       <TablaPinos>
-        
         <TablaOradores
           oradores={oradores}
         />

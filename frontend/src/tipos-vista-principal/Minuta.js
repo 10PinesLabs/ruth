@@ -12,7 +12,7 @@ import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
 import {BotonParaAbrirResumen, ConclusionForm, ConclusionTitle, ConclusionTextarea} from "../minuta/Minuta.styled";
 
 
-const Minuta = ({ dispatch, tema}) => {
+const Minuta = ({ dispatch, tema }) => {
   let [lastKnowConclusion, setLastKnowConclusion] = useState(tema.conclusion);
   let [conclusion, setConclusion] = useState(tema.conclusion);
   let [isEditingConclusion, setIsEditingConclusion] = useState(false);
@@ -76,11 +76,9 @@ const Minuta = ({ dispatch, tema}) => {
 
       <ListaPinosQueHablaron oradores={tema.oradores}/>
       <ConclusionForm>
-
         <ConclusionTitle>
             CONCLUSION
         </ConclusionTitle>
-        
         <ConclusionTextarea
           id={"conclusion"}
           value={conclusion}
@@ -99,9 +97,8 @@ const Minuta = ({ dispatch, tema}) => {
               Guardar
             </Button>
           </div>
-        ) : null}  
+        ) : null}
       </ConclusionForm>
-      
     </VistaDelMedioContainer>
   );
 };
