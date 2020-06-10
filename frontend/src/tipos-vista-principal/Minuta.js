@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 import { Button, SecondaryButton } from "../components/Button.styled";
 import ListaPinosQueHablaron from "../minuta/ListaPinosQueHablaron";
 import { SummaryWriter } from "../minuta/SummaryWriter";
-import InputResumen from "../minuta/InputResumen";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
 import {BotonParaAbrirResumen, SummaryCollapseContainer} from "../minuta/Minuta.styled";

@@ -1,58 +1,10 @@
 import React, { useState } from 'react';
-import styled from 'styled-components'
-import { withStyles } from '@material-ui/core/styles';
-import { colors, font} from '../styles/theme';
-import Button from '@material-ui/core/Button';
-
-const SummaryInput = styled.textarea`
-width:100%;
-resize:vertical;
-`
-
-const SummaryContainer = styled.div`
-display:flex;
-flex-direction: column;
-margin-top:15px;
-`
-
-const SummaryActionTitle = styled.span`
-color: ${colors.black40};
-font-weight: 700;
-`
-
-const SummaryButtons = styled.div`
-display:flex;
-width:100%;
-justify-content: space-between;
-margin-top: 15px;
-`
-
-const TextButton = withStyles({
-    root:{
-        color: colors.primary,
-        fontFamily: font.family,
-        fontWeight:600
-    },
-    label:{
-        textTransform:"none"    
-    }
-    })(Button);
-
-const ThemedButton = withStyles({
-    root:{
-        color: colors.white,
-        background:colors.primary,
-        fontFamily: font.family,
-        fontWeight:600,
-        '&:hover': {
-            background: colors.primaryConstrast,
-         },
-    },
-    label:{
-        textTransform:"none"    
-    },
-    
-    })(Button);
+import {SummaryInput,
+    SummaryContainer,
+    SummaryActionTitle,
+    SummaryButtons,
+    TextButton,
+    ThemedButton} from './SummaryWriter.styled'
 
 export const SummaryWriter = ({exposition, onDiscard, onSave})=>{
 
