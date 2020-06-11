@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {ResumenInput,
     ContenedorResumen,
     TituloDeResumen,
@@ -9,6 +9,10 @@ import {ResumenInput,
 export const ResumenOrador = ({exposicion, onDiscard, onSave})=>{
 
     let [resumen, setResumen] = useState('')
+
+    useEffect(()=>{
+        if(exposicion) setResumen(exposicion.resumen || "")
+    }, [exposicion])
 
     const TitleText = () => {
         if(exposicion){

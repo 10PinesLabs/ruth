@@ -6,13 +6,14 @@ import { tipoDeEvento } from "../store/conclusion";
 import { tipoDeEvento as tipoDeEventoOradores} from "../store/oradores";
 import { toast } from "react-toastify";
 import { Button, SecondaryButton } from "../components/Button.styled";
-import ListaPinosQueHablaron from "../minuta/ListaPinosQueHablaron";
-import { ResumenOrador } from "../minuta/ResumenOrador";
+import {pinoQueHablo as exposicion} from '../minuta/FilaPino'
+import TablaOradores from "../minuta/TablaOradores";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
-import {BotonParaAbrirResumen, ResumenOradorCollapseContainer} from "../minuta/Minuta.styled";
-import {pinoQueHablo as exposicion} from '../minuta/ListaPinosQueHablaron'
+import {BotonParaAbrirResumen, ResumenOradorCollapseContainer, ConclusionForm, ConclusionTextarea, ConclusionTitle} from "../minuta/Minuta.styled";
 import Collapse from '@material-ui/core/Collapse';
+import { ResumenOrador } from "../minuta/ResumenOrador";
+
 
 const Minuta = ({ dispatch, tema, temaActivo }) => {
   let [lastKnowConclusion, setLastKnowConclusion] = useState(tema.conclusion);
@@ -33,7 +34,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
 
 
   useEffect(() => {
-    if (!isEditingConclusion && tema.conclusion != lastKnowConclusion) {
+    if (!isEditingConclusion && tema.conclusion !== lastKnowConclusion) {
       setLastKnowConclusion(tema.conclusion);
       setConclusion(tema.conclusion);
     }
@@ -43,7 +44,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
   useEffect(()=>{
     let orador = tema.oradores.actual;
     if(!exposicionSeleccionada && orador){
-      seleccionarExposicion(exposicion(orador.usuario.nombre, orador.instanciaDeHabla))
+      seleccionarExposicion(exposicion(orador.usuario.nombre, orador.instanciaDeHabla, orador.resumen))
     } 
   }, tema.oradores.actual)
 
@@ -125,10 +126,15 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
         </Collapse>
       </ResumenOradorCollapseContainer>
 
-      <ListaPinosQueHablaron oradores={tema.oradores}  finTema={tema.fin} pinoSeleccionado={exposicionSeleccionada} onSelect={(exposicion)=>seleccionarExposicion(exposicion)}/>
-      <form>
-        <textarea
+      <TablaOradores oradores={tema.oradores}  finTema={tema.fin} pinoSeleccionado={exposicionSeleccionada} onSelect={seleccionarExposicion }/>
+      <ConclusionForm>
+        <ConclusionTitle>
+          CONCLUSION
+        </ConclusionTitle>
+        <ConclusionTextarea
           value={conclusion}
+          rows={6}
+          placeholder={"Aqui va la conclusión general del tema..."}
           onChange={(event) => {
             userChangedConclusionInput(event.target.value);
           }}
@@ -144,7 +150,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
             </Button>
           </div>
         ) : null}
-      </form>
+      </ConclusionForm>
     </VistaDelMedioContainer>
   );
 };
