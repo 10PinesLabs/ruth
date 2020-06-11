@@ -17,22 +17,22 @@ const pinoQueHablo = (orador, index) => {
   }
 }
 
-export const FilaPino = ({orden, tiempo, pino, finTema, isTalking = false, pinoSeleccionado, onSelect}) => {
+export const FilaPino = ({orden, tiempo, pino, isTalking = false, pinoSeleccionado, onSelect}) => {
 
-  const [pointerCursor, setPointerCursor] = useState(false);
+  const [isOverRow, setIsOverRow] = useState(false);
 
+  const esElPinoSeleccionado = pinoSeleccionado && pinoSeleccionado.index === orden - 1;
+  
   const rowStyle = {
-    ...pinoSeleccionado && pinoSeleccionado.index === orden - 1 ?
-      {backgroundColor: "#B0FFD5"} :
-      {backgroundColor: "#F2F2F2"},
-    ...(pointerCursor) ?
-      {cursor: "pointer"} :
-      {cursor: "auto"}
+    backgroundColor: esElPinoSeleccionado ? colors.primary : colors.background,
+    cursor: isOverRow ? 'pointer' : 'auto',
   };
+
+  const PinoNombre = () => <strong>{pino.usuario.nombre}</strong>;
 
   return (<TableRow
     style={rowStyle}
-    onMouseEnter={() => setPointerCursor(true)}
+    onMouseEnter={() => setIsOverRow(true)}
     onClick={onOrdenSeleccionado}
   >
     <StyledTableCell align={"center"}>{orden}</StyledTableCell>
@@ -40,16 +40,14 @@ export const FilaPino = ({orden, tiempo, pino, finTema, isTalking = false, pinoS
       {(isTalking) ? <>
         <OradorActualContainer>
           <RecordVoiceOver style={{color: colors.viridian, marginRight: "10px"}}/>
-          <strong>
-            {pino.usuario.nombre}
-          </strong>
+          <PinoNombre/>
         </OradorActualContainer>
-      </> : <strong>{pino.usuario.nombre}</strong>}
+      </> : <PinoNombre/>}
     </StyledTableCell>
     <StyledTableCell align={"center"}>
       <ClockContainer
         secondsElapsed={tiempo}
-        shouldBeRunning={pino.fin == null && finTema == null}/>
+        shouldBeRunning={isTalking}/>
     </StyledTableCell>
     <StyledTableCell
       align={"center"}>{cantidadReaccionesDelPino(TiposReaccionAlHablar.THUMBS_UP, pino)}</StyledTableCell>
@@ -61,7 +59,6 @@ export const FilaPino = ({orden, tiempo, pino, finTema, isTalking = false, pinoS
       {pino.resumen}
     </StyledTableCell>
   </TableRow>)
-
 
   function onOrdenSeleccionado() {
     onSelect(pinoQueHablo(pino.usuario.nombre, orden - 1));

@@ -1,33 +1,47 @@
 import {TableCell} from "@material-ui/core";
 import { withStyles} from '@material-ui/core/styles';
 import styled from "styled-components";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import React from "react";
+import {colors} from "../styles/theme";
+
+
+const fontSize = 14;
 
 export const StyledTableCell = withStyles(() => ({
   head: {
-    backgroundColor: "#d2d2d2",
+    backgroundColor: colors.black30,
     color: "#5c5c5c",
     fontWeight: "bold",
     padding: "5px 16px 5px 16px",
     fontFamily: "inherit",
-    fontSize: 14
+    fontSize
   },
   body: {
-    fontSize: 14,
+    fontSize,
     fontFamily: "inherit",
     padding: "5px",
     height: "40px",
     verticalAlign: "center",
-    paddingTop: "15px",
-    paddingBottom: "15px"
+    paddingTop: "1em",
+    paddingBottom: "1em"
   },
 }))(TableCell);
 
-export const OradorActualContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 157px;
-`;
+
+const useStyles = makeStyles(theme => ({
+  oradorActualContainer: {
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "center",
+    width: theme.spacing(20),
+  }
+}));
+
+export function OradorActualContainer({children}) {
+  const classes = useStyles();
+  return <div className={classes.oradorActualContainer}>{children}</div>;
+}
 
 export const FlexVerticalCenterSpaceAround = styled.div`
   display: flex;

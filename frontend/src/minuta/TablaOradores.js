@@ -7,9 +7,17 @@ import {colors} from "../styles/theme";
 import {ExpandMore, ThumbDown, ThumbUp, Timer, Update} from "@material-ui/icons";
 import {FilaPino} from "./FilaPino";
 
+function HeaderReaction({children}) {
+  return <StyledTableCell>
+    <FlexVerticalCenterSpaceAround>
+      {children}
+    </FlexVerticalCenterSpaceAround>
+  </StyledTableCell>;
+}
+
 export function TablaOradores({oradores, finTema, pinoSeleccionado, onSelect}) {
 
-  const [ordenAscendiente, setOrdenAscendiente] = useState(true);
+  const [ordenAscendente, setOrdenAscendiente] = useState(true);
 
   const classes = makeStyles(theme => ({
     root: {
@@ -22,32 +30,29 @@ export function TablaOradores({oradores, finTema, pinoSeleccionado, onSelect}) {
     },
   }))();
 
-  const OradoresEnOrdenDescendiente = ({oradores, finTema, pinoSeleccionado, onSelect}) => {
-    return [...oradores.pasados
-      .map((orador, index) =>
-        <FilaPino
+  const OradoresEnOrdenDescendiente = () => {
+    
+    return [...oradores.pasados].concat(oradores.actual || [])
+      .map((orador, index) => {
+
+        const isTalking = !orador.fin && !finTema;
+
+        const tiempo = (fin) => Math.ceil((fin - orador.inicio) / 1000);
+        
+        return <FilaPino
           pino={orador}
           orden={index + 1}
-          tiempo={Math.ceil((orador.fin - orador.inicio) / 1000)}
+          isTalking={isTalking}
+          tiempo={(isTalking)? tiempo(Date.parse(finTema) || Date.now()): tiempo(orador.fin)}
           pinoSeleccionado={pinoSeleccionado}
           onSelect={onSelect}
           resumen={orador.resumen || ""}
-        />),
-      oradores.actual
-        ? <FilaPino
-          pino={oradores.actual}
-          orden={oradores.pasados.length + 1}
-          pinoSeleccionado={pinoSeleccionado}
-          onSelect={onSelect}
-          tiempo={Math.ceil(((Date.parse(finTema) || Date.now()) - oradores.actual.inicio) / 1000)}
-          finTema={finTema}
-          isTalking={true}
-          resumen={oradores.resumen || ""}
-        /> : null];
+        />
+      })
   }
 
-  const OradoresEnOrdenAscendiente = ({oradores, pinoSeleccionado, finTema, onSelect}) => {
-    return OradoresEnOrdenDescendiente({oradores, pinoSeleccionado, finTema, onSelect}).reverse();
+  const OradoresEnOrdenAscendente = () => {
+    return OradoresEnOrdenDescendiente().reverse();
   }
 
   return (<>
@@ -56,42 +61,34 @@ export function TablaOradores({oradores, finTema, pinoSeleccionado, onSelect}) {
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
             <TableRow>
-              <StyledTableCell>
-                <FlexVerticalCenterSpaceAround>
+              <HeaderReaction>
                   #
                   <IconButton
                     style={{color: colors.viridian}}
                     variant="outlined"
-                    onClick={() => setOrdenAscendiente(!ordenAscendiente)}
+                    onClick={() => setOrdenAscendiente(!ordenAscendente)}
                   >
-                    {(ordenAscendiente) ? <Timer/> : <ExpandMore/>}
+                    {(ordenAscendente) ? <Timer/> : <ExpandMore/>}
                   </IconButton>
-                </FlexVerticalCenterSpaceAround>
-              </StyledTableCell>
+              </HeaderReaction>
               <StyledTableCell>Participante</StyledTableCell>
               <StyledTableCell>Tiempo</StyledTableCell>
-              <StyledTableCell>
-                <FlexVerticalCenterSpaceAround>
-                  <ThumbUp/>
-                </FlexVerticalCenterSpaceAround>
-              </StyledTableCell>
-              <StyledTableCell>
-                <FlexVerticalCenterSpaceAround>
-                  <ThumbDown/>
-                </FlexVerticalCenterSpaceAround>
-              </StyledTableCell>
-              <StyledTableCell>
-                <FlexVerticalCenterSpaceAround>
-                  <Update/>
-                </FlexVerticalCenterSpaceAround>
-              </StyledTableCell>
+              <HeaderReaction>    
+                <ThumbUp/>
+              </HeaderReaction>
+              <HeaderReaction>  
+                <ThumbDown/>
+              </HeaderReaction>
+              <HeaderReaction>
+                <Update/>  
+              </HeaderReaction>
               <StyledTableCell>Resumen de su exposición</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {(ordenAscendiente) ?
-              OradoresEnOrdenAscendiente({oradores, pinoSeleccionado, finTema, onSelect}) :
-              OradoresEnOrdenDescendiente({oradores, pinoSeleccionado, finTema, onSelect})}
+            {(ordenAscendente) ?
+              OradoresEnOrdenAscendente() :
+              OradoresEnOrdenDescendiente()}
           </TableBody>
         </Table>
       </Paper>

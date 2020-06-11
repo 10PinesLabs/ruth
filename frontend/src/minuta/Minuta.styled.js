@@ -1,33 +1,55 @@
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import { colors } from '../styles/theme';
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import React from "react";
 
-export const TablaPinos = styled.table`
-  width: 90%
-  align-self: flex-start
-  margin-left: 5%
-  margin-bottom: 10px
-  border-collapse: collapse
-  border-bottom: 2px solid rgba(0, 0, 0, 0.2)
-`;
+const useStyles = makeStyles(theme => ({
+  tablaPinos: {
+    width: "90%",
+    alignSelf: "flex-start",
+    marginLeft: "5%",
+    marginBottom: theme.spacing(1),
+    borderCollapse: "collapse",
+    borderBottom: "2px solid rgba(0, 0, 0, 0.2)"
+  },
+  conclusionTextarea: {
+    width: "100%",
+    marginBottom: theme.spacing(1)
+  },
+  conclusionForm: {
+    width: "80%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: theme.spacing(12)
+  },
+  conclusionTitle: {
+    alignSelf: "flex-start",
+    marginBlockEnd: 0  
+  }
+}));
 
-export const ConclusionTitle = styled.h1 `
-  align-self: flex-start;
-  margin-block-end: 0
-`
+export function TablaPinos(props) {
+  const classes = useStyles();
+  return <table className={classes.tablaPinos}>{props.children}</table>;
+}
 
-export const ConclusionTextarea = styled.textarea`
-  width: 100%;
-  margin-bottom: 10px;
-`
-export const ConclusionForm = styled.form `
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 100px;
-`
+export function ConclusionTextarea(props) {
+  const classes = useStyles();
+  return <textarea {...props} className={classes.conclusionTextarea}>{props.children}</textarea>;
+}
+
+export function ConclusionForm(props) {
+  const classes = useStyles();
+  return <form {...props} className={classes.conclusionForm}>{props.children}</form>;
+}
+
+export function ConclusionTitle(props) {
+  const classes = useStyles();
+  return <h1 {...props} className={classes.conclusionTitle}>{props.children}</h1>;
+}
 
 export const BotonParaAbrirResumen = styled(Button)`
   && { 
@@ -39,5 +61,5 @@ export const BotonParaAbrirResumen = styled(Button)`
 `;
 
 export const ResumenOradorCollapseContainer = styled.div`
-width:60%
+  width:60%
 `;
