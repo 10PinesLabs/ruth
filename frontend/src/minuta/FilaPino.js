@@ -10,10 +10,10 @@ export const cantidadReaccionesDelPino = (tipoReaccion, pino) => {
   return pino.reacciones[tipoReaccion].length;
 }
 
-const pinoQueHablo = (speaker, indexExposicion) => {
+const pinoQueHablo = (orador, index) => {
   return {
-    orador: speaker,
-    index: indexExposicion,
+    orador,
+    index
   }
 }
 
