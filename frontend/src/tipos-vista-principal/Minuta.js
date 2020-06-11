@@ -7,7 +7,7 @@ import { tipoDeEvento as tipoDeEventoOradores} from "../store/oradores";
 import { toast } from "react-toastify";
 import { Button, SecondaryButton } from "../components/Button.styled";
 import ListaPinosQueHablaron from "../minuta/ListaPinosQueHablaron";
-import { CreadorDeResumenOrador } from "../minuta/CreadorDeResumenOrador";
+import { ResumenOrador } from "../minuta/ResumenOrador";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
 import {BotonParaAbrirResumen, ResumenOradorCollapseContainer} from "../minuta/Minuta.styled";
@@ -121,7 +121,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
 
       <ResumenOradorCollapseContainer>
         <Collapse in={isRecapVisible}>
-          <CreadorDeResumenOrador exposicion={exposicionSeleccionada} onDiscard={onDescartarResumen} onSave={onGuardarResumen}/>
+          <ResumenOrador exposicion={exposicionSeleccionada} onDiscard={onDescartarResumen} onSave={onGuardarResumen}/>
         </Collapse>
       </ResumenOradorCollapseContainer>
 

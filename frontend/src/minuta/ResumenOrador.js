@@ -4,9 +4,9 @@ import {ResumenInput,
     TituloDeResumen,
     BotonesDeResumen,
     TextButton,
-    ThemedButton} from './CreadorDeResumenOrador.styled'
+    ThemedButton} from './ResumenOrador.styled'
 
-export const CreadorDeResumenOrador = ({exposicion, onDiscard, onSave})=>{
+export const ResumenOrador = ({exposicion, onDiscard, onSave})=>{
 
     let [resumen, setResumen] = useState('')
 
