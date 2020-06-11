@@ -6,11 +6,11 @@ import { tipoDeEvento } from "../store/conclusion";
 import { tipoDeEvento as tipoDeEventoOradores} from "../store/oradores";
 import { toast } from "react-toastify";
 import { Button, SecondaryButton } from "../components/Button.styled";
-import ListaPinosQueHablaron from "../minuta/ListaPinosQueHablaron";
+import TablaOradores from "../minuta/TablaOradores";
 import { CreadorDeResumenOrador } from "../minuta/CreadorDeResumenOrador";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
-import {BotonParaAbrirResumen, ResumenOradorCollapseContainer} from "../minuta/Minuta.styled";
+import {BotonParaAbrirResumen, ResumenOradorCollapseContainer, ConclusionForm, ConclusionTextarea, ConclusionTitle} from "../minuta/Minuta.styled";
 import Collapse from '@material-ui/core/Collapse';
 
 const Minuta = ({ dispatch, tema, temaActivo }) => {
@@ -31,7 +31,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
 
 
   useEffect(() => {
-    if (!isEditingConclusion && tema.conclusion != lastKnowConclusion) {
+    if (!isEditingConclusion && tema.conclusion !== lastKnowConclusion) {
       setLastKnowConclusion(tema.conclusion);
       setConclusion(tema.conclusion);
     }
@@ -58,10 +58,6 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
   function userChangedConclusionInput(inputValue) {
     setConclusion(inputValue);
     setIsEditingConclusion(true);
-  }
-
-  const onExposicionSeleccionada = (exposicion) => {
-    setExposicionSeleccionada(exposicion)
   }
 
   const onDescartarResumen = ()=>{
@@ -95,10 +91,15 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
         </Collapse>
       </ResumenOradorCollapseContainer>
 
-      <ListaPinosQueHablaron oradores={tema.oradores}  finTema={tema.fin} onSelect={(exposicion)=>onExposicionSeleccionada(exposicion)}/>
-      <form>
-        <textarea
+      <TablaOradores oradores={tema.oradores}  finTema={tema.fin} pinoSeleccionado={exposicionSeleccionada} onSelect={setExposicionSeleccionada}/>
+      <ConclusionForm>
+        <ConclusionTitle>
+          CONCLUSION
+        </ConclusionTitle>
+        <ConclusionTextarea
           value={conclusion}
+          rows={6}
+          placeholder={"Aqui va la conclusión general del tema..."}
           onChange={(event) => {
             userChangedConclusionInput(event.target.value);
           }}
@@ -114,7 +115,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
             </Button>
           </div>
         ) : null}
-      </form>
+      </ConclusionForm>
     </VistaDelMedioContainer>
   );
 };
