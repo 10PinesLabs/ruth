@@ -61,5 +61,5 @@ export const BotonParaAbrirResumen = styled(Button)`
 `;
 
 export const ResumenOradorCollapseContainer = styled.div`
-  width:60%
+width:60%
 `;
