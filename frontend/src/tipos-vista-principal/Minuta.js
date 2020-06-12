@@ -23,7 +23,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
   let [isRecapVisible, setIsRecapCollapsed] = useState(false);
   let [seActualizaExposicionSeleccionada, setActualizarExposicionSeleccionada] = useState(false)
 
-    const dispatchMinuteador = (data) => {
+   const dispatchMinuteador = (data) => {
     const evento = {
       autor: "MINUTEADOR",
       idTema: tema.id,
