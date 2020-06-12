@@ -18,6 +18,7 @@ class ChartBar extends React.Component {
     },
     scales: {
       xAxes: [{
+        display: false,
         ticks: {
           fontSize: 30,
         },

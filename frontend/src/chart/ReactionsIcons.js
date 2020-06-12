@@ -1,8 +1,7 @@
 import React from 'react'
 import { IconBox, IconContainer, IconList } from "./Chart.styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHashtag, faSync, faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
-import { colorForReaccion, reaccionesVisibles } from "../mobile/actions";
+import { faHashtag, faSync, faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 
 export const ReactionsIcons = () => (
   <IconList>
