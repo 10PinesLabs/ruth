@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import {colors} from '../styles/theme'
 
 
 export const ListaActionItemsContainer = styled.div`
@@ -13,9 +13,16 @@ margin: 20px;
 vertical-align: middle;
     `
 
-export const ActionItemDesciption = styled.div`
-display:inline;
-`
+export const ActionItemContainer = styled.div`
+display:flex;
+flex-direction: column;`
 
 export const Owner = styled.span`
-color:`
+margin: 3px;
+color:${colors.primary}
+font-weight: bold;`
+
+export const ActionItemDesciption = styled.div`
+display: block;
+width: 100%;
+`

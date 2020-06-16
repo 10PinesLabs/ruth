@@ -6,15 +6,20 @@ import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';
 
 
-import {ListaActionItemsContainer, Titulo, ActionItemDesciption} from '../minuta/ListaActionItems.styled'
+import {ListaActionItemsContainer,ActionItemDesciption, ActionItemContainer,Titulo, Owner} from '../minuta/ListaActionItems.styled'
 
 const actionItem = (descripcion, owners) =>{
     return (
         <>
         <ListItem>
-            <p>{descripcion}</p>
-            <br/>
-            <span>{"@" + owners[0]}</span>
+            <ActionItemContainer>
+            <ActionItemDesciption>{descripcion}</ActionItemDesciption>
+            <div>
+                <Owner>{"@" + owners[0]}</Owner>
+                <Owner>{"@" + owners[0]}</Owner>
+                <Owner>{"@" + owners[0]}</Owner>
+            </div>
+            </ActionItemContainer>
         </ListItem>
         </>
     )
@@ -41,7 +46,6 @@ export const ListaActionItems = () => {
     return (
         <ListaActionItemsContainer>
             <Titulo>Action Items (##)</Titulo>
-            <Button variant="outlined"> + Agregar Action Item</Button>
             <List alignItems="flex-start" component={Card}>
                 {actionItemsConDivisores(items)}
             </List>
