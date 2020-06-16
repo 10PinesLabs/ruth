@@ -12,7 +12,7 @@ export const BotonCancelar = styled(Button)`
     margin: 1vw;
   };
 `;
-export const BotonCrearActionItems = styled(Button)`
+export const BotonCrearActionItem = styled(Button)`
   && {
     background-color: ${colors.primary}
     margin: 1vw;
