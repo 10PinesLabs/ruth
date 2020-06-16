@@ -3,12 +3,11 @@ import { Button, Tabs } from '@material-ui/core';
 import { colors } from '../styles/theme';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import React from "react";
+import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles(theme => ({
   tablaPinos: {
-    width: "90%",
-    alignSelf: "flex-start",
-    marginLeft: "5%",
+    alignSelf: "center",
     marginBottom: theme.spacing(1),
     borderCollapse: "collapse",
     borderBottom: "2px solid rgba(0, 0, 0, 0.2)"
@@ -56,17 +55,34 @@ export const BotonParaAbrirResumen = styled(Button)`
     color: ${colors.primary};
     font-weight: bold;
     align-self: flex-start;
-    margin-left: 10%;
   }
 `;
 
-export const CustomTabs = styled(Tabs)`
-  
-  width: 90%;
-  margin-bottom: 20px;
-  
+export const TabsHeader = ({handleTabChange,value,children}) => (
+  <Box
+    borderRadius={"borderRadius"}
+    m={2}
+    width={"100%"}
+    boxShadow={2}
+  >
+    <CustomTabs
+      variant="fullWidth"
+      value={value}
+      onChange={handleTabChange}
+    >
+      {children}
+    </CustomTabs>
+  </Box>
+);
+
+
+
+const CustomTabs = styled(Tabs)`
+
   & .MuiTabs-flexContainer {
-    justify-content: space-around
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.2);
+    justify-content: space-around;
   };
   & .MuiTab-root {
     min-width: 300px;
