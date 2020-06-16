@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {Button, Tabs} from '@material-ui/core';
+import { Button, Tabs } from '@material-ui/core';
 import { colors } from '../styles/theme';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import React from "react";
