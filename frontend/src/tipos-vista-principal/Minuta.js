@@ -11,6 +11,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
 import {BotonParaAbrirResumen, ResumenOradorCollapseContainer, ConclusionForm, ConclusionTextarea, ConclusionTitle, TabContainer, TabsHeader, CustomTab} from "../minuta/Minuta.styled";
 import Collapse from '@material-ui/core/Collapse';
+import ActionItems from "../minuta/ActionItems";
 import { ResumenOrador } from "../minuta/ResumenOrador";
 
 const expositor = (nombreOrador, ordenDeOrador, resumen) => {
@@ -173,6 +174,7 @@ const Minuta = ({ dispatch, tema }) => {
               </div>
             ) : null}
           </ConclusionForm>
+          <ActionItems/>
         </TabContainer>
       </VistaMinutaContainer>
     </VistaDelMedioContainer>
