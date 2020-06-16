@@ -12,3 +12,10 @@ display:inline;
 margin: 20px;
 vertical-align: middle;
     `
+
+export const ActionItemDesciption = styled.div`
+display:inline;
+`
+
+export const Owner = styled.span`
+color:`
