@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button } from '@material-ui/core';
+import {Button, Tabs} from '@material-ui/core';
 import { colors } from '../styles/theme';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import React from "react";
@@ -59,6 +59,20 @@ export const BotonParaAbrirResumen = styled(Button)`
     margin-left: 10%;
   }
 `;
+
+export const CustomTabs = styled(Tabs)`
+  
+  width: 90%;
+  margin-bottom: 20px;
+  
+  & .MuiTabs-flexContainer{
+    justify-content: space-around
+  };
+  & .MuiTab-root{
+    min-width: 300px;
+    font-weight: bold;
+  }
+`
 
 export const ResumenOradorCollapseContainer = styled.div`
 width:60%

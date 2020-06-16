@@ -10,8 +10,16 @@ import TablaOradores from "../minuta/TablaOradores";
 import { CreadorDeResumenOrador } from "../minuta/CreadorDeResumenOrador";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
-import {BotonParaAbrirResumen, ResumenOradorCollapseContainer, ConclusionForm, ConclusionTextarea, ConclusionTitle} from "../minuta/Minuta.styled";
+import {
+  BotonParaAbrirResumen,
+  ResumenOradorCollapseContainer,
+  ConclusionForm,
+  ConclusionTextarea,
+  ConclusionTitle,
+  CustomTabs
+} from "../minuta/Minuta.styled";
 import Collapse from '@material-ui/core/Collapse';
+import Tab from "@material-ui/core/Tab";
 
 const Minuta = ({ dispatch, tema, temaActivo }) => {
   let [lastKnowConclusion, setLastKnowConclusion] = useState(tema.conclusion);
@@ -19,7 +27,12 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
   let [isEditingConclusion, setIsEditingConclusion] = useState(false);
   let [exposicionSeleccionada, setExposicionSeleccionada] = useState(null);
   let [isRecapVisible, setIsRecapCollapsed] = useState(false);
+  const [tabValue, setTabValue] = React.useState(0);
 
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+  };
+  
   const dispatchMinuteador = (data) => {
     const evento = {
       autor: "MINUTEADOR",
@@ -77,6 +90,16 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     <VistaDelMedioContainer
       style={useSpring({ opacity: 1, from: { opacity: 0 } })}
     >
+      <CustomTabs
+        value={tabValue}
+        onChange={handleTabChange}
+        indicatorColor="primary"
+        textColor="primary"
+      >
+        <Tab label="Minuta de cada pino" />
+        <Tab label="Anotaciones generales y action items" />
+      </CustomTabs>
+    
       <BotonParaAbrirResumen
         variant="outlined"
         endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
