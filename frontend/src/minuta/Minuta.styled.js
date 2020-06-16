@@ -65,12 +65,18 @@ export const CustomTabs = styled(Tabs)`
   width: 90%;
   margin-bottom: 20px;
   
-  & .MuiTabs-flexContainer{
+  & .MuiTabs-flexContainer {
     justify-content: space-around
   };
-  & .MuiTab-root{
+  & .MuiTab-root {
     min-width: 300px;
     font-weight: bold;
+  };
+  & .MuiTabs-indicator {
+    background-color:${colors.primary};
+  }
+  & .Mui-selected {
+    color: ${colors.primary};
   }
 `
 

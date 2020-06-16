@@ -93,8 +93,6 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
       <CustomTabs
         value={tabValue}
         onChange={handleTabChange}
-        indicatorColor="primary"
-        textColor="primary"
       >
         <Tab label="Minuta de cada pino" />
         <Tab label="Anotaciones generales y action items" />
