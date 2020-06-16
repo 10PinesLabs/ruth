@@ -1,8 +1,9 @@
 import React from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import Divider from '@material-ui/core/Divider';
-import {ListaActionItemsContainer} from '../minuta/ListaActionItems.styled'
+import Button from '@material-ui/core/Button';
+
+import {ListaActionItemsContainer, Titulo} from '../minuta/ListaActionItems.styled'
 
 const ActionItem = () =>{
     return (
@@ -18,14 +19,16 @@ export const ListaActionItems = () => {
 
     return (
         <ListaActionItemsContainer>
-        <span>Action items!</span>
-        <List alignItems="flex-start">
-            <ActionItem/>
-            <ActionItem/>
-            <ActionItem/>
-            <ActionItem/>
-        </List>
-
-        <ListaActionItemsContainer/>
+            <Titulo>Action Items</Titulo>
+            <Button variant="outlined"> + Agregar Action Item</Button>
+            <List alignItems="flex-start">
+                <ActionItem/>
+                <ActionItem/>
+                <ActionItem/>
+                <ActionItem/>
+            </List>
+            
+        </ListaActionItemsContainer>
+       
     )
 }
