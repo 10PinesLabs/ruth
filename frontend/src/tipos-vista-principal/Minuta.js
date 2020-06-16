@@ -7,8 +7,7 @@ import { tipoDeEvento as tipoDeEventoOradores} from "../store/oradores";
 import { toast } from "react-toastify";
 import { Button, SecondaryButton } from "../components/Button.styled";
 import TablaOradores from "../minuta/TablaOradores";
-import { CreadorDeResumenOrador } from "../minuta/CreadorDeResumenOrador";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";k
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
 import {
   BotonParaAbrirResumen,
@@ -94,7 +93,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
   }
 
   const estaExponiendo = (idOfExposition) => {
-    return idOfExposition==tema.oradores.actual.instanciaDeHabla
+    return idOfExposition===tema.oradores.actual.instanciaDeHabla
   }
 
   const seleccionarExposicion = (exposicion) => {
