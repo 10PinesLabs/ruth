@@ -7,11 +7,19 @@ import { tipoDeEvento as tipoDeEventoOradores} from "../store/oradores";
 import { toast } from "react-toastify";
 import { Button, SecondaryButton } from "../components/Button.styled";
 import TablaOradores from "../minuta/TablaOradores";
-import { CreadorDeResumenOrador } from "../minuta/CreadorDeResumenOrador";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
 import {BotonParaAbrirResumen, ResumenOradorCollapseContainer, ConclusionForm, ConclusionTextarea, ConclusionTitle} from "../minuta/Minuta.styled";
 import Collapse from '@material-ui/core/Collapse';
+import { ResumenOrador } from "../minuta/ResumenOrador";
+
+const expositor = (nombreOrador, ordenDeOrador, resumen) => {
+  return {
+    orador:nombreOrador,
+    index:ordenDeOrador,
+    resumen
+  }
+}
 
 const Minuta = ({ dispatch, tema, temaActivo }) => {
   let [lastKnowConclusion, setLastKnowConclusion] = useState(tema.conclusion);
@@ -19,8 +27,9 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
   let [isEditingConclusion, setIsEditingConclusion] = useState(false);
   let [exposicionSeleccionada, setExposicionSeleccionada] = useState(null);
   let [isRecapVisible, setIsRecapCollapsed] = useState(false);
+  let [seActualizaExposicionSeleccionada, setActualizarExposicionSeleccionada] = useState(false)
 
-  const dispatchMinuteador = (data) => {
+   const dispatchMinuteador = (data) => {
     const evento = {
       autor: "MINUTEADOR",
       idTema: tema.id,
@@ -36,6 +45,13 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
       setConclusion(tema.conclusion);
     }
   });
+
+  useEffect(()=>{
+    let orador = tema.oradores.actual;
+    if(!exposicionSeleccionada && orador){
+      seleccionarExposicion(expositor(orador.usuario.nombre, orador.instanciaDeHabla, orador.resumen))
+    } 
+  }, tema.oradores.actual)
 
   function actualizarConclusion() {
     if (!tema.id) {
@@ -60,6 +76,20 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     setIsEditingConclusion(true);
   }
 
+  const hayAlguienExponiendo = () =>{
+    return tema.oradores.actual;
+  }
+
+  const estaExponiendo = (idOfExposition) => {
+    return idOfExposition==tema.oradores.actual.instanciaDeHabla
+  }
+
+  const seleccionarExposicion = (exposicion) => {
+    setExposicionSeleccionada(exposicion)
+    setActualizarExposicionSeleccionada(hayAlguienExponiendo() && estaExponiendo(exposicion.index))
+    
+  }
+
   const onDescartarResumen = ()=>{
     setExposicionSeleccionada(null)
   }
@@ -70,6 +100,16 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
       indexExposicion: exposicionSeleccionada.index,
       resumen
     });
+
+    setExposicionSeleccionada(null)
+    let oradores = [...tema.oradores.pasados, tema.oradores.actual]
+    let siguienteOrador = oradores[exposicionSeleccionada.index+1]
+    if(seActualizaExposicionSeleccionada && siguienteOrador){
+      let selectObject = expositor(siguienteOrador.usuario.nombre, siguienteOrador.instanciaDeHabla)
+      setExposicionSeleccionada(selectObject)
+    }
+    
+
   }
   const buttonText = () => (isRecapVisible ? 'CERRAR EDICION' : 'ABRIR EDICION');
 
@@ -87,11 +127,11 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
 
       <ResumenOradorCollapseContainer>
         <Collapse in={isRecapVisible}>
-          <CreadorDeResumenOrador exposicion={exposicionSeleccionada} onDiscard={onDescartarResumen} onSave={onGuardarResumen}/>
+          <ResumenOrador exposicion={exposicionSeleccionada} onDiscard={onDescartarResumen} onSave={onGuardarResumen}/>
         </Collapse>
       </ResumenOradorCollapseContainer>
 
-      <TablaOradores oradores={tema.oradores}  finTema={tema.fin} pinoSeleccionado={exposicionSeleccionada} onSelect={setExposicionSeleccionada}/>
+      <TablaOradores oradores={tema.oradores}  finTema={tema.fin} pinoSeleccionado={exposicionSeleccionada} onSelect={seleccionarExposicion }/>
       <ConclusionForm>
         <ConclusionTitle>
           CONCLUSION
