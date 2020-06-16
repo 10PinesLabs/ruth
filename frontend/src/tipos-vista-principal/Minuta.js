@@ -19,7 +19,16 @@ import {
   CustomTabs, TabContainer
 } from "../minuta/Minuta.styled";
 import Collapse from '@material-ui/core/Collapse';
+import { ResumenOrador } from "../minuta/ResumenOrador";
 import Tab from "@material-ui/core/Tab";
+
+const expositor = (nombreOrador, ordenDeOrador, resumen) => {
+  return {
+    orador:nombreOrador,
+    index:ordenDeOrador,
+    resumen
+  }
+}
 
 const Minuta = ({ dispatch, tema, temaActivo }) => {
   let [lastKnowConclusion, setLastKnowConclusion] = useState(tema.conclusion);
@@ -28,10 +37,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
   let [exposicionSeleccionada, setExposicionSeleccionada] = useState(null);
   let [isRecapVisible, setIsRecapCollapsed] = useState(false);
   const [tabValue, setTabValue] = React.useState(0);
-
-  const handleTabChange = (event, newValue) => {
-    setTabValue(newValue);
-  };
+  let [seActualizaExposicionSeleccionada, setActualizarExposicionSeleccionada] = useState(false)
   
   const dispatchMinuteador = (data) => {
     const evento = {
@@ -41,14 +47,24 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     };
     dispatch(evento);
   };
-
-
+  
   useEffect(() => {
     if (!isEditingConclusion && tema.conclusion !== lastKnowConclusion) {
       setLastKnowConclusion(tema.conclusion);
       setConclusion(tema.conclusion);
     }
   });
+
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+  };
+  
+  useEffect(()=>{
+    let orador = tema.oradores.actual;
+    if(!exposicionSeleccionada && orador){
+      seleccionarExposicion(expositor(orador.usuario.nombre, orador.instanciaDeHabla, orador.resumen))
+    } 
+  }, tema.oradores.actual)
 
   function actualizarConclusion() {
     if (!tema.id) {
@@ -73,6 +89,20 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     setIsEditingConclusion(true);
   }
 
+  const hayAlguienExponiendo = () =>{
+    return tema.oradores.actual;
+  }
+
+  const estaExponiendo = (idOfExposition) => {
+    return idOfExposition==tema.oradores.actual.instanciaDeHabla
+  }
+
+  const seleccionarExposicion = (exposicion) => {
+    setExposicionSeleccionada(exposicion)
+    setActualizarExposicionSeleccionada(hayAlguienExponiendo() && estaExponiendo(exposicion.index))
+    
+  }
+
   const onDescartarResumen = ()=>{
     setExposicionSeleccionada(null)
   }
@@ -83,6 +113,16 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
       indexExposicion: exposicionSeleccionada.index,
       resumen
     });
+
+    setExposicionSeleccionada(null)
+    let oradores = [...tema.oradores.pasados, tema.oradores.actual]
+    let siguienteOrador = oradores[exposicionSeleccionada.index+1]
+    if(seActualizaExposicionSeleccionada && siguienteOrador){
+      let selectObject = expositor(siguienteOrador.usuario.nombre, siguienteOrador.instanciaDeHabla)
+      setExposicionSeleccionada(selectObject)
+    }
+    
+
   }
   const buttonText = () => (isRecapVisible ? 'CERRAR EDICION' : 'ABRIR EDICION');
 
@@ -110,25 +150,25 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
           {buttonText()}
         </BotonParaAbrirResumen>
 
-        <ResumenOradorCollapseContainer>
-          <Collapse in={isRecapVisible}>
-            <CreadorDeResumenOrador exposicion={exposicionSeleccionada} onDiscard={onDescartarResumen} onSave={onGuardarResumen}/>
-          </Collapse>
-        </ResumenOradorCollapseContainer>
+      <ResumenOradorCollapseContainer>
+        <Collapse in={isRecapVisible}>
+          <ResumenOrador exposicion={exposicionSeleccionada} onDiscard={onDescartarResumen} onSave={onGuardarResumen}/>
+        </Collapse>
+      </ResumenOradorCollapseContainer>
 
-        <TablaOradores oradores={tema.oradores}  finTema={tema.fin} pinoSeleccionado={exposicionSeleccionada} onSelect={setExposicionSeleccionada}/>
-        <ConclusionForm>
-          <ConclusionTitle>
-            CONCLUSION
-          </ConclusionTitle>
-          <ConclusionTextarea
-            value={conclusion}
-            rows={6}
-            placeholder={"Aqui va la conclusión general del tema..."}
-            onChange={(event) => {
-              userChangedConclusionInput(event.target.value);
-            }}
-          />
+      <TablaOradores oradores={tema.oradores}  finTema={tema.fin} pinoSeleccionado={exposicionSeleccionada} onSelect={seleccionarExposicion }/>
+      <ConclusionForm>
+        <ConclusionTitle>
+          CONCLUSION
+        </ConclusionTitle>
+        <ConclusionTextarea
+          value={conclusion}
+          rows={6}
+          placeholder={"Aqui va la conclusión general del tema..."}
+          onChange={(event) => {
+            userChangedConclusionInput(event.target.value);
+          }}
+        />
 
           {isEditingConclusion ? (
             <div>

@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {ResumenInput,
     ContenedorResumen,
     TituloDeResumen,
     BotonesDeResumen,
     TextButton,
-    ThemedButton} from './CreadorDeResumenOrador.styled'
+    ThemedButton} from './ResumenOrador.styled'
 
-export const CreadorDeResumenOrador = ({exposicion, onDiscard, onSave})=>{
+export const ResumenOrador = ({exposicion, onDiscard, onSave})=>{
 
     let [resumen, setResumen] = useState('')
+
+    useEffect(()=>{
+        if(exposicion) setResumen(exposicion.resumen || "")
+    }, [exposicion])
 
     const TitleText = () => {
         if(exposicion){
@@ -22,8 +26,13 @@ export const CreadorDeResumenOrador = ({exposicion, onDiscard, onSave})=>{
     }
 
     const onDiscardSummary = ()=>{
-        setResumen('')
         onDiscard()
+        setResumen('')
+    }
+
+    const onGuardarResumen = ()=>{
+        onSave(resumen)
+        setResumen('')
     }
 
     return(
@@ -32,7 +41,7 @@ export const CreadorDeResumenOrador = ({exposicion, onDiscard, onSave})=>{
             <ResumenInput value={resumen} onChange={(e)=>setResumen(e.target.value)} disabled={isButtonDisabled()} rows={10}/>
             <BotonesDeResumen>
             <TextButton onClick={onDiscardSummary} disabled={isButtonDisabled()}>Descartar cambios</TextButton>
-            <ThemedButton onClick={()=>onSave(resumen)} disabled={isButtonDisabled()}>Guardar</ThemedButton>
+            <ThemedButton onClick={onGuardarResumen} disabled={isButtonDisabled()}>Guardar</ThemedButton>
             </BotonesDeResumen>
         </ContenedorResumen>
     );
