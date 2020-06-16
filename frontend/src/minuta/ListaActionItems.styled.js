@@ -8,10 +8,10 @@ width:80%
 color:black`
 
 export const Titulo = styled.h2`
-display:inline;
-margin: 20px;
+display:block;
+margin: 10px;
 vertical-align: middle;
-    `
+margin-bottom:10px  `
 
 export const ActionItemContainer = styled.div`
 display:flex;
