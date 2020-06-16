@@ -6,7 +6,6 @@ import { tipoDeEvento } from "../store/conclusion";
 import { tipoDeEvento as tipoDeEventoOradores} from "../store/oradores";
 import { toast } from "react-toastify";
 import { Button, SecondaryButton } from "../components/Button.styled";
-import {pinoQueHablo as exposicion} from '../minuta/FilaPino'
 import TablaOradores from "../minuta/TablaOradores";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
@@ -14,6 +13,13 @@ import {BotonParaAbrirResumen, ResumenOradorCollapseContainer, ConclusionForm, C
 import Collapse from '@material-ui/core/Collapse';
 import { ResumenOrador } from "../minuta/ResumenOrador";
 
+const expositor = (nombreOrador, ordenDeOrador, resumen) => {
+  return {
+    orador:nombreOrador,
+    index:ordenDeOrador,
+    resumen
+  }
+}
 
 const Minuta = ({ dispatch, tema, temaActivo }) => {
   let [lastKnowConclusion, setLastKnowConclusion] = useState(tema.conclusion);
@@ -40,11 +46,10 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     }
   });
 
-  //handle Cambio orador
   useEffect(()=>{
     let orador = tema.oradores.actual;
     if(!exposicionSeleccionada && orador){
-      seleccionarExposicion(exposicion(orador.usuario.nombre, orador.instanciaDeHabla, orador.resumen))
+      seleccionarExposicion(expositor(orador.usuario.nombre, orador.instanciaDeHabla, orador.resumen))
     } 
   }, tema.oradores.actual)
 
@@ -100,7 +105,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     let oradores = [...tema.oradores.pasados, tema.oradores.actual]
     let siguienteOrador = oradores[exposicionSeleccionada.index+1]
     if(seActualizaExposicionSeleccionada && siguienteOrador){
-      let selectObject = exposicion(siguienteOrador.usuario.nombre, siguienteOrador.instanciaDeHabla)
+      let selectObject = expositor(siguienteOrador.usuario.nombre, siguienteOrador.instanciaDeHabla)
       setExposicionSeleccionada(selectObject)
     }
     

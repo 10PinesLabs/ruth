@@ -10,7 +10,7 @@ export const cantidadReaccionesDelPino = (tipoReaccion, pino) => {
   return pino.reacciones[tipoReaccion].length;
 }
 
-export const pinoQueHablo = (orador, index, resumen) => {
+const pinoQueHablo = (orador, index, resumen) => {
   return {
     orador,
     index,
