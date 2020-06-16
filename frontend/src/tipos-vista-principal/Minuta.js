@@ -16,7 +16,7 @@ import {
   ConclusionForm,
   ConclusionTextarea,
   ConclusionTitle,
-  CustomTabs
+  CustomTabs, TabContainer
 } from "../minuta/Minuta.styled";
 import Collapse from '@material-ui/core/Collapse';
 import Tab from "@material-ui/core/Tab";
@@ -97,46 +97,51 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
         <Tab label="Minuta de cada pino" />
         <Tab label="Anotaciones generales y action items" />
       </CustomTabs>
-    
-      <BotonParaAbrirResumen
-        variant="outlined"
-        endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
-        onClick={() => setIsRecapCollapsed(!isRecapVisible)}
+      
+      <TabContainer
+        value={tabValue}  
+        index={0}
       >
-        {buttonText()}
-      </BotonParaAbrirResumen>
+        <BotonParaAbrirResumen
+          variant="outlined"
+          endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
+          onClick={() => setIsRecapCollapsed(!isRecapVisible)}
+        >
+          {buttonText()}
+        </BotonParaAbrirResumen>
 
-      <ResumenOradorCollapseContainer>
-        <Collapse in={isRecapVisible}>
-          <CreadorDeResumenOrador exposicion={exposicionSeleccionada} onDiscard={onDescartarResumen} onSave={onGuardarResumen}/>
-        </Collapse>
-      </ResumenOradorCollapseContainer>
+        <ResumenOradorCollapseContainer>
+          <Collapse in={isRecapVisible}>
+            <CreadorDeResumenOrador exposicion={exposicionSeleccionada} onDiscard={onDescartarResumen} onSave={onGuardarResumen}/>
+          </Collapse>
+        </ResumenOradorCollapseContainer>
 
-      <TablaOradores oradores={tema.oradores}  finTema={tema.fin} pinoSeleccionado={exposicionSeleccionada} onSelect={setExposicionSeleccionada}/>
-      <ConclusionForm>
-        <ConclusionTitle>
-          CONCLUSION
-        </ConclusionTitle>
-        <ConclusionTextarea
-          value={conclusion}
-          rows={6}
-          placeholder={"Aqui va la conclusión general del tema..."}
-          onChange={(event) => {
-            userChangedConclusionInput(event.target.value);
-          }}
-        />
+        <TablaOradores oradores={tema.oradores}  finTema={tema.fin} pinoSeleccionado={exposicionSeleccionada} onSelect={setExposicionSeleccionada}/>
+        <ConclusionForm>
+          <ConclusionTitle>
+            CONCLUSION
+          </ConclusionTitle>
+          <ConclusionTextarea
+            value={conclusion}
+            rows={6}
+            placeholder={"Aqui va la conclusión general del tema..."}
+            onChange={(event) => {
+              userChangedConclusionInput(event.target.value);
+            }}
+          />
 
-        {isEditingConclusion ? (
-          <div>
-            <SecondaryButton type="button" onClick={() => resetearConclusion()}>
-              Borrar
-            </SecondaryButton>
-            <Button type="button" onClick={() => actualizarConclusion()}>
-              Guardar
-            </Button>
-          </div>
-        ) : null}
-      </ConclusionForm>
+          {isEditingConclusion ? (
+            <div>
+              <SecondaryButton type="button" onClick={() => resetearConclusion()}>
+                Borrar
+              </SecondaryButton>
+              <Button type="button" onClick={() => actualizarConclusion()}>
+                Guardar
+              </Button>
+            </div>
+          ) : null}
+        </ConclusionForm>
+      </TabContainer>
     </VistaDelMedioContainer>
   );
 };

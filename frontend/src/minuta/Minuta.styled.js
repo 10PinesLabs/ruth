@@ -83,3 +83,10 @@ export const CustomTabs = styled(Tabs)`
 export const ResumenOradorCollapseContainer = styled.div`
 width:60%
 `;
+
+export const TabContainer =  styled.div(({value,index}) => `
+  display: ${(value === index)? "flex": "none"};
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+`);
