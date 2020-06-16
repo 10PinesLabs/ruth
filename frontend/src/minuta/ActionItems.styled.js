@@ -3,7 +3,7 @@ import { Button, Container, TextField } from '@material-ui/core';
 import { colors } from '../styles/theme';
 
 export const ContenedorEdicionActionItem = styled(Container)`
-  background-color: ${colors.black10};
+  background-color: #C7F0E6;
   display: flex;
   flex-direction: column;
 `;
@@ -29,8 +29,11 @@ export const ContenedorInputActionItem = styled(Container)`
 `;
 export const InputActionItem = styled(TextField)`
   & label.Mui-focused{
-    border-bottom-color: red;
     color: ${colors.primary};
+  };
+  
+  & .MuiInput-underline::after{
+    border-bottom: 2px solid ${colors.primary};
   };
 `;
 export const ContenedorBotonesActionItem = styled(Container)`
