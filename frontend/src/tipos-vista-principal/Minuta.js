@@ -157,7 +157,7 @@ const Minuta = ({ dispatch, tema }) => {
         ) : null}
       </ConclusionForm>
 
-      <ActionItems/>
+      <ActionItems tema={tema} dispatch={dispatch}/>
     </VistaDelMedioContainer>
   );
 };
