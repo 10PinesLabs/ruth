@@ -1,7 +1,6 @@
 import React from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';
 
@@ -22,15 +21,15 @@ const actionItem = (descripcion, owners) =>{
             <ActionItemContainer>
             <ActionItemDesciption>{descripcion}</ActionItemDesciption>
             <div>
-                <Owner>{"@" + owners[0]}</Owner>
-                <Owner>{"@" + owners[0]}</Owner>
-                <Owner>{"@" + owners[0]}</Owner>
+              { owners.map((owner) => <Owner>{"@" + owner}</Owner> ) }
             </div>
             </ActionItemContainer>
         </ListItem>
         </>
     )
 }
+
+
 
 const actionItemsConDivisores = (actionItems) => {
     const itemsConDivisores = []

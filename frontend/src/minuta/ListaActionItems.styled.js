@@ -4,7 +4,6 @@ import {colors} from '../styles/theme'
 
 
 export const ListaActionItemsContainer = styled.div`
-width:80%
 color:black`
 
 export const Titulo = styled.h2`
