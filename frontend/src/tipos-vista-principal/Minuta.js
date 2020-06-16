@@ -12,6 +12,7 @@ import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
 import {BotonParaAbrirResumen, ResumenOradorCollapseContainer, ConclusionForm, ConclusionTextarea, ConclusionTitle} from "../minuta/Minuta.styled";
 import Collapse from '@material-ui/core/Collapse';
 import { ResumenOrador } from "../minuta/ResumenOrador";
+import {ListaActionItems} from "../minuta/ListaActionItems"
 
 const expositor = (nombreOrador, ordenDeOrador, resumen) => {
   return {
@@ -155,6 +156,7 @@ const Minuta = ({ dispatch, tema }) => {
           </div>
         ) : null}
       </ConclusionForm>
+      <ListaActionItems></ListaActionItems>
     </VistaDelMedioContainer>
   );
 };
