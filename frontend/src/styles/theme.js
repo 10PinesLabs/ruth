@@ -25,6 +25,12 @@ export const colors = {
   viridian: '#448475',
   downy: '#68c9b2',
   white: '#FFFFFF',
+  thumbsUp: '#68A1EA',
+  thumbsDown: '#FFB3BA',
+  slack: '#FFDFBA',
+  roundUp: '#68C9B2',
+  defaultInactiveBackground: '#E6E6E6',
+  defaultActiveBackground: '#72B572',
 };
 
 export const variables = {
