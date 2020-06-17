@@ -22,16 +22,16 @@ const expositor = (nombreOrador, ordenDeOrador, resumen) => {
   }
 }
 
-const Minuta = ({ dispatch, tema, temaActivo }) => {
-  let [lastKnowConclusion, setLastKnowConclusion] = useState(tema.conclusion);
+const Minuta = ({ dispatch, tema }) => {
   let [conclusion, setConclusion] = useState(tema.conclusion);
-  let [isEditingConclusion, setIsEditingConclusion] = useState(false);
+  let [estaEditandoConclusion, setEstaEditandoConclusion] = useState(false);
   let [exposicionSeleccionada, setExposicionSeleccionada] = useState(null);
   let [isRecapVisible, setIsRecapCollapsed] = useState(false);
   let [tabValue, setTabValue] = useState(0);
   let [seActualizaExposicionSeleccionada, setActualizarExposicionSeleccionada] = useState(false)
+  let [isResumenOradorCerrado, setIsResumenOradorCerrado] = useState(false);
 
-   const dispatchMinuteador = (data) => {
+  const crearEventoDeMinuteador = (data) => {
     const evento = {
       autor: "MINUTEADOR",
       idTema: tema.id,
@@ -40,18 +40,18 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     dispatch(evento);
   };
 
-
+  //encargarse de actualizacion conclusion
   useEffect(() => {
-    if (!isEditingConclusion && tema.conclusion !== lastKnowConclusion) {
-      setLastKnowConclusion(tema.conclusion);
+    if (!estaEditandoConclusion) {
       setConclusion(tema.conclusion);
     }
-  });
+  },[tema.conclusion]);
 
   const manejarCambioTab = (event, newValue) => {
     setTabValue(newValue);
   };
   
+  //encargarse de cambio de orador
   useEffect(()=>{
     let orador = tema.oradores.actual;
     if(!exposicionSeleccionada && orador){
@@ -65,8 +65,8 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
       setConclusion('')
       return;
     }
-    setIsEditingConclusion(false);
-    dispatchMinuteador({
+    setEstaEditandoConclusion(false);
+    crearEventoDeMinuteador({
       tipo: tipoDeEvento.GUARDAR_CONCLUSION,
       conclusion: conclusion,
     });
@@ -74,20 +74,20 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
 
   function resetearConclusion() {
     setConclusion(tema.conclusion);
-    setIsEditingConclusion(false);
+    setEstaEditandoConclusion(false);
   }
 
-  function userChangedConclusionInput(inputValue) {
-    setConclusion(inputValue);
-    setIsEditingConclusion(true);
+  function handleCambioInputConclusion(input) {
+    setConclusion(input);
+    setEstaEditandoConclusion(true);
   }
 
   const hayAlguienExponiendo = () =>{
     return tema.oradores.actual;
   }
 
-  const estaExponiendo = (idOfExposition) => {
-    return idOfExposition===tema.oradores.actual.instanciaDeHabla
+  const estaExponiendo = (instanciaDeHabla) => {
+    return instanciaDeHabla===tema.oradores.actual.instanciaDeHabla
   }
 
   const seleccionarExposicion = (exposicion) => {
@@ -101,7 +101,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
   }
 
   const onGuardarResumen = (resumen)=>{
-    dispatchMinuteador({
+    crearEventoDeMinuteador({
       tipo: tipoDeEventoOradores.RESUMIR_A_ORADOR,
       indexExposicion: exposicionSeleccionada.index,
       resumen
@@ -117,7 +117,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
     
 
   }
-  const buttonText = () => (isRecapVisible ? 'CERRAR EDICION' : 'ABRIR EDICION');
+  const textoBotonEdicion = () => (isResumenOradorCerrado ? 'CERRAR EDICION' : 'ABRIR EDICION');
 
   return (
     <VistaDelMedioContainer
@@ -139,13 +139,13 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
           <BotonParaAbrirResumen
             variant="outlined"
             endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
-            onClick={() => setIsRecapCollapsed(!isRecapVisible)}
+            onClick={() => setIsResumenOradorCerrado(!isResumenOradorCerrado)}
           >
-            {buttonText()}
+            {textoBotonEdicion()}
           </BotonParaAbrirResumen>
     
           <ResumenOradorCollapseContainer>
-            <Collapse in={isRecapVisible}>
+            <Collapse in={isResumenOradorCerrado}>
               <ResumenOrador exposicion={exposicionSeleccionada} onDiscard={onDescartarResumen} onSave={onGuardarResumen}/>
             </Collapse>
           </ResumenOradorCollapseContainer>
@@ -160,11 +160,11 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
               rows={6}
               placeholder={"Aqui va la conclusión general del tema..."}
               onChange={(event) => {
-                userChangedConclusionInput(event.target.value);
+                handleCambioInputConclusion(event.target.value);
               }}
             />
     
-            {isEditingConclusion ? (
+            {estaEditandoConclusion ? (
               <div>
                 <SecondaryButton type="button" onClick={() => resetearConclusion()}>
                   Borrar
