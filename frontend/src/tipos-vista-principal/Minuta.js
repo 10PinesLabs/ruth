@@ -28,7 +28,7 @@ const Minuta = ({ dispatch, tema, temaActivo }) => {
   let [isEditingConclusion, setIsEditingConclusion] = useState(false);
   let [exposicionSeleccionada, setExposicionSeleccionada] = useState(null);
   let [isRecapVisible, setIsRecapCollapsed] = useState(false);
-  const [tabValue, setTabValue] = React.useState(0);
+  let [tabValue, setTabValue] = useState(0);
   let [seActualizaExposicionSeleccionada, setActualizarExposicionSeleccionada] = useState(false)
 
    const dispatchMinuteador = (data) => {
