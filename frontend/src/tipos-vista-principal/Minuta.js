@@ -9,16 +9,7 @@ import { Button, SecondaryButton } from "../components/Button.styled";
 import TablaOradores from "../minuta/TablaOradores";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
-import {
-  BotonParaAbrirResumen,
-  ResumenOradorCollapseContainer,
-  ConclusionForm,
-  ConclusionTextarea,
-  ConclusionTitle,
-  CustomTabs,
-  TabContainer,
-  TabsHeader
-} from "../minuta/Minuta.styled";
+import {BotonParaAbrirResumen, ResumenOradorCollapseContainer, ConclusionForm, ConclusionTextarea, ConclusionTitle, TabContainer, TabsHeader} from "../minuta/Minuta.styled";
 import Collapse from '@material-ui/core/Collapse';
 import { ResumenOrador } from "../minuta/ResumenOrador";
 import Tab from "@material-ui/core/Tab";
