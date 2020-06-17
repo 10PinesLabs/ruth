@@ -176,7 +176,7 @@ const Vista = ({
       </TopSectionContainer>
       <ParticipantsContainer>
         <ParticipantsCard
-          sePuedeReaccionar={true}
+          sePuedeReaccionar={process.env.REACT_APP_MINUTA_PERMITIDA == 'true'}
           usuario={usuario}
           interactive
           isParticipantTalking
