@@ -8,17 +8,15 @@ export const IconList = styled.div`
   display: flex;
   justify-content: center;
   align-items:center;
+  width: 50%
 `;
 
 export const IconBox = styled.div`
   display: flex;
   padding: 10px 0;
   align-items: center;
-  border-radius: 10px;
-  background-color: #AFAFAF;
-  border: 2px solid gray;
   justify-content: space-evenly;
-  width: 15%;
+  width: 25%;
 `;
 
 export const IconContainer = styled.div(({backgroundColor}) => `

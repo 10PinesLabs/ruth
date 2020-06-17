@@ -1,5 +1,5 @@
 import React from 'react';
-import { Coso, GraphsContainer, SubDebateContainer } from "../debate-handler/Debate.styled";
+import {Coso, GraphsContainer, ReactionsContainer, SubDebateContainer} from "../debate-handler/Debate.styled";
 import ParticipantsQueue from "../cola-de-participantes/ParticipantsQueue";
 import ChartBar from "../chart/chartBar";
 import ChartLine from "../chart/chartLine";
@@ -24,7 +24,10 @@ const Debate = ({tema}) => {
           <ChartLine data={debateData.dataLine} inicioTema={tema.inicio}/>
           <ChartBar data={debateData.dataBar}/>
         </GraphsContainer>
-        <ReactionsIcons/>
+        <ReactionsContainer>
+          <ReactionsIcons/>
+          <ReactionsIcons/>
+        </ReactionsContainer>
       </Coso>
       <ParticipantsQueue participants={debateData.participants} finTema={tema.fin}/>
     </SubDebateContainer>

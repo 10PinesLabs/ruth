@@ -23,3 +23,8 @@ export const GraphsContainer = styled.div`
     align-items: center;
     justify-content: space-between;
 `;
+
+export const ReactionsContainer = styled.div`  
+    display: flex;
+    justify-content: space-around;
+`
