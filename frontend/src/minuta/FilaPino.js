@@ -10,10 +10,11 @@ export const cantidadReaccionesDelPino = (tipoReaccion, pino) => {
   return pino.reacciones[tipoReaccion].length;
 }
 
-const pinoQueHablo = (orador, index) => {
+const pinoQueHablo = (orador, index, resumen) => {
   return {
     orador,
-    index
+    index,
+    resumen
   }
 }
 
@@ -61,6 +62,6 @@ export const FilaPino = ({orden, tiempo, pino, isTalking = false, pinoSelecciona
   </TableRow>)
 
   function onOrdenSeleccionado() {
-    onSelect(pinoQueHablo(pino.usuario.nombre, orden - 1));
+    onSelect(pinoQueHablo(pino.usuario.nombre, orden - 1, pino.resumen));
   }
 };
