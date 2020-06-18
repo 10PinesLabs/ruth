@@ -31,6 +31,7 @@ const Minuta = ({ dispatch, tema }) => {
   let [conclusion, setConclusion] = useState(tema.conclusion);
   let [estaEditandoConclusion, setEstaEditandoConclusion] = useState(false);
   let [exposicionSeleccionada, setExposicionSeleccionada] = useState(null);
+  let [tabValue, setTabValue] = useState(0);
   let [seActualizaExposicionSeleccionada, setActualizarExposicionSeleccionada] = useState(false)
   let [isResumenOradorCerrado, setIsResumenOradorCerrado] = useState(false);
 
@@ -50,6 +51,10 @@ const Minuta = ({ dispatch, tema }) => {
     }
   },[tema.conclusion]);
 
+  const manejarCambioTab = (event, newValue) => {
+    setTabValue(newValue);
+  };
+  
   //encargarse de cambio de orador
   useEffect(()=>{
     let orador = tema.oradores.actual;
@@ -86,7 +91,7 @@ const Minuta = ({ dispatch, tema }) => {
   }
 
   const estaExponiendo = (instanciaDeHabla) => {
-    return instanciaDeHabla==tema.oradores.actual.instanciaDeHabla
+    return instanciaDeHabla===tema.oradores.actual.instanciaDeHabla
   }
 
   const seleccionarExposicion = (exposicion) => {
