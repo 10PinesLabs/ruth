@@ -32,6 +32,7 @@ import { reactionTypes } from '../store/reacciones';
 import { SkeletonCircle, SkeletonLine, ReactionSkeletonContainer } from '../skeleton/Skeleton.styled';
 import { reacciones } from './actions';
 import { faSlack } from '@fortawesome/free-brands-svg-icons';
+import { colors } from '../../src/styles/theme.js'
 
 const logoImage = 'https://res-4.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_'
   + '256,f_auto,q_auto:eco/wuhk5weer0fkhmh2oyhv';
@@ -101,16 +102,20 @@ const Vista = ({
         <ReactionButton
           isBig isActive={thumbsUp}
           isDisabled={thumbsDown} icon={faThumbsUp}
+          activeBackground={colors.thumbsUp}
           onClick={() => handleReaction(reacciones.THUMBS_UP, thumbsUp)}/>
         <ReactionButton
           isBig isActive={thumbsDown}
           isDisabled={thumbsUp} icon={faThumbsDown}
+          activeBackground={colors.thumbsDown}
           onClick={() => handleReaction(reacciones.THUMBS_DOWN, thumbsDown)}/>
         <ReactionButton
+          activeBackground={colors.slack}
           isBig isActive={slack} icon={faSlack}
           onClick={() => handleReaction(reacciones.SLACK, slack)}/>
         <ReactionButton
           isBig isActive={redondear} icon={faSync}
+          activeBackground={colors.roundUp}
           onClick={() => handleReaction(reacciones.REDONDEAR, redondear)}/>
       </ReactionsContainer>
     );
