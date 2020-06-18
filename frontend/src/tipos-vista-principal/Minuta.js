@@ -11,6 +11,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
 import {BotonParaAbrirResumen, ResumenOradorCollapseContainer, ConclusionForm, ConclusionTextarea, ConclusionTitle, TabContainer, TabsHeader, CustomTab} from "../minuta/Minuta.styled";
 import Collapse from '@material-ui/core/Collapse';
+import ActionItems from "../minuta/ActionItems";
 import { ResumenOrador } from "../minuta/ResumenOrador";
 import {ListaActionItems} from "../minuta/ListaActionItems"
 
@@ -26,7 +27,6 @@ const Minuta = ({ dispatch, tema }) => {
   let [conclusion, setConclusion] = useState(tema.conclusion);
   let [estaEditandoConclusion, setEstaEditandoConclusion] = useState(false);
   let [exposicionSeleccionada, setExposicionSeleccionada] = useState(null);
-  let [tabValue, setTabValue] = useState(0);
   let [seActualizaExposicionSeleccionada, setActualizarExposicionSeleccionada] = useState(false)
   let [isResumenOradorCerrado, setIsResumenOradorCerrado] = useState(false);
 
@@ -55,7 +55,7 @@ const Minuta = ({ dispatch, tema }) => {
     let orador = tema.oradores.actual;
     if(!exposicionSeleccionada && orador){
       seleccionarExposicion(expositor(orador.usuario.nombre, orador.instanciaDeHabla, orador.resumen))
-    } 
+    }
   }, tema.oradores.actual)
 
   function actualizarConclusion() {
@@ -92,7 +92,7 @@ const Minuta = ({ dispatch, tema }) => {
   const seleccionarExposicion = (exposicion) => {
     setExposicionSeleccionada(exposicion)
     setActualizarExposicionSeleccionada(hayAlguienExponiendo() && estaExponiendo(exposicion.index))
-    
+
   }
 
   const onDescartarResumen = ()=>{
@@ -113,7 +113,7 @@ const Minuta = ({ dispatch, tema }) => {
       let selectObject = expositor(siguienteOrador.usuario.nombre, siguienteOrador.instanciaDeHabla)
       setExposicionSeleccionada(selectObject)
     }
-    
+
 
   }
   const textoBotonEdicion = () => (isResumenOradorCerrado ? 'CERRAR EDICION' : 'ABRIR EDICION');
@@ -174,6 +174,7 @@ const Minuta = ({ dispatch, tema }) => {
               </div>
             ) : null}
           </ConclusionForm>
+          <ActionItems tema={tema} dispatch={dispatch}/>
           <ListaActionItems/>
         </TabContainer>
       </VistaMinutaContainer>
