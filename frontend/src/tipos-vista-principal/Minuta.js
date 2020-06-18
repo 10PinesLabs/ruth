@@ -4,6 +4,7 @@ import { useSpring } from "react-spring";
 import { connect } from "react-redux";
 import { tipoDeEvento } from "../store/conclusion";
 import { tipoDeEvento as tipoDeEventoOradores} from "../store/oradores";
+import { tipoDeEvento as tipoDeEventoActionItem} from "../store/actionItem";
 import { toast } from "react-toastify";
 import { Button, SecondaryButton } from "../components/Button.styled";
 import TablaOradores from "../minuta/TablaOradores";
@@ -11,6 +12,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
 import {BotonParaAbrirResumen, ResumenOradorCollapseContainer, ConclusionForm, ConclusionTextarea, ConclusionTitle, TabContainer, TabsHeader, CustomTab} from "../minuta/Minuta.styled";
 import Collapse from '@material-ui/core/Collapse';
+import ActionItems from "../minuta/ActionItems";
 import { ResumenOrador } from "../minuta/ResumenOrador";
 
 const expositor = (nombreOrador, ordenDeOrador, resumen) => {
@@ -115,8 +117,15 @@ const Minuta = ({ dispatch, tema }) => {
     
 
   }
-  const textoBotonEdicion = () => (isResumenOradorCerrado ? 'CERRAR EDICION' : 'ABRIR EDICION');
 
+  const agregarActionItem = (actionItem) => {
+    crearEventoDeMinuteador({
+      tipo: tipoDeEventoActionItem.AGREGAR_ACTION_ITEM,
+      actionItem,
+    })
+  };
+
+  const textoBotonEdicion = () => (isResumenOradorCerrado ? 'CERRAR EDICION' : 'ABRIR EDICION');
   return (
     <VistaDelMedioContainer
       style={useSpring({ opacity: 1, from: { opacity: 0 } })}
@@ -149,6 +158,11 @@ const Minuta = ({ dispatch, tema }) => {
           </ResumenOradorCollapseContainer>
     
           <TablaOradores oradores={tema.oradores}  finTema={tema.fin} pinoSeleccionado={exposicionSeleccionada} onSelect={seleccionarExposicion }/>
+        </TabContainer>
+          <TabContainer
+          value={tabValue}
+          index={1}
+        >
           <ConclusionForm>
             <ConclusionTitle>
               CONCLUSION
@@ -173,6 +187,7 @@ const Minuta = ({ dispatch, tema }) => {
               </div>
             ) : null}
           </ConclusionForm>
+          <ActionItems onAgregarActionItem={agregarActionItem}/>
         </TabContainer>
       </VistaMinutaContainer>
     </VistaDelMedioContainer>

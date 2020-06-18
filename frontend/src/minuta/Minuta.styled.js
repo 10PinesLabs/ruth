@@ -116,4 +116,5 @@ display: ${(value === index)? "flex": "none"};
 flex-direction: column;
 flex: 1;
 align-items: center;
+width: 100%;
 `);
