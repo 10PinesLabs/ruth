@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';
+import {colors} from "../styles/theme";
 import {ListaActionItemsContainer,
         ActionItemDesciption,
         ActionItemContainer,
@@ -15,10 +16,14 @@ const actionItems = [
     {descripcion:"[BUG] No se puede iniciar sesion en produccion", owners:["olatito", "lauturro"]},    
 ]
 
-const actionItem = (descripcion, owners) =>{
+const ActionItem = ({descripcion, owners, seEstaEditando}) =>{
+    let [hoveringItem, setHoveringItem] = useState(false);
+    const itemStyle = { backgroundColor: seEstaEditando ? colors.primary : colors.background,
+                        cursor: hoveringItem ? 'pointer' : 'auto',}
+
     return (
         <>
-        <ListItem>
+        <ListItem style={itemStyle} onMouseEnter={() => setHoveringItem(true)}>
             <ActionItemContainer>
             <ActionItemDesciption>{descripcion}</ActionItemDesciption>
             <div>
@@ -33,7 +38,7 @@ const actionItem = (descripcion, owners) =>{
 const actionItemsConDivisores = (actionItems) => {
     const itemsConDivisores = []
     actionItems.forEach((item, index) => {
-        itemsConDivisores.push(actionItem(item.descripcion, item.owners))
+        itemsConDivisores.push(<ActionItem descripcion={item.descripcion} owners={item.owners}/>)
         if(actionItems[index+1]) itemsConDivisores.push(<Divider/>)
     })
     return itemsConDivisores
