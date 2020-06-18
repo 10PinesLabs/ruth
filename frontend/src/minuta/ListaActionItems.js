@@ -9,11 +9,12 @@ import {ListaActionItemsContainer,
         ActionItemContainer,
         Titulo, 
         Owner} from '../minuta/ListaActionItems.styled'
+import ActionItems from "../minuta/ActionItems";
 
 const ActionItem = ({descripcion, owners, seEstaEditando}) =>{
 
     let [hoveringItem, setHoveringItem] = useState(false);
-    const itemStyle = { backgroundColor: seEstaEditando ? colors.primary : colors.background,
+    const itemStyle = { padding: seEstaEditando ? 0 : 13,
                         cursor: hoveringItem ? 'pointer' : 'auto',}
 
     return (
@@ -26,7 +27,7 @@ const ActionItem = ({descripcion, owners, seEstaEditando}) =>{
                 </div>
                 </ActionItemContainer>
             :
-            <p>Soy editor</p>
+            <ActionItems/>
             }
         </ListItem>
     )
