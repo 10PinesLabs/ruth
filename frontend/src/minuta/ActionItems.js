@@ -12,7 +12,7 @@ import {TextField} from "@material-ui/core";
 
 const listaDeRoots = ['Pepe', 'Alberto', 'Luis', 'Julieta'];
 
-const ActionItems = ({tema, dispatch, onAgregarActionItem}) => {
+const ActionItems = ({onAgregarActionItem}) => {
 
   const [descripcion, setDescripcion] = useState('');
   const [owners, setOwners] = useState([]);

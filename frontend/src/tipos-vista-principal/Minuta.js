@@ -130,7 +130,6 @@ const Minuta = ({ dispatch, tema }) => {
   };
 
   const textoBotonEdicion = () => (isResumenOradorCerrado ? 'CERRAR EDICION' : 'ABRIR EDICION');
-
   return (
     <VistaDelMedioContainer
       style={useSpring({ opacity: 1, from: { opacity: 0 } })}
@@ -164,12 +163,10 @@ const Minuta = ({ dispatch, tema }) => {
     
           <TablaOradores oradores={tema.oradores}  finTema={tema.fin} pinoSeleccionado={exposicionSeleccionada} onSelect={seleccionarExposicion }/>
         </TabContainer>
-
-        <TabContainer
+          <TabContainer
           value={tabValue}
           index={1}
         >
-
           <Grid container spacing={1}>
             <Grid item xs={5}>
               <ConclusionTema
@@ -185,13 +182,11 @@ const Minuta = ({ dispatch, tema }) => {
             </Grid>
             <Grid item xs={7}>
               <h1>Action Items ({tema.actionItems.length})</h1>
-              <ActionItems tema={tema} dispatch={dispatch} onAgregarActionItem={agregarActionItem}/>
+              <ActionItems onAgregarActionItem={agregarActionItem}/>
               <ListaActionItems actionItems={tema.actionItems} />
             </Grid>
           </Grid>
-
         </TabContainer>
-        
       </VistaMinutaContainer>
     </VistaDelMedioContainer>
   );
