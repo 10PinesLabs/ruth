@@ -175,9 +175,16 @@ const Minuta = ({ dispatch, tema }) => {
               </div>
             ) : null}
           </ConclusionForm>
+        </TabContainer>
+
+        <TabContainer
+          value={tabValue}
+          index={1}
+        >
           <ActionItems tema={tema} dispatch={dispatch}/>
           <ListaActionItems actionItems={tema.actionItems}/>
         </TabContainer>
+        
       </VistaMinutaContainer>
     </VistaDelMedioContainer>
   );
