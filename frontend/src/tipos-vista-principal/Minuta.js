@@ -126,7 +126,6 @@ const Minuta = ({ dispatch, tema }) => {
   };
 
   const textoBotonEdicion = () => (isResumenOradorCerrado ? 'CERRAR EDICION' : 'ABRIR EDICION');
-
   return (
     <VistaDelMedioContainer
       style={useSpring({ opacity: 1, from: { opacity: 0 } })}
@@ -183,7 +182,7 @@ const Minuta = ({ dispatch, tema }) => {
               </div>
             ) : null}
           </ConclusionForm>
-          <ActionItems tema={tema} dispatch={dispatch} onAgregarActionItem={agregarActionItem}/>
+          <ActionItems onAgregarActionItem={agregarActionItem}/>
         </TabContainer>
       </VistaMinutaContainer>
     </VistaDelMedioContainer>
