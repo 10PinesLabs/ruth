@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-  faHashtag,
   faMale,
   faMicrophoneAlt,
   faSync,
@@ -32,6 +31,7 @@ import { CardInteractionsContainer } from '../components/InteractionsContainer.s
 import { reactionTypes } from '../store/reacciones';
 import { SkeletonCircle, SkeletonLine, ReactionSkeletonContainer } from '../skeleton/Skeleton.styled';
 import { reacciones } from './actions';
+import { faSlack } from '@fortawesome/free-brands-svg-icons';
 
 const logoImage = 'https://res-4.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_'
   + '256,f_auto,q_auto:eco/wuhk5weer0fkhmh2oyhv';
@@ -107,7 +107,7 @@ const Vista = ({
           isDisabled={thumbsUp} icon={faThumbsDown}
           onClick={() => handleReaction(reacciones.THUMBS_DOWN, thumbsDown)}/>
         <ReactionButton
-          isBig isActive={slack} icon={faHashtag}
+          isBig isActive={slack} icon={faSlack}
           onClick={() => handleReaction(reacciones.SLACK, slack)}/>
         <ReactionButton
           isBig isActive={redondear} icon={faSync}
@@ -121,21 +121,21 @@ const Vista = ({
   let microphone;
   if (temaEmpezado) {
     if (isTalking) {
-      microphone = 
+      microphone =
         <MicrophoneContainer>
           <TalkButton pressed={true} onClick={onWannaStopTalkClick}>
             <FontAwesomeIcon icon={inQueueIcon()} color={'black'} size={'2x'}/>
           </TalkButton>
         </MicrophoneContainer>;
     } else if (wannaTalk) {
-      microphone = 
+      microphone =
         <MicrophoneContainer>
             <TalkButton pressed={true} onClick={onWannaStopTalkClick}>
               <FontAwesomeIcon icon={inQueueIcon()} color={'black'} size={'2x'}/>
             </TalkButton>
             <QueuedParticipants>
-              <ParticipantsCounter> 
-                {remainingParticipantsUpToUser} 
+              <ParticipantsCounter>
+                {remainingParticipantsUpToUser}
               </ParticipantsCounter>
               <FontAwesomeIcon icon={faMale} color={'silver'} size={'1x'}/>
             </QueuedParticipants>
