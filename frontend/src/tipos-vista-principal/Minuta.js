@@ -130,6 +130,7 @@ const Minuta = ({ dispatch, tema }) => {
   };
 
   const editarActionItem = (actionItem) => {
+    console.log(actionItem)
     crearEventoDeMinuteador({
       tipo: tipoDeEventoActionItem.EDITAR_ACTION_ITEM,
       actionItem,

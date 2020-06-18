@@ -3,7 +3,6 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';
-import {colors} from "../styles/theme";
 import {ListaActionItemsContainer,
         ActionItemDesciption,
         ActionItemContainer,
@@ -11,9 +10,7 @@ import {ListaActionItemsContainer,
         Owner} from '../minuta/ListaActionItems.styled'
 import ActionItems from "../minuta/ActionItems";
 
-const ActionItem = ({descripcion, owners, seEstaEditando, alEditar}) =>{
-
-
+const ActionItem = ({descripcion, owners, seEstaEditando, alEditar, index}) =>{
     let [hoveringItem, setHoveringItem] = useState(false);
     let [editando, setEditando] = useState(seEstaEditando);
 
@@ -21,12 +18,16 @@ const ActionItem = ({descripcion, owners, seEstaEditando, alEditar}) =>{
                         cursor: hoveringItem ? 'pointer' : 'auto',}
 
     const alGuardarEdicion = (actionItemGuardado) => {
+        actionItemGuardado.index = index;
         alEditar(actionItemGuardado)
         setEditando(false)
     }
 
     return (
-        <ListItem style={itemStyle} onMouseEnter={() => setHoveringItem(true)} onClick={()=>{if(!editando)setEditando(true)}}>
+        <ListItem style={itemStyle} 
+                    onMouseEnter={() => setHoveringItem(true)} 
+                    onClick={()=>{if(!editando)setEditando(true)}}>
+
             {!editando ? 
                 <ActionItemContainer>
                 <ActionItemDesciption>{descripcion}</ActionItemDesciption>
@@ -35,12 +36,12 @@ const ActionItem = ({descripcion, owners, seEstaEditando, alEditar}) =>{
                 </div>
                 </ActionItemContainer>
             :
-            <ActionItems 
-             itemDescription={descripcion}
-             itemOwners={owners} edicion={editando}
-             alDescartar={()=>{setEditando(false)}}
-             alEditar={alGuardarEdicion}
-            />
+                <ActionItems 
+                itemDescription={descripcion}
+                itemOwners={owners} edicion={editando}
+                alDescartar={()=>{setEditando(false)}}
+                alEditar={alGuardarEdicion}
+                />
             }
         </ListItem>
     )
@@ -49,7 +50,7 @@ const ActionItem = ({descripcion, owners, seEstaEditando, alEditar}) =>{
 const actionItemsConDivisores = (actionItems, alEditar) => {
     const itemsConDivisores = []
     actionItems.forEach((item, index) => {
-        itemsConDivisores.push(<ActionItem descripcion={item.actionItem.descripcion} owners={item.actionItem.owners} alEditar={alEditar}/>)
+        itemsConDivisores.push(<ActionItem key={index} index={index} descripcion={item.actionItem.descripcion} owners={item.actionItem.owners} alEditar={alEditar}/>)
         if(actionItems[index+1]) itemsConDivisores.push(<Divider/>)
     })
     return itemsConDivisores
