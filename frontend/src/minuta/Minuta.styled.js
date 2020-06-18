@@ -4,6 +4,7 @@ import { colors } from '../styles/theme';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import React from "react";
 import Box from "@material-ui/core/Box";
+import Tab from "@material-ui/core/Tab";
 
 const useStyles = makeStyles(theme => ({
   tablaPinos: {
@@ -58,51 +59,62 @@ export const BotonParaAbrirResumen = styled(Button)`
   }
 `;
 
-export const TabsHeader = ({handleTabChange,value,children}) => (
-  <Box
-    borderRadius={"borderRadius"}
-    m={2}
-    width={"100%"}
-    boxShadow={2}
-  >
-    <CustomTabs
-      variant="fullWidth"
-      value={value}
-      onChange={handleTabChange}
+export const TabsHeader = ({handleTabChange,value,children}) => {
+
+  const useStyles = makeStyles({
+    flexContainer: {
+      borderRadius: "4px",
+      border: "1px solid rgba(0,0,0,0.2)"
+    },
+    indicator: {
+      backgroundColor: colors.primary
+    },
+    selected: {
+      color: colors.primary
+    }
+  });
+  
+  return (
+    <Box
+      borderRadius={"borderRadius"}
+      m={2}
+      width={"100%"}
+      boxShadow={2}
     >
-      {children}
-    </CustomTabs>
-  </Box>
-);
+      <Tabs
+        classes={useStyles()}
+        variant="fullWidth"
+        value={value}
+        onChange={handleTabChange}
+      >
+        {children}
+      </Tabs>
+    </Box>
+  )
+};
 
-
-
-const CustomTabs = styled(Tabs)`
-
-  & .MuiTabs-flexContainer {
-    border-radius: 4px;
-    border: 1px solid rgba(0,0,0,0.2);
-    justify-content: space-around;
-  };
-  & .MuiTab-root {
-    min-width: 300px;
-    font-weight: bold;
-  };
-  & .MuiTabs-indicator {
-    background-color:${colors.primary};
-  }
-  & .Mui-selected {
-    color: ${colors.primary};
-  }
-`
+export const CustomTab = (props) => {
+  const useStyles = makeStyles({
+    wrapper: {
+      fontWeight: "bold",
+    },
+    selected: {
+      color: colors.primary
+    }
+  });
+  
+  return (
+    <Tab {...props} classes={useStyles()}/>
+  )
+};
 
 export const ResumenOradorCollapseContainer = styled.div`
 width:60%
 `;
 
 export const TabContainer =  styled.div(({value,index}) => `
-  display: ${(value === index)? "flex": "none"};
-  flex-direction: column;
-  flex: 1;
-  align-items: center;
+display: ${(value === index)? "flex": "none"};
+flex-direction: column;
+flex: 1;
+align-items: center;
 `);

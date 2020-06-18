@@ -9,10 +9,9 @@ import { Button, SecondaryButton } from "../components/Button.styled";
 import TablaOradores from "../minuta/TablaOradores";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
-import {BotonParaAbrirResumen, ResumenOradorCollapseContainer, ConclusionForm, ConclusionTextarea, ConclusionTitle, TabContainer, TabsHeader} from "../minuta/Minuta.styled";
+import {BotonParaAbrirResumen, ResumenOradorCollapseContainer, ConclusionForm, ConclusionTextarea, ConclusionTitle, TabContainer, TabsHeader, CustomTab} from "../minuta/Minuta.styled";
 import Collapse from '@material-ui/core/Collapse';
 import { ResumenOrador } from "../minuta/ResumenOrador";
-import Tab from "@material-ui/core/Tab";
 
 const expositor = (nombreOrador, ordenDeOrador, resumen) => {
   return {
@@ -127,8 +126,8 @@ const Minuta = ({ dispatch, tema }) => {
           value={tabValue}
           handleTabChange={manejarCambioTab}
         >
-          <Tab label="Minuta de cada pino" />
-          <Tab label="Anotaciones generales y action items" />
+          <CustomTab label="Minuta de cada pino" />
+          <CustomTab label="Anotaciones generales y action items" />
         </TabsHeader>
     
         <TabContainer
