@@ -4,6 +4,7 @@ import { useSpring } from "react-spring";
 import { connect } from "react-redux";
 import { tipoDeEvento } from "../store/conclusion";
 import { tipoDeEvento as tipoDeEventoOradores} from "../store/oradores";
+import { tipoDeEvento as tipoDeEventoActionItem} from "../store/actionItem";
 import { toast } from "react-toastify";
 import { Button, SecondaryButton } from "../components/Button.styled";
 import TablaOradores from "../minuta/TablaOradores";
@@ -111,8 +112,15 @@ const Minuta = ({ dispatch, tema }) => {
 
 
   }
-  const textoBotonEdicion = () => (isResumenOradorCerrado ? 'CERRAR EDICION' : 'ABRIR EDICION');
 
+  const agregarActionItem = (actionItem) => {
+    crearEventoDeMinuteador({
+      tipo: tipoDeEventoActionItem.AGREGAR_ACTION_ITEM,
+      actionItem,
+    })
+  };
+
+  const textoBotonEdicion = () => (isResumenOradorCerrado ? 'CERRAR EDICION' : 'ABRIR EDICION');
   return (
     <VistaDelMedioContainer
       style={useSpring({ opacity: 1, from: { opacity: 0 } })}
@@ -157,7 +165,7 @@ const Minuta = ({ dispatch, tema }) => {
         ) : null}
       </ConclusionForm>
 
-      <ActionItems tema={tema} dispatch={dispatch}/>
+      <ActionItems tema={tema} dispatch={dispatch} onAgregarActionItem={agregarActionItem}/>
     </VistaDelMedioContainer>
   );
 };
