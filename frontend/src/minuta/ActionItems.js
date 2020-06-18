@@ -13,10 +13,10 @@ import {TextField} from "@material-ui/core";
 
 const listaDeRoots = ['Pepe', 'Alberto', 'Luis', 'Julieta'];
 
-const ActionItems = ({tema, dispatch}) => {
+const ActionItems = ({tema, dispatch, itemDescription, itemOwners}) => {
 
-  const [descripcion, setDescripcion] = useState('');
-  const [owners, setOwners] = useState([]);
+  const [descripcion, setDescripcion] = useState(itemDescription || '' );
+  const [owners, setOwners] = useState(itemOwners || []);
 
   const dispatchActionItem = (data) => {
     const evento = {
