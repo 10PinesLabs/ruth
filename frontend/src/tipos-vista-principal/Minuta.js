@@ -4,6 +4,7 @@ import { useSpring } from "react-spring";
 import { connect } from "react-redux";
 import { tipoDeEvento } from "../store/conclusion";
 import { tipoDeEvento as tipoDeEventoOradores} from "../store/oradores";
+import { tipoDeEvento as tipoDeEventoActionItem} from "../store/actionItem";
 import { toast } from "react-toastify";
 import { Button, SecondaryButton } from "../components/Button.styled";
 import TablaOradores from "../minuta/TablaOradores";
@@ -14,6 +15,9 @@ import Collapse from '@material-ui/core/Collapse';
 import ActionItems from "../minuta/ActionItems";
 import { ResumenOrador } from "../minuta/ResumenOrador";
 import {ListaActionItems} from "../minuta/ListaActionItems"
+import {ConclusionTema} from "../minuta/ConclusionTema";
+import Grid from "@material-ui/core/Grid";
+import {Titulo} from "../minuta/ListaActionItems.styled";
 
 const expositor = (nombreOrador, ordenDeOrador, resumen) => {
   return {
@@ -93,7 +97,7 @@ const Minuta = ({ dispatch, tema }) => {
   const seleccionarExposicion = (exposicion) => {
     setExposicionSeleccionada(exposicion)
     setActualizarExposicionSeleccionada(hayAlguienExponiendo() && estaExponiendo(exposicion.index))
-    
+
   }
 
   const onDescartarResumen = ()=>{
@@ -114,9 +118,17 @@ const Minuta = ({ dispatch, tema }) => {
       let selectObject = expositor(siguienteOrador.usuario.nombre, siguienteOrador.instanciaDeHabla)
       setExposicionSeleccionada(selectObject)
     }
-    
+
 
   }
+
+  const agregarActionItem = (actionItem) => {
+    crearEventoDeMinuteador({
+      tipo: tipoDeEventoActionItem.AGREGAR_ACTION_ITEM,
+      actionItem,
+    })
+  };
+
   const textoBotonEdicion = () => (isResumenOradorCerrado ? 'CERRAR EDICION' : 'ABRIR EDICION');
 
   return (
@@ -151,33 +163,35 @@ const Minuta = ({ dispatch, tema }) => {
           </ResumenOradorCollapseContainer>
     
           <TablaOradores oradores={tema.oradores}  finTema={tema.fin} pinoSeleccionado={exposicionSeleccionada} onSelect={seleccionarExposicion }/>
-          <ConclusionForm>
-            <ConclusionTitle>
-              CONCLUSION
-            </ConclusionTitle>
-            <ConclusionTextarea
-              value={conclusion}
-              rows={6}
-              placeholder={"Aqui va la conclusión general del tema..."}
-              onChange={(event) => {
-                handleCambioInputConclusion(event.target.value);
-              }}
-            />
-    
-            {estaEditandoConclusion ? (
-              <div>
-                <SecondaryButton type="button" onClick={() => resetearConclusion()}>
-                  Borrar
-                </SecondaryButton>
-                <Button type="button" onClick={() => actualizarConclusion()}>
-                  Guardar
-                </Button>
-              </div>
-            ) : null}
-          </ConclusionForm>
-          <ActionItems tema={tema} dispatch={dispatch}/>
-          <ListaActionItems/>
         </TabContainer>
+
+        <TabContainer
+          value={tabValue}
+          index={1}
+        >
+
+          <Grid container spacing={1}>
+            <Grid item xs={5}>
+              <ConclusionTema
+                descripcion={"Resumen General"}
+                value={conclusion}
+                onChange={(event) => {
+                  handleCambioInputConclusion(event.target.value);
+                }}
+                estaEditandoConclusion={estaEditandoConclusion}
+                onBorrar={() => resetearConclusion()}
+                onGuardar={() => actualizarConclusion()}
+              />
+            </Grid>
+            <Grid item xs={7}>
+              <h1>Action Items ({tema.actionItems.length})</h1>
+              <ActionItems tema={tema} dispatch={dispatch} onAgregarActionItem={agregarActionItem}/>
+              <ListaActionItems actionItems={tema.actionItems} />
+            </Grid>
+          </Grid>
+
+        </TabContainer>
+        
       </VistaMinutaContainer>
     </VistaDelMedioContainer>
   );
