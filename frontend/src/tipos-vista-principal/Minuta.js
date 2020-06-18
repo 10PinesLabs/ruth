@@ -4,6 +4,7 @@ import { useSpring } from "react-spring";
 import { connect } from "react-redux";
 import { tipoDeEvento } from "../store/conclusion";
 import { tipoDeEvento as tipoDeEventoOradores} from "../store/oradores";
+import { tipoDeEvento as tipoDeEventoActionItem} from "../store/actionItem";
 import { toast } from "react-toastify";
 import { Button, SecondaryButton } from "../components/Button.styled";
 import TablaOradores from "../minuta/TablaOradores";
@@ -30,7 +31,6 @@ const Minuta = ({ dispatch, tema }) => {
   let [conclusion, setConclusion] = useState(tema.conclusion);
   let [estaEditandoConclusion, setEstaEditandoConclusion] = useState(false);
   let [exposicionSeleccionada, setExposicionSeleccionada] = useState(null);
-  let [tabValue, setTabValue] = useState(0);
   let [seActualizaExposicionSeleccionada, setActualizarExposicionSeleccionada] = useState(false)
   let [isResumenOradorCerrado, setIsResumenOradorCerrado] = useState(false);
 
@@ -50,10 +50,6 @@ const Minuta = ({ dispatch, tema }) => {
     }
   },[tema.conclusion]);
 
-  const manejarCambioTab = (event, newValue) => {
-    setTabValue(newValue);
-  };
-  
   //encargarse de cambio de orador
   useEffect(()=>{
     let orador = tema.oradores.actual;
@@ -90,13 +86,13 @@ const Minuta = ({ dispatch, tema }) => {
   }
 
   const estaExponiendo = (instanciaDeHabla) => {
-    return instanciaDeHabla===tema.oradores.actual.instanciaDeHabla
+    return instanciaDeHabla==tema.oradores.actual.instanciaDeHabla
   }
 
   const seleccionarExposicion = (exposicion) => {
     setExposicionSeleccionada(exposicion)
     setActualizarExposicionSeleccionada(hayAlguienExponiendo() && estaExponiendo(exposicion.index))
-    
+
   }
 
   const onDescartarResumen = ()=>{
@@ -117,9 +113,17 @@ const Minuta = ({ dispatch, tema }) => {
       let selectObject = expositor(siguienteOrador.usuario.nombre, siguienteOrador.instanciaDeHabla)
       setExposicionSeleccionada(selectObject)
     }
-    
+
 
   }
+
+  const agregarActionItem = (actionItem) => {
+    crearEventoDeMinuteador({
+      tipo: tipoDeEventoActionItem.AGREGAR_ACTION_ITEM,
+      actionItem,
+    })
+  };
+
   const textoBotonEdicion = () => (isResumenOradorCerrado ? 'CERRAR EDICION' : 'ABRIR EDICION');
 
   return (
@@ -176,8 +180,8 @@ const Minuta = ({ dispatch, tema }) => {
             </Grid>
             <Grid item xs={7}>
               <h1>Action Items ({tema.actionItems.length})</h1>
-              <ActionItems tema={tema} dispatch={dispatch}/>
-              <ListaActionItems actionItems={tema.actionItems}/>
+              <ActionItems tema={tema} dispatch={dispatch} onAgregarActionItem={agregarActionItem}/>
+              <ListaActionItems actionItems={tema.actionItems} />
             </Grid>
           </Grid>
 
