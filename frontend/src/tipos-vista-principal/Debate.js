@@ -1,5 +1,5 @@
 import React from 'react';
-import {Coso, GraphsContainer, ReactionsContainer, SubDebateContainer} from "../debate-handler/Debate.styled";
+import {GraphsAndLabelsContainer, GraphsContainer, ReactionsContainer, SubDebateContainer} from "../debate-handler/Debate.styled";
 import ParticipantsQueue from "../cola-de-participantes/ParticipantsQueue";
 import ChartBar from "../chart/chartBar";
 import ChartLine from "../chart/chartLine";
@@ -19,16 +19,16 @@ const Debate = ({tema}) => {
   const props = useSpring({opacity: 1, from: {opacity: 0}});
   return (
     <SubDebateContainer style={props}>
-      <Coso>
+      <GraphsAndLabelsContainer>
         <GraphsContainer>
           <ChartLine data={debateData.dataLine} inicioTema={tema.inicio}/>
           <ChartBar data={debateData.dataBar}/>
         </GraphsContainer>
         <ReactionsContainer>
-          <ReactionsIcons/>
+          <ReactionsIcons centered/>
           <ReactionsIcons/>
         </ReactionsContainer>
-      </Coso>
+      </GraphsAndLabelsContainer>
       <ParticipantsQueue participants={debateData.participants} finTema={tema.fin}/>
     </SubDebateContainer>
   );

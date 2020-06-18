@@ -19,9 +19,16 @@ export const IconBox = styled.div`
   width: 25%;
 `;
 
-export const IconContainer = styled.div(({backgroundColor}) => `
+export const IconContainer = styled.div(({backgroundColor, centered}) => `
+  margin: ${centered ? '0' : '0 4rem'};
+  margin-top: -0.5rem;
+  height: 35px;
+  width: 35px;
+  min-width: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 50%;
-  padding: 10px;
   background-color: ${backgroundColor}
   opacity: 0.7;
 `);

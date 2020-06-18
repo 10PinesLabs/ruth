@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import {animated} from 'react-spring';
 
-export const Coso = styled.div`  
+export const GraphsAndLabelsContainer = styled.div`  
     display: flex;
     flex-direction: column;
     flex: 1;
