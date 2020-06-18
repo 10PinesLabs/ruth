@@ -1,4 +1,4 @@
-  import React, {useState} from 'react';
+import React, {useState} from 'react';
 import {
   BotonCancelar,
   BotonCrearActionItem,
@@ -12,7 +12,7 @@ import {TextField} from "@material-ui/core";
 
 const listaDeRoots = ['Pepe', 'Alberto', 'Luis', 'Julieta'];
 
-const ActionItems = ({tema, dispatch,onAgregarActionItem, itemDescription, itemOwners, edicion, alDescartar, alEditar}) => {
+const ActionItems = ({onAgregarActionItem, itemDescription, itemOwners, edicion, alDescartar, alEditar}) => {
 
   const [descripcion, setDescripcion] = useState(itemDescription || '' );
   const [owners, setOwners] = useState(itemOwners || []);

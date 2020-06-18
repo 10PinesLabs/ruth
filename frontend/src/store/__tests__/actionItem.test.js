@@ -20,12 +20,22 @@ describe(`#${tipoDeEvento.AGREGAR_ACTION_ITEM}`, () => {
     expect(state).toEqual([]);
   });
 
-  it('cuando el evento es de tipo agregar action item, se devuelve la conclusion', () => {
+  it('cuando el evento es de tipo agregar action item, se devuelve la descripcion', () => {
     const actionItem = {
       descripcion: 'Jugar al truco',
-      owner: 'Lautaro',
+      owners: ['Lautaro'],
     };
     applyEvento(eventoActionItem(actionItem));
     expect(state[0].actionItem.descripcion).toEqual(actionItem.descripcion);
+  });
+
+  it('cuando el evento es de tipo agregar action item, se devuelven los owners', () => {
+    const actionItem = {
+      descripcion: 'Jugar al truco',
+      owners: ['Lautaro', 'Mauro'],
+    };
+    applyEvento(eventoActionItem(actionItem));
+    expect(state[0].actionItem.owners).toContain('Lautaro');
+    expect(state[0].actionItem.owners).toContain('Mauro');
   });
 });

@@ -17,7 +17,6 @@ import { ResumenOrador } from "../minuta/ResumenOrador";
 import {ListaActionItems} from "../minuta/ListaActionItems"
 import {ConclusionTema} from "../minuta/ConclusionTema";
 import Grid from "@material-ui/core/Grid";
-import {Titulo} from "../minuta/ListaActionItems.styled";
 
 const expositor = (nombreOrador, ordenDeOrador, resumen) => {
   return {
@@ -60,7 +59,7 @@ const Minuta = ({ dispatch, tema }) => {
     let orador = tema.oradores.actual;
     if(!exposicionSeleccionada && orador){
       seleccionarExposicion(expositor(orador.usuario.nombre, orador.instanciaDeHabla, orador.resumen))
-    }
+    } 
   }, tema.oradores.actual)
 
   function actualizarConclusion() {
@@ -97,7 +96,7 @@ const Minuta = ({ dispatch, tema }) => {
   const seleccionarExposicion = (exposicion) => {
     setExposicionSeleccionada(exposicion)
     setActualizarExposicionSeleccionada(hayAlguienExponiendo() && estaExponiendo(exposicion.index))
-
+    
   }
 
   const onDescartarResumen = ()=>{
@@ -118,7 +117,7 @@ const Minuta = ({ dispatch, tema }) => {
       let selectObject = expositor(siguienteOrador.usuario.nombre, siguienteOrador.instanciaDeHabla)
       setExposicionSeleccionada(selectObject)
     }
-
+    
 
   }
 
@@ -138,7 +137,6 @@ const Minuta = ({ dispatch, tema }) => {
   }
 
   const textoBotonEdicion = () => (isResumenOradorCerrado ? 'CERRAR EDICION' : 'ABRIR EDICION');
-
   return (
     <VistaDelMedioContainer
       style={useSpring({ opacity: 1, from: { opacity: 0 } })}
@@ -172,12 +170,10 @@ const Minuta = ({ dispatch, tema }) => {
     
           <TablaOradores oradores={tema.oradores}  finTema={tema.fin} pinoSeleccionado={exposicionSeleccionada} onSelect={seleccionarExposicion }/>
         </TabContainer>
-
-        <TabContainer
+          <TabContainer
           value={tabValue}
           index={1}
         >
-
           <Grid container spacing={1}>
             <Grid item xs={5}>
               <ConclusionTema
@@ -193,13 +189,11 @@ const Minuta = ({ dispatch, tema }) => {
             </Grid>
             <Grid item xs={7}>
               <h1>Action Items ({tema.actionItems.length})</h1>
-              <ActionItems tema={tema} dispatch={dispatch} onAgregarActionItem={agregarActionItem}/>
+              <ActionItems onAgregarActionItem={agregarActionItem}/>
               <ListaActionItems actionItems={tema.actionItems} alEditar={editarActionItem} />
             </Grid>
           </Grid>
-
         </TabContainer>
-        
       </VistaMinutaContainer>
     </VistaDelMedioContainer>
   );

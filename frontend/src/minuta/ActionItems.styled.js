@@ -1,5 +1,6 @@
+import React from "react"
 import styled from 'styled-components';
-import { Button, Container, TextField } from '@material-ui/core';
+import {Button, Container, makeStyles, TextField} from '@material-ui/core';
 import { colors } from '../styles/theme';
 
 export const ContenedorEdicionActionItem = styled(Container)`
@@ -27,15 +28,26 @@ export const ContenedorInputActionItem = styled(Container)`
   display: flex;
   flex-direction: column;
 `;
-export const InputActionItem = styled(TextField)`
-  & label.Mui-focused{
-    color: ${colors.primary};
-  };
-  
-  & .MuiInput-underline::after{
-    border-bottom: 2px solid ${colors.primary};
-  };
-`;
+
+export const InputActionItem = (props) => {
+
+  const useStyles = makeStyles(() => ({
+    root: {
+      '& label.Mui-focused':{
+        color: colors.primary,
+      },
+      '& .MuiInput-underline::after': {
+        borderBottomColor: colors.primary,
+      },
+    }
+  }),
+  );
+
+  return (
+    <TextField classes={useStyles()} {...props}/>
+  );
+};
+
 export const ContenedorBotonesActionItem = styled(Container)`
   display: flex;
   flex-direction: row;
