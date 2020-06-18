@@ -158,6 +158,11 @@ const Minuta = ({ dispatch, tema }) => {
           </ResumenOradorCollapseContainer>
     
           <TablaOradores oradores={tema.oradores}  finTema={tema.fin} pinoSeleccionado={exposicionSeleccionada} onSelect={seleccionarExposicion }/>
+        </TabContainer>
+          <TabContainer
+          value={tabValue}
+          index={1}
+        >
           <ConclusionForm>
             <ConclusionTitle>
               CONCLUSION
