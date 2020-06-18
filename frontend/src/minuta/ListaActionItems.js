@@ -40,11 +40,9 @@ export const ListaActionItems = ({actionItems}) => {
   
     return (
         <ListaActionItemsContainer>
-            <Titulo>Action Items ({actionItems.length})</Titulo>
             <List alignItems="flex-start" component={Card}>
                 {actionItemsConDivisores(actionItems)}
             </List>
-            
         </ListaActionItemsContainer>
        
     )
