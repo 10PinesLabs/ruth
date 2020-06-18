@@ -3,10 +3,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';
-
-
-import {ListaActionItemsContainer,ActionItemDesciption, ActionItemContainer,Titulo, Owner} from '../minuta/ListaActionItems.styled'
-
+import {ListaActionItemsContainer,
+        ActionItemDesciption,
+        ActionItemContainer,
+        Titulo, 
+        Owner} from '../minuta/ListaActionItems.styled'
 
 const actionItems = [
     {descripcion:"Como minuteador, quiero poder enviar la minuta por email al finalizar la reunion de roots", owners:["olatito", "lauturro"]},
@@ -28,8 +29,6 @@ const actionItem = (descripcion, owners) =>{
         </>
     )
 }
-
-
 
 const actionItemsConDivisores = (actionItems) => {
     const itemsConDivisores = []
