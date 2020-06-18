@@ -17,7 +17,6 @@ const actionItems = [
 
 const actionItem = (descripcion, owners) =>{
     return (
-        <>
         <ListItem>
             <ActionItemContainer>
             <ActionItemDesciption>{descripcion}</ActionItemDesciption>
@@ -26,7 +25,6 @@ const actionItem = (descripcion, owners) =>{
             </div>
             </ActionItemContainer>
         </ListItem>
-        </>
     )
 }
 
