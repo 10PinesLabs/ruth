@@ -129,6 +129,13 @@ const Minuta = ({ dispatch, tema }) => {
     })
   };
 
+  const editarActionItem = (actionItem) => {
+    crearEventoDeMinuteador({
+      tipo: tipoDeEventoActionItem.EDITAR_ACTION_ITEM,
+      actionItem,
+    })
+  }
+
   const textoBotonEdicion = () => (isResumenOradorCerrado ? 'CERRAR EDICION' : 'ABRIR EDICION');
 
   return (
@@ -186,7 +193,7 @@ const Minuta = ({ dispatch, tema }) => {
             <Grid item xs={7}>
               <h1>Action Items ({tema.actionItems.length})</h1>
               <ActionItems tema={tema} dispatch={dispatch} onAgregarActionItem={agregarActionItem}/>
-              <ListaActionItems actionItems={tema.actionItems} />
+              <ListaActionItems actionItems={tema.actionItems} alEditar={editarActionItem} />
             </Grid>
           </Grid>
 

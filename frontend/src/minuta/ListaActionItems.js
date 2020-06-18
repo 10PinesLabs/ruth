@@ -11,15 +11,23 @@ import {ListaActionItemsContainer,
         Owner} from '../minuta/ListaActionItems.styled'
 import ActionItems from "../minuta/ActionItems";
 
-const ActionItem = ({descripcion, owners, seEstaEditando}) =>{
+const ActionItem = ({descripcion, owners, seEstaEditando, alEditar}) =>{
+
 
     let [hoveringItem, setHoveringItem] = useState(false);
-    const itemStyle = { padding: seEstaEditando ? 0 : 13,
+    let [editando, setEditando] = useState(seEstaEditando);
+
+    const itemStyle = { padding: editando ? 0 : 13,
                         cursor: hoveringItem ? 'pointer' : 'auto',}
 
+    const alGuardarEdicion = (actionItemGuardado) => {
+        alEditar(actionItemGuardado)
+        setEditando(false)
+    }
+
     return (
-        <ListItem style={itemStyle} onMouseEnter={() => setHoveringItem(true)}>
-            {!seEstaEditando ? 
+        <ListItem style={itemStyle} onMouseEnter={() => setHoveringItem(true)} onClick={()=>{if(!editando)setEditando(true)}}>
+            {!editando ? 
                 <ActionItemContainer>
                 <ActionItemDesciption>{descripcion}</ActionItemDesciption>
                 <div>
@@ -27,27 +35,32 @@ const ActionItem = ({descripcion, owners, seEstaEditando}) =>{
                 </div>
                 </ActionItemContainer>
             :
-            <ActionItems/>
+            <ActionItems 
+             itemDescription={descripcion}
+             itemOwners={owners} edicion={editando}
+             alDescartar={()=>{setEditando(false)}}
+             alEditar={alGuardarEdicion}
+            />
             }
         </ListItem>
     )
 }
 
-const actionItemsConDivisores = (actionItems) => {
+const actionItemsConDivisores = (actionItems, alEditar) => {
     const itemsConDivisores = []
     actionItems.forEach((item, index) => {
-        itemsConDivisores.push(<ActionItem descripcion={item.actionItem.descripcion} owners={item.actionItem.owners} seEstaEditando={false}/>)
+        itemsConDivisores.push(<ActionItem descripcion={item.actionItem.descripcion} owners={item.actionItem.owners} alEditar={alEditar}/>)
         if(actionItems[index+1]) itemsConDivisores.push(<Divider/>)
     })
     return itemsConDivisores
 }
 
-export const ListaActionItems = ({actionItems}) => {
+export const ListaActionItems = ({actionItems, alEditar}) => {
   
     return (
         <ListaActionItemsContainer>
             <List alignItems="flex-start" component={Card}>
-                {actionItemsConDivisores(actionItems)}
+                {actionItemsConDivisores(actionItems, alEditar)}
             </List>
         </ListaActionItemsContainer>
        

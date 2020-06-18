@@ -12,7 +12,7 @@ import {TextField} from "@material-ui/core";
 
 const listaDeRoots = ['Pepe', 'Alberto', 'Luis', 'Julieta'];
 
-const ActionItems = ({tema, dispatch,onAgregarActionItem, itemDescription, itemOwners}) => {
+const ActionItems = ({tema, dispatch,onAgregarActionItem, itemDescription, itemOwners, edicion, alDescartar, alEditar}) => {
 
   const [descripcion, setDescripcion] = useState(itemDescription || '' );
   const [owners, setOwners] = useState(itemOwners || []);
@@ -20,6 +20,11 @@ const ActionItems = ({tema, dispatch,onAgregarActionItem, itemDescription, itemO
   const limpiarInputs = () => {
     setDescripcion('');
     setOwners([]);
+  }
+
+  const descartar = ()=>{
+    limpiarInputs();
+    if(alDescartar) alDescartar()
   }
 
   return (
@@ -42,13 +47,13 @@ const ActionItems = ({tema, dispatch,onAgregarActionItem, itemDescription, itemO
               }/>
           </ContenedorInputActionItem>
           <ContenedorBotonesActionItem>
-            <BotonCancelar size="small" onClick={limpiarInputs} variant="outlined">Descartar</BotonCancelar>
+            <BotonCancelar size="small" onClick={descartar} variant="outlined">Descartar</BotonCancelar>
             <BotonCrearActionItem
               size="small"
               onClick={() => {
-                onAgregarActionItem({descripcion, owners});
+                edicion ? alEditar({descripcion, owners}) : onAgregarActionItem({descripcion, owners});
                 limpiarInputs();
-              }}>Crear action item</BotonCrearActionItem>
+              }}>{edicion ? "Guardar" : "Crear action item"}</BotonCrearActionItem>
           </ContenedorBotonesActionItem>
         </ContenedorEdicionActionItem>
       </Box>
