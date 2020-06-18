@@ -17,7 +17,6 @@ import { ResumenOrador } from "../minuta/ResumenOrador";
 import {ListaActionItems} from "../minuta/ListaActionItems"
 import {ConclusionTema} from "../minuta/ConclusionTema";
 import Grid from "@material-ui/core/Grid";
-import {Titulo} from "../minuta/ListaActionItems.styled";
 
 const expositor = (nombreOrador, ordenDeOrador, resumen) => {
   return {
