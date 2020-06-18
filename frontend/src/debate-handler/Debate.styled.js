@@ -7,7 +7,6 @@ export const Coso = styled.div`
     flex: 1;
     height: 50%;
     border-top: 1px solid silver;
-    border-bottom: 1px solid silver;
 `;
 
 export const SubDebateContainer = styled(animated.div)`  

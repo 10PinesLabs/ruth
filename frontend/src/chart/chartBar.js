@@ -18,10 +18,8 @@ class ChartBar extends React.Component {
     },
     scales: {
       xAxes: [{
-        display: false,
-        ticks: {
-          fontSize: 30,
-        },
+        display: true,
+        position: 'bottom',
       }],
       yAxes: [
         {
@@ -40,9 +38,8 @@ class ChartBar extends React.Component {
 
   formattedData = () => {
     const reacciones = reaccionesVisibles;
-
     return {
-      labels: reacciones,
+      labels: ['','', '', ''], //TODO: Sacar este workaround que se hizo para alinear los ejes X de ambos gráficos
       datasets: [{
         data: reacciones.map((reaccion) => (this.props.data.data[reaccion] || []).length),
         backgroundColor: reacciones.map(colorForReaccion),
