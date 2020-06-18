@@ -5,6 +5,7 @@ import {tipoDeEvento, conclusionReducer} from './conclusion'
 import reaccionesReducer from './reacciones';
 import Backend from '../api/backend';
 import historicoDeReaccionesReducer from './historicoDeReacciones';
+import {actionItemReducer} from "./actionItem";
 
 setAutoFreeze(false);
 
@@ -15,6 +16,7 @@ export const temaReducer = (state, action) => produce(state, (draft) => {
   
   draft.oradores = oradoresReducer(draft.oradores, action);
   draft.conclusion = conclusionReducer(draft.conclusion,action)
+  draft.actionItems = actionItemReducer(draft.actionItems, action)
   
   const oldReacciones = draft.reacciones;
   draft.reacciones = reaccionesReducer(draft.reacciones, action);

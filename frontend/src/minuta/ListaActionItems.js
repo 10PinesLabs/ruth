@@ -22,7 +22,6 @@ const ActionItem = ({descripcion, owners, seEstaEditando}) =>{
                         cursor: hoveringItem ? 'pointer' : 'auto',}
 
     return (
-        <>
         <ListItem style={itemStyle} onMouseEnter={() => setHoveringItem(true)}>
             <ActionItemContainer>
             <ActionItemDesciption>{descripcion}</ActionItemDesciption>
@@ -31,7 +30,6 @@ const ActionItem = ({descripcion, owners, seEstaEditando}) =>{
             </div>
             </ActionItemContainer>
         </ListItem>
-        </>
     )
 }
 
