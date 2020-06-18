@@ -42,7 +42,6 @@ const actionItemsConDivisores = (actionItems) => {
 
 export const ListaActionItems = () => {
   
-    const itemsConDivisores = []
     return (
         <ListaActionItemsContainer>
             <Titulo>Action Items ({actionItems.length})</Titulo>
