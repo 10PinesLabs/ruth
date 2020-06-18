@@ -6,6 +6,7 @@ import React from "react";
 
 const useStyles = makeStyles(theme => ({
   tablaPinos: {
+    width: "100%",
     alignSelf: "center",
     marginBottom: theme.spacing(1),
     borderCollapse: "collapse",
