@@ -61,18 +61,19 @@ export const BotonParaAbrirResumen = styled(Button)`
 
 export const TabsHeader = ({handleTabChange,value,children}) => {
 
-  const useStyles = makeStyles({
-    flexContainer: {
-      borderRadius: "4px",
-      border: "1px solid rgba(0,0,0,0.2)"
-    },
-    indicator: {
-      backgroundColor: colors.primary
-    },
-    selected: {
-      color: colors.primary
-    }
-  });
+  const useStyles = makeStyles(({spacing}) => ({
+      flexContainer: {
+        borderRadius: spacing(0.5),
+        border: "1px solid rgba(0,0,0,0.2)"
+      },
+      indicator: {
+        backgroundColor: colors.primary
+      },
+      selected: {
+        color: colors.primary
+      }
+    })
+  );
   
   return (
     <Box
