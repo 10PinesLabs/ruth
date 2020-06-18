@@ -153,30 +153,6 @@ const Minuta = ({ dispatch, tema }) => {
           </ResumenOradorCollapseContainer>
     
           <TablaOradores oradores={tema.oradores}  finTema={tema.fin} pinoSeleccionado={exposicionSeleccionada} onSelect={seleccionarExposicion }/>
-          <ConclusionForm>
-            <ConclusionTitle>
-              CONCLUSION
-            </ConclusionTitle>
-            <ConclusionTextarea
-              value={conclusion}
-              rows={6}
-              placeholder={"Aqui va la conclusión general del tema..."}
-              onChange={(event) => {
-                handleCambioInputConclusion(event.target.value);
-              }}
-            />
-    
-            {estaEditandoConclusion ? (
-              <div>
-                <SecondaryButton type="button" onClick={() => resetearConclusion()}>
-                  Borrar
-                </SecondaryButton>
-                <Button type="button" onClick={() => actualizarConclusion()}>
-                  Guardar
-                </Button>
-              </div>
-            ) : null}
-          </ConclusionForm>
         </TabContainer>
 
         <TabContainer
