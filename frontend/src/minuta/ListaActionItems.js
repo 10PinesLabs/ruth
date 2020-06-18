@@ -23,12 +23,16 @@ const ActionItem = ({descripcion, owners, seEstaEditando}) =>{
 
     return (
         <ListItem style={itemStyle} onMouseEnter={() => setHoveringItem(true)}>
-            <ActionItemContainer>
-            <ActionItemDesciption>{descripcion}</ActionItemDesciption>
-            <div>
-              { owners.map((owner) => <Owner>{"@" + owner}</Owner> ) }
-            </div>
-            </ActionItemContainer>
+            {!seEstaEditando ? 
+                <ActionItemContainer>
+                <ActionItemDesciption>{descripcion}</ActionItemDesciption>
+                <div>
+                { owners.map((owner) => <Owner>{"@" + owner}</Owner> ) }
+                </div>
+                </ActionItemContainer>
+            :
+            <p>Soy editor</p>
+            }
         </ListItem>
     )
 }
@@ -36,7 +40,7 @@ const ActionItem = ({descripcion, owners, seEstaEditando}) =>{
 const actionItemsConDivisores = (actionItems) => {
     const itemsConDivisores = []
     actionItems.forEach((item, index) => {
-        itemsConDivisores.push(<ActionItem descripcion={item.descripcion} owners={item.owners}/>)
+        itemsConDivisores.push(<ActionItem descripcion={item.descripcion} owners={item.owners} seEstaEditando={false}/>)
         if(actionItems[index+1]) itemsConDivisores.push(<Divider/>)
     })
     return itemsConDivisores
