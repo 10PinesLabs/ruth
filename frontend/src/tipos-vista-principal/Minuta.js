@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { VistaDelMedioContainer } from "./Resumen.styled";
+import {VistaDelMedioContainer, VistaMinutaContainer} from "./Resumen.styled";
 import { useSpring } from "react-spring";
 import { connect } from "react-redux";
 import { tipoDeEvento } from "../store/conclusion";
@@ -9,7 +9,7 @@ import { Button, SecondaryButton } from "../components/Button.styled";
 import TablaOradores from "../minuta/TablaOradores";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
-import {BotonParaAbrirResumen, ResumenOradorCollapseContainer, ConclusionForm, ConclusionTextarea, ConclusionTitle} from "../minuta/Minuta.styled";
+import {BotonParaAbrirResumen, ResumenOradorCollapseContainer, ConclusionForm, ConclusionTextarea, ConclusionTitle, TabContainer, TabsHeader, CustomTab} from "../minuta/Minuta.styled";
 import Collapse from '@material-ui/core/Collapse';
 import { ResumenOrador } from "../minuta/ResumenOrador";
 
@@ -25,6 +25,7 @@ const Minuta = ({ dispatch, tema }) => {
   let [conclusion, setConclusion] = useState(tema.conclusion);
   let [estaEditandoConclusion, setEstaEditandoConclusion] = useState(false);
   let [exposicionSeleccionada, setExposicionSeleccionada] = useState(null);
+  let [tabValue, setTabValue] = useState(0);
   let [seActualizaExposicionSeleccionada, setActualizarExposicionSeleccionada] = useState(false)
   let [isResumenOradorCerrado, setIsResumenOradorCerrado] = useState(false);
 
@@ -44,6 +45,10 @@ const Minuta = ({ dispatch, tema }) => {
     }
   },[tema.conclusion]);
 
+  const manejarCambioTab = (event, newValue) => {
+    setTabValue(newValue);
+  };
+  
   //encargarse de cambio de orador
   useEffect(()=>{
     let orador = tema.oradores.actual;
@@ -80,7 +85,7 @@ const Minuta = ({ dispatch, tema }) => {
   }
 
   const estaExponiendo = (instanciaDeHabla) => {
-    return instanciaDeHabla==tema.oradores.actual.instanciaDeHabla
+    return instanciaDeHabla===tema.oradores.actual.instanciaDeHabla
   }
 
   const seleccionarExposicion = (exposicion) => {
@@ -116,45 +121,60 @@ const Minuta = ({ dispatch, tema }) => {
     <VistaDelMedioContainer
       style={useSpring({ opacity: 1, from: { opacity: 0 } })}
     >
-      <BotonParaAbrirResumen
-        variant="outlined"
-        endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
-        onClick={() => setIsResumenOradorCerrado(!isResumenOradorCerrado)}
-      >
-        {textoBotonEdicion()}
-      </BotonParaAbrirResumen>
-
-      <ResumenOradorCollapseContainer>
-        <Collapse in={isResumenOradorCerrado}>
-          <ResumenOrador exposicion={exposicionSeleccionada} onDiscard={onDescartarResumen} onSave={onGuardarResumen}/>
-        </Collapse>
-      </ResumenOradorCollapseContainer>
-
-      <TablaOradores oradores={tema.oradores}  finTema={tema.fin} pinoSeleccionado={exposicionSeleccionada} onSelect={seleccionarExposicion }/>
-      <ConclusionForm>
-        <ConclusionTitle>
-          CONCLUSION
-        </ConclusionTitle>
-        <ConclusionTextarea
-          value={conclusion}
-          rows={6}
-          placeholder={"Aqui va la conclusión general del tema..."}
-          onChange={(event) => {
-            handleCambioInputConclusion(event.target.value);
-          }}
-        />
-
-        {estaEditandoConclusion ? (
-          <div>
-            <SecondaryButton type="button" onClick={() => resetearConclusion()}>
-              Borrar
-            </SecondaryButton>
-            <Button type="button" onClick={() => actualizarConclusion()}>
-              Guardar
-            </Button>
-          </div>
-        ) : null}
-      </ConclusionForm>
+      <VistaMinutaContainer>
+        <TabsHeader
+          value={tabValue}
+          handleTabChange={manejarCambioTab}
+        >
+          <CustomTab label="Minuta de cada pino" />
+          <CustomTab label="Anotaciones generales y action items" />
+        </TabsHeader>
+    
+        <TabContainer
+          value={tabValue}
+          index={0}
+        >
+          <BotonParaAbrirResumen
+            variant="outlined"
+            endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
+            onClick={() => setIsResumenOradorCerrado(!isResumenOradorCerrado)}
+          >
+            {textoBotonEdicion()}
+          </BotonParaAbrirResumen>
+    
+          <ResumenOradorCollapseContainer>
+            <Collapse in={isResumenOradorCerrado}>
+              <ResumenOrador exposicion={exposicionSeleccionada} onDiscard={onDescartarResumen} onSave={onGuardarResumen}/>
+            </Collapse>
+          </ResumenOradorCollapseContainer>
+    
+          <TablaOradores oradores={tema.oradores}  finTema={tema.fin} pinoSeleccionado={exposicionSeleccionada} onSelect={seleccionarExposicion }/>
+          <ConclusionForm>
+            <ConclusionTitle>
+              CONCLUSION
+            </ConclusionTitle>
+            <ConclusionTextarea
+              value={conclusion}
+              rows={6}
+              placeholder={"Aqui va la conclusión general del tema..."}
+              onChange={(event) => {
+                handleCambioInputConclusion(event.target.value);
+              }}
+            />
+    
+            {estaEditandoConclusion ? (
+              <div>
+                <SecondaryButton type="button" onClick={() => resetearConclusion()}>
+                  Borrar
+                </SecondaryButton>
+                <Button type="button" onClick={() => actualizarConclusion()}>
+                  Guardar
+                </Button>
+              </div>
+            ) : null}
+          </ConclusionForm>
+        </TabContainer>
+      </VistaMinutaContainer>
     </VistaDelMedioContainer>
   );
 };
