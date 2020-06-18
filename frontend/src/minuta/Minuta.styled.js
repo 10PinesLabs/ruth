@@ -22,8 +22,7 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center",
-    marginBottom: theme.spacing(12)
+    justifyContent: "center"
   },
   conclusionTitle: {
     alignSelf: "flex-start",

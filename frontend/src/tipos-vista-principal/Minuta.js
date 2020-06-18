@@ -14,6 +14,8 @@ import Collapse from '@material-ui/core/Collapse';
 import ActionItems from "../minuta/ActionItems";
 import { ResumenOrador } from "../minuta/ResumenOrador";
 import {ListaActionItems} from "../minuta/ListaActionItems"
+import {ConclusionTema} from "../minuta/ConclusionTema";
+import Grid from "@material-ui/core/Grid";
 
 const expositor = (nombreOrador, ordenDeOrador, resumen) => {
   return {
@@ -181,8 +183,26 @@ const Minuta = ({ dispatch, tema }) => {
           value={tabValue}
           index={1}
         >
-          <ActionItems tema={tema} dispatch={dispatch}/>
-          <ListaActionItems actionItems={tema.actionItems}/>
+
+          <Grid container spacing={1}>
+            <Grid item xs={5}>
+              <ConclusionTema
+                descripcion={"Resumen General"}
+                value={conclusion}
+                onChange={(event) => {
+                  handleCambioInputConclusion(event.target.value);
+                }}
+                estaEditandoConclusion={estaEditandoConclusion}
+                onBorrar={() => resetearConclusion()}
+                onGuardar={() => actualizarConclusion()}
+              />
+            </Grid>
+            <Grid item xs={7}>
+              <ActionItems tema={tema} dispatch={dispatch}/>
+              <ListaActionItems actionItems={tema.actionItems}/>
+            </Grid>
+          </Grid>
+
         </TabContainer>
         
       </VistaMinutaContainer>
