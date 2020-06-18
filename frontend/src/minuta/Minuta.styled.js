@@ -25,8 +25,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center"
   },
   conclusionTitle: {
-    alignSelf: "flex-start",
-    marginBlockEnd: 0  
+    alignSelf: "flex-start"
   }
 }));
 

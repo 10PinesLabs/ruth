@@ -16,6 +16,7 @@ import { ResumenOrador } from "../minuta/ResumenOrador";
 import {ListaActionItems} from "../minuta/ListaActionItems"
 import {ConclusionTema} from "../minuta/ConclusionTema";
 import Grid from "@material-ui/core/Grid";
+import {Titulo} from "../minuta/ListaActionItems.styled";
 
 const expositor = (nombreOrador, ordenDeOrador, resumen) => {
   return {
@@ -174,6 +175,7 @@ const Minuta = ({ dispatch, tema }) => {
               />
             </Grid>
             <Grid item xs={7}>
+              <h1>Action Items ({tema.actionItems.length})</h1>
               <ActionItems tema={tema} dispatch={dispatch}/>
               <ListaActionItems actionItems={tema.actionItems}/>
             </Grid>
