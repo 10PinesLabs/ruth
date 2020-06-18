@@ -6,49 +6,24 @@ import {
   ContenedorInputActionItem,
   InputActionItem,
 } from './ActionItems.styled';
-import {tipoDeEvento} from "../store/actionItem";
 import Box from "@material-ui/core/Box";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import {TextField} from "@material-ui/core";
 
 const listaDeRoots = ['Pepe', 'Alberto', 'Luis', 'Julieta'];
 
-const ActionItems = ({tema, dispatch}) => {
+const ActionItems = ({tema, dispatch, onAgregarActionItem}) => {
 
   const [descripcion, setDescripcion] = useState('');
   const [owners, setOwners] = useState([]);
-
-  const dispatchActionItem = (data) => {
-    const evento = {
-      autor: "MINUTEADOR",
-      idTema: tema.id,
-      data,
-    };
-    dispatch(evento);
-  }
 
   const limpiarInputs = () => {
     setDescripcion('');
     setOwners([]);
   }
 
-  const agregarActionItem = () => {
-    const actionItem = {
-      descripcion,
-      owners,
-    }
-    dispatchActionItem({
-      tipo: tipoDeEvento.AGREGAR_ACTION_ITEM,
-      actionItem,
-    });
-
-    limpiarInputs();
-
-  };
-
   return (
     <>
-    <h1>Action Items</h1>
       <Box component={ContenedorEdicionActionItem} clone boxShadow={2}>
         <ContenedorEdicionActionItem maxWidth="md">
           <ContenedorInputActionItem maxWidth="md">
@@ -68,7 +43,12 @@ const ActionItems = ({tema, dispatch}) => {
           </ContenedorInputActionItem>
           <ContenedorBotonesActionItem>
             <BotonCancelar size="small" onClick={limpiarInputs} variant="outlined">Descartar</BotonCancelar>
-            <BotonCrearActionItem size="small" onClick={agregarActionItem}>Crear action item</BotonCrearActionItem>
+            <BotonCrearActionItem
+              size="small"
+              onClick={() => {
+                onAgregarActionItem({descripcion, owners});
+                limpiarInputs();
+              }}>Crear action item</BotonCrearActionItem>
           </ContenedorBotonesActionItem>
         </ContenedorEdicionActionItem>
       </Box>

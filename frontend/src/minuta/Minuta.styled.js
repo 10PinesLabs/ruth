@@ -22,12 +22,10 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center",
-    marginBottom: theme.spacing(12)
+    justifyContent: "center"
   },
   conclusionTitle: {
-    alignSelf: "flex-start",
-    marginBlockEnd: 0  
+    alignSelf: "flex-start"
   }
 }));
 
@@ -118,4 +116,5 @@ display: ${(value === index)? "flex": "none"};
 flex-direction: column;
 flex: 1;
 align-items: center;
+width: 100%;
 `);

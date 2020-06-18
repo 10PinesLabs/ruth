@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Card from '@material-ui/core/Card';
@@ -10,18 +10,12 @@ import {ListaActionItemsContainer,
         Titulo, 
         Owner} from '../minuta/ListaActionItems.styled'
 
-const actionItems = [
-    {descripcion:"Como minuteador, quiero poder enviar la minuta por email al finalizar la reunion de roots", owners:["olatito", "lauturro"]},
-    {descripcion: "Como owner de un action item, me gustaria recibir un email con la descripcion del mismo", owners:["olatito", "lauturro"]},
-    {descripcion:"[BUG] No se puede iniciar sesion en produccion", owners:["olatito", "lauturro"]},    
-]
-
-const ActionItem = ({descripcion, owners, seEstaEditando}) =>{
-    let [hoveringItem, setHoveringItem] = useState(false);
-    const itemStyle = { backgroundColor: seEstaEditando ? colors.primary : colors.background,
-                        cursor: hoveringItem ? 'pointer' : 'auto',}
-
-    return (
+const actionItem = (descripcion, owners) =>{
+  let [hoveringItem, setHoveringItem] = useState(false);
+  const itemStyle = { backgroundColor: seEstaEditando ? colors.primary : colors.background,
+    cursor: hoveringItem ? 'pointer' : 'auto',}
+    
+  return (
         <ListItem style={itemStyle} onMouseEnter={() => setHoveringItem(true)}>
             <ActionItemContainer>
             <ActionItemDesciption>{descripcion}</ActionItemDesciption>
@@ -36,13 +30,13 @@ const ActionItem = ({descripcion, owners, seEstaEditando}) =>{
 const actionItemsConDivisores = (actionItems) => {
     const itemsConDivisores = []
     actionItems.forEach((item, index) => {
-        itemsConDivisores.push(<ActionItem descripcion={item.descripcion} owners={item.owners}/>)
+        itemsConDivisores.push(actionItem(item.actionItem.descripcion, item.actionItem.owners))
         if(actionItems[index+1]) itemsConDivisores.push(<Divider/>)
     })
     return itemsConDivisores
 }
 
-export const ListaActionItems = () => {
+export const ListaActionItems = ({actionItems}) => {
   
     return (
         <ListaActionItemsContainer>
