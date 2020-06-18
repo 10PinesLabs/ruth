@@ -9,12 +9,6 @@ import {ListaActionItemsContainer,
         Titulo, 
         Owner} from '../minuta/ListaActionItems.styled'
 
-const actionItems = [
-    {descripcion:"Como minuteador, quiero poder enviar la minuta por email al finalizar la reunion de roots", owners:["olatito", "lauturro"]},
-    {descripcion: "Como owner de un action item, me gustaria recibir un email con la descripcion del mismo", owners:["olatito", "lauturro"]},
-    {descripcion:"[BUG] No se puede iniciar sesion en produccion", owners:["olatito", "lauturro"]},    
-]
-
 const actionItem = (descripcion, owners) =>{
     return (
         <ListItem>
@@ -31,13 +25,13 @@ const actionItem = (descripcion, owners) =>{
 const actionItemsConDivisores = (actionItems) => {
     const itemsConDivisores = []
     actionItems.forEach((item, index) => {
-        itemsConDivisores.push(actionItem(item.descripcion, item.owners))
+        itemsConDivisores.push(actionItem(item.actionItem.descripcion, item.actionItem.owners))
         if(actionItems[index+1]) itemsConDivisores.push(<Divider/>)
     })
     return itemsConDivisores
 }
 
-export const ListaActionItems = () => {
+export const ListaActionItems = ({actionItems}) => {
   
     return (
         <ListaActionItemsContainer>

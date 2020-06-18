@@ -176,7 +176,7 @@ const Minuta = ({ dispatch, tema }) => {
             ) : null}
           </ConclusionForm>
           <ActionItems tema={tema} dispatch={dispatch}/>
-          <ListaActionItems/>
+          <ListaActionItems actionItems={tema.actionItems}/>
         </TabContainer>
       </VistaMinutaContainer>
     </VistaDelMedioContainer>
