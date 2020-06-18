@@ -56,7 +56,7 @@ const Minuta = ({ dispatch, tema }) => {
     let orador = tema.oradores.actual;
     if(!exposicionSeleccionada && orador){
       seleccionarExposicion(expositor(orador.usuario.nombre, orador.instanciaDeHabla, orador.resumen))
-    }
+    } 
   }, tema.oradores.actual)
 
   function actualizarConclusion() {
@@ -93,7 +93,7 @@ const Minuta = ({ dispatch, tema }) => {
   const seleccionarExposicion = (exposicion) => {
     setExposicionSeleccionada(exposicion)
     setActualizarExposicionSeleccionada(hayAlguienExponiendo() && estaExponiendo(exposicion.index))
-
+    
   }
 
   const onDescartarResumen = ()=>{
@@ -114,7 +114,7 @@ const Minuta = ({ dispatch, tema }) => {
       let selectObject = expositor(siguienteOrador.usuario.nombre, siguienteOrador.instanciaDeHabla)
       setExposicionSeleccionada(selectObject)
     }
-
+    
 
   }
 
