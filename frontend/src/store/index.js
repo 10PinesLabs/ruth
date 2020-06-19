@@ -27,12 +27,12 @@ export const temaReducer = (state, action) => produce(state, (draft) => {
 
 function compareTemaByPriority(tema1, tema2) {
   if (tema2.prioridad === null) {
-    return -1;
-  }
-  if (tema1.prioridad === null) {
     return 1;
   }
-  return tema2.prioridad - tema1.prioridad;
+  if (tema1.prioridad === null) {
+    return -1;
+  }
+  return tema1.prioridad - tema2.prioridad ;
 }
 
 function compareTema(tema1, tema2) {
