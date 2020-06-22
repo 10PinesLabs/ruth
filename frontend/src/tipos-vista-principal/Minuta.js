@@ -168,8 +168,8 @@ const Minuta = ({ dispatch, tema }) => {
           <Grid container spacing={1}>
             <Grid item xs={5}>
               <ConclusionTema
-                descripcion={"Resumen General"}
-                value={conclusion}
+                titulo={"Resumen General"}
+                conclusion={conclusion}
                 onChange={(event) => {
                   handleCambioInputConclusion(event.target.value);
                 }}
