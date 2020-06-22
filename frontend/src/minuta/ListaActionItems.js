@@ -35,7 +35,6 @@ export const ListaActionItems = ({actionItems}) => {
                 )}
             </List>
         </ListaActionItemsContainer>
-       
     )
 }
 
