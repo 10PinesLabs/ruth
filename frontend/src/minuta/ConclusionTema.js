@@ -15,14 +15,14 @@ export function ConclusionTema(props) {
     />
 
     {props.estaEditandoConclusion ? (
-      <div>
+      <>
         <SecondaryButton type="button" onClick={props.onBorrar}>
           Borrar
         </SecondaryButton>
         <Button type="button" onClick={props.onGuardar}>
           Guardar
         </Button>
-      </div>
+      </>
     ) : null}
   </ConclusionForm>;
 }
