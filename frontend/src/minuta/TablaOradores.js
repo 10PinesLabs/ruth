@@ -4,7 +4,7 @@ import {makeStyles, Paper, Table, TableBody, TableHead, TableRow} from "@materia
 import {FlexVerticalCenterSpaceAround, StyledTableCell} from "./TablaOradores.styled";
 import IconButton from "@material-ui/core/IconButton";
 import {colors} from "../styles/theme";
-import {ExpandMore, ThumbDown, ThumbUp, Timer, Update} from "@material-ui/icons";
+import {ArrowDownward, ArrowUpward, ThumbDown, ThumbUp, Update} from "@material-ui/icons";
 import {FilaPino} from "./FilaPino";
 
 function HeaderReaction({children}) {
@@ -68,7 +68,7 @@ export function TablaOradores({oradores, finTema, pinoSeleccionado, onSelect}) {
                     variant="outlined"
                     onClick={() => setOrdenAscendiente(!ordenAscendente)}
                   >
-                    {(ordenAscendente) ? <Timer/> : <ExpandMore/>}
+                    {(ordenAscendente) ? <ArrowDownward/> : <ArrowUpward/>}
                   </IconButton>
               </HeaderReaction>
               <StyledTableCell>Participante</StyledTableCell>
