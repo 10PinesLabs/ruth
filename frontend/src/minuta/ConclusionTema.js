@@ -2,27 +2,27 @@ import {ConclusionForm, ConclusionTextarea, ConclusionTitle} from "./Minuta.styl
 import {Button, SecondaryButton} from "../components/Button.styled";
 import React from "react";
 
-export function ConclusionTema(props) {
+export function ConclusionTema({ titulo, conclusion, onChange, onBorrar, onGuardar, estaEditandoConclusion }) {
   return <ConclusionForm>
     <ConclusionTitle>
-      {props.descripcion}
+      {titulo}
     </ConclusionTitle>
     <ConclusionTextarea
-      value={props.value}
+      value={conclusion}
       rows={6}
       placeholder={"Aqui va la conclusión general del tema..."}
-      onChange={props.onChange}
+      onChange={onChange}
     />
 
-    {props.estaEditandoConclusion ? (
-      <div>
-        <SecondaryButton type="button" onClick={props.onBorrar}>
+    {estaEditandoConclusion ? (
+      <>
+        <SecondaryButton type="button" onClick={onBorrar}>
           Borrar
         </SecondaryButton>
-        <Button type="button" onClick={props.onGuardar}>
+        <Button type="button" onClick={onGuardar}>
           Guardar
         </Button>
-      </div>
+      </>
     ) : null}
   </ConclusionForm>;
 }

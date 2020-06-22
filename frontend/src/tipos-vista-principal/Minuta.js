@@ -11,7 +11,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
 import {BotonParaAbrirResumen, ResumenOradorCollapseContainer, TabContainer, TabsHeader, CustomTab} from "../minuta/Minuta.styled";
 import Collapse from '@material-ui/core/Collapse';
-import ActionItems from "../minuta/ActionItems";
+import ActionItemEditor from "../minuta/ActionItemEditor";
 import { ResumenOrador } from "../minuta/ResumenOrador";
 import {ListaActionItems} from "../minuta/ListaActionItems"
 import {ConclusionTema} from "../minuta/ConclusionTema";
@@ -176,8 +176,8 @@ const Minuta = ({ dispatch, tema }) => {
           <Grid container spacing={1}>
             <Grid item xs={5}>
               <ConclusionTema
-                descripcion={"Resumen General"}
-                value={conclusion}
+                titulo={"Resumen General"}
+                conclusion={conclusion}
                 onChange={(event) => {
                   handleCambioInputConclusion(event.target.value);
                 }}
@@ -188,7 +188,7 @@ const Minuta = ({ dispatch, tema }) => {
             </Grid>
             <Grid item xs={7}>
               <h1>Action Items ({tema.actionItems.length})</h1>
-              <ActionItems onAgregarActionItem={agregarActionItem}/>
+              <ActionItemEditor onAgregarActionItem={agregarActionItem}/>
               <ListaActionItems actionItems={tema.actionItems} alEditar={editarActionItem} />
             </Grid>
           </Grid>

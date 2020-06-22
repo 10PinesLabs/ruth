@@ -37,23 +37,14 @@ const ActionItem = ({descripcion, owners, seEstaEditando, alEditar, index}) =>{
                 </ActionItemContainer>
             :
                 <ActionItems 
-                itemDescription={descripcion}
-                itemOwners={owners} edicion={editando}
-                alDescartar={()=>{setEditando(false)}}
-                alEditar={alGuardarEdicion}
+                  itemDescription={descripcion}
+                  itemOwners={owners} edicion={editando}
+                  alDescartar={()=>{setEditando(false)}}
+                  alEditar={alGuardarEdicion}
                 />
             }
         </ListItem>
     )
-}
-
-const actionItemsConDivisores = (actionItems, alEditar) => {
-    const itemsConDivisores = []
-    actionItems.forEach((item, index) => {
-        itemsConDivisores.push(<ActionItem key={index} index={index} descripcion={item.actionItem.descripcion} owners={item.actionItem.owners} alEditar={alEditar}/>)
-        if(actionItems[index+1]) itemsConDivisores.push(<Divider/>)
-    })
-    return itemsConDivisores
 }
 
 export const ListaActionItems = ({actionItems, alEditar}) => {
@@ -61,9 +52,24 @@ export const ListaActionItems = ({actionItems, alEditar}) => {
     return (
         <ListaActionItemsContainer>
             <List alignItems="flex-start" component={Card}>
-                {actionItemsConDivisores(actionItems, alEditar)}
+                {actionItems.map((item, index) =>
+                  <>
+                    <ActionItem
+                      key={index} 
+                      index={index}
+                      descripcion={item.actionItem.descripcion} 
+                      owners={item.actionItem.owners}
+                      alEditar={alEditar}
+                    />
+                    {actionItems[index + 1] ? <Divider/> : null}
+                  </>
+                )}
             </List>
         </ListaActionItemsContainer>
-       
     )
 }
+
+
+
+
+
