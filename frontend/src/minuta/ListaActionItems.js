@@ -32,7 +32,7 @@ const ActionItem = ({descripcion, owners, seEstaEditando, alEditar, index}) =>{
                 <ActionItemContainer>
                 <ActionItemDesciption>{descripcion}</ActionItemDesciption>
                 <div>
-                { owners.map((owner) => <Owner>{"@" + owner}</Owner> ) }
+                { owners.map((owner) => <Owner>{"@" + owner.usuario}</Owner> ) }
                 </div>
                 </ActionItemContainer>
             :
