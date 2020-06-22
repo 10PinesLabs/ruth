@@ -33,7 +33,6 @@ export const ListaActionItems = ({actionItems}) => {
                     {actionItems[index + 1] ? <Divider/> : null}
                   </>
                 )}
-              
             </List>
         </ListaActionItemsContainer>
        
