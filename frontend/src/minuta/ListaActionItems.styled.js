@@ -6,12 +6,6 @@ import {colors} from '../styles/theme'
 export const ListaActionItemsContainer = styled.div`
 color:black`
 
-export const Titulo = styled.h2`
-display:block;
-margin: 10px;
-vertical-align: middle;
-margin-bottom:10px  `
-
 export const ActionItemContainer = styled.div`
 display:flex;
 flex-direction: column;`

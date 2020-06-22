@@ -6,62 +6,65 @@ import Divider from '@material-ui/core/Divider';
 import {ListaActionItemsContainer,
         ActionItemDesciption,
         ActionItemContainer,
-        Titulo, 
-        Owner} from '../minuta/ListaActionItems.styled'
-import ActionItems from "../minuta/ActionItems";
+        Owner} from './ListaActionItems.styled'
+import {ActionItemEditor} from "./ActionItemEditor";
 
 const ActionItem = ({descripcion, owners, seEstaEditando, alEditar, index}) =>{
-    let [hoveringItem, setHoveringItem] = useState(false);
-    let [editando, setEditando] = useState(seEstaEditando);
+  let [hoveringItem, setHoveringItem] = useState(false);
+  let [editando, setEditando] = useState(seEstaEditando);
 
-    const itemStyle = { padding: editando ? 0 : 13,
-                        cursor: hoveringItem ? 'pointer' : 'auto',}
+  const itemStyle = { padding: editando ? 0 : 13,
+                      cursor: hoveringItem ? 'pointer' : 'auto',}
 
-    const alGuardarEdicion = (actionItemGuardado) => {
-        actionItemGuardado.index = index;
-        alEditar(actionItemGuardado)
-        setEditando(false)
-    }
+  const alGuardarEdicion = (actionItemGuardado) => {
+      alEditar({...actionItemGuardado, index})
+      setEditando(false)
+  }
 
-    return (
-        <ListItem style={itemStyle} 
-                    onMouseEnter={() => setHoveringItem(true)} 
-                    onClick={()=>{if(!editando)setEditando(true)}}>
-
-            {!editando ? 
-                <ActionItemContainer>
-                <ActionItemDesciption>{descripcion}</ActionItemDesciption>
-                <div>
-                { owners.map((owner) => <Owner>{"@" + owner}</Owner> ) }
-                </div>
-                </ActionItemContainer>
-            :
-                <ActionItems 
-                  itemDescription={descripcion}
-                  itemOwners={owners} edicion={editando}
-                  alDescartar={()=>{setEditando(false)}}
-                  alEditar={alGuardarEdicion}
-                />
-            }
-        </ListItem>
-    )
+  return (
+    <ListItem 
+      style={itemStyle} 
+      onMouseEnter={() => setHoveringItem(true)} 
+      onClick={()=> !editando? setEditando(true) : null}
+    >
+      {!editando ? 
+        <ActionItemContainer>
+          <ActionItemDesciption>{descripcion}</ActionItemDesciption>
+          <div>
+            { owners.map((owner) => <Owner>{"@" + owner}</Owner> ) }
+          </div>
+        </ActionItemContainer>
+    :
+        <ActionItemEditor 
+          itemDescription={descripcion}
+          itemOwners={owners} edicion={editando}
+          alDescartar={()=>{setEditando(false)}}
+          alEditar={alGuardarEdicion}
+        />
+      }
+    </ListItem>
+  )
 }
 
 export const ListaActionItems = ({actionItems, alEditar}) => {
+  
+  function siguienteElemento(index) {
+    return actionItems[index + 1];
+  }
   
     return (
         <ListaActionItemsContainer>
             <List alignItems="flex-start" component={Card}>
                 {actionItems.map((item, index) =>
                   <>
-                    <ActionItem
+                    <ActionItem 
                       key={index} 
                       index={index}
                       descripcion={item.actionItem.descripcion} 
                       owners={item.actionItem.owners}
                       alEditar={alEditar}
                     />
-                    {actionItems[index + 1] ? <Divider/> : null}
+                    {siguienteElemento(index) ? <Divider/> : null}
                   </>
                 )}
             </List>

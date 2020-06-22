@@ -11,7 +11,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
 import {BotonParaAbrirResumen, ResumenOradorCollapseContainer, TabContainer, TabsHeader, CustomTab} from "../minuta/Minuta.styled";
 import Collapse from '@material-ui/core/Collapse';
-import ActionItemEditor from "../minuta/ActionItemEditor";
+import { ActionItemEditor } from "../minuta/ActionItemEditor";
 import { ResumenOrador } from "../minuta/ResumenOrador";
 import {ListaActionItems} from "../minuta/ListaActionItems"
 import {ConclusionTema} from "../minuta/ConclusionTema";
