@@ -62,12 +62,13 @@ export function TablaOradores({oradores, finTema, pinoSeleccionado, onSelect}) {
           <TableHead>
             <TableRow>
               <HeaderReaction>
-                  #
+                  
                   <IconButton
                     style={{color: colors.viridian}}
                     variant="outlined"
                     onClick={() => setOrdenAscendiente(!ordenAscendente)}
                   >
+                    #
                     {(ordenAscendente) ? <ArrowDownward/> : <ArrowUpward/>}
                   </IconButton>
               </HeaderReaction>
