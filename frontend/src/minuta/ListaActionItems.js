@@ -8,18 +8,16 @@ import {ListaActionItemsContainer,
         ActionItemContainer,
         Owner} from './ListaActionItems.styled'
 
-const actionItem = (descripcion, owners) =>{
-    return (
-        <ListItem>
-            <ActionItemContainer>
+const ActionItem = ({ descripcion, owners }) => (
+    <ListItem>
+        <ActionItemContainer>
             <ActionItemDesciption>{descripcion}</ActionItemDesciption>
             <div>
               { owners.map((owner) => <Owner>{"@" + owner}</Owner> ) }
             </div>
-            </ActionItemContainer>
-        </ListItem>
-    )
-}
+        </ActionItemContainer>
+    </ListItem>
+)
 
 const actionItemsConDivisores = (actionItems) => {
     const itemsConDivisores = []
