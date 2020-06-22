@@ -16,16 +16,12 @@ class TalkingReactionButton extends React.Component {
         paddingLeft: 0,
         paddingRight: 0,
         maxWidth: "none"
-    }
-    backgroundActivo = 'linear-gradient(90deg, rgba(220,223,3,1) 0%, rgba(255,252,184,1) 100%)'
-
-    backgroundInactivo = 'linear-gradient(90deg, rgba(255,255,255,1) 30%, rgba(187,187,186,1) 97%)'
+    };
 
     render() {
         return <Grid item xs={4} justify="center" alignItems="center" style={this.estiloGrilla}>
             <ReactionButton
-                inactiveBackground={this.backgroundInactivo}
-                activeBackground={this.backgroundActivo}
+                activeBackground={'#FFD152'}
                 isBig
                 isActive={this.props.active} icon={this.props.icon}
                 onClick={this.handleReaction}/>

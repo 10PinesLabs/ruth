@@ -23,9 +23,12 @@ if (process.env.NODE_ENV === 'production') {
   //
   // To aliviate this we should trust the X-Forward-* family of headers
   // more on this https://expressjs.com/en/guide/behind-proxies.html
-  app.set('trust proxy', true);
-  cookieOptions.secure = true;
+  app.enable('trust proxy');
+  app.set('trust proxy', 1);
+  console.log('estamos en prod');
+  cookieOptions.secure = false;
 } else {
+  console.log('no estamos en prod');
   cookieOptions.secure = false;
   cookieOptions.secret = process.env.SESSION_SECRET || 'secret';
 }
@@ -35,7 +38,6 @@ app.use(json());
 app.use(urlencoded({ extended: false }));
 
 app.use(cookieSession(cookieOptions));
-
 app.use('/api', apiRouter(expressWs.getWss()));
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, './frontend')));

@@ -18,7 +18,7 @@ function calculateDataForReaction(data, inicioSeconds, inicioTema, now, reaccion
 }
 
 const REFRESH_RATE = 10000;
-const ChartLine = ({ data, inicioTema, tiempoTema = 10 }) => {
+const ChartLine = ({ data, inicioTema }) => {
   const graphOptions = ({
     layout: {
       padding: {
@@ -29,7 +29,7 @@ const ChartLine = ({ data, inicioTema, tiempoTema = 10 }) => {
       },
     },
     legend: {
-      display: true,
+      display: false,
       position: 'bottom',
       labels: {
         fontSize: 20,
