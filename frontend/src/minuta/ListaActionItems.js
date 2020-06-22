@@ -24,10 +24,16 @@ export const ListaActionItems = ({actionItems}) => {
     return (
         <ListaActionItemsContainer>
             <List alignItems="flex-start" component={Card}>
-                {actionItems.map((item) =>
-                  <ActionItem descripcion={item.actionItem.descripcion} owners={item.actionItem.owners}/>
+                {actionItems.map((item, index) =>
+                  <>
+                    <ActionItem 
+                      descripcion={item.actionItem.descripcion} 
+                      owners={item.actionItem.owners}
+                    />
+                    {actionItems[index + 1] ? <Divider/> : null}
+                  </>
                 )}
-              <Divider/>
+              
             </List>
         </ListaActionItemsContainer>
        
