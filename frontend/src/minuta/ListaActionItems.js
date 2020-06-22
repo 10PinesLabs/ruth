@@ -22,7 +22,7 @@ const ActionItem = ({ descripcion, owners }) => (
 const actionItemsConDivisores = (actionItems) => {
     const itemsConDivisores = []
     actionItems.forEach((item, index) => {
-        itemsConDivisores.push(actionItem(item.actionItem.descripcion, item.actionItem.owners))
+        itemsConDivisores.push(<ActionItem descripcion={item.actionItem.descripcion} owners={item.actionItem.owners}/>)
         if(actionItems[index+1]) itemsConDivisores.push(<Divider/>)
     })
     return itemsConDivisores
