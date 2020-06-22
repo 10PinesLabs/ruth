@@ -5,14 +5,14 @@ import {
   ContenedorBotonesActionItem, ContenedorEdicionActionItem,
   ContenedorInputActionItem,
   InputActionItem,
-} from './ActionItems.styled';
+} from './ActionItemEditor.styled';
 import Box from "@material-ui/core/Box";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import {TextField} from "@material-ui/core";
 
 const listaDeRoots = ['Pepe', 'Alberto', 'Luis', 'Julieta'];
 
-const ActionItems = ({onAgregarActionItem}) => {
+const ActionItemEditor = ({onAgregarActionItem}) => {
 
   const [descripcion, setDescripcion] = useState('');
   const [owners, setOwners] = useState([]);
@@ -54,4 +54,4 @@ const ActionItems = ({onAgregarActionItem}) => {
   )
 };
 
-export default ActionItems;
+export default ActionItemEditor;
