@@ -24,7 +24,6 @@ const ActionItems = ({onAgregarActionItem}) => {
 
   return (
     <>
-    <h1>Action Items</h1>
       <Box component={ContenedorEdicionActionItem} clone boxShadow={2}>
         <ContenedorEdicionActionItem maxWidth="md">
           <ContenedorInputActionItem maxWidth="md">

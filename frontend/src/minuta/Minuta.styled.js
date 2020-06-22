@@ -6,6 +6,7 @@ import React from "react";
 
 const useStyles = makeStyles(theme => ({
   tablaPinos: {
+    width: "100%",
     alignSelf: "center",
     marginBottom: theme.spacing(1),
     borderCollapse: "collapse",
@@ -20,12 +21,10 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center",
-    marginBottom: theme.spacing(12)
+    justifyContent: "center"
   },
   conclusionTitle: {
-    alignSelf: "flex-start",
-    marginBlockEnd: 0  
+    alignSelf: "flex-start"
   }
 }));
 

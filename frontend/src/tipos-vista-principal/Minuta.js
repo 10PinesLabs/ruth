@@ -6,14 +6,16 @@ import { tipoDeEvento } from "../store/conclusion";
 import { tipoDeEvento as tipoDeEventoOradores} from "../store/oradores";
 import { tipoDeEvento as tipoDeEventoActionItem} from "../store/actionItem";
 import { toast } from "react-toastify";
-import { Button, SecondaryButton } from "../components/Button.styled";
 import TablaOradores from "../minuta/TablaOradores";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
-import {BotonParaAbrirResumen, ResumenOradorCollapseContainer, ConclusionForm, ConclusionTextarea, ConclusionTitle, TabContainer, TabsHeader, CustomTab} from "../minuta/Minuta.styled";
+import {BotonParaAbrirResumen, ResumenOradorCollapseContainer, TabContainer, TabsHeader, CustomTab} from "../minuta/Minuta.styled";
 import Collapse from '@material-ui/core/Collapse';
 import ActionItems from "../minuta/ActionItems";
 import { ResumenOrador } from "../minuta/ResumenOrador";
+import {ListaActionItems} from "../minuta/ListaActionItems"
+import {ConclusionTema} from "../minuta/ConclusionTema";
+import Grid from "@material-ui/core/Grid";
 
 const expositor = (nombreOrador, ordenDeOrador, resumen) => {
   return {
@@ -163,31 +165,25 @@ const Minuta = ({ dispatch, tema }) => {
           value={tabValue}
           index={1}
         >
-          <ConclusionForm>
-            <ConclusionTitle>
-              CONCLUSION
-            </ConclusionTitle>
-            <ConclusionTextarea
-              value={conclusion}
-              rows={6}
-              placeholder={"Aqui va la conclusión general del tema..."}
-              onChange={(event) => {
-                handleCambioInputConclusion(event.target.value);
-              }}
-            />
-    
-            {estaEditandoConclusion ? (
-              <div>
-                <SecondaryButton type="button" onClick={() => resetearConclusion()}>
-                  Borrar
-                </SecondaryButton>
-                <Button type="button" onClick={() => actualizarConclusion()}>
-                  Guardar
-                </Button>
-              </div>
-            ) : null}
-          </ConclusionForm>
-          <ActionItems onAgregarActionItem={agregarActionItem}/>
+          <Grid container spacing={1}>
+            <Grid item xs={5}>
+              <ConclusionTema
+                descripcion={"Resumen General"}
+                value={conclusion}
+                onChange={(event) => {
+                  handleCambioInputConclusion(event.target.value);
+                }}
+                estaEditandoConclusion={estaEditandoConclusion}
+                onBorrar={() => resetearConclusion()}
+                onGuardar={() => actualizarConclusion()}
+              />
+            </Grid>
+            <Grid item xs={7}>
+              <h1>Action Items ({tema.actionItems.length})</h1>
+              <ActionItems onAgregarActionItem={agregarActionItem}/>
+              <ListaActionItems actionItems={tema.actionItems} />
+            </Grid>
+          </Grid>
         </TabContainer>
       </VistaMinutaContainer>
     </VistaDelMedioContainer>
