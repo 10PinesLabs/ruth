@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   BotonCancelar,
   BotonCrearActionItem,
@@ -9,13 +9,13 @@ import {
 import Box from "@material-ui/core/Box";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import {TextField} from "@material-ui/core";
-
-const listaDeRoots = ['Pepe', 'Alberto', 'Luis', 'Julieta'];
+import backend from '../api/backend'
 
 const ActionItemEditor = ({onSubmit, itemDescription, itemOwners, estaEditando = false, alDescartar}) => {
 
   const [descripcion, setDescripcion] = useState(itemDescription || '');
   const [owners, setOwners] = useState(itemOwners || []);
+  const [listaDeRoots, setListaDeRoots] = useState([])
 
   const limpiarInputs = () => {
     setDescripcion('');
@@ -27,6 +27,14 @@ const ActionItemEditor = ({onSubmit, itemDescription, itemOwners, estaEditando =
     if(alDescartar) alDescartar()
   }
 
+  const actualizarListaDeRoots = () =>{
+    backend.getRoots()
+      .then((roots)=>{
+        setListaDeRoots(roots)})
+  }
+
+  useEffect(actualizarListaDeRoots, [])
+
   return (
     <Box component={ContenedorEdicionActionItem} clone boxShadow={2}>
       <ContenedorEdicionActionItem maxWidth="md">
@@ -36,6 +44,8 @@ const ActionItemEditor = ({onSubmit, itemDescription, itemOwners, estaEditando =
             multiple
             options={listaDeRoots}
             value={owners}
+            getOptionLabel={root => root.usuario}
+            renderOption={root => <div>{root.usuario} ({root.nombre})</div>}
             onChange={(event, value) => setOwners(value)}
             renderInput={params => (
               <TextField {...params}
