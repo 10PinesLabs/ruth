@@ -19,23 +19,22 @@ const ActionItem = ({ descripcion, owners }) => (
     </ListItem>
 )
 
-const actionItemsConDivisores = (actionItems) => {
-    const itemsConDivisores = []
-    actionItems.forEach((item, index) => {
-        itemsConDivisores.push(<ActionItem descripcion={item.actionItem.descripcion} owners={item.actionItem.owners}/>)
-        if(actionItems[index+1]) itemsConDivisores.push(<Divider/>)
-    })
-    return itemsConDivisores
-}
-
 export const ListaActionItems = ({actionItems}) => {
   
     return (
         <ListaActionItemsContainer>
             <List alignItems="flex-start" component={Card}>
-                {actionItemsConDivisores(actionItems)}
+                {actionItems.map((item) =>
+                  <ActionItem descripcion={item.actionItem.descripcion} owners={item.actionItem.owners}/>
+                )}
+              <Divider/>
             </List>
         </ListaActionItemsContainer>
        
     )
 }
+
+
+
+
+
