@@ -49,24 +49,24 @@ export const ListaActionItems = ({actionItems, alEditar}) => {
     return actionItems[index + 1];
   }
   
-    return (
-        <ListaActionItemsContainer>
-            <List alignItems="flex-start" component={Card}>
-                {actionItems.map((item, index) =>
-                  <>
-                    <ActionItem 
-                      key={index} 
-                      index={index}
-                      descripcion={item.actionItem.descripcion} 
-                      owners={item.actionItem.owners}
-                      alEditar={alEditar}
-                    />
-                    {siguienteElemento(index) ? <Divider/> : null}
-                  </>
-                )}
-            </List>
-        </ListaActionItemsContainer>
-    )
+  return (
+    <ListaActionItemsContainer>
+        <List alignItems="flex-start" component={Card}>
+            {actionItems.map((item, index) =>
+              <>
+                <ActionItem 
+                  key={index} 
+                  index={index}
+                  descripcion={item.actionItem.descripcion} 
+                  owners={item.actionItem.owners}
+                  alEditar={alEditar}
+                />
+                {siguienteElemento(index) ? <Divider/> : null}
+              </>
+            )}
+        </List>
+    </ListaActionItemsContainer>
+  )
 }
 
 
