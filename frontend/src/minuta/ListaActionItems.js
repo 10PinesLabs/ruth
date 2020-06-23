@@ -3,67 +3,74 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';
-import {ListaActionItemsContainer,
-        ActionItemDesciption,
-        ActionItemContainer,
-        Titulo, 
-        Owner} from '../minuta/ListaActionItems.styled'
-import ActionItems from "../minuta/ActionItems";
+import {ActionItemContainer, ActionItemDescription, ListaActionItemsContainer, Owner} from './ListaActionItems.styled'
+import {ActionItemEditor} from "./ActionItemEditor";
 
-const ActionItem = ({descripcion, owners, seEstaEditando, alEditar, index}) =>{
-    let [hoveringItem, setHoveringItem] = useState(false);
-    let [editando, setEditando] = useState(seEstaEditando);
+const ActionItem = ({descripcion, owners, onEdit, index}) =>{
+  const [estaEditando, setEstaEditando] = useState(false);
 
-    const itemStyle = { padding: editando ? 0 : 13,
-                        cursor: hoveringItem ? 'pointer' : 'auto',}
+  const alGuardarEdicion = (actionItemGuardado) => {
+    onEdit({...actionItemGuardado, index})
+    setEstaEditando(false)
+  }
 
-    const alGuardarEdicion = (actionItemGuardado) => {
-        actionItemGuardado.index = index;
-        alEditar(actionItemGuardado)
-        setEditando(false)
-    }
-
-    return (
-        <ListItem style={itemStyle} 
-                    onMouseEnter={() => setHoveringItem(true)} 
-                    onClick={()=>{if(!editando)setEditando(true)}}>
-
-            {!editando ? 
-                <ActionItemContainer>
-                <ActionItemDesciption>{descripcion}</ActionItemDesciption>
-                <div>
-                { owners.map((owner) => <Owner>{"@" + owner.usuario}</Owner> ) }
-                </div>
-                </ActionItemContainer>
-            :
-                <ActionItems 
-                itemDescription={descripcion}
-                itemOwners={owners} edicion={editando}
-                alDescartar={()=>{setEditando(false)}}
-                alEditar={alGuardarEdicion}
-                />
-            }
-        </ListItem>
-    )
-}
-
-const actionItemsConDivisores = (actionItems, alEditar) => {
-    const itemsConDivisores = []
-    actionItems.forEach((item, index) => {
-        itemsConDivisores.push(<ActionItem key={index} index={index} descripcion={item.actionItem.descripcion} owners={item.actionItem.owners} alEditar={alEditar}/>)
-        if(actionItems[index+1]) itemsConDivisores.push(<Divider/>)
-    })
-    return itemsConDivisores
-}
-
-export const ListaActionItems = ({actionItems, alEditar}) => {
+  const itemClass = {
+    padding: estaEditando ? 0 : 13,
+  };
   
-    return (
-        <ListaActionItemsContainer>
-            <List alignItems="flex-start" component={Card}>
-                {actionItemsConDivisores(actionItems, alEditar)}
-            </List>
-        </ListaActionItemsContainer>
-       
-    )
+  return (
+    <ListItem 
+      style={itemClass} 
+      button={!estaEditando}
+      onClick={()=> !estaEditando? setEstaEditando(true) : null}
+    >
+      {!estaEditando ? 
+        <ActionItemContainer>
+          <ActionItemDescription>{descripcion}</ActionItemDescription>
+          <div>
+            { owners.map((owner) => <Owner>{"@" + owner.usuario}</Owner> ) }
+          </div>
+        </ActionItemContainer>
+      :
+        <ActionItemEditor 
+          itemDescription={descripcion}
+          itemOwners={owners}
+          estaEditando={estaEditando}
+          alDescartar={()=>{setEstaEditando(false)}}
+          onSubmit={alGuardarEdicion}
+        />
+      }
+    </ListItem>
+  )
 }
+
+export const ListaActionItems = ({actionItems, onEdit}) => {
+  
+  function esElUltimoItem(index) {
+    return actionItems.length === index + 1;
+  }
+  
+  return (
+    <ListaActionItemsContainer>
+        <List alignItems="flex-start" component={Card}>
+            {actionItems.map((item, index) =>
+              <>
+                <ActionItem 
+                  key={item.id} 
+                  index={index}
+                  descripcion={item.actionItem.descripcion} 
+                  owners={item.actionItem.owners}
+                  onEdit={onEdit}
+                />
+                {!esElUltimoItem(index) && <Divider/>}
+              </>
+            )}
+        </List>
+    </ListaActionItemsContainer>
+  )
+}
+
+
+
+
+
