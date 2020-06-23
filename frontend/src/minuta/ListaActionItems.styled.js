@@ -15,7 +15,7 @@ margin: 3px;
 color:${colors.primary}
 font-weight: bold;`
 
-export const ActionItemDesciption = styled.div`
+export const ActionItemDescription = styled.div`
 display: block;
 width: 100%;
 `
