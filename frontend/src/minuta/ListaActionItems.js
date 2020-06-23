@@ -7,7 +7,7 @@ import {ActionItemContainer, ActionItemDescription, ListaActionItemsContainer, O
 import {ActionItemEditor} from "./ActionItemEditor";
 
 const ActionItem = ({descripcion, owners, onEdit, index}) =>{
-  let [estaEditando, setEstaEditando] = useState(false);
+  const [estaEditando, setEstaEditando] = useState(false);
 
   const alGuardarEdicion = (actionItemGuardado) => {
     onEdit({...actionItemGuardado, index})
