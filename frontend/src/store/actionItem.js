@@ -5,7 +5,7 @@ export const tipoDeEvento = {
   EDITAR_ACTION_ITEM: 'Editar un action item',
 };
 
-const INITIAL_ACTION_ITEMS_STATE = [];
+export const INITIAL_ACTION_ITEMS_STATE = [];
 
 export const actionItemReducer = (state = INITIAL_ACTION_ITEMS_STATE, evento) => produce(state, (prevActionItems) => {
   switch (evento.type) {

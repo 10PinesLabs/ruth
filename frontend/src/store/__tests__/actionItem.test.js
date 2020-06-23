@@ -1,4 +1,4 @@
-import { actionItemReducer, tipoDeEvento } from '../actionItem';
+import {actionItemReducer, INITIAL_ACTION_ITEMS_STATE, tipoDeEvento} from '../actionItem';
 
 const eventoAgregarActionItem = (actionItem) => ({
   type: tipoDeEvento.AGREGAR_ACTION_ITEM,
@@ -14,7 +14,7 @@ describe(`# action items!`, () => {
   let state;
 
   beforeEach(() => {
-    state = [];
+    state = INITIAL_ACTION_ITEMS_STATE;
   });
 
   const applyEvento = (ev) => {
