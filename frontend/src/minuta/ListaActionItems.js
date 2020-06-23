@@ -37,7 +37,7 @@ const ActionItem = ({descripcion, owners, onEdit, index}) =>{
           itemOwners={owners}
           estaEditando={estaEditando}
           alDescartar={()=>{setEstaEditando(false)}}
-          onEdit={alGuardarEdicion}
+          onSubmit={alGuardarEdicion}
         />
       }
     </ListItem>

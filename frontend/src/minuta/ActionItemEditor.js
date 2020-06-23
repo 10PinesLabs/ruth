@@ -12,7 +12,7 @@ import {TextField} from "@material-ui/core";
 
 const listaDeRoots = ['Pepe', 'Alberto', 'Luis', 'Julieta'];
 
-const ActionItemEditor = ({onAgregarActionItem, itemDescription, itemOwners, estaEditando = false, alDescartar, onEdit}) => {
+const ActionItemEditor = ({onSubmit, itemDescription, itemOwners, estaEditando = false, alDescartar}) => {
 
   const [descripcion, setDescripcion] = useState(itemDescription || '');
   const [owners, setOwners] = useState(itemOwners || []);
@@ -50,7 +50,7 @@ const ActionItemEditor = ({onAgregarActionItem, itemDescription, itemOwners, est
           <BotonCrearActionItem
             size="small"
             onClick={() => {
-              estaEditando ? onEdit({descripcion, owners}) : onAgregarActionItem({descripcion, owners});
+              onSubmit({descripcion, owners});
               limpiarInputs();
             }}>
               {estaEditando ? "Guardar" : "Crear action item"}
