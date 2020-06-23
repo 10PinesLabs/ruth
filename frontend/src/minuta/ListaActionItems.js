@@ -6,25 +6,25 @@ import Divider from '@material-ui/core/Divider';
 import {ActionItemContainer, ActionItemDesciption, ListaActionItemsContainer, Owner} from './ListaActionItems.styled'
 import {ActionItemEditor} from "./ActionItemEditor";
 
-const ActionItem = ({descripcion, owners, seEstaEditando, onEdit, index}) =>{
-  let [editando, setEditando] = useState(seEstaEditando);
+const ActionItem = ({descripcion, owners, onEdit, index}) =>{
+  let [estaEditando, setEstaEditando] = useState(false);
 
   const alGuardarEdicion = (actionItemGuardado) => {
     onEdit({...actionItemGuardado, index})
-    setEditando(false)
+    setEstaEditando(false)
   }
 
   const itemClass = {
-    padding: editando ? 0 : 13,
+    padding: estaEditando ? 0 : 13,
   };
   
   return (
     <ListItem 
       style={itemClass} 
       button
-      onClick={()=> !editando? setEditando(true) : null}
+      onClick={()=> !estaEditando? setEstaEditando(true) : null}
     >
-      {!editando ? 
+      {!estaEditando ? 
         <ActionItemContainer>
           <ActionItemDesciption>{descripcion}</ActionItemDesciption>
           <div>
@@ -34,9 +34,10 @@ const ActionItem = ({descripcion, owners, seEstaEditando, onEdit, index}) =>{
       :
         <ActionItemEditor 
           itemDescription={descripcion}
-          itemOwners={owners} edicion={editando}
-          alDescartar={()=>{setEditando(false)}}
-          alEditar={alGuardarEdicion}
+          itemOwners={owners}
+          estaEditando={estaEditando}
+          alDescartar={()=>{setEstaEditando(false)}}
+          onEdit={alGuardarEdicion}
         />
       }
     </ListItem>
