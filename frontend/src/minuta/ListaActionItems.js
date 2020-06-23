@@ -6,12 +6,12 @@ import Divider from '@material-ui/core/Divider';
 import {ActionItemContainer, ActionItemDesciption, ListaActionItemsContainer, Owner} from './ListaActionItems.styled'
 import {ActionItemEditor} from "./ActionItemEditor";
 
-const ActionItem = ({descripcion, owners, seEstaEditando, alEditar, index}) =>{
+const ActionItem = ({descripcion, owners, seEstaEditando, onEdit, index}) =>{
   let [editando, setEditando] = useState(seEstaEditando);
 
   const alGuardarEdicion = (actionItemGuardado) => {
-      alEditar({...actionItemGuardado, index})
-      setEditando(false)
+    onEdit({...actionItemGuardado, index})
+    setEditando(false)
   }
 
   const itemClass = {
@@ -31,7 +31,7 @@ const ActionItem = ({descripcion, owners, seEstaEditando, alEditar, index}) =>{
             { owners.map((owner) => <Owner>{"@" + owner}</Owner> ) }
           </div>
         </ActionItemContainer>
-    :
+      :
         <ActionItemEditor 
           itemDescription={descripcion}
           itemOwners={owners} edicion={editando}
@@ -43,7 +43,7 @@ const ActionItem = ({descripcion, owners, seEstaEditando, alEditar, index}) =>{
   )
 }
 
-export const ListaActionItems = ({actionItems, alEditar}) => {
+export const ListaActionItems = ({actionItems, onEdit}) => {
   
   function esElUltimoItem(index) {
     return actionItems.length === index + 1;
@@ -59,7 +59,7 @@ export const ListaActionItems = ({actionItems, alEditar}) => {
                   index={index}
                   descripcion={item.actionItem.descripcion} 
                   owners={item.actionItem.owners}
-                  alEditar={alEditar}
+                  onEdit={onEdit}
                 />
                 {!esElUltimoItem(index) && <Divider/>}
               </>

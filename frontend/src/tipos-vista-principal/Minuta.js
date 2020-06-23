@@ -188,7 +188,7 @@ const Minuta = ({ dispatch, tema }) => {
             <Grid item xs={7}>
               <h1>Action Items ({tema.actionItems.length})</h1>
               <ActionItemEditor onAgregarActionItem={agregarActionItem}/>
-              <ListaActionItems actionItems={tema.actionItems} alEditar={editarActionItem} />
+              <ListaActionItems actionItems={tema.actionItems} onEdit={editarActionItem} />
             </Grid>
           </Grid>
         </TabContainer>
