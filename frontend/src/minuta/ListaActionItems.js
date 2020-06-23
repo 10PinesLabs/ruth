@@ -45,8 +45,8 @@ const ActionItem = ({descripcion, owners, seEstaEditando, alEditar, index}) =>{
 
 export const ListaActionItems = ({actionItems, alEditar}) => {
   
-  function siguienteElemento(index) {
-    return actionItems[index + 1];
+  function esElUltimoItem(index) {
+    return actionItems.length === index + 1;
   }
   
   return (
@@ -61,7 +61,7 @@ export const ListaActionItems = ({actionItems, alEditar}) => {
                   owners={item.actionItem.owners}
                   alEditar={alEditar}
                 />
-                {siguienteElemento(index) ? <Divider/> : null}
+                {!esElUltimoItem(index) && <Divider/>}
               </>
             )}
         </List>
