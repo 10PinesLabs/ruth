@@ -55,7 +55,7 @@ export const ListaActionItems = ({actionItems, alEditar}) => {
             {actionItems.map((item, index) =>
               <>
                 <ActionItem 
-                  key={index} 
+                  key={item.id} 
                   index={index}
                   descripcion={item.actionItem.descripcion} 
                   owners={item.actionItem.owners}
