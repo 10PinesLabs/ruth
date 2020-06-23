@@ -21,7 +21,7 @@ const ActionItem = ({descripcion, owners, onEdit, index}) =>{
   return (
     <ListItem 
       style={itemClass} 
-      button
+      button={!estaEditando}
       onClick={()=> !estaEditando? setEstaEditando(true) : null}
     >
       {!estaEditando ? 
