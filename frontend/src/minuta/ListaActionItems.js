@@ -3,7 +3,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';
-import {ActionItemContainer, ActionItemDesciption, ListaActionItemsContainer, Owner} from './ListaActionItems.styled'
+import {ActionItemContainer, ActionItemDescription, ListaActionItemsContainer, Owner} from './ListaActionItems.styled'
 import {ActionItemEditor} from "./ActionItemEditor";
 
 const ActionItem = ({descripcion, owners, onEdit, index}) =>{
@@ -26,7 +26,7 @@ const ActionItem = ({descripcion, owners, onEdit, index}) =>{
     >
       {!estaEditando ? 
         <ActionItemContainer>
-          <ActionItemDesciption>{descripcion}</ActionItemDesciption>
+          <ActionItemDescription>{descripcion}</ActionItemDescription>
           <div>
             { owners.map((owner) => <Owner>{"@" + owner}</Owner> ) }
           </div>
