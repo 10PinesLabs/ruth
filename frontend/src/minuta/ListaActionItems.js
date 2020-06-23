@@ -3,28 +3,25 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';
-import {ListaActionItemsContainer,
-        ActionItemDesciption,
-        ActionItemContainer,
-        Owner} from './ListaActionItems.styled'
+import {ActionItemContainer, ActionItemDesciption, ListaActionItemsContainer, Owner} from './ListaActionItems.styled'
 import {ActionItemEditor} from "./ActionItemEditor";
 
 const ActionItem = ({descripcion, owners, seEstaEditando, alEditar, index}) =>{
-  let [hoveringItem, setHoveringItem] = useState(false);
   let [editando, setEditando] = useState(seEstaEditando);
-
-  const itemStyle = { padding: editando ? 0 : 13,
-                      cursor: hoveringItem ? 'pointer' : 'auto',}
 
   const alGuardarEdicion = (actionItemGuardado) => {
       alEditar({...actionItemGuardado, index})
       setEditando(false)
   }
 
+  const itemClass = {
+    padding: editando ? 0 : 13,
+  };
+  
   return (
     <ListItem 
-      style={itemStyle} 
-      onMouseEnter={() => setHoveringItem(true)} 
+      style={itemClass} 
+      button
       onClick={()=> !editando? setEditando(true) : null}
     >
       {!editando ? 
