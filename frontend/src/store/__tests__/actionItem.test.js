@@ -45,7 +45,7 @@ describe(`# action items!`, () => {
     expect(state[0].actionItem.owners).toContain('Mauro');
   });
 
-  describe("cuando el evento es de tipo editar action item", () => {
+  describe("cuando ya tengo un action item para el tema,", () => {
 
     const actionItemAgregado = {
       descripcion: 'Jugar a la play',
@@ -56,7 +56,7 @@ describe(`# action items!`, () => {
       applyEvento(eventoAgregarActionItem(actionItemAgregado));
     });
     
-    it(' y ya existia el elemento que se quiere editar, ' +
+    it(' llega un evento de edicion y ya existia el elemento que se quiere editar, ' +
       'su descripción y owners son editados', () => {
       
       const actionItemEditadoConIndexExistente = {
@@ -71,7 +71,7 @@ describe(`# action items!`, () => {
       expect(state[0].actionItem.owners).toContain('Mauro');
     });
 
-    it('y el index de edicion no pertenece a ningun elemento existente, ' +
+    it(' llega un evento de edicion y el index de edicion no pertenece a ningun elemento existente, ' +
       'los action items quedan en el estado anterior', () => {
       
       const actionItemEditadoConIndexInexistente = {
