@@ -62,7 +62,7 @@ describe(`# action items!`, () => {
       const actionItemEditadoConIndexExistente = {
         descripcion: 'Bailarse unos temazos',
         owners: ['Lautaro','Mauro'],
-        index: 0
+        id: 0
       };
       applyEvento(eventoEditarActionItem(actionItemEditadoConIndexExistente));
 
@@ -77,7 +77,7 @@ describe(`# action items!`, () => {
       const actionItemEditadoConIndexInexistente = {
         descripcion: 'Bailarse unos temazos',
         owners: ['Lautaro','Mauro'],
-        index: 1
+        id: 1
       };
       applyEvento(eventoEditarActionItem(actionItemEditadoConIndexInexistente));
 
