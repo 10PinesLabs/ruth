@@ -9,6 +9,8 @@ module.exports = {
     },
     usuario: {
       type: Sequelize.STRING,
+      allowNull: false,
+    unique: true,
     },
     nombre: {
       type: Sequelize.STRING,
