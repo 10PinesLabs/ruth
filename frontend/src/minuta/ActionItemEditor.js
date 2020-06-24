@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   BotonCancelar,
   BotonCrearActionItem,
@@ -9,13 +9,13 @@ import {
 import Box from "@material-ui/core/Box";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import {TextField} from "@material-ui/core";
-
-const listaDeRoots = ['Pepe', 'Alberto', 'Luis', 'Julieta'];
+import backend from '../api/backend'
 
 const ActionItemEditor = ({onSubmit, itemDescription, itemOwners, estaEditando = false, alDescartar}) => {
 
   const [descripcion, setDescripcion] = useState(itemDescription || '');
   const [owners, setOwners] = useState(itemOwners || []);
+  const [usuarios, setUsuarios] = useState([])
 
   const limpiarInputs = () => {
     setDescripcion('');
@@ -27,6 +27,14 @@ const ActionItemEditor = ({onSubmit, itemDescription, itemOwners, estaEditando =
     if(alDescartar) alDescartar()
   }
 
+  const actualizarUsuarios = () =>{
+    backend.getUsuarios()
+      .then((usuarios)=>{
+        setUsuarios(usuarios)})
+  }
+
+  useEffect(actualizarUsuarios, [])
+
   return (
     <Box component={ContenedorEdicionActionItem} clone boxShadow={2}>
       <ContenedorEdicionActionItem maxWidth="md">
@@ -34,8 +42,10 @@ const ActionItemEditor = ({onSubmit, itemDescription, itemOwners, estaEditando =
           <InputActionItem value={descripcion} onChange={(event) => setDescripcion(event.target.value)} multiline label="Descripcion"/>
           <Autocomplete
             multiple
-            options={listaDeRoots}
+            options={usuarios}
             value={owners}
+            getOptionLabel={usuario => usuario.usuario}
+            renderOption={usuario => <div>{usuario.usuario} ({usuario.nombre})</div>}
             onChange={(event, value) => setOwners(value)}
             renderInput={params => (
               <TextField {...params}

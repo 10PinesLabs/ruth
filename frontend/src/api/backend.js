@@ -22,6 +22,10 @@ const Backend = {
   getPerfil() {
     return requester.get('/perfil/me');
   },
+
+  getUsuarios() {
+    return requester.get('/usuarios');
+  }
 };
 
 export default Backend;
