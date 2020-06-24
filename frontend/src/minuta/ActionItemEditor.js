@@ -28,7 +28,7 @@ const ActionItemEditor = ({onSubmit, itemDescription, itemOwners, estaEditando =
   }
 
   const actualizarListaDeRoots = () =>{
-    backend.getRoots()
+    backend.getUsuarios()
       .then((roots)=>{
         setListaDeRoots(roots)})
   }

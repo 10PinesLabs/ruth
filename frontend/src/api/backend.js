@@ -23,7 +23,7 @@ const Backend = {
     return requester.get('/perfil/me');
   },
 
-  getRoots() {
+  getUsuarios() {
     return requester.get('/usuarios');
   }
 };
