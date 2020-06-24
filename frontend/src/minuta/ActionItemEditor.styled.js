@@ -8,15 +8,20 @@ export const ContenedorEdicionActionItem = styled(Container)`
   display: flex;
   flex-direction: column;
 `;
+
+const margenBoton = `
+    margin: 1vw 0vw 1vw 0vw;
+`
+
 export const BotonCancelar = styled(Button)`
   && {
-    margin: 1vw;
+    ${margenBoton}
   };
 `;
 export const BotonCrearActionItem = styled(Button)`
   && {
     background-color: ${colors.primary}
-    margin: 1vw;
+    ${margenBoton}
     color: ${colors.white}
   };
   
@@ -24,7 +29,7 @@ export const BotonCrearActionItem = styled(Button)`
 export const ContenedorInputActionItem = styled(Container)`
   background-color: ${colors.white};
   padding: 1vw;
-  margin: 3vw;
+  margin-top: 2vw;
   display: flex;
   flex-direction: column;
 `;
@@ -48,8 +53,9 @@ export const InputActionItem = (props) => {
   );
 };
 
-export const ContenedorBotonesActionItem = styled(Container)`
+export const ContenedorBotonesActionItem = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding: 0;
 `;
