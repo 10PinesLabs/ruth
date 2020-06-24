@@ -6,6 +6,6 @@ import context from '~/context';
 const router = Router();
 const controller = Controller(context.usuariosRepo);
 
-router.get('/', asyncMiddleware(controller.usuarios));
+router.get('/', asyncMiddleware(controller.obtener));
 
 export default router;

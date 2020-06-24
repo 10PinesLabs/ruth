@@ -1,6 +1,6 @@
 const Controller = (repoUsuarios) => ({
 
-  usuarios: () => (repoUsuarios.obtenerTodos()),
+  obtener: () => (repoUsuarios.obtenerTodos()),
 
 });
 

@@ -8,7 +8,7 @@ export default class UsuariosRepo {
   guardarOActualizarUsuario({
     id, usuario, email, nombre,
   }) {
-    return models.Usuario.upsert({
+    models.Usuario.upsert({
       id, usuario, email, nombre,
     });
   }

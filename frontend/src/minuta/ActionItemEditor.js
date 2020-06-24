@@ -15,7 +15,7 @@ const ActionItemEditor = ({onSubmit, itemDescription, itemOwners, estaEditando =
 
   const [descripcion, setDescripcion] = useState(itemDescription || '');
   const [owners, setOwners] = useState(itemOwners || []);
-  const [listaDeRoots, setListaDeRoots] = useState([])
+  const [usuarios, setUsuarios] = useState([])
 
   const limpiarInputs = () => {
     setDescripcion('');
@@ -27,13 +27,13 @@ const ActionItemEditor = ({onSubmit, itemDescription, itemOwners, estaEditando =
     if(alDescartar) alDescartar()
   }
 
-  const actualizarListaDeRoots = () =>{
+  const actualizarUsuarios = () =>{
     backend.getUsuarios()
       .then((roots)=>{
-        setListaDeRoots(roots)})
+        setUsuarios(roots)})
   }
 
-  useEffect(actualizarListaDeRoots, [])
+  useEffect(actualizarUsuarios, [])
 
   return (
     <Box component={ContenedorEdicionActionItem} clone boxShadow={2}>
@@ -42,10 +42,10 @@ const ActionItemEditor = ({onSubmit, itemDescription, itemOwners, estaEditando =
           <InputActionItem value={descripcion} onChange={(event) => setDescripcion(event.target.value)} multiline label="Descripcion"/>
           <Autocomplete
             multiple
-            options={listaDeRoots}
+            options={usuarios}
             value={owners}
-            getOptionLabel={root => root.usuario}
-            renderOption={root => <div>{root.usuario} ({root.nombre})</div>}
+            getOptionLabel={usuario => usuario.usuario}
+            renderOption={usuario => <div>{usuario.usuario} ({usuario.nombre})</div>}
             onChange={(event, value) => setOwners(value)}
             renderInput={params => (
               <TextField {...params}
