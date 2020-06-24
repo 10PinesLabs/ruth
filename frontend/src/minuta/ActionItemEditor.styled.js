@@ -9,23 +9,24 @@ export const ContenedorEdicionActionItem = styled(Container)`
   flex-direction: column;
 `;
 
-const reglasBoton = `
+const estilosBotones = `
     font-family: 'Poppins',sans-serif;
     text-transform: none;
     font-weight: bold;
     margin: 1vw 0vw 1vw 0vw;
+    padding: 4px 8px 4px 8px;
 `
 
 export const BotonCancelar = styled(Button)`
   && {
-    ${reglasBoton}
+    ${estilosBotones}
   };
 `;
 export const BotonEnviar = styled(Button)`
   && {
     background-color: ${colors.primary}
     color: ${colors.white}
-    ${reglasBoton}
+    ${estilosBotones}
   };
   
 `;
