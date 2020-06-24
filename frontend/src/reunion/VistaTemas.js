@@ -54,7 +54,7 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas, usuario}) => {
     if (temaActivo()) {
       terminarTema();
     }
-    cerrarReunion();
+    cerrarReunion(temas);
   };
 
   const seleccionarTema = (nuevoTemaSeleccionado) => {
