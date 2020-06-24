@@ -1,4 +1,5 @@
 import VotacionDeRoots from '../votacionDeRoots/votacionDeRoots';
+import notificador from './notificador';
 
 const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas }) => ({
   reunion: async () => {
@@ -14,7 +15,7 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
 
   crear: async (req) => {
     const ultimaReunion = await repoReuniones.findLastCreated();
-    if(ultimaReunion && ultimaReunion.abierta){
+    if (ultimaReunion && ultimaReunion.abierta) {
       const temasUltimaReunion = await repoTemas.findTemasDeReunion(ultimaReunion.id);
       return { ...(ultimaReunion.toJSON()), temas: temasUltimaReunion };
     }
@@ -27,9 +28,14 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
 
   actualizar: async (req) => {
     const { abierta } = req.body;
+    const temasDeReunion = req.body.temas;
 
     const reunionAActualizar = await repoReuniones.findLastCreated();
     await reunionAActualizar.update({ abierta });
+
+    if (!req.body.abierta) {
+      notificador.notificarOwnersDeActionItemsDeReunion(temasDeReunion);
+    }
   },
 
 });
