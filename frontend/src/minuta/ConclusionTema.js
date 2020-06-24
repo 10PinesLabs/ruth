@@ -1,10 +1,7 @@
 import {ConclusionForm, ConclusionTitle} from "./Minuta.styled";
-import {Button, SecondaryButton} from "../components/Button.styled";
 import React from "react";
-import TextField from "@material-ui/core/TextField";
-import {withStyles} from "@material-ui/core";
+import {withStyles, TextField, Box} from "@material-ui/core";
 import {colors} from "../styles/theme";
-import Box from "@material-ui/core/Box";
 import {BotonCancelar, BotonSubmit} from "./ActionItemEditor.styled";
 
 export function ConclusionTema({ titulo, conclusion, onChange, onBorrar, onGuardar, estaEditandoConclusion }) {
