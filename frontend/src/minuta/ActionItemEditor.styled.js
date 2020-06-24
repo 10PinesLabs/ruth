@@ -9,19 +9,20 @@ export const ContenedorEdicionActionItem = styled(Container)`
   flex-direction: column;
 `;
 
-const margenBoton = `
+const estilosBotones = `
     margin: 1vw 0vw 1vw 0vw;
+    padding: 4px 8px 4px 8px;
 `
 
 export const BotonCancelar = styled(Button)`
   && {
-    ${margenBoton}
+    ${estilosBotones}
   };
 `;
 export const BotonCrearActionItem = styled(Button)`
   && {
     background-color: ${colors.primary}
-    ${margenBoton}
+    ${estilosBotones}
     color: ${colors.white}
   };
   

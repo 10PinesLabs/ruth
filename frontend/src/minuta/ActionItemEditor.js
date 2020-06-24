@@ -56,9 +56,8 @@ const ActionItemEditor = ({onSubmit, itemDescription, itemOwners, estaEditando =
             }/>
         </ContenedorInputActionItem>
         <ContenedorBotonesActionItem>
-          <BotonCancelar size="small" onClick={descartar} variant="outlined">Descartar</BotonCancelar>
+          <BotonCancelar onClick={descartar} variant="outlined">Descartar</BotonCancelar>
           <BotonCrearActionItem
-            size="small"
             onClick={() => {
               onSubmit({descripcion, owners});
               limpiarInputs();
