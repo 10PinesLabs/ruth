@@ -9,12 +9,18 @@ module.exports = {
     },
     usuario: {
       type: Sequelize.STRING,
+      allowNull: false,
+      unique: true,
     },
     nombre: {
       type: Sequelize.STRING,
+      allowNull: false,
+      unique: true,
     },
     email: {
       type: Sequelize.STRING,
+      allowNull: false,
+      unique: true,
     },
   }),
   down: (queryInterface) => queryInterface.dropTable('Usuarios'),
