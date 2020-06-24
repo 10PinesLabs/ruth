@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {
   BotonCancelar,
-  BotonCrearActionItem,
+  BotonSubmit,
   ContenedorBotonesActionItem, ContenedorEdicionActionItem,
   ContenedorInputActionItem,
   InputActionItem,
@@ -57,14 +57,14 @@ const ActionItemEditor = ({onSubmit, itemDescription, itemOwners, estaEditando =
         </ContenedorInputActionItem>
         <ContenedorBotonesActionItem>
           <BotonCancelar size="small" onClick={descartar} variant="outlined">Descartar</BotonCancelar>
-          <BotonCrearActionItem
+          <BotonSubmit
             size="small"
             onClick={() => {
               onSubmit({descripcion, owners});
               limpiarInputs();
             }}>
               {estaEditando ? "Guardar" : "Crear action item"}
-          </BotonCrearActionItem>
+          </BotonSubmit>
         </ContenedorBotonesActionItem>
       </ContenedorEdicionActionItem>
     </Box>

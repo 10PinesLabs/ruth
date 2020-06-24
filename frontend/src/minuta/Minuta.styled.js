@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(1)
   },
   conclusionForm: {
-    width: "80%",
+    width: "90%",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -110,10 +110,14 @@ export const ResumenOradorCollapseContainer = styled.div`
 width:60%
 `;
 
-export const TabContainer =  styled.div(({value,index}) => `
-display: ${(value === index)? "flex": "none"};
+const TabContainer = styled.div(() => `
+display: "flex";
 flex-direction: column;
 flex: 1;
 align-items: center;
 width: 100%;
 `);
+
+export const TabRenderer =  ({value, index, children}) => (<>
+  { index === value && <TabContainer>{children}</TabContainer> }
+</>)
