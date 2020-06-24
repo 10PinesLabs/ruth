@@ -28,8 +28,8 @@ class TemasHandler extends React.Component {
     this.dispatchTema({ tipo: datosTema.fin ? 'Terminar Tema' : 'Empezar Tema', idTema: datosTema.id });
   };
 
-  cerrarReunion = () => {
-    backend.cerrarReunion()
+  cerrarReunion = (temas) => {
+    backend.cerrarReunion(temas)
       .then(() => toast.success('Reunión finalizada'))
       .then(() => {
         this.setState({ redirect: true });
