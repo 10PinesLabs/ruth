@@ -25,7 +25,7 @@ export const FilaPino = ({orden, tiempo, pino, isTalking = false, pinoSelecciona
   const esElPinoSeleccionado = pinoSeleccionado && pinoSeleccionado.index === orden - 1;
   
   const rowStyle = {
-    backgroundColor: esElPinoSeleccionado ? colors.primary : colors.background,
+    backgroundColor: esElPinoSeleccionado ? colors.downy : colors.background,
     cursor: isOverRow ? 'pointer' : 'auto',
   };
 
