@@ -8,6 +8,6 @@ module.exports = (sequelize, DataTypes) => {
     usuario: DataTypes.STRING,
     nombre: DataTypes.STRING,
     email: DataTypes.STRING,
-  }, { timestamps: false });
+  });
   return Usuario;
 };
