@@ -3,11 +3,11 @@ import {List, ListItem, Divider, makeStyles} from '@material-ui/core';
 import {ActionItemContainer, ActionItemDescription, ListaActionItemsContainer, Owner} from './ListaActionItems.styled'
 import {ActionItemEditor} from "./ActionItemEditor";
 
-const ActionItem = ({descripcion, owners, onEdit, index}) =>{
+const ActionItem = ({descripcion, owners, onEdit, id}) =>{
   const [estaEditando, setEstaEditando] = useState(false);
 
   const alGuardarEdicion = (actionItemGuardado) => {
-    onEdit({...actionItemGuardado, index})
+    onEdit({...actionItemGuardado, id})
     setEstaEditando(false)
   }
 
@@ -59,11 +59,11 @@ export const ListaActionItems = ({actionItems, onEdit}) => {
       {
         actionItems.length !== 0 &&
         <List alignItems="flex-start" className={classes.root}>
-            {actionItems.map((item, index) =>
+            {actionItems.slice().reverse().map((item, index) =>
               <>
                 <ActionItem 
                   key={item.id} 
-                  index={index}
+                  id={item.id}
                   descripcion={item.actionItem.descripcion} 
                   owners={item.actionItem.owners}
                   onEdit={onEdit}
