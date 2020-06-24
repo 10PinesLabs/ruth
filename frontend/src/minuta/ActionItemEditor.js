@@ -29,8 +29,8 @@ const ActionItemEditor = ({onSubmit, itemDescription, itemOwners, estaEditando =
 
   const actualizarUsuarios = () =>{
     backend.getUsuarios()
-      .then((roots)=>{
-        setUsuarios(roots)})
+      .then((usuarios)=>{
+        setUsuarios(usuarios)})
   }
 
   useEffect(actualizarUsuarios, [])
