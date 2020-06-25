@@ -12,7 +12,7 @@ export default {
         const { actionItem } = actionItemEvent;
         actionItem.owners.forEach((owner) => {
           const mensajeAEnviar = mensaje(actionItem.descripcion, actionItem.owners);
-          if (process.env.MESSAGE_TESTING === 'false') {
+          if (process.env.MESSAGE_TESTING && process.env.MESSAGE_TESTING === 'false') {
             context.mensajeador.enviarMensajeDirecto(owner, mensajeAEnviar);
           } else {
             context.mensajeador.mensajeTest(`Mensaje enviado a:@${owner.usuario}\n${mensajeAEnviar}`);
