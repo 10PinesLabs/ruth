@@ -1,4 +1,5 @@
 import BackofficeValidator from './backOfficeValidator';
+import context from '~/context';
 
 const BackofficeController = () => ({
 
@@ -16,6 +17,8 @@ const BackofficeController = () => ({
       email: query.email,
       root: query.root === 'true',
     };
+
+    context.usuariosRepo.guardarOActualizarUsuario(req.session.usuario);
 
     return ['\n',
       '<!DOCTYPE html>',
