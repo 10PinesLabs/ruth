@@ -10,7 +10,7 @@ export default class SlackMessageService {
     });
   }
 
-  enviarMensaje({ email }, cuerpo) {
+  enviarMensajeDirecto({ email }, cuerpo) {
     this.app.client.users.lookupByEmail({
       token: this.token,
       email,
@@ -27,5 +27,15 @@ export default class SlackMessageService {
       . catch((error) => {
         console.error(error);
       });
+  }
+
+  mensajeTest(cuerpo) {
+    this.app.client.chat.postMessage(
+      {
+        token: this.token,
+        channel: '#ruth-dev',
+        text: cuerpo,
+      },
+    );
   }
 }
