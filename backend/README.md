@@ -15,5 +15,7 @@ Como tenemos `sequalize-cli` podemos crear modelos _a la rails_:
 ### Base de datos en docker
 Si tienen docker, pueden levantar la base de datos haciendo: `$ dcompose up -d --no-recreate`.
 
+### mensajes
+Si se setea MESSAGE_TESTING a true los mensajes de slack seran redirigidos a #ruth-dev, si no se enviaran como dm
 ### TODO
 - proxy frontned
