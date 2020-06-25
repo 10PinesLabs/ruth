@@ -2,7 +2,7 @@ import {ConclusionForm, ConclusionTitle} from "./Minuta.styled";
 import React from "react";
 import {withStyles, TextField, Box} from "@material-ui/core";
 import {colors} from "../styles/theme";
-import {BotonCancelar, BotonSubmit} from "./ActionItemEditor.styled";
+import {BotonCancelar, BotonEnviar} from "./ActionItemEditor.styled";
 
 export function ConclusionTema({ titulo, conclusion, onChange, onBorrar, onGuardar, estaEditandoConclusion }) {
   
@@ -30,9 +30,9 @@ export function ConclusionTema({ titulo, conclusion, onChange, onBorrar, onGuard
           <BotonCancelar onClick={onBorrar}>
             Cancelar
           </BotonCancelar>
-          <BotonSubmit onClick={onGuardar}>
+          <BotonEnviar onClick={onGuardar}>
             Guardar
-          </BotonSubmit>  
+          </BotonEnviar>  
         </Box>
       </>
     ) : null}

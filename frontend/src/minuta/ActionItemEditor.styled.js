@@ -21,7 +21,7 @@ export const BotonCancelar = styled(Button)`
     ${reglasBoton}
   };
 `;
-export const BotonSubmit = styled(Button)`
+export const BotonEnviar = styled(Button)`
   && {
     background-color: ${colors.primary}
     margin: 1vw;
