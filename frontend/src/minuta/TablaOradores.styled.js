@@ -13,14 +13,12 @@ export const StyledTableCell = withStyles(() => ({
     backgroundColor: colors.black30,
     color: "#5c5c5c",
     fontWeight: "bold",
-    padding: "5px 16px 5px 16px",
     fontFamily: "inherit",
     fontSize
   },
   body: {
     fontSize,
     fontFamily: "inherit",
-    padding: "5px",
     height: "40px",
     verticalAlign: "center",
     paddingTop: "1em",
@@ -32,7 +30,7 @@ export const StyledTableCell = withStyles(() => ({
 const useStyles = makeStyles(theme => ({
   oradorActualContainer: {
     display: "flex",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     alignItems: "center",
     width: theme.spacing(20),
   }
