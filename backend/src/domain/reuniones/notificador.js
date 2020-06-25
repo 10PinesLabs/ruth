@@ -2,7 +2,7 @@ import context from '~/context';
 
 const listaDeOwners = (owners) => owners.map((owner) => `${owner.usuario}`).join(',');
 
-const mensaje = (descripcion, owners) => `Fuiste asignado a un aciton item\n>${descripcion}\n>Owners:${listaDeOwners(owners)}`;
+const mensaje = (descripcion, owners) => `Fuiste asignado a un action item\n>${descripcion}\n>Owners:${listaDeOwners(owners)}`;
 
 export default {
 

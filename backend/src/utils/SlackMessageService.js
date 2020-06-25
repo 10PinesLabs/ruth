@@ -11,31 +11,28 @@ export default class SlackMessageService {
   }
 
   enviarMensajeDirecto({ email }, cuerpo) {
-    this.app.client.users.lookupByEmail({
-      token: this.token,
-      email,
-    })
-      .then((result) => {
-        this.app.client.chat.postMessage(
-          {
-            token: this.token,
-            channel: result.user.id,
-            text: cuerpo,
-          },
-        );
+    this.app.client.users
+      .lookupByEmail({
+        token: this.token,
+        email,
       })
-      . catch((error) => {
+      .then((result) => {
+        this.app.client.chat.postMessage({
+          token: this.token,
+          channel: result.user.id,
+          text: cuerpo,
+        });
+      })
+      .catch((error) => {
         console.error(error);
       });
   }
 
   mensajeTest(cuerpo) {
-    this.app.client.chat.postMessage(
-      {
-        token: this.token,
-        channel: '#ruth-dev',
-        text: cuerpo,
-      },
-    );
+    this.app.client.chat.postMessage({
+      token: this.token,
+      channel: '#ruth-dev',
+      text: cuerpo,
+    });
   }
 }
