@@ -1,8 +1,5 @@
 import React, {useState} from 'react';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Card from '@material-ui/core/Card';
-import Divider from '@material-ui/core/Divider';
+import {List, ListItem, Divider, makeStyles} from '@material-ui/core';
 import {ActionItemContainer, ActionItemDescription, ListaActionItemsContainer, Owner} from './ListaActionItems.styled'
 import {ActionItemEditor} from "./ActionItemEditor";
 
@@ -49,10 +46,19 @@ export const ListaActionItems = ({actionItems, onEdit}) => {
   function esElUltimoItem(index) {
     return actionItems.length === index + 1;
   }
-  
+
+  const classes = makeStyles((theme) => ({
+    root: {
+      backgroundColor: theme.palette.background.paper,
+    },
+  }))();
+
+
   return (
     <ListaActionItemsContainer>
-        <List alignItems="flex-start" component={Card}>
+      {
+        actionItems.length !== 0 &&
+        <List alignItems="flex-start" className={classes.root}>
             {actionItems.slice().reverse().map((item, index) =>
               <>
                 <ActionItem 
@@ -66,6 +72,7 @@ export const ListaActionItems = ({actionItems, onEdit}) => {
               </>
             )}
         </List>
+      }
     </ListaActionItemsContainer>
   )
 }
