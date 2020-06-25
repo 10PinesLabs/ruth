@@ -1,12 +1,9 @@
-const componerMailResumen = (reunion, temas) => {
+const componerMailResumen = (reunion, temas, fecha) => {
   const fueTratado = (tema) => tema.inicio != null;
   const temasAListar = temas.filter((tema) => fueTratado(tema));
 
-  const listaTemas = () => `Temas: <ul>${temas.map((tema) => `<li>${fueTratado(tema) ? `<bold>${tema.titulo}</bold>` : `${tema.titulo}`}</li>`)} </ul>`;
-
-  const fechaReunion = (date) => date.getDate().toString().concat(`-${
-    (date.getMonth() + 1).toString()}`).concat(`-${
-    date.getFullYear().toString()}`);
+  const listaTemas = () => `Temas: <ul>${temas
+    .map((tema) => `<li>${fueTratado(tema) ? `<bold>${tema.titulo}</bold>` : `${tema.titulo}`}</li>`).join('')} </ul>`;
 
   const emojisReacciones = {
     'Thumbs up': 128077,
@@ -14,6 +11,13 @@ const componerMailResumen = (reunion, temas) => {
     'Seguirlo por slack': 128260,
     Redondear: 128260,
   };
+
+  const posiblesReaccionesATema = [
+    'Thumbs up',
+    'Thumbs down',
+    'Seguirlo por slack',
+    'Redondear',
+  ];
 
   const cantidadReacciones = (stringReaccion, reacciones) => {
     const emoji = String.fromCodePoint(emojisReacciones[stringReaccion]);
@@ -24,10 +28,8 @@ const componerMailResumen = (reunion, temas) => {
   };
 
   const reaccionesATema = (tema) => `Reacciones: <ul>
-  <li>Thumbs up: ${cantidadReacciones('Thumbs up', tema.reacciones)}</li>
-  <li>Thumbs down: ${cantidadReacciones('Thumbs down', tema.reacciones)}</li>
-  <li>Seguirlo por slack: ${cantidadReacciones('Seguirlo por slack', tema.reacciones)}</li>
-  <li>Redondear: ${cantidadReacciones('Redondear', tema.reacciones)}</li>
+    ${posiblesReaccionesATema
+    .map((reaccion) => `<li>${reaccion}: ${cantidadReacciones(reaccion, tema.reacciones)}</li>`).join('')}
   </ul>`;
 
   const reaccionesAOrador = (orador) => `Reacciones: <ul>
@@ -38,25 +40,27 @@ const componerMailResumen = (reunion, temas) => {
   const oradores = (tema) => {
     const timeStampElapsed = (fin, inicio) => Math.ceil((fin - inicio) / 1000);
 
-    const parsearTiempoHablando = (orador) => `Tiempo hablando: ${
-      Math.floor(Math.abs(timeStampElapsed(orador.fin, orador.inicio)) / 60)
-    } minutos, ${
-      (`0${Math.abs(timeStampElapsed(orador.fin, orador.inicio)) % 60}`).slice(-2)
-    } segundos.`;
+    const minutosHablando = (orador) => Math
+      .floor(Math.abs(timeStampElapsed(orador.fin, orador.inicio)) / 60);
+    const segundosHablando = (orador) => (`0${Math.abs(timeStampElapsed(orador.fin, orador.inicio)) % 60}`).slice(-2);
 
-    return (`Debate: <ul>${tema.oradores.pasados.map((orador) => `<li>${orador.usuario.nombre} <br>${parsearTiempoHablando(orador)}<br>Resumen: ${orador.resumen}<br>${reaccionesAOrador(orador)}</li>`)}</ul>`);
+    return (`Debate: <ul>${tema.oradores.pasados.map((orador) => `<li>${orador.usuario.nombre} 
+        (${minutosHablando(orador)}:${segundosHablando(orador)})
+        <br>Resumen: ${orador.resumen}
+        <br>${reaccionesAOrador(orador)}</li>`)}
+      </ul>`);
   };
-  const actionItems = (tema) => `Action items: <ul>${tema.actionItems.map((actionItem) => `
-      <li>${actionItem.actionItem.descripcion}. Owners: ${actionItem.actionItem.owners}`)}</ul>`;
+  const actionItems = (tema) => `Action items: <ul>${tema.actionItems.map(({ actionItem }) => `
+      <li>${actionItem.descripcion}. Owners: ${actionItem.owners}`)}</ul>`;
 
   const temasDeReunion = () => temasAListar.map((tema) => `<h2>Titulo: ${tema.titulo}</h2>
-    <p>Descripcion: ${tema.descripcion}</p>
-    <p>Conclusion: ${tema.conclusion}</p>
+    <p>Descripción: ${tema.descripcion}</p>
+    <p>Conclusión: ${tema.conclusion}</p>
     ${reaccionesATema(tema)}
     ${oradores(tema)}
     ${actionItems(tema)}`);
 
-  return `<h1> Reunion ${fechaReunion(reunion.dataValues.updatedAt)} </h1>
+  return `<h1> Reunion ${fecha} </h1>
     ${listaTemas(temas)}
     ${temasDeReunion(temas)}`;
 };

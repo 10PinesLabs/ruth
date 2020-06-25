@@ -4,8 +4,12 @@ const nodemailer = require('nodemailer');
 const { markdown } = require('nodemailer-markdown');
 
 async function enviarResumenPorMail(reunion, temas) {
-  const esMailSeguro = () => process.env.MAIL_PORT === 465;
-  const getMailService = () => (process.env.MAIL_PORT === 465 ? 'Gmail' : '');
+  const esMailSeguro = () => process.env.MAIL_PORT === '465';
+  const getMailService = () => (process.env.MAIL_PORT === '465' ? 'Gmail' : '');
+
+  const fechaReunion = (date) => date.getDate().toString().concat(`-${
+    (date.getMonth() + 1).toString()}`).concat(`-${
+    date.getFullYear().toString()}`);
 
   const transporter = nodemailer.createTransport({
     host: process.env.MAIL_HOST,
@@ -20,14 +24,12 @@ async function enviarResumenPorMail(reunion, temas) {
 
   transporter.use('compile', markdown());
 
-  const info = await transporter.sendMail({
-    from: '"Ruth 👻" <votacionroots@gmail.com>',
+  await transporter.sendMail({
+    from: `<${process.env.MAIL_SENDER_ADRESS}>`,
     to: process.env.MAIL_DESTINATION,
-    subject: 'Hello ✔',
-    markdown: componerMailResumen(reunion, temas),
+    subject: `Resumen Roots - ${fechaReunion(reunion.dataValues.updatedAt)}`,
+    markdown: componerMailResumen(reunion, temas, fechaReunion(reunion.dataValues.updatedAt)),
   });
-  // eslint-disable-next-line no-console
-  console.log('Message sent: %s', info.messageId);
 }
 
 export default enviarResumenPorMail;
