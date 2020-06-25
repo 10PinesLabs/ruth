@@ -33,11 +33,6 @@ export function TablaPinos(props) {
   return <table className={classes.tablaPinos}>{props.children}</table>;
 }
 
-export function ConclusionTextarea(props) {
-  const classes = useStyles();
-  return <textarea {...props} className={classes.conclusionTextarea}>{props.children}</textarea>;
-}
-
 export function ConclusionForm(props) {
   const classes = useStyles();
   return <form {...props} className={classes.conclusionForm}>{props.children}</form>;
@@ -105,10 +100,6 @@ export const CustomTab = (props) => {
     <Tab {...props} classes={useStyles()}/>
   )
 };
-
-export const ResumenOradorCollapseContainer = styled.div`
-width:60%
-`;
 
 const TabContainer = styled.div(() => `
 display: "flex";
