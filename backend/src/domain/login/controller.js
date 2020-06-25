@@ -18,7 +18,9 @@ const BackofficeController = () => ({
       root: query.root === 'true',
     };
 
-    context.usuariosRepo.guardarOActualizarUsuario(req.session.usuario);
+    if (req.session.usuario.root) {
+      context.usuariosRepo.guardarOActualizarUsuario(req.session.usuario);
+    }
 
     return ['\n',
       '<!DOCTYPE html>',
