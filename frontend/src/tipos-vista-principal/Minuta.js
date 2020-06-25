@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import TablaOradores from "../minuta/TablaOradores";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
-import {BotonParaAbrirResumen, ResumenOradorCollapseContainer, TabContainer, TabsHeader, CustomTab} from "../minuta/Minuta.styled";
+import {BotonParaAbrirResumen, ResumenOradorCollapseContainer, TabRenderer, TabsHeader, CustomTab} from "../minuta/Minuta.styled";
 import Collapse from '@material-ui/core/Collapse';
 import { ActionItemEditor } from "../minuta/ActionItemEditor";
 import { ResumenOrador } from "../minuta/ResumenOrador";
@@ -148,7 +148,7 @@ const Minuta = ({ dispatch, tema }) => {
           <CustomTab label="Anotaciones generales y action items" />
         </TabsHeader>
     
-        <TabContainer
+        <TabRenderer
           value={tabValue}
           index={0}
         >
@@ -167,15 +167,15 @@ const Minuta = ({ dispatch, tema }) => {
           </ResumenOradorCollapseContainer>
     
           <TablaOradores oradores={tema.oradores}  finTema={tema.fin} pinoSeleccionado={exposicionSeleccionada} onSelect={seleccionarExposicion }/>
-        </TabContainer>
-          <TabContainer
+        </TabRenderer>
+        <TabRenderer
           value={tabValue}
           index={1}
         >
           <Grid container spacing={1}>
             <Grid item xs={5}>
               <ConclusionTema
-                titulo={"Resumen General"}
+                titulo={"Resúmen General"}
                 conclusion={conclusion}
                 onChange={(event) => {
                   handleCambioInputConclusion(event.target.value);
@@ -191,7 +191,7 @@ const Minuta = ({ dispatch, tema }) => {
               <ListaActionItems actionItems={tema.actionItems} onEdit={editarActionItem} />
             </Grid>
           </Grid>
-        </TabContainer>
+        </TabRenderer>
       </VistaMinutaContainer>
     </VistaDelMedioContainer>
   );

@@ -1,28 +1,60 @@
-import {ConclusionForm, ConclusionTextarea, ConclusionTitle} from "./Minuta.styled";
-import {Button, SecondaryButton} from "../components/Button.styled";
+import {ConclusionForm, ConclusionTitle} from "./Minuta.styled";
 import React from "react";
+import {withStyles, TextField, Box} from "@material-ui/core";
+import {colors} from "../styles/theme";
+import {BotonCancelar, BotonEnviar} from "./ActionItemEditor.styled";
 
 export function ConclusionTema({ titulo, conclusion, onChange, onBorrar, onGuardar, estaEditandoConclusion }) {
+  
   return <ConclusionForm>
     <ConclusionTitle>
       {titulo}
     </ConclusionTitle>
-    <ConclusionTextarea
+
+    <CustomTextfield
       value={conclusion}
-      rows={6}
-      placeholder={"Aqui va la conclusión general del tema..."}
+      label="Conclusiones generales de la reunion"
+      multiline
+      rows="10"
+      variant="outlined"
       onChange={onChange}
     />
 
     {estaEditandoConclusion ? (
       <>
-        <SecondaryButton type="button" onClick={onBorrar}>
-          Borrar
-        </SecondaryButton>
-        <Button type="button" onClick={onGuardar}>
-          Guardar
-        </Button>
+        <Box 
+          display="flex"
+          justifyContent="space-between"
+          width={1}
+        >
+          <BotonCancelar onClick={onBorrar}>
+            Cancelar
+          </BotonCancelar>
+          <BotonEnviar onClick={onGuardar}>
+            Guardar
+          </BotonEnviar>  
+        </Box>
       </>
     ) : null}
   </ConclusionForm>;
 }
+
+const CustomTextfield = withStyles({
+  root: {
+    width: "100%",
+    '& label.Mui-focused': {
+      color: `${colors.primary} !important`,
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: colors.primary,
+    },
+    '& .MuiOutlinedInput-root': {
+      '&:hover fieldset': {
+        borderColor: colors.black50,
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: colors.primary,
+      },
+    },
+  },
+})(TextField);

@@ -8,16 +8,25 @@ export const ContenedorEdicionActionItem = styled(Container)`
   display: flex;
   flex-direction: column;
 `;
+
+const reglasBoton = `
+    font-family: 'Poppins',sans-serif;
+    text-transform: none;
+    font-weight: bold;
+`
+
 export const BotonCancelar = styled(Button)`
   && {
     margin: 1vw;
+    ${reglasBoton}
   };
 `;
-export const BotonCrearActionItem = styled(Button)`
+export const BotonEnviar = styled(Button)`
   && {
     background-color: ${colors.primary}
     margin: 1vw;
     color: ${colors.white}
+    ${reglasBoton}
   };
   
 `;
