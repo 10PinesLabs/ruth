@@ -9,7 +9,6 @@ import logger from '~/logger';
 import eventosRouter from './domain/eventos/router';
 import webSocketRouter from '~/webSocket';
 import usuariosRouter from '~/domain/usuarios/router';
-import context from '~/context';
 
 export default (wss) => {
   const router = Router({ promise: true });
@@ -17,7 +16,6 @@ export default (wss) => {
   router.use('/auth', loginRouter);
   router.use('*', (req, res, next) => {
     if (estaLogueado(req)) {
-      context.usuariosRepo.guardarOActualizarUsuario(req.session.usuario);
       next();
     } else {
       res.status(403)
