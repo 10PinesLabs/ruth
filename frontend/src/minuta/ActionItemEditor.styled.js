@@ -9,31 +9,31 @@ export const ContenedorEdicionActionItem = styled(Container)`
   flex-direction: column;
 `;
 
-const reglasBoton = `
+const estilosBotones = `
     font-family: 'Poppins',sans-serif;
     text-transform: none;
     font-weight: bold;
+    margin: 1vw 0vw 1vw 0vw;
+    padding: 4px 8px 4px 8px;
 `
 
 export const BotonCancelar = styled(Button)`
   && {
-    margin: 1vw;
-    ${reglasBoton}
+    ${estilosBotones}
   };
 `;
 export const BotonEnviar = styled(Button)`
   && {
     background-color: ${colors.primary}
-    margin: 1vw;
+    ${estilosBotones}
     color: ${colors.white}
-    ${reglasBoton}
   };
   
 `;
 export const ContenedorInputActionItem = styled(Container)`
   background-color: ${colors.white};
   padding: 1vw;
-  margin: 3vw;
+  margin-top: 2vw;
   display: flex;
   flex-direction: column;
 `;
@@ -57,7 +57,7 @@ export const InputActionItem = (props) => {
   );
 };
 
-export const ContenedorBotonesActionItem = styled(Container)`
+export const ContenedorBotonesActionItem = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
