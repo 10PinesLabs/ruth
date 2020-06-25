@@ -27,14 +27,13 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
   },
 
   actualizar: async (req) => {
-    const { abierta } = req.body;
-    const temasDeReunion = req.body.temas;
+    const { abierta, temas } = req.body;
 
     const reunionAActualizar = await repoReuniones.findLastCreated();
     await reunionAActualizar.update({ abierta });
 
-    if (!req.body.abierta) {
-      notificador.notificarOwnersDeActionItemsDeReunion(temasDeReunion);
+    if (!abierta) {
+      notificador.notificarOwnersDeActionItemsDeReunion(temas);
     }
   },
 
