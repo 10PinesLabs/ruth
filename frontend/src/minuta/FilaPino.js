@@ -53,9 +53,9 @@ export const FilaPino = ({orden, tiempo, pino, isTalking = false, pinoSelecciona
     <StyledTableCell
       align={"center"}>{cantidadReaccionesDelPino(TiposReaccionAlHablar.THUMBS_UP, pino)}</StyledTableCell>
     <StyledTableCell
-      align={"center"}>{cantidadReaccionesDelPino(TiposReaccionAlHablar.REDONDEAR, pino)} </StyledTableCell>
-    <StyledTableCell
       align={"center"}>{cantidadReaccionesDelPino(TiposReaccionAlHablar.THUMBS_DOWN, pino)}</StyledTableCell>
+    <StyledTableCell
+      align={"center"}>{cantidadReaccionesDelPino(TiposReaccionAlHablar.REDONDEAR, pino)} </StyledTableCell>
     <StyledTableCell>
       {pino.resumen}
     </StyledTableCell>

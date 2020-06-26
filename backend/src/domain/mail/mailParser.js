@@ -51,7 +51,7 @@ const componerMailResumen = (reunion, temas, fecha) => {
       </ul>`);
   };
   const actionItems = (tema) => `Action items: <ul>${tema.actionItems.map(({ actionItem }) => `
-      <li>${actionItem.descripcion}. Owners: ${actionItem.owners}`)}</ul>`;
+      <li>${actionItem.descripcion}. Owners: ${actionItem.owners.map(({ nombre }) => nombre).join(', ')}`)}</ul>`;
 
   const temasDeReunion = () => temasAListar.map((tema) => `<h2>Titulo: ${tema.titulo}</h2>
     <p>Descripción: ${tema.descripcion}</p>
