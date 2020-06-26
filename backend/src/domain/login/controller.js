@@ -5,6 +5,7 @@ const BackofficeController = () => ({
 
   callback: (req, res) => {
     const { query } = req;
+    const esRoot = query.root === 'true';
 
     if (!BackofficeValidator.isFromBackoffice(query)) {
       return res.send('Falló la validación, el backoffice envió una firma incorrecta').status(500);
@@ -15,10 +16,10 @@ const BackofficeController = () => ({
       usuario: query.username,
       nombre: query.full_name,
       email: query.email,
-      root: query.root === 'true',
+      root: esRoot,
     };
 
-    if (req.session.usuario.root) {
+    if (esRoot) {
       context.usuariosRepo.guardarOActualizarUsuario(req.session.usuario);
     }
 
