@@ -40,8 +40,8 @@ export const FilaPino = ({orden, tiempo, pino, isTalking = false, pinoSelecciona
     <StyledTableCell>
       {(isTalking) ? <>
         <OradorActualContainer>
-          <RecordVoiceOver style={{color: colors.viridian, marginRight: "10px"}}/>
           <PinoNombre/>
+          <RecordVoiceOver style={{color: colors.viridian, marginRight: "10px"}}/>
         </OradorActualContainer>
       </> : <PinoNombre/>}
     </StyledTableCell>
