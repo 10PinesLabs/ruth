@@ -1,7 +1,7 @@
 import React from "react"
 import styled from 'styled-components';
 import {Button, Container, makeStyles, TextField} from '@material-ui/core';
-import { colors } from '../styles/theme';
+import {colors} from '../styles/theme';
 
 export const ContenedorEdicionActionItem = styled(Container)`
   background-color: #C7F0E6;
@@ -9,34 +9,49 @@ export const ContenedorEdicionActionItem = styled(Container)`
   flex-direction: column;
 `;
 
-const estilosBotones = `
-    font-family: 'Poppins',sans-serif;
-    text-transform: none;
-    font-weight: bold;
-    margin: 1vw 0vw 1vw 0vw;
-    padding: 4px 8px 4px 8px;
-`
+const boton = (theme) => ({
+    fontFamily: 'Poppins',
+    fontWeight: "bold",
+    margin: `${theme.spacing(1.5)}px 0px ${theme.spacing(1.5)}px 0px`,
+    padding: `${theme.spacing(0.5)}px ${theme.spacing(1)}px ${theme.spacing(0.5)}px ${theme.spacing(1)}px`,
+});
 
-export const BotonCancelar = styled(Button)`
-  && {
-    ${estilosBotones}
-  };
-`;
-export const BotonEnviar = styled(Button)`
-  && {
-    background-color: ${colors.primary}
-    color: ${colors.white}
-    ${estilosBotones}
-  };
-  
-`;
-export const ContenedorInputActionItem = styled(Container)`
-  background-color: ${colors.white};
-  padding: 1vw;
-  margin-top: 2vw;
-  display: flex;
-  flex-direction: column;
-`;
+const useStylesBotones = makeStyles(theme => ({
+  boton: {
+    ...boton(theme)
+  },
+  botonEnviar: {
+    ...boton(theme),
+    backgroundColor: colors.primary,
+    color: colors.white
+  }
+}));
+
+export function BotonCancelar(props) {
+  const classes = useStylesBotones();
+  return <Button {...props} className={classes.boton}>{props.children}</Button>;
+}
+
+export function BotonEnviar(props) {
+  const classes = useStylesBotones();
+  return <Button {...props} className={classes.botonEnviar}>{props.children}</Button>;
+}
+
+const useStylesContenedorActionItems = makeStyles(theme => ({
+  root: {
+    backgroundColor: colors.white,
+    padding: theme.spacing(3),
+    marginTop: theme.spacing(3),
+    display: "flex",
+    flexDirection: "column"
+  }
+}));
+
+
+export function ContenedorInputActionItem(props) {
+  const classes = useStylesContenedorActionItems();
+  return <Container {...props} className={classes.root}>{props.children}</Container>;
+}
 
 export const InputActionItem = (props) => {
 
