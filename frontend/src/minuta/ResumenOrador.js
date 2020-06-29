@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import {ResumenInput,
+import {
     ContenedorResumen,
-    TituloDeResumen,
     BotonesDeResumen,
     TextButton,
     ThemedButton} from './ResumenOrador.styled'
+import {ThemedTextfield} from "../styles/theme";
 
 export const ResumenOrador = ({exposicion, onDiscard, onSave})=>{
 
@@ -17,9 +17,9 @@ export const ResumenOrador = ({exposicion, onDiscard, onSave})=>{
 
     const TitleText = () => {
         if(exposicion){
-            return `Editar resumen de la exposicion #${exposicion.index+1} de ${exposicion.orador}`
+            return `#${exposicion.index+1} ${exposicion.orador}`
         }
-        return 'Elige un participante para poder editar tu resumen'
+        return 'Elige un participante para poder editar su resumen'
     }
 
     const isButtonDisabled = () => {
@@ -44,11 +44,18 @@ export const ResumenOrador = ({exposicion, onDiscard, onSave})=>{
     };
     return(
         <ContenedorResumen key="container">
-            <TituloDeResumen  disabled={isButtonDisabled()}>{TitleText()}</TituloDeResumen>
-            <ResumenInput value={resumen} onChange={onValueChange} disabled={isButtonDisabled()} rows={10}/>
+            <ThemedTextfield 
+              value={resumen} 
+              onChange={onValueChange} 
+              disabled={isButtonDisabled()} 
+              rows={10}
+              label={TitleText()}
+              multiline
+              variant={"outlined"}
+            />
             <BotonesDeResumen>
-            <TextButton onClick={onDiscardSummary} disabled={isButtonDisabled()}>{fueEditado? "Descartar cambios" : "Cancelar"}</TextButton>
-            <ThemedButton onClick={onGuardarResumen} disabled={isButtonDisabled()}>Guardar</ThemedButton>
+                <TextButton onClick={onDiscardSummary} disabled={isButtonDisabled()}>{fueEditado? "Descartar cambios" : "Cancelar"}</TextButton>
+                <ThemedButton onClick={onGuardarResumen} disabled={isButtonDisabled()}>Guardar</ThemedButton>
             </BotonesDeResumen>
         </ContenedorResumen>
     );

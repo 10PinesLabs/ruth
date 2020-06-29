@@ -1,7 +1,7 @@
 import {ConclusionForm, ConclusionTitle} from "./Minuta.styled";
 import React from "react";
-import {withStyles, TextField, Box} from "@material-ui/core";
-import {colors} from "../styles/theme";
+import {Box} from "@material-ui/core";
+import {ThemedTextfield} from "../styles/theme";
 import {BotonCancelar, BotonEnviar} from "./ActionItemEditor.styled";
 
 export function ConclusionTema({ titulo, conclusion, onChange, onBorrar, onGuardar, estaEditandoConclusion }) {
@@ -11,7 +11,7 @@ export function ConclusionTema({ titulo, conclusion, onChange, onBorrar, onGuard
       {titulo}
     </ConclusionTitle>
 
-    <CustomTextfield
+    <ThemedTextfield
       value={conclusion}
       label="Conclusiones generales de la reunion"
       multiline
@@ -38,23 +38,3 @@ export function ConclusionTema({ titulo, conclusion, onChange, onBorrar, onGuard
     ) : null}
   </ConclusionForm>;
 }
-
-const CustomTextfield = withStyles({
-  root: {
-    width: "100%",
-    '& label.Mui-focused': {
-      color: `${colors.primary} !important`,
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: colors.primary,
-    },
-    '& .MuiOutlinedInput-root': {
-      '&:hover fieldset': {
-        borderColor: colors.black50,
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: colors.primary,
-      },
-    },
-  },
-})(TextField);

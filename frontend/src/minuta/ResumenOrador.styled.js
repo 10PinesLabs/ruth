@@ -3,20 +3,11 @@ import styled from 'styled-components'
 import { colors, font} from '../styles/theme';
 import Button from '@material-ui/core/Button';
 
-export const ResumenInput = styled.textarea`
-width:100%;
-resize:vertical;
-`
-
 export const ContenedorResumen = styled.div`
+width:60%;
 display:flex;
 flex-direction: column;
 margin-top:15px;
-`
-
-export const TituloDeResumen = styled.span`
-color: ${props => props.disabled ? colors.black40 : colors.black50};
-font-weight: 700;
 `
 
 export const BotonesDeResumen = styled.div`

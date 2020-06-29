@@ -9,13 +9,14 @@ import { toast } from "react-toastify";
 import TablaOradores from "../minuta/TablaOradores";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
-import {BotonParaAbrirResumen, ResumenOradorCollapseContainer, TabRenderer, TabsHeader, CustomTab} from "../minuta/Minuta.styled";
+import {BotonParaAbrirResumen, TabRenderer, TabsHeader, CustomTab} from "../minuta/Minuta.styled";
 import Collapse from '@material-ui/core/Collapse';
 import { ActionItemEditor } from "../minuta/ActionItemEditor";
 import { ResumenOrador } from "../minuta/ResumenOrador";
 import {ListaActionItems} from "../minuta/ListaActionItems"
 import {ConclusionTema} from "../minuta/ConclusionTema";
 import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
 
 const expositor = (nombreOrador, ordenDeOrador, resumen) => {
   return {
@@ -159,13 +160,15 @@ const Minuta = ({ dispatch, tema }) => {
           >
             {textoBotonEdicion()}
           </BotonParaAbrirResumen>
-    
-          <ResumenOradorCollapseContainer>
-            <Collapse in={isResumenOradorCerrado}>
+          <Collapse in={isResumenOradorCerrado}>
+            <Box
+              display={"flex"}
+              width={1}
+              justifyContent={"center"}
+            >
               <ResumenOrador exposicion={exposicionSeleccionada} onDiscard={onDescartarResumen} onSave={onGuardarResumen}/>
-            </Collapse>
-          </ResumenOradorCollapseContainer>
-    
+            </Box>
+          </Collapse>
           <TablaOradores oradores={tema.oradores}  finTema={tema.fin} pinoSeleccionado={exposicionSeleccionada} onSelect={seleccionarExposicion }/>
         </TabRenderer>
         <TabRenderer
