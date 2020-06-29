@@ -28,13 +28,14 @@ const ActionItemEditor = ({onSubmit, itemDescription, itemOwners, estaEditando =
   }
 
   const guardar = () => {
-    if(esUnActionItem(descripcion,owners)){
-      onSubmit({descripcion, owners});
+    let actionItem = {descripcion, owners}
+    if(esUnActionItem(actionItem)){
+      onSubmit(actionItem);
       limpiarInputs();
     }
   }
 
-  const esUnActionItem = (descripcion, owners) => {
+  const esUnActionItem = ({descripcion, owners}) => {
     return tieneDescripcion(descripcion) && tienenAlMenosUnOwner(owners)
   }
 
