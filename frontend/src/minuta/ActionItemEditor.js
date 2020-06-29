@@ -27,6 +27,25 @@ const ActionItemEditor = ({onSubmit, itemDescription, itemOwners, estaEditando =
     if(alDescartar) alDescartar()
   }
 
+  const guardar = () => {
+    if(esUnActionItem(descripcion,owners)){
+      onSubmit({descripcion, owners});
+      limpiarInputs();
+    }
+  }
+
+  const esUnActionItem = (descripcion, owners) => {
+    return tieneDescripcion(descripcion) && tienenAlMenosUnOwner(owners)
+  }
+
+  const tieneDescripcion = (descripcion) => {
+    return descripcion
+  }
+
+  const tienenAlMenosUnOwner = (owners) => {
+    return owners.length>0
+  }
+
   const actualizarUsuarios = () =>{
     backend.getUsuarios()
       .then((usuarios)=>{
@@ -59,10 +78,7 @@ const ActionItemEditor = ({onSubmit, itemDescription, itemOwners, estaEditando =
           <BotonCancelar size="small" onClick={descartar} variant="outlined">Descartar</BotonCancelar>
           <BotonEnviar
             size="small"
-            onClick={() => {
-              onSubmit({descripcion, owners});
-              limpiarInputs();
-            }}>
+            onClick={guardar}>
               {estaEditando ? "Guardar" : "Crear action item"}
           </BotonEnviar>
         </ContenedorBotonesActionItem>
