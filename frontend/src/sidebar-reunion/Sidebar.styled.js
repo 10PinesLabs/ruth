@@ -7,6 +7,9 @@ export const SidebarContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  position: sticky;
+  height: 100%;
+  margin-right: calc(100% - 100vw);
   width: ${sidebar.width};
   background: ${colors.black30};
   border-left: 0.1rem solid ${colors.black30};
