@@ -1,6 +1,5 @@
+import nodemailer from 'nodemailer';
 import componerMailResumen from '~/domain/mail/mailParser';
-
-const nodemailer = require('nodemailer');
 
 async function enviarResumenPorMail(reunion, temas) {
   const esMailSeguro = () => process.env.MAIL_PORT === '465';

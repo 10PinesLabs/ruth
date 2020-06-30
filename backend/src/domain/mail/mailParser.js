@@ -1,4 +1,4 @@
-const ejs = require('ejs');
+import ejs from 'ejs';
 
 const componerMailResumen = (reunion, temas, fecha) => {
   const fueTratado = (tema) => tema.inicio != null;
