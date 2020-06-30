@@ -35,15 +35,15 @@ const ActionItemEditor = ({onSubmit, itemDescription, itemOwners, estaEditando =
     }
   }
 
-  const esUnActionItem = ({descripcion, owners}) => {
-    return tieneDescripcion(descripcion) && tienenAlMenosUnOwner(owners)
+  const esUnActionItem = (actionItem) => {
+    return actionItemTieneDescripcion(actionItem) && actionItemTieneAlMenosUnOwner(actionItem)
   }
 
-  const tieneDescripcion = (descripcion) => {
+  const actionItemTieneDescripcion = ({descripcion}) => {
     return descripcion
   }
 
-  const tienenAlMenosUnOwner = (owners) => {
+  const actionItemTieneAlMenosUnOwner = ({owners}) => {
     return owners.length>0
   }
 
