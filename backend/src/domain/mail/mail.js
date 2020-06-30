@@ -1,7 +1,6 @@
 import componerMailResumen from '~/domain/mail/mailParser';
 
 const nodemailer = require('nodemailer');
-const sanitizeHTML = require('sanitize-html');
 
 async function enviarResumenPorMail(reunion, temas) {
   const esMailSeguro = () => process.env.MAIL_PORT === '465';
@@ -27,12 +26,7 @@ async function enviarResumenPorMail(reunion, temas) {
     from: `<${process.env.MAIL_SENDER_ADRESS}>`,
     to: process.env.MAIL_DESTINATION,
     subject: `Resumen Roots - ${fechaReunion(reunion.dataValues.updatedAt)}`,
-    html: sanitizeHTML(
-      componerMailResumen(reunion, temas, fechaReunion(reunion.dataValues.updatedAt)),
-      {
-        allowedTags: ['h1', 'h2', 'p', 'ul', 'li'],
-      },
-    ),
+    html: componerMailResumen(reunion, temas, fechaReunion(reunion.dataValues.updatedAt)),
   });
 }
 
