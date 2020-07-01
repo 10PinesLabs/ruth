@@ -1,4 +1,5 @@
 import VotacionDeRoots from '../votacionDeRoots/votacionDeRoots';
+import enviarResumenPorMail from '~/domain/mail/mail';
 import notificador from './notificador';
 
 const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas }) => ({
@@ -34,6 +35,7 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
 
     if (!abierta) {
       notificador.notificarOwnersDeActionItemsDeReunion(temas);
+      await enviarResumenPorMail(reunionAActualizar, req.body.temas);
     }
   },
 
