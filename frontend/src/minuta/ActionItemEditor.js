@@ -76,7 +76,7 @@ const ActionItemEditor = ({onSubmit, itemDescription, itemOwners, estaEditando =
             }/>
         </ContenedorInputActionItem>
         <ContenedorBotonesActionItem>
-          <BotonCancelar size="small" onClick={descartar} variant="outlined">Descartar</BotonCancelar>
+          <BotonCancelar onClick={descartar} variant="outlined">Descartar</BotonCancelar>
           <BotonEnviar
             size="small"
             onClick={guardar}>
