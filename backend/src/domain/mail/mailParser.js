@@ -77,7 +77,7 @@ const componerMailResumen = (reunion, temas, fecha) => {
         <p>Action items:</p>
         <ul>
             <% tema.actionItems.forEach(({ actionItem }) => { %>
-                <li> <%= actionItem.descripcion %>. Owners: <%= actionItem.owners %> </li>
+                <li> <%= actionItem.descripcion %>. Owners: <%= actionItem.owners.nombre %> </li>
             <% }) %>
         </ul>
       <% }) %> 
