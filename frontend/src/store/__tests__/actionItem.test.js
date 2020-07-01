@@ -2,6 +2,7 @@ import {actionItemReducer, INITIAL_ACTION_ITEMS_STATE, tipoDeEvento} from '../ac
 
 const eventoAgregarActionItem = (actionItem) => ({
   type: tipoDeEvento.AGREGAR_ACTION_ITEM,
+  id: 1,
   actionItem,
 });
 
@@ -62,8 +63,9 @@ describe(`# action items!`, () => {
       const actionItemEditadoConIndexExistente = {
         descripcion: 'Bailarse unos temazos',
         owners: ['Lautaro','Mauro'],
-        id: 0
+        id: 1
       };
+      
       applyEvento(eventoEditarActionItem(actionItemEditadoConIndexExistente));
 
       expect(state[0].actionItem.descripcion).toEqual(actionItemEditadoConIndexExistente.descripcion);
@@ -77,7 +79,7 @@ describe(`# action items!`, () => {
       const actionItemEditadoConIndexInexistente = {
         descripcion: 'Bailarse unos temazos',
         owners: ['Lautaro','Mauro'],
-        id: 1
+        id: 2
       };
       applyEvento(eventoEditarActionItem(actionItemEditadoConIndexInexistente));
 
