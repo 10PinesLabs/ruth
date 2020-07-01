@@ -13,8 +13,9 @@ export const actionItemReducer = (state = INITIAL_ACTION_ITEMS_STATE, evento) =>
       prevActionItems.push(evento);
       break;
     case (tipoDeEvento.EDITAR_ACTION_ITEM):
-      if(prevActionItems[evento.actionItem.id]){
-        prevActionItems[evento.actionItem.id] = evento
+      let indexDeActionItemAEditar = prevActionItems.findIndex((actionItem) => actionItem.id === evento.actionItem.id)
+      if(prevActionItems[indexDeActionItemAEditar]){
+        prevActionItems[indexDeActionItemAEditar] = evento
       }
       break;
   }
