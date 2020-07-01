@@ -7,12 +7,17 @@ const Controller = (wss) => {
   return ({
     publicar: async (req, res) => {
       await lock.acquire('event', async () => {
-        const evento = req.body;
+        const eventoRaw = req.body;
+
+        const contenidoEvento = {
+          ...eventoRaw,
+          fecha: new Date().getTime(),
+        };
 
         const eventoNuevo = await context.eventosRepo.guardarEvento({
-          evento,
-          idTema: evento.idTema,
-          reunionId: evento.reunionId,
+          evento: contenidoEvento,
+          idTema: eventoRaw.idTema,
+          reunionId: eventoRaw.reunionId,
         });
 
         res.status(200)
@@ -20,7 +25,7 @@ const Controller = (wss) => {
 
         wss.clients.forEach((client) => {
           client.send(JSON.stringify([{
-            ...evento,
+            ...eventoNuevo.evento,
             id: eventoNuevo.id,
           }]));
         });

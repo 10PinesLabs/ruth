@@ -1,24 +1,44 @@
 import express, { json, urlencoded } from 'express';
 import morgan from 'morgan';
 import * as path from 'path';
-import session from 'express-session';
+import cookieSession from 'cookie-session';
 
-import indexRouter from './routes';
-import webSocketRouter from './webSocket';
+import apiRouter from './routes';
 import logger from '~/logger';
 
 const app = express();
 const expressWs = require('express-ws')(app);
 
+const cookieOptions = {
+  name: 'ruth_session',
+  maxAge: 24 * 60 * 60 * 1000, // 24 hours
+};
+
+if (process.env.NODE_ENV === 'production') {
+  cookieOptions.secret = process.env.SESSION_SECRET;
+  // This is necessary since the app is not server directly into the internet
+  // but is behind a proxy (heroku) so the machinery that express uses to check
+  // if the request is secure isn't very useful (requests are secure when they
+  // reach the router but the connection between the router and express is not
+  //
+  // To aliviate this we should trust the X-Forward-* family of headers
+  // more on this https://expressjs.com/en/guide/behind-proxies.html
+  app.enable('trust proxy');
+  app.set('trust proxy', 1);
+  console.log('estamos en prod');
+  cookieOptions.secure = false;
+} else {
+  console.log('no estamos en prod');
+  cookieOptions.secure = false;
+  cookieOptions.secret = process.env.SESSION_SECRET || 'secret';
+}
 
 app.use(morgan('combined', { stream: logger.stream }));
 app.use(json());
 app.use(urlencoded({ extended: false }));
-// TODO: Express sessions esta usando un memory store, deberiamos mandar en la cookie directamente el valor (a la JWT) sino cada reset de heroku invalida las sesiones anteriores.
-app.use(session({ secret: 'keyboard cat' }));
 
-app.ws('/ws', webSocketRouter(expressWs.getWss()));
-app.use('/api', indexRouter(expressWs.getWss()));
+app.use(cookieSession(cookieOptions));
+app.use('/api', apiRouter(expressWs.getWss()));
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, './frontend')));
   app.use('*', (req, res) => {

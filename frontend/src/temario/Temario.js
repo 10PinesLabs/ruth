@@ -26,10 +26,10 @@ class Temario extends React.Component {
           <ListaTemario temas = {this.props.temas}
                         temaActual={this.props.temaActual}
                         seleccionarTema = {this.props.seleccionarTema}/>
+          <SecondaryButton style={{ marginBottom: '2rem', marginTop: 'auto', padding: '0.5em 0',  height: '3em' }}
+                           onClick={this.props.cerrarReunion}
+                           disabled={false}>Cerrar Reunión</SecondaryButton>
         </ContenidoTemario>
-        <SecondaryButton style={{ marginBottom: '2rem', marginTop: 'auto', padding: '0.5em 0',  height: '3em' }}
-                         onClick={this.props.cerrarReunion}
-                         disabled={false}>Cerrar Reunión</SecondaryButton>
         <Arrow src="./pino-blanco.svg"
                onMouseEnter={() => this.setState({ isActive: true })} />
       </Temas>

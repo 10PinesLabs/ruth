@@ -1,20 +1,25 @@
 import styled from 'styled-components';
 import {font} from "../styles/theme";
 
-export const CardContainer = styled.div(({isTalking}) => `
+export const CardContainer = styled.div(({isTalking,sePuedeReaccionar}) => `
   display: flex;
   flex-shrink: 0;
-  flex-direction: column;
+  flex-direction: ${(sePuedeReaccionar)? "row" : "column"};
   align-items: center;
   background: linear-gradient(145deg, #c7c7c7, #ececec);
   justify-content: space-between;
-  width: ${isTalking ? '12em' : '10em'};
+  width: ${(sePuedeReaccionar)? "70%" : isTalking ? '12em' : '10em'};
   height: ${isTalking ? '15em' : '13.5em'};
   margin: 0 0.5em;
   box-shadow: 5px 5px 10px #828282, -5px -5px 10px #ffffff;
   border-radius: 20px;
   position:relative;
 `);
+
+export const ParticipantDataReactableContainer = styled.div(() => `
+    width: 70%;
+`
+);
 
 export const CardInfoFooter = styled.div`
   display: inline-flex;
@@ -36,7 +41,8 @@ export const CardInfoContainer = styled.div`
 
 export const TalkingAnimationContainer = styled.div`
   position: absolute;
-  left: 5%;
+  left:20%;
+  
 `;
 
 export const UserAvatar = styled.div(({isTalking, avatar}) => `
@@ -50,9 +56,13 @@ export const UserAvatar = styled.div(({isTalking, avatar}) => `
 `);
 
 export const CardName = styled.span`
-  font-size: ${font.sizeP};
   text-align: center;
   color: black;
+  max-width: 95%;
+  overflow: hidden;
+  display: -webkit-box;
+   -webkit-line-clamp: 2;
+   -webkit-box-orient: vertical;
 `;
 
 export const Cerrar = styled.div`

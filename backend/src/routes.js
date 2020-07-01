@@ -7,6 +7,8 @@ import loginRouter from '~/domain/login/router';
 import estaLogueado from '~/domain/login/estaLogueado';
 import logger from '~/logger';
 import eventosRouter from './domain/eventos/router';
+import webSocketRouter from '~/webSocket';
+import usuariosRouter from '~/domain/usuarios/router';
 
 export default (wss) => {
   const router = Router({ promise: true });
@@ -32,6 +34,8 @@ export default (wss) => {
   router.use('/eventos', eventosRouter(wss));
   router.use('/temas', temasRouter);
   router.use('/perfil', perfilRouter);
+  router.use('/usuarios', usuariosRouter);
+  router.ws('/ws', webSocketRouter());
 
   if (process.env.NODE_ENV !== 'production') {
     router.use('/pruebas', pruebasRouter);

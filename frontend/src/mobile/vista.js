@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-  faHashtag,
   faMale,
   faMicrophoneAlt,
   faSync,
@@ -32,6 +31,8 @@ import { CardInteractionsContainer } from '../components/InteractionsContainer.s
 import { reactionTypes } from '../store/reacciones';
 import { SkeletonCircle, SkeletonLine, ReactionSkeletonContainer } from '../skeleton/Skeleton.styled';
 import { reacciones } from './actions';
+import { faSlack } from '@fortawesome/free-brands-svg-icons';
+import { colors } from '../../src/styles/theme.js'
 
 const logoImage = 'https://res-4.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_'
   + '256,f_auto,q_auto:eco/wuhk5weer0fkhmh2oyhv';
@@ -83,8 +84,8 @@ const Vista = ({
     else dispatchEvent({ tipo: tipoDeEvento.DESENCOLAR });
   };
 
-  const kickear = () => {
-    dispatchEvent({ tipo: tipoDeEvento.KICKEAR, kickearA: participant.usuario });
+  const kickear = ( usuario ) => {
+    dispatchEvent({ tipo: tipoDeEvento.KICKEAR, kickearA: usuario });
   };
 
   const [showSkeleton, setShowSekelton] = useState(true);
@@ -101,16 +102,20 @@ const Vista = ({
         <ReactionButton
           isBig isActive={thumbsUp}
           isDisabled={thumbsDown} icon={faThumbsUp}
+          activeBackground={colors.thumbsUp}
           onClick={() => handleReaction(reacciones.THUMBS_UP, thumbsUp)}/>
         <ReactionButton
           isBig isActive={thumbsDown}
           isDisabled={thumbsUp} icon={faThumbsDown}
+          activeBackground={colors.thumbsDown}
           onClick={() => handleReaction(reacciones.THUMBS_DOWN, thumbsDown)}/>
         <ReactionButton
-          isBig isActive={slack} icon={faHashtag}
+          activeBackground={colors.slack}
+          isBig isActive={slack} icon={faSlack}
           onClick={() => handleReaction(reacciones.SLACK, slack)}/>
         <ReactionButton
           isBig isActive={redondear} icon={faSync}
+          activeBackground={colors.roundUp}
           onClick={() => handleReaction(reacciones.REDONDEAR, redondear)}/>
       </ReactionsContainer>
     );
@@ -121,21 +126,21 @@ const Vista = ({
   let microphone;
   if (temaEmpezado) {
     if (isTalking) {
-      microphone = 
+      microphone =
         <MicrophoneContainer>
           <TalkButton pressed={true} onClick={onWannaStopTalkClick}>
             <FontAwesomeIcon icon={inQueueIcon()} color={'black'} size={'2x'}/>
           </TalkButton>
         </MicrophoneContainer>;
     } else if (wannaTalk) {
-      microphone = 
+      microphone =
         <MicrophoneContainer>
             <TalkButton pressed={true} onClick={onWannaStopTalkClick}>
               <FontAwesomeIcon icon={inQueueIcon()} color={'black'} size={'2x'}/>
             </TalkButton>
             <QueuedParticipants>
-              <ParticipantsCounter> 
-                {remainingParticipantsUpToUser} 
+              <ParticipantsCounter>
+                {remainingParticipantsUpToUser}
               </ParticipantsCounter>
               <FontAwesomeIcon icon={faMale} color={'silver'} size={'1x'}/>
             </QueuedParticipants>
@@ -175,9 +180,14 @@ const Vista = ({
         </CardInteractionsContainer>
       </TopSectionContainer>
       <ParticipantsContainer>
-        <ParticipantsCard interactive isParticipantTalking
-                          kickear={kickear}
-                          participant={participant}/>
+        <ParticipantsCard
+          sePuedeReaccionar={process.env.REACT_APP_MINUTA_PERMITIDA == 'true'}
+          usuario={usuario}
+          interactive
+          isParticipantTalking
+          dispatchEvent={dispatchEvent}
+          kickear={kickear}
+          participant={participant}/>
       </ParticipantsContainer>
       <ActionContainerStyle>
         {showSkeleton ? <TalkButton pressed={false}><SkeletonCircle/></TalkButton> : microphone}

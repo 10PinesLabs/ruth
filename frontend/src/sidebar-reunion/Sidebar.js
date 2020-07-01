@@ -1,5 +1,5 @@
 import React from 'react';
-import { faChartBar, faBroadcastTower, faComment, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faChartBar, faBroadcastTower, faComment, faUsers, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 
 import SidebarElement from './SidebarElement';
@@ -13,19 +13,20 @@ class Sidebar extends React.Component {
     };
   }
 
-  menu = [
-    { icon: faBroadcastTower, title: 'Resumen', habilitado: true },
-    { icon: faComment, title: 'Presentación', habilitado: false },
-    { icon: faChartBar, title: 'Debate', habilitado: true },
-    { icon: faUsers, title: 'Opinar', habilitado: true },
-  ];
+  menu =[
+    { icon: faBroadcastTower, title: 'Resumen', habilitado: true,oculto: false },
+    { icon: faComment, title: 'Presentación', habilitado: false,oculto: false },
+    { icon: faChartBar, title: 'Debate', habilitado: true,oculto: false },
+    { icon: faUsers, title: 'Opinar', habilitado: true,oculto: false },
+    { icon: faEdit, title: 'Minuta', habilitado: true,oculto: process.env.REACT_APP_MINUTA_PERMITIDA != 'true' }
+  ] ;
 
   habilitarPresentacion = () => this.props.link !== null
 
   render() {
     return (
       <SidebarContainer>
-        {this.menu.map((seccion) => <ElementoContainer
+        {this.menu.filter( opcion => !opcion.oculto).map((seccion) => <ElementoContainer
           key={seccion.title}
           habilitar={seccion.habilitado || this.habilitarPresentacion()}
           onClick={() => this.props.handleSelection(seccion.title)}>

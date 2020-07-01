@@ -15,13 +15,17 @@ const Backend = {
     return requester.post('/reunionDeRoots', { abierta: true });
   },
 
-  cerrarReunion() {
-    return requester.put('/reunionActual', { abierta: false });
+  cerrarReunion(temas) {
+    return requester.put('/reunionActual', { abierta: false, temas });
   },
 
   getPerfil() {
     return requester.get('/perfil/me');
   },
+
+  getUsuarios() {
+    return requester.get('/usuarios');
+  }
 };
 
 export default Backend;

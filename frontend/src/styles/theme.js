@@ -1,3 +1,5 @@
+import {TextField, withStyles} from "@material-ui/core";
+
 export const font = {
   family: "'Poppins',sans-serif",
   module: '16px',
@@ -12,7 +14,7 @@ export const font = {
 };
 
 export const colors = {
-  primary: '#68C9B2',
+  primary: '#00AC83',
   secondary: '#448495',
   lightGrey: '#E0E0E0',
   darkRed: '#FF7F7F',
@@ -25,6 +27,12 @@ export const colors = {
   viridian: '#448475',
   downy: '#68c9b2',
   white: '#FFFFFF',
+  thumbsUp: '#68A1EA',
+  thumbsDown: '#FFB3BA',
+  slack: '#FFDFBA',
+  roundUp: '#68C9B2',
+  defaultInactiveBackground: '#E6E6E6',
+  defaultActiveBackground: '#72B572',
 };
 
 export const variables = {
@@ -50,3 +58,23 @@ export const temario = {
 export const header = {
   height: '6em',
 };
+
+export const ThemedTextfield = withStyles({
+  root: {
+    width: "100%",
+    '& label.Mui-focused': {
+      color: `${colors.primary} !important`,
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: colors.primary,
+    },
+    '& .MuiOutlinedInput-root': {
+      '&:hover fieldset': {
+        borderColor: colors.black50,
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: colors.primary,
+      },
+    },
+  },
+})(TextField);
