@@ -6,7 +6,7 @@ async function enviarResumenPorMail(reunion, temas) {
   const getMailService = () => (process.env.MAIL_PORT === '465' ? 'Gmail' : '');
 
   const fechaReunion = (date) => (
-    `${date.getDate().toString()}-${date.getMonth().toString()}-${date.getFullYear().toString()}`
+    `${date.getDate().toString()}-${(date.getMonth() + 1).toString()}-${date.getFullYear().toString()}`
   );
 
   const transporter = nodemailer.createTransport({

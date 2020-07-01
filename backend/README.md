@@ -22,7 +22,7 @@ En produccion, las variables de ambiente relacionadas a los mails deben quedar d
 MAIL_HOST=smtp.gmail.com,
 MAIL_PORT=465,
 ```
-Ademas de las variables relacionadas a usuario, contraseña, destinatarios, que tendras que pedirlas en el channel de #ruth
+Ademas, las variables `MAIL_USER` Y `MAIL_PASS`, que son las credenciales del mail que usaremos, `MAIL_DESTINATION`, a que direccion de mail se quiere mandar el resumen, y `MAIL_SENDER_ADDRESS`, que es la direccion que aparecerá como remitente, que son privadas y habra que pedirlas en #ruth.
 
 #####Local
 En local, para poder verificar como se estan enviando de mails, podes settear las variables de ambiente del backend siguiendo el .example, utilizando una direccion de correo de Ethereal Mail:
