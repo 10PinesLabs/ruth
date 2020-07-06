@@ -44,7 +44,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "concurrently": "^5.0.0",
+    "concurrently": "^5.2.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "sequelize-cli": "^5.5.1"
