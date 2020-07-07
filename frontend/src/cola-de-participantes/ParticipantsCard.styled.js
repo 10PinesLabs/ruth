@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import {font} from "../styles/theme";
 
 export const CardContainer = styled.div(({isTalking,sePuedeReaccionar}) => `
   display: flex;

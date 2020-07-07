@@ -1,7 +1,7 @@
 import { configureStore, createAction, getDefaultMiddleware } from '@reduxjs/toolkit';
 import produce, { setAutoFreeze } from 'immer';
 import oradoresReducer from './oradores';
-import {tipoDeEvento, conclusionReducer} from './conclusion'
+import {conclusionReducer} from './conclusion'
 import reaccionesReducer from './reacciones';
 import Backend from '../api/backend';
 import historicoDeReaccionesReducer from './historicoDeReacciones';

@@ -36,7 +36,6 @@ const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant
   };
 
   const [showSkeleton, setShowSekelton] = useState(true);
-  const [open, setOpen] = useState(false);
   const [oradorAKickear, setOradorAKickear] = useState(null)
 
   useEffect(() => {
@@ -56,7 +55,7 @@ const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant
       >
         {interactive && <Cerrar onClick={() => setOradorAKickear(participant.usuario)}/>}
         <ModalDeConfirmacion
-          title={`¿Estás seguro que querés kickear a ${oradorAKickear && oradorAKickear.nombre || ''}?`}
+          title={`¿Estás seguro que querés kickear a ${oradorAKickear && (oradorAKickear.nombre || '')}?`}
           open={Boolean(oradorAKickear)}
           confirmText={"Si"}
           cancelText={"No"}

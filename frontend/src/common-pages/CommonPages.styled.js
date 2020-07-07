@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {font, sizeBreakpoint} from "../styles/theme";
+import {font} from "../styles/theme";
 import {animated} from 'react-spring';
 
 export const PageContainer = styled(animated.div)`

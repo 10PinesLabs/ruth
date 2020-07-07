@@ -1,7 +1,5 @@
 import styled from 'styled-components';
-import {
-  colors, font, sidebar, sizeBreakpoint,
-} from '../styles/theme';
+import {colors, font, sidebar} from '../styles/theme';
 
 export const SidebarContainer = styled.div`
   display: flex;

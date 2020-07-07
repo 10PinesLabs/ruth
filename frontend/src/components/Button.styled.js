@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { colors, font, sizeBreakpoint } from '../styles/theme';
+import { colors, font } from '../styles/theme';
 
 export const Button = styled.button`
   font-family: ${font.p};

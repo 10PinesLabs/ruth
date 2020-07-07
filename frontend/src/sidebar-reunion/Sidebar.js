@@ -18,7 +18,7 @@ class Sidebar extends React.Component {
     { icon: faComment, title: 'Presentación', habilitado: false,oculto: false },
     { icon: faChartBar, title: 'Debate', habilitado: true,oculto: false },
     { icon: faUsers, title: 'Opinar', habilitado: true,oculto: false },
-    { icon: faEdit, title: 'Minuta', habilitado: true,oculto: process.env.REACT_APP_MINUTA_PERMITIDA != 'true' }
+    { icon: faEdit, title: 'Minuta', habilitado: true,oculto: process.env.REACT_APP_MINUTA_PERMITIDA !== 'true' }
   ] ;
 
   habilitarPresentacion = () => this.props.link !== null

@@ -130,9 +130,8 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
         draft.pasados[evento.indexExposicion].resumen = evento.resumen
       }else
       draft.actual.resumen = evento.resumen
+      break;
     }
-
-
     default: {
       break
     }

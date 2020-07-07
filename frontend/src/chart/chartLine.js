@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { ChartlineContainer } from './Chart.styled';
 import { colorForReaccion, reacciones } from '../mobile/actions';

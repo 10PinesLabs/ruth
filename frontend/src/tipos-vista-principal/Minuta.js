@@ -33,7 +33,7 @@ const Minuta = ({ dispatch, tema }) => {
   let [tabValue, setTabValue] = useState(0);
   let [seActualizaExposicionSeleccionada, setActualizarExposicionSeleccionada] = useState(false)
   let [isResumenOradorCerrado, setIsResumenOradorCerrado] = useState(false);
-
+  
   const crearEventoDeMinuteador = (data) => {
     const evento = {
       autor: "MINUTEADOR",
@@ -43,24 +43,26 @@ const Minuta = ({ dispatch, tema }) => {
     dispatch(evento);
   };
 
-  //encargarse de actualizacion conclusion
-  useEffect(() => {
+  const handleCambioConclusion = () => {
     if (!estaEditandoConclusion) {
       setConclusion(tema.conclusion);
     }
-  },[tema.conclusion]);
+  }
 
   const manejarCambioTab = (event, newValue) => {
     setTabValue(newValue);
   };
   
-  //encargarse de cambio de orador
-  useEffect(()=>{
+  const handleCambioOrador = () => {
     let orador = tema.oradores.actual;
     if(!exposicionSeleccionada && orador){
       seleccionarExposicion(expositor(orador.usuario.nombre, orador.instanciaDeHabla, orador.resumen))
     } 
-  }, tema.oradores.actual)
+  }
+
+  useEffect( handleCambioConclusion ,[tema.conclusion]);
+
+  useEffect(handleCambioOrador, [tema.oradores.actual])
 
   function actualizarConclusion() {
     if (!tema.id) {
@@ -117,8 +119,7 @@ const Minuta = ({ dispatch, tema }) => {
       let selectObject = expositor(siguienteOrador.usuario.nombre, siguienteOrador.instanciaDeHabla)
       setExposicionSeleccionada(selectObject)
     }
-    
-
+  
   }
 
   const agregarActionItem = (actionItem) => {
@@ -136,6 +137,7 @@ const Minuta = ({ dispatch, tema }) => {
   }
 
   const textoBotonEdicion = () => (isResumenOradorCerrado ? 'CERRAR EDICION' : 'ABRIR EDICION');
+
   return (
     <VistaDelMedioContainer
       style={useSpring({ opacity: 1, from: { opacity: 0 } })}
