@@ -31,9 +31,6 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas, usuario}) => {
     if (temaSeleccionado.inicio !== null) {
       return toast.error('No se puede iniciar un tema que ya fue iniciado');
     }
-    if (indiceTemaAMostrar !== indiceTemaATratar) {
-      return toast.error('Existe otro tema para tratar');
-    }
     return actualizarTema({
       id: temaSeleccionado.id,
       inicio: Date.now(),
@@ -75,8 +72,6 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas, usuario}) => {
     }
   };
 
-  const esElSiguienteTemaATratar = indiceTemaAMostrar === indiceTemaATratar;
-
   const segundosRestantes = () => {
     const {inicio, fin, cantidadDeMinutosDelTema} = temaSeleccionado;
     if (inicio === null) {
@@ -116,7 +111,6 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas, usuario}) => {
                            temaActivo={temaActivo()}
                            avanzarTema={avanzarTema}
                            retrocederTema={retrocederTema}
-                           temaATratar={esElSiguienteTemaATratar}
                            handleCerrarReunion={handleCerrarReunion}/>
       </VistaTemaContainer>
       <Sidebar handleSelection={setSelectedElement}
