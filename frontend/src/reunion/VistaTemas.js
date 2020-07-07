@@ -31,12 +31,23 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas, usuario}) => {
     if (temaSeleccionado.inicio !== null) {
       return toast.error('No se puede iniciar un tema que ya fue iniciado');
     }
+    if(existeUnTemaEmpezado()){
+      return toast.error('Ya hay otro tema en curso');
+    }
     return actualizarTema({
       id: temaSeleccionado.id,
       inicio: Date.now(),
       fin: null,
     });
   };
+
+  const existeUnTemaEmpezado = ()=> {
+    return temas.some(tema => estaElTemaEmpezado(tema))
+  }
+
+  const estaElTemaEmpezado = (tema) => {
+   return tema.inicio && !tema.fin;
+  } 
 
   const terminarTema = () => {
     actualizarTema({
