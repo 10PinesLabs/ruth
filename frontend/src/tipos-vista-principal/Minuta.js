@@ -56,13 +56,13 @@ const Minuta = ({ dispatch, tema }) => {
   const handleCambioOrador = () => {
     let orador = tema.oradores.actual;
     if(!exposicionSeleccionada && orador){
-      seleccionarExposicion(expositor(orador.usuario.nombre, orador.instanciaDeHabla, orador.resumen))
+      seleccionarExposicion(expositor(orador.usuario.nombre, tema.oradores.pasados.length, orador.resumen))
     } 
   }
 
   useEffect( handleCambioConclusion ,[tema.conclusion]);
 
-  useEffect(handleCambioOrador, [tema.oradores.actual])
+  useEffect(handleCambioOrador, [tema.oradores.actual?.usuario,tema.oradores.actual?.instanciaDeHabla])
 
   function actualizarConclusion() {
     if (!tema.id) {
@@ -92,7 +92,7 @@ const Minuta = ({ dispatch, tema }) => {
   }
 
   const estaExponiendo = (instanciaDeHabla) => {
-    return instanciaDeHabla===tema.oradores.actual.instanciaDeHabla
+    return instanciaDeHabla===tema.oradores.pasados.length
   }
 
   const seleccionarExposicion = (exposicion) => {
@@ -114,9 +114,10 @@ const Minuta = ({ dispatch, tema }) => {
 
     setExposicionSeleccionada(null)
     let oradores = [...tema.oradores.pasados, tema.oradores.actual]
-    let siguienteOrador = oradores[exposicionSeleccionada.index+1]
+    let indexSiguienteOrador = exposicionSeleccionada.index+1;
+    let siguienteOrador = oradores[indexSiguienteOrador]
     if(seActualizaExposicionSeleccionada && siguienteOrador){
-      let selectObject = expositor(siguienteOrador.usuario.nombre, siguienteOrador.instanciaDeHabla)
+      let selectObject = expositor(siguienteOrador.usuario.nombre, indexSiguienteOrador)
       setExposicionSeleccionada(selectObject)
     }
   
