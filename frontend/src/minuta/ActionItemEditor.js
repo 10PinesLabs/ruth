@@ -59,7 +59,7 @@ const ActionItemEditor = ({onSubmit, itemDescription, itemOwners, estaEditando =
     <Box component={ContenedorEdicionActionItem} clone boxShadow={2}>
       <ContenedorEdicionActionItem maxWidth="md">
         <ContenedorInputActionItem maxWidth="md">
-          <InputActionItem value={descripcion} onChange={(event) => setDescripcion(event.target.value)} multiline label="Descripcion"/>
+          <InputActionItem value={descripcion} onChange={(event) => setDescripcion(event.target.value)} multiline label="Descripción"/>
           <Autocomplete
             multiple
             options={usuarios}
