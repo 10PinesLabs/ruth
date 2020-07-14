@@ -1,4 +1,4 @@
-import {produce} from 'immer';
+import { produce } from 'immer';
 
 export const tipoDeEvento = {
   AGREGAR_ACTION_ITEM: 'Agregar un action item',

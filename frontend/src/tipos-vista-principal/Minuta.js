@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from "react";
+import React, { useState, useEffect } from "react";
 import {VistaDelMedioContainer, VistaMinutaContainer} from "./Resumen.styled";
-import {useSpring} from "react-spring";
-import {connect} from "react-redux";
-import {tipoDeEvento} from "../store/conclusion";
-import {tipoDeEvento as tipoDeEventoOradores} from "../store/oradores";
-import {tipoDeEvento as tipoDeEventoActionItem} from "../store/actionItem";
-import {toast} from "react-toastify";
+import { useSpring } from "react-spring";
+import { connect } from "react-redux";
+import { tipoDeEvento } from "../store/conclusion";
+import { tipoDeEvento as tipoDeEventoOradores} from "../store/oradores";
+import { tipoDeEvento as tipoDeEventoActionItem} from "../store/actionItem";
+import { toast } from "react-toastify";
 import TablaOradores from "../minuta/TablaOradores";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
 import {BotonParaAbrirResumen, CustomTab, TabRenderer, TabsHeader} from "../minuta/Minuta.styled";
 import Collapse from '@material-ui/core/Collapse';
-import {ActionItemEditor} from "../minuta/ActionItemEditor";
-import {ResumenOrador} from "../minuta/ResumenOrador";
+import { ActionItemEditor } from "../minuta/ActionItemEditor";
+import { ResumenOrador } from "../minuta/ResumenOrador";
 import {ListaActionItems} from "../minuta/ListaActionItems"
 import {ConclusionTema} from "../minuta/ConclusionTema";
 import Grid from "@material-ui/core/Grid";
