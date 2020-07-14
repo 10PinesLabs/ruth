@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Divider, List, ListItem, makeStyles} from '@material-ui/core';
+import {List, ListItem, Divider, makeStyles} from '@material-ui/core';
 import {ActionItemContainer, ActionItemDescription, ListaActionItemsContainer, Owner} from './ListaActionItems.styled'
 import {ActionItemEditor} from "./ActionItemEditor";
 

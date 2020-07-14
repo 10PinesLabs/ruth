@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import TablaOradores from "../minuta/TablaOradores";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
-import {BotonParaAbrirResumen, CustomTab, TabRenderer, TabsHeader} from "../minuta/Minuta.styled";
+import {BotonParaAbrirResumen, TabRenderer, TabsHeader, CustomTab} from "../minuta/Minuta.styled";
 import Collapse from '@material-ui/core/Collapse';
 import { ActionItemEditor } from "../minuta/ActionItemEditor";
 import { ResumenOrador } from "../minuta/ResumenOrador";
