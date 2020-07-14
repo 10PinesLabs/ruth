@@ -1,9 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   BotonBorrar,
   BotonCancelar,
   BotonEnviar,
-  ContenedorBotonesActionItem,
   ContenedorEdicionActionItem,
   ContenedorInputActionItem,
   InputActionItem,
@@ -94,28 +93,21 @@ const ActionItemEditor = ({onSubmit, itemDescription, itemOwners, estaEditando =
               onChange={(event, value) => setOwners(value)}
               renderInput={params => (
                 <TextField {...params}
-                placeholder="Owners"
-                margin="normal"
-                fullWidth/>
+                           placeholder="Owners"
+                           margin="normal"
+                           fullWidth/>
               )
               }/>
           </ContenedorInputActionItem>
-          <ContenedorBotonesActionItem>
-            { estaEditando && <BotonBorrar variant="outlined" onClick={abrirConfirmacionDeBorrado}><FontAwesomeIcon icon={faTrash}/></BotonBorrar>}
-            <BotonCancelar onClick={descartar} variant="outlined">Descartar</BotonCancelar>
-            <BotonEnviar
-              size="small"
-              onClick={guardar}>
-                {estaEditando ? "Guardar" : "Crear action item"}
-            </BotonEnviar>
-          </ContenedorBotonesActionItem>
+          <Botonera estaEditando={estaEditando} onClick={abrirConfirmacionDeBorrado} onClick1={descartar}
+                    onClick2={guardar}/>
         </ContenedorEdicionActionItem>
       </Box>
       <Dialog
-      open={confirmacionDeBorradoAbierta}
-      onClose={cerrarConfirmacionDeBorrado}
-      aria-labelledby="alert-dialog-slide-title"
-      aria-describedby="alert-dialog-slide-description">
+        open={confirmacionDeBorradoAbierta}
+        onClose={cerrarConfirmacionDeBorrado}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description">
         <DialogTitle id="alert-dialog-slide-title">¿Querés borrar este Action Item?</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
@@ -134,5 +126,41 @@ const ActionItemEditor = ({onSubmit, itemDescription, itemOwners, estaEditando =
     </>
   )
 };
+
+function Botonera(props) {
+  
+   const BotonesBorrarYCancelar = (props) => (
+    <>
+       <BotonCancelar onClick={props.onClick1} variant="outlined">Descartar</BotonCancelar>
+       <BotonEnviar
+         size="small"
+         onClick={props.onClick2}>
+         {props.estaEditando ? "Guardar" : "Crear action item"}
+       </BotonEnviar>
+    </>
+  );
+  
+  return <Box display="flex" justifyContent="space-between">
+    {(props.estaEditando)?
+      <>
+        <BotonBorrar 
+          variant="outlined" 
+          onClick={props.onClick}
+        >
+          <FontAwesomeIcon icon={faTrash}/>
+        </BotonBorrar>
+        <Box 
+          display="flex" 
+          justifyContent= "space-between"
+          width="0.4"
+        >
+          <BotonesBorrarYCancelar {...props}/>
+        </Box>
+      </>
+      :
+      <BotonesBorrarYCancelar {...props}/>
+    }
+  </Box>;
+}
 
 export { ActionItemEditor };

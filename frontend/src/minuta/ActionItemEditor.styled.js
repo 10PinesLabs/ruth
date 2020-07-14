@@ -3,18 +3,18 @@ import styled from 'styled-components';
 import {Button, Container, makeStyles, TextField} from '@material-ui/core';
 import {colors} from '../styles/theme';
 
-export const ContenedorEdicionActionItem = styled.div`
+export const ContenedorEdicionActionItem = styled(Container)`
   background-color: #C7F0E6;
   display: flex;
   flex-direction: column;
-  padding:1.5vw;
-  width:inherit;
 `;
 
 const boton = (theme) => ({
     fontFamily: 'Poppins',
     fontWeight: "bold",
-    margin: `0px ${theme.spacing(1.5)}px`,
+    margin: `${theme.spacing(1.5)}px 0px ${theme.spacing(1.5)}px 0px`,
+    padding: `${theme.spacing(0.5)}px ${theme.spacing(1)}px ${theme.spacing(0.5)}px ${theme.spacing(1)}px`,
+    letterSpacing: '1px'
 });
 
 const useStylesBotones = makeStyles(theme => ({
@@ -27,8 +27,8 @@ const useStylesBotones = makeStyles(theme => ({
     color: colors.white,
   },
   BotonBorrar:{
-    minWidth: '0px',
-    marginRight: 'auto',
+    ...boton(theme),
+    minWidth: 0,
     color:`${colors.black50}` 
   }
 }));
@@ -52,6 +52,7 @@ const useStylesContenedorActionItems = makeStyles(theme => ({
   root: {
     backgroundColor: colors.white,
     padding: theme.spacing(3),
+    marginTop: theme.spacing(3),
     display: "flex",
     flexDirection: "column"
   }
@@ -81,10 +82,3 @@ export const InputActionItem = (props) => {
     <TextField classes={useStyles()} {...props}/>
   );
 };
-
-export const ContenedorBotonesActionItem = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  margin-top: 20px;
-`;
