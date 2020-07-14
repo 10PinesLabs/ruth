@@ -39,7 +39,7 @@ const ActionItemEditor = ({onSubmit, itemDescription, itemOwners, estaEditando =
   }
 
   const guardar = () => {
-      let actionItem = {descripcion, owners}
+    let actionItem = {descripcion, owners}
     if(esUnActionItemValido(actionItem)){
       onSubmit(actionItem);
       limpiarInputs();
@@ -96,7 +96,7 @@ const ActionItemEditor = ({onSubmit, itemDescription, itemOwners, estaEditando =
                 <TextField {...params}
                 placeholder="Owners"
                 margin="normal"
-                fullWidth/> 
+                fullWidth/>
               )
               }/>
           </ContenedorInputActionItem>
