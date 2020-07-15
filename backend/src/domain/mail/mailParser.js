@@ -41,6 +41,8 @@ const componerMailResumen = (reunion, temas, fecha) => {
       cantidad: cantidadReacciones(reaccion, tema.reacciones),
     })));
 
+  const ownersActionItem = (actionItem) => actionItem.owners.map((owner) => owner.nombre).join(', ');
+
   return (
     ejs.render(`
       <h1>Reunion <%= fecha %></h1>
@@ -76,8 +78,8 @@ const componerMailResumen = (reunion, temas, fecha) => {
         </ul>
         <p>Action items:</p>
         <ul>
-            <% tema.actionItems.forEach(({ actionItem }) => { %>
-                <li> <%= actionItem.descripcion %>. Owners: <%= actionItem.owners.nombre %> </li>
+            <% tema.actionItems.forEach(({actionItem}) => { %>
+                <li> <%= actionItem.descripcion %> . Owners: <%= ownersActionItem(actionItem) %> </li>
             <% }) %>
         </ul>
       <% }) %> 
@@ -87,6 +89,7 @@ const componerMailResumen = (reunion, temas, fecha) => {
       temasAListar,
       reaccionesATema,
       tiempoHablando,
+      ownersActionItem,
     }, 'utf8')
   );
 };
