@@ -31,6 +31,7 @@ describe(`# action items!`, () => {
     const actionItem = {
       descripcion: 'Jugar al truco',
       owners: ['Lautaro'],
+      id:0
     };
     applyEvento(eventoAgregarActionItem(actionItem));
     expect(state[0].actionItem.descripcion).toEqual(actionItem.descripcion);
@@ -51,6 +52,7 @@ describe(`# action items!`, () => {
     const actionItemAgregado = {
       descripcion: 'Jugar a la play',
       owners: ['Lautaro'],
+      id:0
     };
 
     beforeEach(() => {

@@ -136,6 +136,13 @@ const Minuta = ({ dispatch, tema }) => {
     })
   }
 
+  const borrarActionItem = (actionItem) => {
+    crearEventoDeMinuteador({
+      tipo: tipoDeEventoActionItem.BORRAR_ACTION_ITEM,
+      actionItem
+    })
+  }
+
   const textoBotonEdicion = () => (isResumenOradorCerrado ? 'CERRAR EDICION' : 'ABRIR EDICION');
 
   return (
@@ -193,7 +200,7 @@ const Minuta = ({ dispatch, tema }) => {
             <Grid item xs={7}>
               <h1>Action Items ({tema.actionItems.length})</h1>
               <ActionItemEditor onSubmit={agregarActionItem}/>
-              <ListaActionItems actionItems={tema.actionItems} onEdit={editarActionItem} />
+              <ListaActionItems actionItems={tema.actionItems} alBorrar={borrarActionItem} onEdit={editarActionItem} />
             </Grid>
           </Grid>
         </TabRenderer>

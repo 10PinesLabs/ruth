@@ -3,12 +3,18 @@ import {List, ListItem, Divider, makeStyles} from '@material-ui/core';
 import {ActionItemContainer, ActionItemDescription, ListaActionItemsContainer, Owner} from './ListaActionItems.styled'
 import {ActionItemEditor} from "./ActionItemEditor";
 
-const ActionItem = ({descripcion, owners, onEdit, id}) =>{
+const ActionItem = ({descripcion, owners, onEdit, onDelete, id}) =>{
   const [estaEditando, setEstaEditando] = useState(false);
 
+  const actionItemConId = (actionItem) => { return {...actionItem, id}}
+
   const alGuardarEdicion = (actionItemGuardado) => {
-    onEdit({...actionItemGuardado, id})
+    onEdit(actionItemConId(actionItemGuardado))
     setEstaEditando(false)
+  }
+
+  const alBorrarActionItem = (actionItemABorrar) => {
+    onDelete(actionItemConId(actionItemABorrar))
   }
 
   const itemClass = {
@@ -34,6 +40,7 @@ const ActionItem = ({descripcion, owners, onEdit, id}) =>{
           itemOwners={owners}
           estaEditando={estaEditando}
           alDescartar={()=>{setEstaEditando(false)}}
+          alBorrar={alBorrarActionItem}
           onSubmit={alGuardarEdicion}
         />
       }
@@ -41,7 +48,7 @@ const ActionItem = ({descripcion, owners, onEdit, id}) =>{
   )
 }
 
-export const ListaActionItems = ({actionItems, onEdit}) => {
+export const ListaActionItems = ({actionItems, onEdit, alBorrar}) => {
   
   function esElUltimoItem(index) {
     return actionItems.length === index + 1;
@@ -67,6 +74,7 @@ export const ListaActionItems = ({actionItems, onEdit}) => {
                   descripcion={item.actionItem.descripcion} 
                   owners={item.actionItem.owners}
                   onEdit={onEdit}
+                  onDelete={alBorrar}
                 />
                 {!esElUltimoItem(index) && <Divider/>}
               </>

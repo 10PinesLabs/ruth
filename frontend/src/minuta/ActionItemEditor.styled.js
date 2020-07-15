@@ -14,6 +14,7 @@ const boton = (theme) => ({
     fontWeight: "bold",
     margin: `${theme.spacing(1.5)}px 0px ${theme.spacing(1.5)}px 0px`,
     padding: `${theme.spacing(0.5)}px ${theme.spacing(1)}px ${theme.spacing(0.5)}px ${theme.spacing(1)}px`,
+    letterSpacing: '1px'
 });
 
 const useStylesBotones = makeStyles(theme => ({
@@ -23,9 +24,19 @@ const useStylesBotones = makeStyles(theme => ({
   botonEnviar: {
     ...boton(theme),
     backgroundColor: colors.primary,
-    color: colors.white
+    color: colors.white,
+  },
+  BotonBorrar:{
+    ...boton(theme),
+    minWidth: 0,
+    color:`${colors.black50}` 
   }
 }));
+
+export function BotonBorrar(props) {
+  const classes = useStylesBotones();
+  return <Button {...props} className={classes.BotonBorrar}>{props.children}</Button>;
+}
 
 export function BotonCancelar(props) {
   const classes = useStylesBotones();
@@ -71,9 +82,3 @@ export const InputActionItem = (props) => {
     <TextField classes={useStyles()} {...props}/>
   );
 };
-
-export const ContenedorBotonesActionItem = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
