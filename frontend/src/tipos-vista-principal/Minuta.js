@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import {VistaDelMedioContainer, VistaMinutaContainer} from "./Resumen.styled";
 import { useSpring } from "react-spring";
 import { connect } from "react-redux";
-import { tipoDeEvento } from "../store/conclusion";
-import { tipoDeEvento as tipoDeEventoOradores} from "../store/oradores";
-import { tipoDeEvento as tipoDeEventoActionItem} from "../store/actionItem";
+import { conclusionEventos } from "../store/conclusion";
+import { oradorEventos } from "../store/oradores"
+import {  actionItemEventos } from "../store/actionItem";
 import { toast } from "react-toastify";
 import TablaOradores from "../minuta/TablaOradores";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -34,15 +34,6 @@ const Minuta = ({ dispatch, tema }) => {
   let [seActualizaExposicionSeleccionada, setActualizarExposicionSeleccionada] = useState(false)
   let [isResumenOradorCerrado, setIsResumenOradorCerrado] = useState(false);
   
-  const crearEventoDeMinuteador = (data) => {
-    const evento = {
-      autor: "MINUTEADOR",
-      idTema: tema.id,
-      data,
-    };
-    dispatch(evento);
-  };
-
   const handleCambioConclusion = () => {
     if (!estaEditandoConclusion) {
       setConclusion(tema.conclusion);
@@ -71,10 +62,7 @@ const Minuta = ({ dispatch, tema }) => {
       return;
     }
     setEstaEditandoConclusion(false);
-    crearEventoDeMinuteador({
-      tipo: tipoDeEvento.GUARDAR_CONCLUSION,
-      conclusion: conclusion,
-    });
+    dispatch(conclusionEventos.guardarConclusion(conclusion))
   }
 
   function resetearConclusion() {
@@ -106,11 +94,7 @@ const Minuta = ({ dispatch, tema }) => {
   }
 
   const onGuardarResumen = (resumen)=>{
-    crearEventoDeMinuteador({
-      tipo: tipoDeEventoOradores.RESUMIR_A_ORADOR,
-      indexExposicion: exposicionSeleccionada.index,
-      resumen
-    });
+    dispatch(oradorEventos.resumirAOrador(exposicionSeleccionada.index, resumen))
 
     setExposicionSeleccionada(null)
     let oradores = [...tema.oradores.pasados, tema.oradores.actual]
@@ -124,24 +108,15 @@ const Minuta = ({ dispatch, tema }) => {
   }
 
   const agregarActionItem = (actionItem) => {
-    crearEventoDeMinuteador({
-      tipo: tipoDeEventoActionItem.AGREGAR_ACTION_ITEM,
-      actionItem,
-    })
+    dispatch(actionItemEventos.agregarActionItem(actionItem))
   };
 
   const editarActionItem = (actionItem) => {
-    crearEventoDeMinuteador({
-      tipo: tipoDeEventoActionItem.EDITAR_ACTION_ITEM,
-      actionItem,
-    })
+    dispatch(actionItemEventos.editarActionItem(actionItem))
   }
 
   const borrarActionItem = (actionItem) => {
-    crearEventoDeMinuteador({
-      tipo: tipoDeEventoActionItem.BORRAR_ACTION_ITEM,
-      actionItem
-    })
+    dispatch(actionItemEventos.borrarActionItem(actionItem))
   }
 
   const textoBotonEdicion = () => (isResumenOradorCerrado ? 'CERRAR EDICION' : 'ABRIR EDICION');

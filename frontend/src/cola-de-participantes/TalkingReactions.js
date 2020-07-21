@@ -2,7 +2,7 @@ import Grid from "@material-ui/core/Grid";
 import {ReactionButton} from "../mobile/ReactionButton";
 import {faSync, faThumbsDown, faThumbsUp} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
-import {tipoDeEvento} from "../store/oradores";
+import { oradorEventos} from "../store/oradores";
 
 export const TiposReaccionAlHablar = {
     THUMBS_UP: "thumbsUp",
@@ -29,8 +29,8 @@ class TalkingReactionButton extends React.Component {
     }
 
     handleReaction = () => {
-        const tipoReaccion = this.props.active ? tipoDeEvento.DESREACCIONAR_A_ORADOR : tipoDeEvento.REACCIONAR_A_ORADOR;
-        return this.props.onClick(tipoReaccion);
+        const eventoReaccion = this.props.active ? oradorEventos.desreaccionarAOrador : oradorEventos.reaccionarAOrador;
+        return this.props.onClick(eventoReaccion);
     }
 }
 
@@ -38,15 +38,7 @@ export function TalkingReactions({dispatchEvent, participant, usuario}) {
 
     function onReaction(tipoReaccion) {
         return (tipoEvento) => {
-            dispatchEvent({
-                tipo: tipoEvento,
-                usuarioOrador: {
-                    nombre: participant.usuario.nombre,
-                    email: participant.usuario.email,
-                },
-                instanciaDeHabla: participant.instanciaDeHabla,
-                reaccion: tipoReaccion
-            });
+            dispatchEvent(tipoEvento(tipoReaccion, usuario, participant.instanciaDeHabla));
         }
     }
 

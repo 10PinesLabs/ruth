@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import { connect } from 'react-redux';
 import backend from '../api/backend';
 import VistaTemas from './VistaTemas';
+import { temaEventos } from '../store/tema'
 
 class TemasHandler extends React.Component {
   dispatchTema = (data) => {
@@ -25,7 +26,7 @@ class TemasHandler extends React.Component {
   };
 
   requestActualizarTema = (datosTema) => {
-    this.dispatchTema({ tipo: datosTema.fin ? 'Terminar Tema' : 'Empezar Tema', idTema: datosTema.id });
+    this.props.dispatch( datosTema.fin ? temaEventos.terminarTema(datosTema.id)  : temaEventos.empezarTema(datosTema.id));
   };
 
   cerrarReunion = (temas) => {
@@ -50,6 +51,6 @@ class TemasHandler extends React.Component {
 
 
 const mapStateToProps = (state) => ({
-  temas: state.temas,
+  temas: state.reunion.temas,
 });
 export default connect(mapStateToProps)(TemasHandler);

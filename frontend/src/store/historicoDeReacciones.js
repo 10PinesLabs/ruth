@@ -1,6 +1,6 @@
 import { produce } from 'immer';
 
-export default (state = [], newReacciones, action) => produce(state, (draft) => {
+export const historicoDeReaccionesReducer = (state = [], newReacciones, action) => produce(state, (draft) => {
   const keys = Object.keys(newReacciones);
   const newSnapshot = {};
 

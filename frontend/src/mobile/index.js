@@ -6,18 +6,7 @@ import { reacciones } from './actions';
 const Mobile = ({
   usuario, dispatch, tema, queuedParticipants, ...props
 }) => {
-  const dispatchEvent = (data) => {
-    if (tema.id) {
-      const evento = {
-        autor: 'MOBILE',
-        fecha: Date.now(),
-        idTema: tema.id,
-        usuario,
-        data,
-      };
-      dispatch(evento);
-    }
-  };
+
   const esUsuarioActual = (evento) => evento.usuario.email === usuario.email;
 
   const remainingParticipantsUpToUser = (queuedParticipants) => {
@@ -41,7 +30,7 @@ const Mobile = ({
         {...props}
         remainingParticipantsUpToUser={(queuedParticipants && remainingParticipantsUpToUser(queuedParticipants)) || 0}
         usuario={usuario}
-        dispatchEvent={dispatchEvent}
+        dispatchEvent={dispatch}
         wannaTalk={Boolean(tema && tema.oradores.cola.find(esUsuarioActual))}
         isTalking={Boolean(tema && tema.oradores.actual && esUsuarioActual(tema.oradores.actual))}
         thumbsUp={reaccionoCon(reacciones.THUMBS_UP)}
@@ -55,7 +44,7 @@ const Mobile = ({
 
 
 const mapStateToProps = (state) => {
-  const tema = state.temas.find((t) => t.fin === null && t.inicio !== null);
+  const tema = state.reunion.temas.find((t) => t.fin === null && t.inicio !== null);
   const title = tema && tema.titulo;
   const participant = tema && tema.oradores.actual;
   const queuedParticipants = tema && tema.oradores.cola;

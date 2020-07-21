@@ -26,9 +26,9 @@ import {
   TalkButton,
   ReactionsContainer,
 } from './vista.styled';
-import { tipoDeEvento } from '../store/oradores';
+import { oradorEventos } from '../store/oradores';
 import { CardInteractionsContainer } from '../components/InteractionsContainer.styled';
-import { reactionTypes } from '../store/reacciones';
+import { reaccionEventos } from '../store/reacciones';
 import { SkeletonCircle, SkeletonLine, ReactionSkeletonContainer } from '../skeleton/Skeleton.styled';
 import { reacciones } from './actions';
 import { faSlack } from '@fortawesome/free-brands-svg-icons';
@@ -70,22 +70,22 @@ const Vista = ({
   isTalking,
 }) => {
   const handleReaction = (nombre, estaReaccionado) => {
-    const tipo = estaReaccionado ? reactionTypes.DESREACCIONAR : reactionTypes.REACCIONAR;
-    dispatchEvent({ tipo, nombre });
+    const evento = estaReaccionado ? reaccionEventos.desreaccionar(usuario, nombre) :  reaccionEventos.reaccionar(usuario, nombre);
+    dispatchEvent(evento);
   };
 
   const onWannaTalkClick = () => {
-    dispatchEvent({ tipo: tipoDeEvento.LEVANTAR_MANO });
+    dispatchEvent(oradorEventos.levantarMano(usuario));
   };
 
   const onWannaStopTalkClick = () => {
     const estoyHablando = participant.usuario.email === usuario.email;
-    if (estoyHablando) dispatchEvent({ tipo: tipoDeEvento.DEJAR_DE_HABLAR });
-    else dispatchEvent({ tipo: tipoDeEvento.DESENCOLAR });
+    if (estoyHablando) dispatchEvent(oradorEventos.dejarDeHablar(usuario));
+    else dispatchEvent(oradorEventos.desencolar(usuario));
   };
 
   const kickear = ( usuario ) => {
-    dispatchEvent({ tipo: tipoDeEvento.KICKEAR, kickearA: usuario });
+    dispatchEvent(oradorEventos.kickear(usuario));
   };
 
   const [showSkeleton, setShowSekelton] = useState(true);
