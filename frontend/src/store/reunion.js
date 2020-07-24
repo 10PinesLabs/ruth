@@ -1,5 +1,5 @@
 import produce from "immer";
-import { createEvent } from "./util";
+import { createEvent } from "./evento";
 import { temaReducer } from "./tema";
 
 export const reunionEventoTypes = {

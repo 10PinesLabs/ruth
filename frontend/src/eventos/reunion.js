@@ -1,4 +1,4 @@
-import { createEvent } from './util';
+import { createEvent } from './evento';
 
 export const reunionEventoTypes = {
   EMPEZAR_REUNION:'Una reunion es comenzada' 

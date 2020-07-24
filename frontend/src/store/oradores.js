@@ -1,6 +1,6 @@
 import { produce } from "immer";
 import { TiposReaccionAlHablar } from "../cola-de-participantes/TalkingReactions";
-import { createEvent } from "./util";
+import { createEvent } from "./evento";
 
 const _ = require("lodash");
 

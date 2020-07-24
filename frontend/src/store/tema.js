@@ -4,7 +4,7 @@ import { conclusionReducer } from "./conclusion";
 import { actionItemReducer } from "./actionItem";
 import { reaccionesReducer } from "./reacciones";
 import { historicoDeReaccionesReducer } from "./historicoDeReacciones";
-import { createEvent } from "./util";
+import { createEvent } from "./evento";
 
 export const temaEventoType = {
   EMPEZAR_TEMA: "Se le da comienzo a un tema",

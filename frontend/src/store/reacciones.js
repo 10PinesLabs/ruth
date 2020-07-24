@@ -1,6 +1,6 @@
 import { produce } from "immer";
 import { reacciones } from "../mobile/actions";
-import { createEvent } from './util'
+import { createEvent } from './evento'
 
 export const reaccionEventoTypes = {
   REINICIAR: 'Reiniciar reacciones',

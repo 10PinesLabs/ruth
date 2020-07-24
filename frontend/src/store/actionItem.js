@@ -1,5 +1,5 @@
 import { produce } from "immer";
-import { createEvent } from "./util";
+import { createEvent } from "./evento";
 
 export const actionItemEventoTypes = {
   AGREGAR_ACTION_ITEM: 'Agregar un action item',
