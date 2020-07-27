@@ -6,26 +6,26 @@ import { reaccionesReducer } from "./reacciones";
 import { historicoDeReaccionesReducer } from "./historicoDeReacciones";
 import { createEvent } from "./evento";
 
-export const temaEventoType = {
+export const temaEventoTypes = {
   EMPEZAR_TEMA: "Se le da comienzo a un tema",
   TERMINAR_TEMA: "se le da fin a un tema",
 };
 
 export const temaEventos = {
-  empezarTema: (idTema) => createEvent(temaEventoType.EMPEZAR_TEMA, { idTema }),
+  empezarTema: (idTema) => createEvent(temaEventoTypes.EMPEZAR_TEMA, { idTema }),
   terminarTema: (idTema) =>
-    createEvent(temaEventoType.TERMINAR_TEMA, { idTema }),
+    createEvent(temaEventoTypes.TERMINAR_TEMA, { idTema }),
 };
 
 export const temaReducer = (state, action) =>
   produce(state, (draft) => {
     switch (action.type) {
-      case temaEventoType.EMPEZAR_TEMA: {
+      case temaEventoTypes.EMPEZAR_TEMA: {
         draft.inicio = new Date(action.fecha).toISOString();
         break;
       }
 
-      case temaEventoType.TERMINAR_TEMA: {
+      case temaEventoTypes.TERMINAR_TEMA: {
         const ahora = new Date(action.fecha).toISOString();
         if (draft.fin === null && draft.inicio !== null) {
           draft.fin = ahora;
