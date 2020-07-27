@@ -4,6 +4,7 @@ import { temaReducer } from "./tema";
 
 export const reunionEventoTypes = {
   EMPEZAR_REUNION: "Una reunion es comenzada",
+  TERMINAR_REUNION: "La reunion fue finalizada"
 };
 
 export const reunionEventos = {
@@ -12,6 +13,9 @@ export const reunionEventos = {
       reunion,
       comesFromWS:true
     }),
+  finalizarReunionActual: () => 
+    createEvent(reunionEventoTypes.TERMINAR_REUNION),
+  
 };
 
 export const reunionReducer = (state, action) =>
@@ -23,6 +27,10 @@ export const reunionReducer = (state, action) =>
         draft.reunion.temas = action.reunion.temas
           .map((tema) => temaReducer(tema, action))
           .sort(compareTema);
+        break;
+      }
+      case reunionEventoTypes.TERMINAR_REUNION: {
+        draft.reunion.abierta = false;
         break;
       }
 
