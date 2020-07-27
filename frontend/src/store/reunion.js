@@ -10,12 +10,12 @@ export const reunionEventos = {
   comenzarReunion: (reunion) =>
     createEvent(reunionEventoTypes.EMPEZAR_REUNION, {
       reunion,
+      comesFromWS:true
     }),
 };
 
 export const reunionReducer = (state, action) =>
   produce(state, (draft) => {
-    console.log(action);
     draft.ultimoEventoId = action.id;
     switch (action.type) {
       case reunionEventoTypes.EMPEZAR_REUNION: {
@@ -32,17 +32,20 @@ export const reunionReducer = (state, action) =>
             (tema) => tema.id === action.idTema
           );
 
-          if (temaIndex !== -1)
+          if (temaIndex !== -1){
             draft.reunion.temas[temaIndex] = temaReducer(
               draft.reunion.temas[temaIndex],
               action
             );
-          break;
+            break;
+          }
+          
+          console.error(
+            "Se recibio una accion con un idTema desconocido",
+            action
+          );
         }
-        console.error(
-          "Se recibio una accion con un idTema desconocido",
-          action
-        );
+       
     }
   });
 
