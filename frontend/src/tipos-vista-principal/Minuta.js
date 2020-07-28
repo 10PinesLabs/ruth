@@ -147,7 +147,7 @@ const Minuta = ({ dispatch, tema }) => {
 
   const textoBotonEdicion = () => (isResumenOradorCerrado ? 'CERRAR EDICION' : 'ABRIR EDICION');
 
-  const textoBotonCreadorActionItems = () => !isCreadorActionItemCerrado ? 'Abrir creador action item' : 'Cerrar creador';
+  const textoBotonCreadorActionItems = () => !isCreadorActionItemCerrado ? 'Abrir creador de action items' : 'Cerrar creador';
 
   return (
     <VistaDelMedioContainer
