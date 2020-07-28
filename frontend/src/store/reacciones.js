@@ -1,5 +1,5 @@
-import { produce } from "immer";
-import { reacciones } from "../mobile/actions";
+import { produce } from 'immer';
+import { reacciones } from '../mobile/actions';
 import { createEvent } from './evento'
 
 export const reaccionEventoTypes = {

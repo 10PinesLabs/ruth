@@ -1,7 +1,7 @@
 // eslint-disable no-console
-import { useEffect, useState } from "react";
-import { batch } from "react-redux";
-import createStore from "./store";
+import { useEffect, useState } from 'react';
+import { batch } from 'react-redux';
+import createStore from './store';
 import { reunionEventos } from "./store/reunion";
 
 function getWebSocket(lastEvent) {
