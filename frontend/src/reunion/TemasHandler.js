@@ -25,10 +25,6 @@ class TemasHandler extends React.Component {
     this.props.dispatch(evento);
   };
 
-  requestActualizarTema = (datosTema) => {
-    this.props.dispatch( datosTema.fin ? temaEventos.terminarTema(datosTema.id)  : temaEventos.empezarTema(datosTema.id));
-  };
-
   cerrarReunion = (temas) => {
     backend.cerrarReunion(temas)
       .then(() => toast.success('Reunión finalizada'))
@@ -43,7 +39,7 @@ class TemasHandler extends React.Component {
     return <VistaTemas
       usuario={this.props.usuario}
       temas={this.props.temas}
-      actualizarTema={this.requestActualizarTema}
+      dispatch={this.props.dispatch}
       cerrarReunion={this.cerrarReunion}
     />;
   }

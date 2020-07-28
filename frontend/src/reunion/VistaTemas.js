@@ -10,9 +10,10 @@ import Temario from '../temario/Temario';
 import Header from "./Header";
 import {useSpring} from "react-spring";
 import Mobile from '../mobile/index';
+import { temaEventos } from '../store/tema';
 
 
-const VistaTemas = ({actualizarTema, cerrarReunion, temas, usuario}) => {
+const VistaTemas = ({dispatch, cerrarReunion, temas, usuario}) => {
 
   const indiceTemaSinFinalizar = temas.findIndex((tema) => tema.fin === null);
   const ultimoTema = temas.length - 1;
@@ -34,11 +35,7 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas, usuario}) => {
     if(existeUnTemaEmpezado()){
       return toast.error('Ya hay otro tema en curso');
     }
-    return actualizarTema({
-      id: temaSeleccionado.id,
-      inicio: Date.now(),
-      fin: null,
-    });
+    dispatch(temaEventos.empezarTema(temaSeleccionado.id))
   };
 
   const existeUnTemaEmpezado = ()=> {
@@ -50,13 +47,13 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas, usuario}) => {
   } 
 
   const terminarTema = () => {
-    actualizarTema({
-      id: temaSeleccionado.id,
-      inicio: temaSeleccionado.inicio,
-      fin: Date.now(),
-    });
+    dispatch(temaEventos.terminarTema(temaSeleccionado.id))
     toast.success('Tema finalizado');
   };
+
+  const reabrirTema = () => {
+
+  }
 
   const handleCerrarReunion = () => {
     if (temaActivo()) {
