@@ -53,4 +53,19 @@ describe(`#tema reducer`, () => {
     expect(state.fin).toEqual(fechaDeFin.toISOString());
 
   });
+
+  it("cuando el evento es de tipo reabrir tema se le quita el inicio y se le agrega un tiempo inactivo igual a la cantidad de tiempo transcurrido entre el cierre del tema y la nueva apertura", ()=> {
+    let idDeTema = 4;
+    let fechaDeInicio = new Date();
+    let fechaDeFin = new  Date();
+    let fechaDeReapertura = new Date();
+
+    applyEvento(eventoConFecha(temaEventos.empezarTema(idDeTema), fechaDeInicio));
+    applyEvento(eventoConFecha(temaEventos.terminarTema(idDeTema), fechaDeFin));
+    applyEvento(eventoConFecha(temaEventos.reabrirTema(idDeTema), fechaDeReapertura))
+
+    expect(state.inicio).toEqual(fechaDeInicio.toISOString());
+    expect(state.fin).toEqual(null);
+    expect(state.tiempoInactivo).toEqual(fechaDeReapertura - fechaDeFin)
+  })
 });
