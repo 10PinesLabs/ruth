@@ -1,10 +1,6 @@
-import {
-  configureStore,
-  createAction,
-  getDefaultMiddleware,
-} from "@reduxjs/toolkit";
-import produce, { setAutoFreeze } from "immer";
-import Backend from "../api/backend";
+import { configureStore, createAction, getDefaultMiddleware } from '@reduxjs/toolkit';
+import produce, { setAutoFreeze } from 'immer';
+import Backend from '../api/backend';
 import { reunionReducer } from "./reunion";
 
 setAutoFreeze(false);
