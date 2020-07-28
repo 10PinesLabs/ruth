@@ -24,7 +24,7 @@ describe(`#tema reducer`, () => {
   it("cuando el evento es de tipo empezar tema, se le pone la fecha del evento como inicio al tema al tema", () => {
     let idDeTema = 4;
     let fechaDeGeneracionDeEvento = new Date();
-    applyEvento(eventoConFecha(temaEventos.empezarTema(4),fechaDeGeneracionDeEvento));
+    applyEvento(eventoConFecha(temaEventos.empezarTema(idDeTema),fechaDeGeneracionDeEvento));
 
     expect(state.fin).toEqual(null);
     expect(state.inicio).toEqual(fechaDeGeneracionDeEvento.toISOString());
@@ -35,7 +35,7 @@ describe(`#tema reducer`, () => {
     let idDeTema = 4;
     let fechaDeGeneracionDeEvento = new Date();
 
-    applyEvento(eventoConFecha(temaEventos.terminarTema(4), fechaDeGeneracionDeEvento));
+    applyEvento(eventoConFecha(temaEventos.terminarTema(idDeTema), fechaDeGeneracionDeEvento));
 
     expect(state).toEqual(INITIAL_STATE);
 
@@ -46,8 +46,8 @@ describe(`#tema reducer`, () => {
     let fechaDeInicio = new Date();
     let fechaDeFin = new  Date();
 
-    applyEvento(eventoConFecha(temaEventos.empezarTema(4), fechaDeInicio));
-    applyEvento(eventoConFecha(temaEventos.terminarTema(4), fechaDeFin));
+    applyEvento(eventoConFecha(temaEventos.empezarTema(idDeTema), fechaDeInicio));
+    applyEvento(eventoConFecha(temaEventos.terminarTema(idDeTema), fechaDeFin));
 
     expect(state.inicio).toEqual(fechaDeInicio.toISOString());
     expect(state.fin).toEqual(fechaDeFin.toISOString());
