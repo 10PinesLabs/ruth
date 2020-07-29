@@ -3,31 +3,36 @@ import styled from 'styled-components';
 export const CardContainer = styled.div(({isTalking,sePuedeReaccionar}) => `
   display: flex;
   flex-shrink: 0;
-  flex-direction: ${(sePuedeReaccionar)? "row" : "column"};
   align-items: center;
   background: linear-gradient(145deg, #c7c7c7, #ececec);
   justify-content: space-between;
-  width: ${(sePuedeReaccionar)? "70%" : isTalking ? '12em' : '10em'};
-  height: ${isTalking ? '15em' : '13.5em'};
   margin: 0 0.5em;
   box-shadow: 5px 5px 10px #828282, -5px -5px 10px #ffffff;
-  border-radius: 20px;
+  border-radius: 7px;
   position:relative;
+  flex-direction: column;
+  min-width: 230px;
+  max-height: 350px;
+  max-width: 255px;
+  margin-top: 10px;
 `);
 
 export const ParticipantDataReactableContainer = styled.div(() => `
-    width: 70%;
+    width: 100%;
+    height: 100%;
 `
 );
 
 export const CardInfoContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  position:relative;
   align-items: center;
+  padding: 2px 0px;
   justify-content: space-between;
-  height: 100%;
   width: 100%;
-  margin: 0.5em 0;
+  font-size:1.3em;
+  background-color: #ddddddab;
 `;
 
 export const UserAvatar = styled.div(({isTalking, avatar}) => `
@@ -35,15 +40,20 @@ export const UserAvatar = styled.div(({isTalking, avatar}) => `
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  min-height: ${isTalking? '9.5em' : '8em'};
   width: 100%;
-  border-radius: 20px 20px 0 0;
+  height: 75%;
+  min-height: 240px;
+  border-radius: 7px 7px 0 0;
+  display: flex;
+  align-items: flex-end;
 `);
 
 export const CardName = styled.span`
-  text-align: center;
+  text-align: left;
   color: black;
-  max-width: 95%;
+  max-width: 70%;
+  margin-left: 6px;
+  text-align: left;
   overflow: hidden;
   display: -webkit-box;
    -webkit-line-clamp: 2;
@@ -51,26 +61,18 @@ export const CardName = styled.span`
 `;
 
 export const Cerrar = styled.div`
-  display: block;
-  width: 1.5em;
-  height: 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2em;
+  height: 2.2em;
   position:absolute;
-  right:-0.75em;
-  top: -0.75em;
-  border-radius: 50%;
+  right:0em;
+  top: 0em;
+  border-radius: 0 7px 0 10px;
   opacity: 0.9;
   background: rgba(0, 0, 0, 0) linear-gradient(145deg, rgb(230, 230, 230), rgb(200, 200, 200)) repeat scroll 0% 0%;
-  box-shadow: rgb(130, 130, 130) 4px 4px 10px, rgb(255, 255, 255) -4px -4px 10px;
   cursor: pointer;
-  :after{
-    display: flex;
-    content: '';
-    background: url(./kick.svg) no-repeat center center;
-    background-size: 0.7em;
-    fill: gray;
-    width: 100%;
-    height: 100%;
-    align-items:center;
-    justify-content: center;
-  }
+  color:red;
+
 `;

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import {
   faMale,
-  faMicrophoneAlt,
   faSync,
   faThumbsDown,
   faThumbsUp,
   faHandPaper,
+  faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ParticipantsCard from '../cola-de-participantes/ParticipantsCard';
@@ -23,16 +23,17 @@ import {
   TopSectionContainer,
   MicrophoneContainer,
   ParticipantsCounter,
-  TalkButton,
   ReactionsContainer,
+  SpeakerAreaContainer
 } from './vista.styled';
 import { tipoDeEvento } from '../store/oradores';
 import { CardInteractionsContainer } from '../components/InteractionsContainer.styled';
 import { reactionTypes } from '../store/reacciones';
-import { SkeletonCircle, SkeletonLine, ReactionSkeletonContainer } from '../skeleton/Skeleton.styled';
+import { SkeletonCircle, SkeletonLine, ReactionSkeletonContainer, SkeletonBlock } from '../skeleton/Skeleton.styled';
 import { reacciones } from './actions';
 import { faSlack } from '@fortawesome/free-brands-svg-icons';
 import { colors } from '../../src/styles/theme.js'
+import Button from '@material-ui/core/Button';
 
 const logoImage = 'https://res-4.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_'
   + '256,f_auto,q_auto:eco/wuhk5weer0fkhmh2oyhv';
@@ -93,7 +94,21 @@ const Vista = ({
     setTimeout(() => setShowSekelton(false), 1000);
   }, []);
 
-  const inQueueIcon = () => (isTalking ? faMicrophoneAlt : faHandPaper);
+  const inQueueIcon = () => (faTimes);
+
+  const TalkButton = ({children, color = colors.primary, onClick, icon }) => {
+    return (
+      <Button
+        variant="outlined"
+        style={{ color: color, borderColor: color }}
+        onClick={onClick}
+        startIcon={icon}
+        size="large"
+      >
+        {children}
+      </Button>
+    );
+  };
 
   let botonesDeReaccion;
   if (temaEmpezado) {
@@ -126,34 +141,68 @@ const Vista = ({
   let microphone;
   if (temaEmpezado) {
     if (isTalking) {
-      microphone =
+      microphone = (
         <MicrophoneContainer>
-          <TalkButton pressed={true} onClick={onWannaStopTalkClick}>
-            <FontAwesomeIcon icon={inQueueIcon()} color={'black'} size={'2x'}/>
+          <TalkButton
+            pressed={true}
+            color="black"
+            onClick={onWannaStopTalkClick}
+            icon={
+              <FontAwesomeIcon icon={inQueueIcon()} color="black" size={"2x"} />
+            }
+          >
+            Dejar de hablar
           </TalkButton>
-        </MicrophoneContainer>;
+        </MicrophoneContainer>
+      );
     } else if (wannaTalk) {
-      microphone =
+      microphone = (
         <MicrophoneContainer>
-            <TalkButton pressed={true} onClick={onWannaStopTalkClick}>
-              <FontAwesomeIcon icon={inQueueIcon()} color={'black'} size={'2x'}/>
-            </TalkButton>
-            <QueuedParticipants>
-              <ParticipantsCounter>
-                {remainingParticipantsUpToUser}
-              </ParticipantsCounter>
-              <FontAwesomeIcon icon={faMale} color={'silver'} size={'1x'}/>
-            </QueuedParticipants>
-        </MicrophoneContainer>;
+          <TalkButton
+            pressed={true}
+            onClick={onWannaStopTalkClick}
+            color="black"
+            icon={
+              <FontAwesomeIcon
+                icon={inQueueIcon()}
+                color={"black"}
+                size={"2x"}
+              />
+            }
+          >
+            Desencolarse ({remainingParticipantsUpToUser})
+          </TalkButton>
+        </MicrophoneContainer>
+      );
     } else {
-      microphone = <TalkButton pressed={false} onClick={onWannaTalkClick}>
-        <FontAwesomeIcon icon={faHandPaper} color={'gray'} size={'2x'}/>
-      </TalkButton>;
+      microphone = (
+        <TalkButton
+          pressed={false}
+          onClick={onWannaTalkClick}
+          icon={
+            <FontAwesomeIcon
+              icon={faHandPaper}
+              color={colors.primary}
+              size={"2x"}
+            />
+          }
+        >
+          Quiero hablar
+        </TalkButton>
+      );
     }
   } else {
-    microphone = <TalkButton pressed={false}>
-      <FontAwesomeIcon icon={faHandPaper} color={'#ff3b3b8c'} size={'2x'}/>
-    </TalkButton>;
+    microphone = (
+      <TalkButton
+        pressed={false}
+        color="#ff3b3b8c"
+        icon={
+          <FontAwesomeIcon icon={faHandPaper} color={"#ff3b3b8c"} size={"2x"} />
+        }
+      >
+        Aun no
+      </TalkButton>
+    );
   }
 
 
@@ -180,18 +229,20 @@ const Vista = ({
         </CardInteractionsContainer>
       </TopSectionContainer>
       <ParticipantsContainer>
-        <ParticipantsCard
-          sePuedeReaccionar={process.env.REACT_APP_MINUTA_PERMITIDA === 'true'}
-          usuario={usuario}
-          interactive
-          isParticipantTalking
-          dispatchEvent={dispatchEvent}
-          kickear={kickear}
-          participant={participant}/>
+        <SpeakerAreaContainer>
+          <ParticipantsCard
+            sePuedeReaccionar={process.env.REACT_APP_MINUTA_PERMITIDA === 'true'}
+            usuario={usuario}
+            interactive
+            isParticipantTalking
+            dispatchEvent={dispatchEvent}
+            kickear={kickear}
+            participant={participant}/>
+          </SpeakerAreaContainer>
+        <ActionContainerStyle>
+          {showSkeleton ? <SkeletonBlock/>: microphone}
+        </ActionContainerStyle>
       </ParticipantsContainer>
-      <ActionContainerStyle>
-        {showSkeleton ? <TalkButton pressed={false}><SkeletonCircle/></TalkButton> : microphone}
-      </ActionContainerStyle>
     </MobileUsableArea>
   );
 };

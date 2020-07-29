@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { colors } from '../styles/theme';
 
 export const MobileUsableArea = styled.div`
     width: 100%;
@@ -13,7 +14,7 @@ export const MobileUsableArea = styled.div`
 `;
 
 export const TopSectionContainer = styled.div`
-    min-height: 14em;
+    width: 100%;
 `;
 
 export const LogoHeader = styled.div`
@@ -44,13 +45,11 @@ export const ParticipantsContainer = styled.div`
     align-items: center;
     justify-content: center;
     min-height: 20em;
-    width: 95%;
+    width: 100%;
     height: 100%;
-    border-radius: 40px;
-    max-width: 30em;
     //background: #BBBBBB;
     background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRBvqFqZpJ08P0JcheadQG6O7Cln-SZauMu9CiqKJzHRKmcOEkY");
-    box-shadow: inset 4px 4px 8px #6b6b6b, inset -4px -4px 6px #d4d2d2;
+    box-shadow: inset 0px 35px 17px -37px rgba(0,0,0,1);
 `;
 
 export const ActionContainerStyle = styled.div`
@@ -58,9 +57,8 @@ export const ActionContainerStyle = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-top: 0.5em;
+    padding-bottom: 2em;
     width: 100%;
-    min-height: 8em;
 `;
 
 export const QueuedParticipants = styled.div`
@@ -81,12 +79,19 @@ export const QueuedParticipants = styled.div`
 `;
 
 export const SubjectTitle = styled.div`
-    color: grey; 
-    margin: 0.5em 0 0 0;
+    color: black; 
     font-size: 2em;
-    font-weight: 200; 
+    font-weight: 500; 
     text-align: center;
     font-family: 'Poppins', sans-serif;
+    &:before{
+        color: grey; 
+        font-size: 0.75em;
+        font-weight: 300; 
+        text-align: center;
+        font-family: 'Poppins', sans-serif;
+        content:"tema ";
+    }
 `;
 
 export const TemaNoEmpezado = styled.div`
@@ -122,21 +127,16 @@ export const ReactionsContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    width: 45%;
+    min-width: 200px;
+    justify-content: space-evenly;
     height: ${(props) => props.height}rem;
 `;
 
-export const TalkButton = styled.div(({pressed}) => `
-    height: 6em;
-    width: 6em;
-    border-radius: 50%;
+export const SpeakerAreaContainer = styled.div`
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
-    flex-direction: column;
     align-items: center;
-    margin-bottom: 1em;
-    box-shadow: rgb(130, 130, 130) 4px 4px 10px, rgb(255, 255, 255) -4px -4px 10px;
-    background: ${pressed? 'linear-gradient(145deg, rgb(114, 181, 114), rgb(205, 255, 205))' :
-    'linear-gradient(145deg, rgb(230, 230, 230), rgb(200, 200, 200))'
-    };
-`);
+`;

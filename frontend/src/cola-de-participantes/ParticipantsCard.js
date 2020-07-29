@@ -5,14 +5,17 @@ import getGravatarUrlFor from '../api/gravatar';
 import {SkeletonBlock, SkeletonLine} from "../skeleton/Skeleton.styled";
 import {ModalDeConfirmacion} from "../tipos-vista-principal/Modal";
 import {TalkingReactions} from "./TalkingReactions";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEject } from '@fortawesome/free-solid-svg-icons'
 
 const ParticipantData = (props) => {
   return <>
-    <UserAvatar isTalking={props.talking} avatar={getGravatarUrlFor(props.usuario.email)}/>
+    <UserAvatar isTalking={props.talking} avatar={getGravatarUrlFor(props.usuario.email)}>
     <CardInfoContainer>
       <CardName isInteractive={props.interactive}> {props.usuario.nombre} </CardName>
       <ParticipantCounter isInteractive={props.interactive} estadoOrador={props.estadoOrador}/>
     </CardInfoContainer>
+    </UserAvatar>
   </>;
 }
 
@@ -53,7 +56,7 @@ const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant
         isInteractive={interactive}
         isTalking={isParticipantTalking}
       >
-        {interactive && <Cerrar onClick={() => setOradorAKickear(participant.usuario)}/>}
+        {interactive && <Cerrar onClick={() => setOradorAKickear(participant.usuario)}><FontAwesomeIcon icon={faEject}/></Cerrar>}
         <ModalDeConfirmacion
           title={`¿Estás seguro que querés kickear a ${oradorAKickear && (oradorAKickear.nombre || '')}?`}
           open={Boolean(oradorAKickear)}
@@ -63,17 +66,17 @@ const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant
 
         {(sePuedeReaccionar) ?
           <>
-            <TalkingReactions
-              usuario={usuario}
-              dispatchEvent={dispatchEvent}
-              participant={participant}
-            />
             <ParticipantDataReactableContainer>
               <ParticipantData
                 talking={isParticipantTalking}
                 usuario={participant.usuario}
                 interactive={interactive}
                 estadoOrador={estadoOrador()}/>
+              <TalkingReactions
+              usuario={usuario}
+              dispatchEvent={dispatchEvent}
+              participant={participant}/>
+              
             </ParticipantDataReactableContainer>
           </> :
           <ParticipantData
