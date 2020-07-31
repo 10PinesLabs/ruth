@@ -1,8 +1,7 @@
-import { temaReducer, temaEventos } from "../tema";
+import { temaReducer, INITIAL_TEMA_STATE as INITIAL_STATE, temaEventos } from "../tema";
 
 describe(`#tema reducer`, () => {
   let state;
-  let INITIAL_STATE = {"actionItems": [], "conclusion": "", "fin": null, "historicoDeReacciones": [], "inicio": null, "oradores": {"actual": null, "cola": [], "pasados": []}, "reacciones": {}};
 
   beforeEach(() => {
     state = INITIAL_STATE

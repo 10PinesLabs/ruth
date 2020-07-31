@@ -1,9 +1,8 @@
-import { reunionReducer, reunionEventos } from "../reunion";
+import { reunionReducer, INITIAL_REUNION_STATE as INITIAL_STATE , reunionEventos } from "../reunion";
 import { temaReducer } from "../tema"
 
 describe(`#reunion reducer`, () => {
   let state;
-  let INITIAL_STATE = {};
 
   let temaObligatorioConMenorPrioridad = {
     tipo: "conDescripcion",

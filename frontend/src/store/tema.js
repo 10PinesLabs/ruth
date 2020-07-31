@@ -17,7 +17,17 @@ export const temaEventos = {
     createEvent(temaEventoTypes.TERMINAR_TEMA, { idTema }),
 };
 
-export const temaReducer = (state, action) =>
+export const INITIAL_TEMA_STATE = {
+  actionItems: [],
+  conclusion: "",
+  fin: null,
+  historicoDeReacciones: [],
+  inicio: null,
+  oradores: { actual: null, cola: [], pasados: [] },
+  reacciones: {},
+};
+
+export const temaReducer = (state = INITIAL_TEMA_STATE, action) =>
   produce(state, (draft) => {
     switch (action.type) {
       case temaEventoTypes.EMPEZAR_TEMA: {
