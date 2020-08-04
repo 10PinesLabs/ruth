@@ -235,7 +235,7 @@ const Vista = ({
               <>
                 <b>+{remainingParticipantsUpToUser-1}</b>
                 <br />
-                Delante tuyo
+                Delante <br/>tuyo
               </>
             ) : (
               <>

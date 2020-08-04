@@ -133,17 +133,17 @@ export const ReactionsContainer = styled.div`
 `;
 
 export const SpeakerAreaContainer = styled.div`
-    width: 60%;
     height: 100%;
     display: flex;
+    position:relative;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 `;
 
 export const CantidadDeOradores = styled.div`
-    margin-right: 10%;
-    width: 10%;
-    margin-left: -18%;
+    position:absolute;
+    top:40%;
+    left: -30%;
     color:gray;
 `
