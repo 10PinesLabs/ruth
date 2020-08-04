@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-  faMale,
   faSync,
   faThumbsDown,
   faThumbsUp,
@@ -17,14 +16,13 @@ import {
   LogoLabel,
   MobileUsableArea,
   ParticipantsContainer,
-  QueuedParticipants,
   SubjectTitle,
   TemaNoEmpezado,
   TopSectionContainer,
   MicrophoneContainer,
-  ParticipantsCounter,
   ReactionsContainer,
-  SpeakerAreaContainer
+  SpeakerAreaContainer,
+  CantidadDeOradores
 } from './vista.styled';
 import { tipoDeEvento } from '../store/oradores';
 import { CardInteractionsContainer } from '../components/InteractionsContainer.styled';
@@ -69,6 +67,7 @@ const Vista = ({
   redondear,
   wannaTalk,
   isTalking,
+  queuedParticipants
 }) => {
   const handleReaction = (nombre, estaReaccionado) => {
     const tipo = estaReaccionado ? reactionTypes.DESREACCIONAR : reactionTypes.REACCIONAR;
@@ -170,7 +169,7 @@ const Vista = ({
               />
             }
           >
-            Desencolarse ({remainingParticipantsUpToUser})
+            Desencolarse
           </TalkButton>
         </MicrophoneContainer>
       );
@@ -230,15 +229,36 @@ const Vista = ({
       </TopSectionContainer>
       <ParticipantsContainer>
         <SpeakerAreaContainer>
+          { queuedParticipants?.length>0 &&
+          <CantidadDeOradores>
+            {wannaTalk ? (
+              <>
+                <b>+{remainingParticipantsUpToUser-1}</b>
+                <br />
+                Delante tuyo
+              </>
+            ) : (
+              <>
+                <b>+{queuedParticipants?.length}</b>
+                <br />
+                Encolados
+              </>
+            )}
+          </CantidadDeOradores>
+            }
           <ParticipantsCard
-            sePuedeReaccionar={process.env.REACT_APP_MINUTA_PERMITIDA === 'true'}
+            sePuedeReaccionar={
+              process.env.REACT_APP_MINUTA_PERMITIDA === "true"
+            }
             usuario={usuario}
             interactive
             isParticipantTalking
             dispatchEvent={dispatchEvent}
             kickear={kickear}
-            participant={participant}/>
-          </SpeakerAreaContainer>
+            participant={participant}
+          />
+        </SpeakerAreaContainer>
+
         <ActionContainerStyle>
           {showSkeleton ? <SkeletonBlock/>: microphone}
         </ActionContainerStyle>
