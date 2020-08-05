@@ -98,7 +98,6 @@ const wsForwarder = (store) => (next) => (action) => {
     }
 
     next(stateEventos.iniciarEnvioDeEvento());
-    state = store.getState();
     let temaActual = state.reunion.temas.find((t) => t.fin === null && t.inicio !== null);
     Backend.publicarEvento({
       reunionId: state.reunion.id,
