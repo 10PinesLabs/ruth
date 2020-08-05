@@ -88,38 +88,8 @@ export const stateReducer = (state = INITIAL_STATE, action) =>
     }
   });
 
-const wsForwarder = (store) => (next) => (action) => {
-  if (!action.comesFromWS) {
-    // We don't dispatch actions that we send to the backend since we'll
-    // see them twice, in the future we could be smarter.
-    let state = store.getState();
-    if (state.esperandoConfirmacionDeEvento || state.esperandoEventoId) {
-      return;
-    }
-
-    next(stateEventos.iniciarEnvioDeEvento());
-    state = store.getState();
-    let temaActual = state.reunion.temas.find((t) => t.fin === null && t.inicio !== null);
-    Backend.publicarEvento({
-      reunionId: state.reunion.id,
-      idTema: temaActual?.id,
-      ...action,
-    })
-      .then(({ id }) => {
-        next(stateEventos.eventoConfirmadoPorBackend(id));
-      })
-      .catch((e) => {
-        console.error('el backend fallo');
-        console.error(e);
-        next(stateEventos.eventoRechazadoPorBackend());
-      });
-  } else {
-    next(action);
-  }
-};
-
 export default () =>
   configureStore({
     reducer: stateReducer,
-    middleware: [...getDefaultMiddleware(), wsForwarder],
+    middleware: [...getDefaultMiddleware()],
   });
