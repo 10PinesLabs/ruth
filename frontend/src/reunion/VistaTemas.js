@@ -83,16 +83,6 @@ const VistaTemas = ({dispatch, cerrarReunion, temas, usuario}) => {
     }
   };
 
-  const segundosRestantes = () => {
-    const {inicio, fin, tiempoInactivo, cantidadDeMinutosDelTema} = temaSeleccionado;
-    if (inicio === null) {
-      return cantidadDeMinutosDelTema * 60;
-    }
-    const tiempo = fin === null ? Date.now() : Date.parse(fin);
-    return Math.round(cantidadDeMinutosDelTema * 60
-      - (tiempo - Date.parse(inicio) - (tiempoInactivo || 0)) / 1000);
-  };
-
   const temaActivo = () => {
     const {inicio, fin} = temaSeleccionado;
     return inicio !== null && fin === null;
@@ -110,9 +100,8 @@ const VistaTemas = ({dispatch, cerrarReunion, temas, usuario}) => {
       />
 
       {(selectedElement !== 'Opinar' &&
-      <Header titulo={temaSeleccionado.titulo}
-              segundosRestantes={segundosRestantes()}
-              temaActivo={temaActivo()}
+      <Header tema={temaSeleccionado}
+              estaActivo={temaActivo()}
       />)}
       <VistaTemaContainer shouldShowHeader={selectedElement !== 'Opinar'} style={propsToAnimate}>
         <VistaSeleccionada tema={temaSeleccionado}
