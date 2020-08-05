@@ -1,9 +1,22 @@
-import { configureStore, createAction, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import produce, { setAutoFreeze } from 'immer';
 import Backend from '../api/backend';
 import { reunionReducer } from "./reunion";
+import { createEvent } from './evento';
 
 setAutoFreeze(false);
+
+export const stateEventoTypes = {
+  INICIAR_ENVIO: 'iniciarEnvioDeEvento',
+  ENVIO_CONFIRMADO: 'eventoConfirmadoPorBackend',
+  ENVIO_RECHAZADO: 'eventoRechazadoPorBackend'
+}
+
+export const stateEventos = {
+iniciarEnvioDeEvento: () => createEvent(stateEventoTypes.INICIAR_ENVIO),
+eventoConfirmadoPorBackend: (id) => createEvent(stateEventoTypes.ENVIO_CONFIRMADO, {id}),
+eventoRechazadoPorBackend: () => createEvent(stateEventoTypes.ENVIO_RECHAZADO),
+}
 
 const INITIAL_STATE = {
   reunion: null,
@@ -16,13 +29,13 @@ const INITIAL_STATE = {
 export const stateReducer = (state = INITIAL_STATE, action) =>
   produce(state, (draft) => {
     switch (action.type) {
-      case iniciarEnvioDeEvento.toString(): {
+      case stateEventoTypes.INICIAR_ENVIO: {
         draft.esperandoConfirmacionDeEvento = true;
         draft.esperandoEventoId = null;
         draft.eventosEncolados = [];
         break;
       }
-      case eventoConfirmadoPorBackend.toString(): {
+      case stateEventoTypes.ENVIO_CONFIRMADO: {
         if (draft.esperandoConfirmacionDeEvento) {
           if (draft.eventosEncolados.some((eventoId) => eventoId === action.payload)) {
             // el evento ya llego antes de que el backend nos confirmara asi que
@@ -40,7 +53,7 @@ export const stateReducer = (state = INITIAL_STATE, action) =>
         }
         break;
       }
-      case eventoRechazadoPorBackend.toString(): {
+      case stateEventoTypes.ENVIO_RECHAZADO: {
         if (draft.esperandoConfirmacionDeEvento) {
           draft.eventosEncolados = [];
           draft.esperandoConfirmacionDeEvento = false;
@@ -75,10 +88,6 @@ export const stateReducer = (state = INITIAL_STATE, action) =>
     }
   });
 
-const iniciarEnvioDeEvento = createAction('iniciarEnvioDeEvento');
-const eventoConfirmadoPorBackend = createAction('eventoConfirmadoPorBackend');
-const eventoRechazadoPorBackend = createAction('eventoRechazadoPorBackend');
-
 const wsForwarder = (store) => (next) => (action) => {
   if (!action.comesFromWS) {
     // We don't dispatch actions that we send to the backend since we'll
@@ -88,7 +97,7 @@ const wsForwarder = (store) => (next) => (action) => {
       return;
     }
 
-    next(iniciarEnvioDeEvento());
+    next(stateEventos.iniciarEnvioDeEvento());
     state = store.getState();
     let temaActual = state.reunion.temas.find((t) => t.fin === null && t.inicio !== null);
     Backend.publicarEvento({
@@ -97,12 +106,12 @@ const wsForwarder = (store) => (next) => (action) => {
       ...action,
     })
       .then(({ id }) => {
-        next(eventoConfirmadoPorBackend(id));
+        next(stateEventos.eventoConfirmadoPorBackend(id));
       })
       .catch((e) => {
         console.error('el backend fallo');
         console.error(e);
-        next(eventoRechazadoPorBackend());
+        next(stateEventos.eventoRechazadoPorBackend());
       });
   } else {
     next(action);

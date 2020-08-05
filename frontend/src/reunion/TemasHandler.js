@@ -34,7 +34,6 @@ class TemasHandler extends React.Component {
       .then(() => toast.success('Reunión finalizada'))
       .then(() => {
         this.setState({ redirect: true });
-        this.dispatchReunion({ tipo: 'Cerrar Reunion' });
       })
       .catch(() => toast.error('No se pudo finalizar la reunión'));
   }
