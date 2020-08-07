@@ -8,12 +8,12 @@ export const actionItemEventoTypes = {
 };
 
 export const actionItemEventos = {
-  agregarActionItem: (actionItem) =>
-    createEvent(actionItemEventoTypes.AGREGAR_ACTION_ITEM, { actionItem }),
-  editarActionItem: (actionItem) =>
-    createEvent(actionItemEventoTypes.EDITAR_ACTION_ITEM, { actionItem }),
-  borrarActionItem: (actionItem) =>
-    createEvent(actionItemEventoTypes.BORRAR_ACTION_ITEM, { actionItem }),
+  agregarActionItem: (actionItem, idTema) =>
+    createEvent(actionItemEventoTypes.AGREGAR_ACTION_ITEM, { actionItem, idTema }),
+  editarActionItem: (actionItem, idTema) =>
+    createEvent(actionItemEventoTypes.EDITAR_ACTION_ITEM, { actionItem, idTema }),
+  borrarActionItem: (actionItem, idTema) =>
+    createEvent(actionItemEventoTypes.BORRAR_ACTION_ITEM, { actionItem, idTema }),
 };
 
 export const INITIAL_ACTION_ITEMS_STATE = [];

@@ -43,7 +43,7 @@ export const temaReducer = (state = INITIAL_TEMA_STATE, action) =>
         break;
       }
 
-      default:
+      default:{
         draft.inicio = draft.inicio || null;
         draft.fin = draft.fin || null;
 
@@ -60,5 +60,6 @@ export const temaReducer = (state = INITIAL_TEMA_STATE, action) =>
             action
           );
         }
+      }
     }
   });

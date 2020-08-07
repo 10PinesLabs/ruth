@@ -16,37 +16,37 @@ export const reaccionEventos = {
 export const INITIAL_REACCIONES_STATE = {};
 
 export const reaccionesReducer = (state = INITIAL_REACCIONES_STATE, evento) =>
-  produce(state, (draft) => {
-    const { nombre, usuario } = evento;
-    switch (evento.type) {
-      case reaccionEventoTypes.REINICIAR: {
-        return INITIAL_REACCIONES_STATE;
-      }
-      case reaccionEventoTypes.REACCIONAR: {
-        if (draft[nombre]) {
-          addIfNotExists(draft[nombre], usuario.email);
-        } else {
-          draft[nombre] = [usuario.email];
-        }
-
-        conseguiContrapartes(nombre).forEach((contraparte) => {
-          if (draft[contraparte]) {
-            remove(draft[contraparte], usuario.email);
-          }
-        });
-        break;
-      }
-      case reaccionEventoTypes.DESREACCIONAR: {
-        if (draft[nombre]) {
-          remove(draft[nombre], usuario.email);
-        }
-        break;
-      }
-      default: {
-        break;
-      }
+produce(state, (draft) => {
+  const { nombre, usuario } = evento;
+  switch (evento.type) {
+    case reaccionEventoTypes.REINICIAR: {
+      return INITIAL_REACCIONES_STATE;
     }
-  });
+    case reaccionEventoTypes.REACCIONAR: {
+      if (draft[nombre]) {
+        addIfNotExists(draft[nombre], usuario.email);
+      } else {
+        draft[nombre] = [usuario.email];
+      }
+
+      conseguiContrapartes(nombre).forEach((contraparte) => {
+        if (draft[contraparte]) {
+          remove(draft[contraparte], usuario.email);
+        }
+      });
+      break;
+    }
+    case reaccionEventoTypes.DESREACCIONAR: {
+      if (draft[nombre]) {
+        remove(draft[nombre], usuario.email);
+      }
+      break;
+    }
+    default: {
+      break;
+    }
+  }
+});
 
   function conseguiContrapartes(nombre) {
     switch (nombre) {

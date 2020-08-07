@@ -27,66 +27,66 @@ const INITIAL_STATE = {
 };
 
 export const stateReducer = (state = INITIAL_STATE, action) =>
-  produce(state, (draft) => {
-    switch (action.type) {
-      case stateEventoTypes.INICIAR_ENVIO: {
-        draft.esperandoConfirmacionDeEvento = true;
-        draft.esperandoEventoId = null;
-        draft.eventosEncolados = [];
-        break;
-      }
-      case stateEventoTypes.ENVIO_CONFIRMADO: {
-        if (draft.esperandoConfirmacionDeEvento) {
-          if (draft.eventosEncolados.some((eventoId) => eventoId === action.payload)) {
-            // el evento ya llego antes de que el backend nos confirmara asi que
-            // No estamos esperando nada
-            draft.eventosEncolados = [];
-            draft.esperandoConfirmacionDeEvento = false;
-            draft.esperandoEventoId = null;
-          } else {
-            draft.esperandoConfirmacionDeEvento = false;
-            draft.esperandoEventoId = action.payload;
-          }
-        } else {
-          console.warn('me llego un evento confirmado mientras no estaba esperando confirmacion...');
-          console.warn(action);
-        }
-        break;
-      }
-      case stateEventoTypes.ENVIO_RECHAZADO: {
-        if (draft.esperandoConfirmacionDeEvento) {
+produce(state, (draft) => {
+  switch (action.type) {
+    case stateEventoTypes.INICIAR_ENVIO: {
+      draft.esperandoConfirmacionDeEvento = true;
+      draft.esperandoEventoId = null;
+      draft.eventosEncolados = [];
+      break;
+    }
+    case stateEventoTypes.ENVIO_CONFIRMADO: {
+      if (draft.esperandoConfirmacionDeEvento) {
+        if (draft.eventosEncolados.some((eventoId) => eventoId === action.payload)) {
+          // el evento ya llego antes de que el backend nos confirmara asi que
+          // No estamos esperando nada
           draft.eventosEncolados = [];
           draft.esperandoConfirmacionDeEvento = false;
+          draft.esperandoEventoId = null;
         } else {
-          console.warn('me llego un evento rechazado mientras no estaba esperando confirmacion...');
-          console.warn(action);
+          draft.esperandoConfirmacionDeEvento = false;
+          draft.esperandoEventoId = action.payload;
         }
-        break;
+      } else {
+        console.warn('me llego un evento confirmado mientras no estaba esperando confirmacion...');
+        console.warn(action);
       }
-      default: {
-        let { esperandoEventoId, eventosEncolados, esperandoConfirmacionDeEvento } = draft;
-
-        if (esperandoConfirmacionDeEvento) {
-          // Estoy esperando que el backend me confirme un evento asi que agrego los
-          // ids de los mensajes que me llegan a la lista de mensajes que me llegaron
-          // por si alguno de esos es el mensaje que yo mande
-          eventosEncolados = [...eventosEncolados, action.id];
-        }
-
-        if (draft.esperandoEventoId) {
-          // Estoy esperando que el backend me envie el mensaje que yo mande y que ya me
-          // confirmo que iba a llegar, si es ese mensaje entonces habilito de nuevo la
-          // UI para hacer cosas
-          if (draft.esperandoEventoId === action.id) {
-            esperandoEventoId = null;
-          }
-        }
-
-        const newState = reunionReducer(draft, action);
-        return { ...newState, esperandoEventoId, eventosEncolados };
-      }
+      break;
     }
-  });
+    case stateEventoTypes.ENVIO_RECHAZADO: {
+      if (draft.esperandoConfirmacionDeEvento) {
+        draft.eventosEncolados = [];
+        draft.esperandoConfirmacionDeEvento = false;
+      } else {
+        console.warn('me llego un evento rechazado mientras no estaba esperando confirmacion...');
+        console.warn(action);
+      }
+      break;
+    }
+    default: {
+      let { esperandoEventoId, eventosEncolados, esperandoConfirmacionDeEvento } = draft;
+
+      if (esperandoConfirmacionDeEvento) {
+        // Estoy esperando que el backend me confirme un evento asi que agrego los
+        // ids de los mensajes que me llegan a la lista de mensajes que me llegaron
+        // por si alguno de esos es el mensaje que yo mande
+        eventosEncolados = [...eventosEncolados, action.id];
+      }
+
+      if (draft.esperandoEventoId) {
+        // Estoy esperando que el backend me envie el mensaje que yo mande y que ya me
+        // confirmo que iba a llegar, si es ese mensaje entonces habilito de nuevo la
+        // UI para hacer cosas
+        if (draft.esperandoEventoId === action.id) {
+          esperandoEventoId = null;
+        }
+      }
+
+      const newState = reunionReducer(draft, action);
+      return { ...newState, esperandoEventoId, eventosEncolados };
+    }
+  }
+});
 
 const wsForwarder = (store) => (next) => (action) => {
   if (!action.comesFromWS) {
@@ -118,7 +118,7 @@ const wsForwarder = (store) => (next) => (action) => {
 };
 
 export default () =>
-  configureStore({
-    reducer: stateReducer,
-    middleware: [...getDefaultMiddleware(), wsForwarder],
-  });
+configureStore({
+  reducer: stateReducer,
+  middleware: [...getDefaultMiddleware(), wsForwarder],
+});
