@@ -28,7 +28,7 @@ export const reunionReducer = (state = INITIAL_REUNION_STATE, action) =>
         break;
       }
 
-      default:
+      default:{
         if (!draft.reunion?.temas) {
           break;
         }
@@ -50,7 +50,7 @@ export const reunionReducer = (state = INITIAL_REUNION_STATE, action) =>
             action
           );
           break;
-       
+      }
     }
   });
 
