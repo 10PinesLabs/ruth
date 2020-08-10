@@ -29,8 +29,8 @@ class TalkingReactionButton extends React.Component {
     }
 
     handleReaction = () => {
-        const eventoReaccion = this.props.active ? oradorEventos.desreaccionarAOrador : oradorEventos.reaccionarAOrador;
-        return this.props.onClick(eventoReaccion);
+        const creadorDeEventoReaccion = this.props.active ? oradorEventos.desreaccionarAOrador : oradorEventos.reaccionarAOrador;
+        return this.props.onClick(creadorDeEventoReaccion);
     }
 }
 
