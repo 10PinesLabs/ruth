@@ -37,12 +37,15 @@ export const temaReducer = (state, action) =>
       }
 
       case temaEventoTypes.REABRIR_TEMA: {
-          if(draft.fin!=null && draft.inicio!=null){
-            const ahora = new Date(action.fecha);
-            let tiempoDesdeQueSeTerminoElTemaHastaAhora = ahora - Date.parse(draft.fin)
-            draft.tiempoInactivo = (draft.tiempoInactivo || 0) + tiempoDesdeQueSeTerminoElTemaHastaAhora;
-            draft.fin = null;
+          if(draft.fin===null || draft.inicio===null){
+            break;
           }
+
+          const ahora = new Date(action.fecha);
+          let tiempoDesdeQueSeTerminoElTemaHastaAhora = ahora - Date.parse(draft.fin)
+          draft.tiempoInactivo = (draft.tiempoInactivo || 0) + tiempoDesdeQueSeTerminoElTemaHastaAhora;
+          draft.fin = null;
+          
           break;
       }
 
