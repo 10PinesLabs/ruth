@@ -26,9 +26,9 @@ import {
   TalkButton,
   ReactionsContainer,
 } from './vista.styled';
-import { tipoDeEvento } from '../store/oradores';
+import { oradorEventos } from '../store/oradores';
 import { CardInteractionsContainer } from '../components/InteractionsContainer.styled';
-import { reactionTypes } from '../store/reacciones';
+import { reaccionEventos } from '../store/reacciones';
 import { SkeletonCircle, SkeletonLine, ReactionSkeletonContainer } from '../skeleton/Skeleton.styled';
 import { reacciones } from './actions';
 import { faSlack } from '@fortawesome/free-brands-svg-icons';
@@ -56,7 +56,7 @@ const getFontSizeForWindow = () => {
 
 
 const Vista = ({
-  dispatchEvent,
+  dispatch,
   temaEmpezado,
   title,
   usuario,
@@ -68,24 +68,25 @@ const Vista = ({
   redondear,
   wannaTalk,
   isTalking,
+  tema
 }) => {
   const handleReaction = (nombre, estaReaccionado) => {
-    const tipo = estaReaccionado ? reactionTypes.DESREACCIONAR : reactionTypes.REACCIONAR;
-    dispatchEvent({ tipo, nombre });
+    const evento = estaReaccionado ? reaccionEventos.desreaccionar(usuario, nombre, tema.id) :  reaccionEventos.reaccionar(usuario, nombre, tema.id);
+    dispatch(evento);
   };
 
   const onWannaTalkClick = () => {
-    dispatchEvent({ tipo: tipoDeEvento.LEVANTAR_MANO });
+    dispatch(oradorEventos.levantarMano(usuario, tema.id));
   };
 
   const onWannaStopTalkClick = () => {
     const estoyHablando = participant.usuario.email === usuario.email;
-    if (estoyHablando) dispatchEvent({ tipo: tipoDeEvento.DEJAR_DE_HABLAR });
-    else dispatchEvent({ tipo: tipoDeEvento.DESENCOLAR });
+    if (estoyHablando) dispatch(oradorEventos.dejarDeHablar(usuario, tema.id));
+    else dispatch(oradorEventos.desencolar(usuario, tema.id));
   };
 
   const kickear = ( usuario ) => {
-    dispatchEvent({ tipo: tipoDeEvento.KICKEAR, kickearA: usuario });
+    dispatch(oradorEventos.kickear(usuario, tema.id));
   };
 
   const [showSkeleton, setShowSekelton] = useState(true);
@@ -185,9 +186,10 @@ const Vista = ({
           usuario={usuario}
           interactive
           isParticipantTalking
-          dispatchEvent={dispatchEvent}
+          dispatchEvent={dispatch}
           kickear={kickear}
-          participant={participant}/>
+          participant={participant}
+          tema={tema}/>
       </ParticipantsContainer>
       <ActionContainerStyle>
         {showSkeleton ? <TalkButton pressed={false}><SkeletonCircle/></TalkButton> : microphone}

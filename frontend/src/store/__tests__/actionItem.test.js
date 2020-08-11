@@ -1,13 +1,13 @@
-import {actionItemReducer, INITIAL_ACTION_ITEMS_STATE, tipoDeEvento} from '../actionItem';
+import {actionItemReducer, INITIAL_ACTION_ITEMS_STATE, actionItemEventoTypes} from '../actionItem';
 
 const eventoAgregarActionItem = (actionItem) => ({
-  type: tipoDeEvento.AGREGAR_ACTION_ITEM,
+  type: actionItemEventoTypes.AGREGAR_ACTION_ITEM,
   id: 1,
   actionItem,
 });
 
 const eventoEditarActionItem = (actionItem) => ({
-  type: tipoDeEvento.EDITAR_ACTION_ITEM,
+  type: actionItemEventoTypes.EDITAR_ACTION_ITEM,
   actionItem,
 });
 

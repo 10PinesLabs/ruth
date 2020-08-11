@@ -1,46 +1,28 @@
 import { produce } from 'immer';
 import { reacciones } from '../mobile/actions';
+import { createEvent } from './evento'
 
-export const reactionTypes = {
+export const reaccionEventoTypes = {
   REINICIAR: 'Reiniciar reacciones',
   REACCIONAR: 'Reaccionar',
   DESREACCIONAR: 'Desreaccionar',
 };
 
-function conseguiContrapartes(nombre) {
-  switch (nombre) {
-    case reacciones.THUMBS_DOWN:
-      return [reacciones.THUMBS_UP];
-    case reacciones.THUMBS_UP:
-      return [reacciones.THUMBS_DOWN];
-    default:
-      return [];
-  }
+export const reaccionEventos = {
+  reaccionar: (usuario, reaccion, idTema) => createEvent(reaccionEventoTypes.REACCIONAR, {usuario, nombre: reaccion, idTema}),
+  desreaccionar: (usuario, reaccion, idTema) => createEvent(reaccionEventoTypes.DESREACCIONAR, {usuario, nombre: reaccion, idTema})
 }
-
-const addIfNotExists = (emails, newEmail) => {
-  const index = emails.indexOf(newEmail);
-  if (index === -1) {
-    emails.push(newEmail);
-  }
-};
-
-const remove = (emails, newEmail) => {
-  const index = emails.indexOf(newEmail);
-  if (index !== -1) {
-    emails.splice(index, 1);
-  }
-};
 
 export const INITIAL_REACCIONES_STATE = {};
 
-export default (state = INITIAL_REACCIONES_STATE, evento) => produce(state, (draft) => {
+export const reaccionesReducer = (state = INITIAL_REACCIONES_STATE, evento) =>
+produce(state, (draft) => {
   const { nombre, usuario } = evento;
   switch (evento.type) {
-    case reactionTypes.REINICIAR: {
+    case reaccionEventoTypes.REINICIAR: {
       return INITIAL_REACCIONES_STATE;
     }
-    case reactionTypes.REACCIONAR: {
+    case reaccionEventoTypes.REACCIONAR: {
       if (draft[nombre]) {
         addIfNotExists(draft[nombre], usuario.email);
       } else {
@@ -54,7 +36,7 @@ export default (state = INITIAL_REACCIONES_STATE, evento) => produce(state, (dra
       });
       break;
     }
-    case reactionTypes.DESREACCIONAR: {
+    case reaccionEventoTypes.DESREACCIONAR: {
       if (draft[nombre]) {
         remove(draft[nombre], usuario.email);
       }
@@ -65,3 +47,28 @@ export default (state = INITIAL_REACCIONES_STATE, evento) => produce(state, (dra
     }
   }
 });
+
+  function conseguiContrapartes(nombre) {
+    switch (nombre) {
+      case reacciones.THUMBS_DOWN:
+        return [reacciones.THUMBS_UP];
+      case reacciones.THUMBS_UP:
+        return [reacciones.THUMBS_DOWN];
+      default:
+        return [];
+    }
+  }
+  
+  const addIfNotExists = (emails, newEmail) => {
+    const index = emails.indexOf(newEmail);
+    if (index === -1) {
+      emails.push(newEmail);
+    }
+  };
+  
+  const remove = (emails, newEmail) => {
+    const index = emails.indexOf(newEmail);
+    if (index !== -1) {
+      emails.splice(index, 1);
+    }
+  };
