@@ -6,7 +6,7 @@ export const conclusionEventoTypes = {
 };
 
 export const conclusionEventos = {
-  guardarConclusion: (conclusion) => createEvent(conclusionEventoTypes.GUARDAR_CONCLUSION, {conclusion})
+  guardarConclusion: (conclusion, idTema) => createEvent(conclusionEventoTypes.GUARDAR_CONCLUSION, {conclusion, idTema})
 }
 
 export const INITIAL_CONCLUSION = ''

@@ -30,7 +30,7 @@ const Mobile = ({
         {...props}
         remainingParticipantsUpToUser={(queuedParticipants && remainingParticipantsUpToUser(queuedParticipants)) || 0}
         usuario={usuario}
-        dispatchEvent={dispatch}
+        dispatch={dispatch}
         wannaTalk={Boolean(tema && tema.oradores.cola.find(esUsuarioActual))}
         isTalking={Boolean(tema && tema.oradores.actual && esUsuarioActual(tema.oradores.actual))}
         thumbsUp={reaccionoCon(reacciones.THUMBS_UP)}

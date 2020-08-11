@@ -29,16 +29,16 @@ class TalkingReactionButton extends React.Component {
     }
 
     handleReaction = () => {
-        const eventoReaccion = this.props.active ? oradorEventos.desreaccionarAOrador : oradorEventos.reaccionarAOrador;
-        return this.props.onClick(eventoReaccion);
+        const creadorDeEventoReaccion = this.props.active ? oradorEventos.desreaccionarAOrador : oradorEventos.reaccionarAOrador;
+        return this.props.onClick(creadorDeEventoReaccion);
     }
 }
 
-export function TalkingReactions({dispatchEvent, participant, usuario}) {
+export function TalkingReactions({dispatchEvent, participant, usuario, tema}) {
 
     function onReaction(tipoReaccion) {
         return (tipoEvento) => {
-            dispatchEvent(tipoEvento(tipoReaccion, usuario, participant.instanciaDeHabla));
+            dispatchEvent(tipoEvento(tipoReaccion, usuario, participant.instanciaDeHabla, tema.id));
         }
     }
 

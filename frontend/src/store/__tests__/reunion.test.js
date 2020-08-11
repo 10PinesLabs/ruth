@@ -1,11 +1,10 @@
-import { reunionReducer, reunionEventos } from "../reunion";
+import { reunionReducer, INITIAL_REUNION_STATE as INITIAL_STATE , reunionEventos } from "../reunion";
 import { temaReducer } from "../tema"
 
 describe(`#reunion reducer`, () => {
   let state;
-  let INITIAL_STATE = {};
 
-  let temaObligatorioConMenorPrioridad = {
+  const temaObligatorioConMenorPrioridad = {
     tipo: "conDescripcion",
     id: 796,
     duracion: "MEDIO",
@@ -25,7 +24,7 @@ describe(`#reunion reducer`, () => {
     cantidadDeMinutosDelTema: 60,
   };
 
-  let temaObligatorioConMayorPrioridad = {
+  const temaObligatorioConMayorPrioridad = {
     tipo: "conDescripcion",
     id: 400,
     duracion: "MEDIO",
@@ -45,7 +44,7 @@ describe(`#reunion reducer`, () => {
     cantidadDeMinutosDelTema: 60,
   };
 
-  let temaNoObligatorioConMayorPrioridad = {
+  const temaNoObligatorioConMayorPrioridad = {
     tipo: "conDescripcion",
     id: 799,
     duracion: "CORTO",
@@ -65,7 +64,7 @@ describe(`#reunion reducer`, () => {
     cantidadDeMinutosDelTema: 60,
   };
 
-  let temaNoObligatorioConMenorPrioridad = {
+  const temaNoObligatorioConMenorPrioridad = {
     tipo: "conDescripcion",
     id: 795,
     duracion: "CORTO",
@@ -85,7 +84,7 @@ describe(`#reunion reducer`, () => {
     cantidadDeMinutosDelTema: 60,
   };
 
-  let reunionConTemas = {
+  const reunionConTemas = {
     temas: [
       temaNoObligatorioConMayorPrioridad,
       temaObligatorioConMenorPrioridad,
