@@ -1,5 +1,5 @@
-import { produce } from "immer";
-import { reacciones } from "../mobile/actions";
+import { produce } from 'immer';
+import { reacciones } from '../mobile/actions';
 import { createEvent } from './evento'
 
 export const reaccionEventoTypes = {
@@ -9,44 +9,44 @@ export const reaccionEventoTypes = {
 };
 
 export const reaccionEventos = {
-  reaccionar: (usuario, reaccion) => createEvent(reaccionEventoTypes.REACCIONAR, {usuario, nombre: reaccion}),
-  desreaccionar: (usuario, reaccion) => createEvent(reaccionEventoTypes.DESREACCIONAR, {usuario, nombre: reaccion})
+  reaccionar: (usuario, reaccion, idTema) => createEvent(reaccionEventoTypes.REACCIONAR, {usuario, nombre: reaccion, idTema}),
+  desreaccionar: (usuario, reaccion, idTema) => createEvent(reaccionEventoTypes.DESREACCIONAR, {usuario, nombre: reaccion, idTema})
 }
 
 export const INITIAL_REACCIONES_STATE = {};
 
 export const reaccionesReducer = (state = INITIAL_REACCIONES_STATE, evento) =>
-  produce(state, (draft) => {
-    const { nombre, usuario } = evento;
-    switch (evento.type) {
-      case reaccionEventoTypes.REINICIAR: {
-        return INITIAL_REACCIONES_STATE;
-      }
-      case reaccionEventoTypes.REACCIONAR: {
-        if (draft[nombre]) {
-          addIfNotExists(draft[nombre], usuario.email);
-        } else {
-          draft[nombre] = [usuario.email];
-        }
-
-        conseguiContrapartes(nombre).forEach((contraparte) => {
-          if (draft[contraparte]) {
-            remove(draft[contraparte], usuario.email);
-          }
-        });
-        break;
-      }
-      case reaccionEventoTypes.DESREACCIONAR: {
-        if (draft[nombre]) {
-          remove(draft[nombre], usuario.email);
-        }
-        break;
-      }
-      default: {
-        break;
-      }
+produce(state, (draft) => {
+  const { nombre, usuario } = evento;
+  switch (evento.type) {
+    case reaccionEventoTypes.REINICIAR: {
+      return INITIAL_REACCIONES_STATE;
     }
-  });
+    case reaccionEventoTypes.REACCIONAR: {
+      if (draft[nombre]) {
+        addIfNotExists(draft[nombre], usuario.email);
+      } else {
+        draft[nombre] = [usuario.email];
+      }
+
+      conseguiContrapartes(nombre).forEach((contraparte) => {
+        if (draft[contraparte]) {
+          remove(draft[contraparte], usuario.email);
+        }
+      });
+      break;
+    }
+    case reaccionEventoTypes.DESREACCIONAR: {
+      if (draft[nombre]) {
+        remove(draft[nombre], usuario.email);
+      }
+      break;
+    }
+    default: {
+      break;
+    }
+  }
+});
 
   function conseguiContrapartes(nombre) {
     switch (nombre) {

@@ -44,7 +44,7 @@ const App = ({ usuario }) => {
   if (reunion.abierta !== true) {
     return <>
       <GlobalStyle/>
-      <EmpezarReunion {...reunion} handleReunionIniciada={handleReunionIniciada}/>)}/>
+      <EmpezarReunion {...reunion} handleReunionIniciada={handleReunionIniciada}/>
     </>;
   }
 

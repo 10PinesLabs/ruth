@@ -56,7 +56,7 @@ const getFontSizeForWindow = () => {
 
 
 const Vista = ({
-  dispatchEvent,
+  dispatch,
   temaEmpezado,
   title,
   usuario,
@@ -68,24 +68,25 @@ const Vista = ({
   redondear,
   wannaTalk,
   isTalking,
+  tema
 }) => {
   const handleReaction = (nombre, estaReaccionado) => {
-    const evento = estaReaccionado ? reaccionEventos.desreaccionar(usuario, nombre) :  reaccionEventos.reaccionar(usuario, nombre);
-    dispatchEvent(evento);
+    const evento = estaReaccionado ? reaccionEventos.desreaccionar(usuario, nombre, tema.id) :  reaccionEventos.reaccionar(usuario, nombre, tema.id);
+    dispatch(evento);
   };
 
   const onWannaTalkClick = () => {
-    dispatchEvent(oradorEventos.levantarMano(usuario));
+    dispatch(oradorEventos.levantarMano(usuario, tema.id));
   };
 
   const onWannaStopTalkClick = () => {
     const estoyHablando = participant.usuario.email === usuario.email;
-    if (estoyHablando) dispatchEvent(oradorEventos.dejarDeHablar(usuario));
-    else dispatchEvent(oradorEventos.desencolar(usuario));
+    if (estoyHablando) dispatch(oradorEventos.dejarDeHablar(usuario, tema.id));
+    else dispatch(oradorEventos.desencolar(usuario, tema.id));
   };
 
   const kickear = ( usuario ) => {
-    dispatchEvent(oradorEventos.kickear(usuario));
+    dispatch(oradorEventos.kickear(usuario, tema.id));
   };
 
   const [showSkeleton, setShowSekelton] = useState(true);
@@ -185,9 +186,10 @@ const Vista = ({
           usuario={usuario}
           interactive
           isParticipantTalking
-          dispatchEvent={dispatchEvent}
+          dispatchEvent={dispatch}
           kickear={kickear}
-          participant={participant}/>
+          participant={participant}
+          tema={tema}/>
       </ParticipantsContainer>
       <ActionContainerStyle>
         {showSkeleton ? <TalkButton pressed={false}><SkeletonCircle/></TalkButton> : microphone}

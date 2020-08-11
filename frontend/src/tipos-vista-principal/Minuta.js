@@ -62,7 +62,7 @@ const Minuta = ({ dispatch, tema }) => {
       return;
     }
     setEstaEditandoConclusion(false);
-    dispatch(conclusionEventos.guardarConclusion(conclusion))
+    dispatch(conclusionEventos.guardarConclusion(conclusion, tema.id))
   }
 
   function resetearConclusion() {
@@ -94,7 +94,7 @@ const Minuta = ({ dispatch, tema }) => {
   }
 
   const onGuardarResumen = (resumen)=>{
-    dispatch(oradorEventos.resumirAOrador(exposicionSeleccionada.index, resumen))
+    dispatch(oradorEventos.resumirAOrador(exposicionSeleccionada.index, resumen, tema.id))
 
     setExposicionSeleccionada(null)
     let oradores = [...tema.oradores.pasados, tema.oradores.actual]
@@ -108,15 +108,15 @@ const Minuta = ({ dispatch, tema }) => {
   }
 
   const agregarActionItem = (actionItem) => {
-    dispatch(actionItemEventos.agregarActionItem(actionItem))
+    dispatch(actionItemEventos.agregarActionItem(actionItem, tema.id))
   };
 
   const editarActionItem = (actionItem) => {
-    dispatch(actionItemEventos.editarActionItem(actionItem))
+    dispatch(actionItemEventos.editarActionItem(actionItem, tema.id))
   }
 
   const borrarActionItem = (actionItem) => {
-    dispatch(actionItemEventos.borrarActionItem(actionItem))
+    dispatch(actionItemEventos.borrarActionItem(actionItem, tema.id))
   }
 
   const textoBotonEdicion = () => (isResumenOradorCerrado ? 'CERRAR EDICION' : 'ABRIR EDICION');

@@ -1,7 +1,7 @@
 // eslint-disable no-console
-import { useEffect, useState } from "react";
-import { batch } from "react-redux";
-import createStore from "./store";
+import { useEffect, useState } from 'react';
+import { batch } from 'react-redux';
+import createStore from './store';
 import { reunionEventos } from "./store/reunion";
 
 function getWebSocket(lastEvent) {
@@ -59,10 +59,7 @@ export function useRuthConnectedStore(reunion) {
     }
     const ws = new ReconnectingWebSocket();
     const newStore = createStore();
-    newStore.dispatch({
-      ...reunionEventos.comenzarReunion(reunion),
-    });
-
+    newStore.dispatch(reunionEventos.comenzarReunion(reunion));
     ws.onmessage = (evento) => {
       newStore.dispatch(evento);
     };
