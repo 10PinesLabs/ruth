@@ -7,6 +7,8 @@ export const reunionEventoTypes = {
   TERMINAR_REUNION: "La reunion fue finalizada"
 };
 
+export const INITIAL_REUNION_STATE = {}
+
 export const reunionEventos = {
   comenzarReunion: (reunion) =>
     createEvent(reunionEventoTypes.EMPEZAR_REUNION, {
