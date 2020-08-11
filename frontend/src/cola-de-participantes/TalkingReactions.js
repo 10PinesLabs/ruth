@@ -34,11 +34,11 @@ class TalkingReactionButton extends React.Component {
     }
 }
 
-export function TalkingReactions({dispatchEvent, participant, usuario}) {
+export function TalkingReactions({dispatchEvent, participant, usuario, tema}) {
 
     function onReaction(tipoReaccion) {
         return (tipoEvento) => {
-            dispatchEvent(tipoEvento(tipoReaccion, usuario, participant.instanciaDeHabla));
+            dispatchEvent(tipoEvento(tipoReaccion, usuario, participant.instanciaDeHabla, tema.id));
         }
     }
 

@@ -9,8 +9,8 @@ export const reaccionEventoTypes = {
 };
 
 export const reaccionEventos = {
-  reaccionar: (usuario, reaccion) => createEvent(reaccionEventoTypes.REACCIONAR, {usuario, nombre: reaccion}),
-  desreaccionar: (usuario, reaccion) => createEvent(reaccionEventoTypes.DESREACCIONAR, {usuario, nombre: reaccion})
+  reaccionar: (usuario, reaccion, idTema) => createEvent(reaccionEventoTypes.REACCIONAR, {usuario, nombre: reaccion, idTema}),
+  desreaccionar: (usuario, reaccion, idTema) => createEvent(reaccionEventoTypes.DESREACCIONAR, {usuario, nombre: reaccion, idTema})
 }
 
 export const INITIAL_REACCIONES_STATE = {};

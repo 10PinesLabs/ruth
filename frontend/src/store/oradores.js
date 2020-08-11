@@ -14,19 +14,20 @@ export const oradorEventoTypes = {
 };
 
 export const oradorEventos = {
-  levantarMano: (usuario) =>
-    createEvent(oradorEventoTypes.LEVANTAR_MANO, { usuario }),
-  dejarDeHablar: (usuario) =>
-    createEvent(oradorEventoTypes.DEJAR_DE_HABLAR, { usuario }),
-  desencolar: (usuario) =>
-    createEvent(oradorEventoTypes.DESENCOLAR, { usuario }),
-  kickear: (usuario) =>
-    createEvent(oradorEventoTypes.KICKEAR, { kickearA: usuario }),
-  reaccionarAOrador: (reaccion, usuario, instanciaDeHabla) =>
+  levantarMano: (usuario, idTema) =>
+    createEvent(oradorEventoTypes.LEVANTAR_MANO, { usuario, idTema }),
+  dejarDeHablar: (usuario, idTema) =>
+    createEvent(oradorEventoTypes.DEJAR_DE_HABLAR, { usuario, idTema }),
+  desencolar: (usuario, idTema) =>
+    createEvent(oradorEventoTypes.DESENCOLAR, { usuario, idTema }),
+  kickear: (usuario, idTema) =>
+    createEvent(oradorEventoTypes.KICKEAR, { kickearA: usuario, idTema }),
+  reaccionarAOrador: (reaccion, usuario, instanciaDeHabla, idTema) =>
     createEvent(oradorEventoTypes.REACCIONAR_A_ORADOR, {
       reaccion,
       usuario,
       instanciaDeHabla,
+      idTema
     }),
   desreaccionarAOrador: (reaccion, usuario, instanciaDeHabla) =>
     createEvent(oradorEventoTypes.DESREACCIONAR_A_ORADOR, {
