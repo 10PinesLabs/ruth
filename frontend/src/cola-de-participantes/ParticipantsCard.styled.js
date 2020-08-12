@@ -1,26 +1,16 @@
 import styled from 'styled-components';
 
 export const CardContainer = styled.div(({isTalking,sePuedeReaccionar}) => `
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
   background: linear-gradient(145deg, #c7c7c7, #ececec);
-  justify-content: space-between;
-  margin: 0 0.5em;
   box-shadow: 5px 5px 10px #828282, -5px -5px 10px #ffffff;
   border-radius: 7px;
   position:relative;
-  flex-direction: column;
-  min-width: 230px;
-  max-height: 350px;
-  max-width: 255px;
-  margin-top: 10px;
+  min-width: 16.5em;
+  margin-top: 0.7em;
 `);
 
 export const ParticipantDataReactableContainer = styled.div(() => `
-    width: 100%;
-    height: 100%;
-`
+    width: 100%;  `
 );
 
 export const CardInfoContainer = styled.div`
@@ -40,9 +30,7 @@ export const UserAvatar = styled.div(({isTalking, avatar}) => `
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  width: 100%;
-  height: 75%;
-  min-height: 240px;
+  min-height: 17.2em;
   border-radius: 7px 7px 0 0;
   display: flex;
   align-items: flex-end;

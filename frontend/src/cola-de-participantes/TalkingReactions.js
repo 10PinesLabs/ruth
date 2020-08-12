@@ -62,9 +62,6 @@ export function TalkingReactions({dispatchEvent, participant, usuario}) {
         direction="row"
         style={{
           justifyContent: "space-evenly",
-          alignSelf: "center",
-          alignItems: "center",
-          height: "25%",
           padding: "13px 0",
         }}
       >
