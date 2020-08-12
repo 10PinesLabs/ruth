@@ -4,7 +4,10 @@ import { temaReducer } from "./tema";
 
 export const reunionEventoTypes = {
   EMPEZAR_REUNION: "Una reunion es comenzada",
+  TERMINAR_REUNION: "La reunion fue finalizada"
 };
+
+export const INITIAL_REUNION_STATE = {}
 
 export const reunionEventos = {
   comenzarReunion: (reunion) =>
@@ -12,6 +15,9 @@ export const reunionEventos = {
       reunion,
       comesFromWS:true
     }),
+  finalizarReunionActual: () => 
+    createEvent(reunionEventoTypes.TERMINAR_REUNION),
+  
 };
 
 export const reunionReducer = (state, action) =>
@@ -25,27 +31,34 @@ export const reunionReducer = (state, action) =>
           .sort(compareTema);
         break;
       }
+      case reunionEventoTypes.TERMINAR_REUNION: {
+        draft.reunion.abierta = false;
+        break;
+      }
+      
+      default:{
+        if (!draft.reunion?.temas) {
+          break;
+        }
+        
+        const temaIndex = draft.reunion.temas.findIndex(
+          (tema) => tema.id === action.idTema
+        );
 
-      default:
-        if (draft.reunion?.temas) {
-          const temaIndex = draft.reunion.temas.findIndex(
-            (tema) => tema.id === action.idTema
-          );
-
-          if (temaIndex !== -1){
-            draft.reunion.temas[temaIndex] = temaReducer(
-              draft.reunion.temas[temaIndex],
-              action
-            );
-            break;
-          }
-          
+        if (temaIndex === -1){
           console.error(
             "Se recibio una accion con un idTema desconocido",
             action
           );
+          break;
         }
-       
+
+        draft.reunion.temas[temaIndex] = temaReducer(
+            draft.reunion.temas[temaIndex],
+            action
+          );
+          break;
+      }
     }
   });
 

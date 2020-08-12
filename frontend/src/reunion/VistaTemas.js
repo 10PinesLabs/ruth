@@ -56,6 +56,8 @@ const VistaTemas = ({dispatch, cerrarReunion, temas, usuario}) => {
       return toast.error('Ya hay otro tema en curso');
     }
     dispatch(temaEventos.reabrirTema(temaSeleccionado.id))
+    toast.success('Tema reabierto');
+
   }
 
   const handleCerrarReunion = () => {

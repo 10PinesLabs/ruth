@@ -1,8 +1,7 @@
-import { temaReducer, temaEventos } from "../tema";
+import { temaReducer, INITIAL_TEMA_STATE as INITIAL_STATE, temaEventos } from "../tema";
 
 describe(`#tema reducer`, () => {
   let state;
-  let INITIAL_STATE = {"actionItems": [], "conclusion": "", "fin": null, "historicoDeReacciones": [], "inicio": null, "oradores": {"actual": null, "cola": [], "pasados": []}, "reacciones": {}};
 
   beforeEach(() => {
     state = INITIAL_STATE
@@ -24,7 +23,7 @@ describe(`#tema reducer`, () => {
   it("cuando el evento es de tipo empezar tema, se le pone la fecha del evento como inicio al tema al tema", () => {
     let idDeTema = 4;
     let fechaDeGeneracionDeEvento = new Date();
-    applyEvento(eventoConFecha(temaEventos.empezarTema(4),fechaDeGeneracionDeEvento));
+    applyEvento(eventoConFecha(temaEventos.empezarTema(idDeTema),fechaDeGeneracionDeEvento));
 
     expect(state.fin).toEqual(null);
     expect(state.inicio).toEqual(fechaDeGeneracionDeEvento.toISOString());
@@ -35,7 +34,7 @@ describe(`#tema reducer`, () => {
     let idDeTema = 4;
     let fechaDeGeneracionDeEvento = new Date();
 
-    applyEvento(eventoConFecha(temaEventos.terminarTema(4), fechaDeGeneracionDeEvento));
+    applyEvento(eventoConFecha(temaEventos.terminarTema(idDeTema), fechaDeGeneracionDeEvento));
 
     expect(state).toEqual(INITIAL_STATE);
 
@@ -94,6 +93,3 @@ describe(`#tema reducer`, () => {
     expect(state.tiempoInactivo).toEqual(undefined)
   })
 });
-
-
-
