@@ -16,7 +16,7 @@ const ParticipantData = (props) => {
   </>;
 }
 
-const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant, isParticipantTalking, interactive, kickear, finTema, usuario}) => {
+const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant, isParticipantTalking, interactive, kickear, finTema, usuario, tema}) => {
   const estadoOrador = () => {
     if (estaEncolado()) {
       return {detalle: 'encolado'};
@@ -67,6 +67,7 @@ const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant
               usuario={usuario}
               dispatchEvent={dispatchEvent}
               participant={participant}
+              tema={tema}
             />
             <ParticipantDataReactableContainer>
               <ParticipantData

@@ -6,7 +6,7 @@ export const conclusionEventoTypes = {
 };
 
 export const conclusionEventos = {
-  guardarConclusion: (conclusion) => createEvent(conclusionEventoTypes.GUARDAR_CONCLUSION, {conclusion})
+  guardarConclusion: (conclusion, idTema) => createEvent(conclusionEventoTypes.GUARDAR_CONCLUSION, {conclusion, idTema})
 }
 
 export const INITIAL_CONCLUSION = ''
@@ -17,7 +17,6 @@ export const conclusionReducer = (state = INITIAL_CONCLUSION, evento) => produce
     case(conclusionEventoTypes.GUARDAR_CONCLUSION):
       return evento.conclusion;
     default:
-      console.error("Se recibio un evento de tipo conclusion desconocido.")
       break;
   }
 
