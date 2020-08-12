@@ -61,23 +61,6 @@ export const ActionContainerStyle = styled.div`
     width: 100%;
 `;
 
-export const QueuedParticipants = styled.div`
-    position: absolute;
-    top: -1.3em;
-    right: -0.5em;
-    margin-top: 1em;
-    margin-left: 2em;
-    display: flex;
-    justify-content: space-between;
-    padding: 0.5em;
-    border-radius: 50%;
-    align-items: center;
-    height: 1em;
-    background: linear-gradient(145deg, #c7c7c7, #ececec);
-    box-shadow: rgb(130, 130, 130) 4px 4px 10px, rgb(255, 255, 255) -4px -4px 10px;
-    pointer-events: none;
-`;
-
 export const SubjectTitle = styled.div`
     color: black; 
     font-size: 2em;
@@ -113,14 +96,6 @@ export const MicrophoneContainer = styled.div`
     align-items: center;
     justify-content: center;
     position: relative;
-`;
-
-export const ParticipantsCounter = styled.span`
-    color: silver;
-    font-size: 0.9em;
-    margin-right: 0.3em;
-    font-family: 'Poppins', sans-serif;
-
 `;
 
 export const ReactionsContainer = styled.div`

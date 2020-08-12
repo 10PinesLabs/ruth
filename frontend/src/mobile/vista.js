@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-  faMale,
   faSync,
   faThumbsDown,
   faThumbsUp,
@@ -17,12 +16,10 @@ import {
   LogoLabel,
   MobileUsableArea,
   ParticipantsContainer,
-  QueuedParticipants,
   SubjectTitle,
   TemaNoEmpezado,
   TopSectionContainer,
   MicrophoneContainer,
-  ParticipantsCounter,
   ReactionsContainer,
   SpeakerAreaContainer
 } from './vista.styled';
@@ -96,14 +93,13 @@ const Vista = ({
 
   const inQueueIcon = () => (faTimes);
 
-  const TalkButton = ({children, color = colors.primary, onClick, icon }) => {
+  const TalkButton = ({children, color = colors.primary, ...props}) => {
     return (
       <Button
         variant="outlined"
         style={{ color: color, borderColor: color }}
-        onClick={onClick}
-        startIcon={icon}
         size="large"
+        {...props}
       >
         {children}
       </Button>
@@ -147,7 +143,7 @@ const Vista = ({
             pressed={true}
             color="black"
             onClick={onWannaStopTalkClick}
-            icon={
+            startIcon={
               <FontAwesomeIcon icon={inQueueIcon()} color="black" size={"2x"} />
             }
           >
@@ -162,7 +158,7 @@ const Vista = ({
             pressed={true}
             onClick={onWannaStopTalkClick}
             color="black"
-            icon={
+            startIcon={
               <FontAwesomeIcon
                 icon={inQueueIcon()}
                 color={"black"}
@@ -179,7 +175,7 @@ const Vista = ({
         <TalkButton
           pressed={false}
           onClick={onWannaTalkClick}
-          icon={
+          startIcon={
             <FontAwesomeIcon
               icon={faHandPaper}
               color={colors.primary}
@@ -196,7 +192,7 @@ const Vista = ({
       <TalkButton
         pressed={false}
         color="#ff3b3b8c"
-        icon={
+        startIcon={
           <FontAwesomeIcon icon={faHandPaper} color={"#ff3b3b8c"} size={"2x"} />
         }
       >
