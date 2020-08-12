@@ -20,23 +20,26 @@ export const INITIAL_ACTION_ITEMS_STATE = [];
 
 export const actionItemReducer = (state = INITIAL_ACTION_ITEMS_STATE, evento) => produce(state, (prevActionItems) => {
   switch (evento.type) {
-    case actionItemEventoTypes.AGREGAR_ACTION_ITEM:
+    case actionItemEventoTypes.AGREGAR_ACTION_ITEM:{
       prevActionItems.push(evento);
       break;
-    case actionItemEventoTypes.EDITAR_ACTION_ITEM:
+    }
+    case actionItemEventoTypes.EDITAR_ACTION_ITEM:{
       let indexDeActionItemAEditar = prevActionItems.findIndex((actionItem) => actionItem.id === evento.actionItem.id)
       if(prevActionItems[indexDeActionItemAEditar]){
         prevActionItems[indexDeActionItemAEditar] = evento
       }
       break;
-    case actionItemEventoTypes.BORRAR_ACTION_ITEM:
+    }
+    case actionItemEventoTypes.BORRAR_ACTION_ITEM:{
       let indexDeActionItemABorrar = prevActionItems.findIndex(actionItem =>actionItem.id === evento.actionItem.id)
       if(indexDeActionItemABorrar>=0){
         prevActionItems.splice(indexDeActionItemABorrar, 1)
       }
       break;
-    default:
-      console.error("Se recibio un eventode actionItem desconocido")
+    }
+    default:{
       break;
+    }
   }
 });

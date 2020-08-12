@@ -17,7 +17,6 @@ export const conclusionReducer = (state = INITIAL_CONCLUSION, evento) => produce
     case(conclusionEventoTypes.GUARDAR_CONCLUSION):
       return evento.conclusion;
     default:
-      console.error("Se recibio un evento de tipo conclusion desconocido.")
       break;
   }
 

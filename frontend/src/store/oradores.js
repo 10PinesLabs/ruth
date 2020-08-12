@@ -29,11 +29,12 @@ export const oradorEventos = {
       instanciaDeHabla,
       idTema
     }),
-  desreaccionarAOrador: (reaccion, usuario, instanciaDeHabla) =>
+  desreaccionarAOrador: (reaccion, usuario, instanciaDeHabla, idTema) =>
     createEvent(oradorEventoTypes.DESREACCIONAR_A_ORADOR, {
       reaccion,
       usuario,
       instanciaDeHabla,
+      idTema
     }),
   resumirAOrador: (indexExposicion, resumen, idTema) =>
     createEvent(oradorEventoTypes.RESUMIR_A_ORADOR, {
