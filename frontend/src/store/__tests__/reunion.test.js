@@ -112,7 +112,7 @@ describe(`#reunion reducer`, () => {
   it("con un evento desconocido, no hace nada", () => {
     let idDeEvento = 7;
     applyEvento(eventoConId({ type: "UNKNOWN" }, idDeEvento));
-    expect(state).toEqual({ ultimoEventoId: idDeEvento });
+    expect(state).toEqual(INITIAL_STATE);
   });
 
   it("con un evento del tipo empezar reunion se reordenan todos los temas recibidos", () => {
