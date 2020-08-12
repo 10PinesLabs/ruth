@@ -39,7 +39,6 @@ export const actionItemReducer = (state = INITIAL_ACTION_ITEMS_STATE, evento) =>
       break;
     }
     default:{
-      console.error("Se recibio un eventode actionItem desconocido")
       break;
     }
   }
