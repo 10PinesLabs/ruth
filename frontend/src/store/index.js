@@ -116,7 +116,7 @@ const wsForwarder = (store) => (next) => (action) => {
 };
 
 export default () =>
-configureStore({
-  reducer: stateReducer,
-  middleware: [...getDefaultMiddleware(), wsForwarder],
-});
+  configureStore({
+    reducer: stateReducer,
+    middleware: [...getDefaultMiddleware(), wsForwarder],
+  });
