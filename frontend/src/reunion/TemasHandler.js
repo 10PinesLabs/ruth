@@ -4,26 +4,9 @@ import { connect } from 'react-redux';
 import backend from '../api/backend';
 import VistaTemas from './VistaTemas';
 import { temaEventos } from '../store/tema'
+import { reunionEventos } from '../store/reunion';
 
 class TemasHandler extends React.Component {
-  dispatchTema = (data) => {
-    const evento = {
-      autor: 'PRESENTADOR',
-      fecha: Date.now(),
-      idTema: data.idTema,
-      data: { tipo: data.tipo },
-    };
-    this.props.dispatch(evento);
-  };
-
-  dispatchReunion = (data) => {
-    const evento = {
-      autor: 'PRESENTADOR',
-      fecha: Date.now(),
-      data: { tipo: data.tipo },
-    };
-    this.props.dispatch(evento);
-  };
 
   requestActualizarTema = (datosTema) => {
     this.props.dispatch( datosTema.fin ? temaEventos.terminarTema(datosTema.id)  : temaEventos.empezarTema(datosTema.id));
@@ -31,11 +14,11 @@ class TemasHandler extends React.Component {
 
   cerrarReunion = (temas) => {
     backend.cerrarReunion(temas)
-      .then(() => toast.success('Reunión finalizada'))
       .then(() => {
-        this.setState({ redirect: true });
+        this.props.dispatch(reunionEventos.finalizarReunionActual());
       })
-      .catch(() => toast.error('No se pudo finalizar la reunión'));
+      .then(() => toast.success('Reunión finalizada'))
+      .catch(() => {toast.error('No se pudo finalizar la reunión')});
   }
 
   render() {
