@@ -8,16 +8,6 @@ import { ReconnectingWebSocket } from "./ReduxWebSocketWrapper"
 export const RuthStore = (reunion) => {
   const [store, setStore] = useState();
 
-  const crearEventoDeBackend = (action, state) => {
-    let temaActual = state.reunion.temas.find((t) => t.fin === null && t.inicio !== null);
-
-    return {
-      reunionId: state.reunion.id,
-      idTema: temaActual?.id,
-      ...action,
-    }
-  }
-
   useEffect(() => {
     if (!reunion || !reunion.abierta) {
       return;
@@ -26,29 +16,7 @@ export const RuthStore = (reunion) => {
     const newStore = createStore();
     const next = newStore.dispatch
 
-    newStore.dispatch =  (action) => {
-        return new Promise((resolve, reject) => {
-          
-          let state = newStore.getState();
-          const evento = crearEventoDeBackend(action, state)
-          if (state.esperandoConfirmacionDeEvento || state.esperandoEventoId) {
-            return;
-          }
-      
-          next(stateEventos.iniciarEnvioDeEvento());
-          Backend.publicarEvento(evento)
-            .then(({ id }) => {
-              next(stateEventos.eventoConfirmadoPorBackend(id));
-              resolve()
-            })
-            .catch((e) => {
-              console.error('el backend fallo');
-              console.error(e);
-              next(stateEventos.eventoRechazadoPorBackend());
-              reject()
-            });
-          })
-    };
+    newStore.dispatch = enviarEventoAlBackend
 
     newStore.reduceEvent = next
     newStore.reduceEvent(reunionEventos.comenzarReunion(reunion));
@@ -62,3 +30,36 @@ export const RuthStore = (reunion) => {
   }, [reunion]);
   return store;
 }
+
+  const crearEventoDeBackend = (action, state) => {
+    return {
+      reunionId: state.reunion.id,
+      ...action,
+    }
+  }
+
+  const enviarEventoAlBackend = (action) => {
+    return new Promise((resolve, reject) => {
+      
+      let state = newStore.getState();
+      const evento = crearEventoDeBackend(action, state)
+      if (state.esperandoConfirmacionDeEvento || state.esperandoEventoId) {
+        return;
+      }
+  
+      next(stateEventos.iniciarEnvioDeEvento());
+      Backend.publicarEvento(evento)
+        .then(({ id }) => {
+          next(stateEventos.eventoConfirmadoPorBackend(id));
+          resolve()
+        })
+        .catch((e) => {
+          console.error('el backend fallo');
+          console.error(e);
+          next(stateEventos.eventoRechazadoPorBackend());
+          reject()
+        });
+      })
+};
+
+
