@@ -8,7 +8,6 @@ import _ from "lodash";
 
 export const RuthStore = (reunion) => {
   const [store, setStore] = useState();
-  const enviosABackend = []
 
   const crearEventoDeBackend = (action, state) => {
     let temaActual = state.reunion.temas.find((t) => t.fin === null && t.inicio !== null);
@@ -29,16 +28,10 @@ export const RuthStore = (reunion) => {
     const next = newStore.dispatch
 
     newStore.dispatch =  (action) => {
-      if (!action.comesFromWS) {
-        
-        let state = newStore.getState();
-        const evento = crearEventoDeBackend(action, state)
-        let promiseResolve 
-        let promesaDeEvento = new Promise((resolve, reject) => {
-
-          promiseResolve = resolve
-          // We don't dispatch actions that we send to the backend since we'll
-          // see them twice, in the future we could be smarter.
+        return new Promise((resolve, reject) => {
+          
+          let state = newStore.getState();
+          const evento = crearEventoDeBackend(action, state)
           if (state.esperandoConfirmacionDeEvento || state.esperandoEventoId) {
             return;
           }
@@ -47,6 +40,7 @@ export const RuthStore = (reunion) => {
           Backend.publicarEvento(evento)
             .then(({ id }) => {
               next(stateEventos.eventoConfirmadoPorBackend(id));
+              resolve()
             })
             .catch((e) => {
               console.error('el backend fallo');
@@ -55,24 +49,15 @@ export const RuthStore = (reunion) => {
               reject()
             });
           })
-
-        enviosABackend.push({evento, promiseResolve})
-        return promesaDeEvento;
-
-      } else {
-        const eventoEnviado = enviosABackend.find(promesaDeEvento => _.matches(promesaDeEvento.evento, action))
-        if(eventoEnviado){
-          console.log("se recibio un evento enviado", eventoEnviado)
-          eventoEnviado.promiseResolve()
-        }
-        next(action);
-      }
     };
 
-    newStore.dispatch(reunionEventos.comenzarReunion(reunion));
+    newStore.dispatchEvent = next
+    newStore.dispatchEvent(reunionEventos.comenzarReunion(reunion));
+
     ws.onmessage = (evento) => {
-      newStore.dispatch(evento);
+      newStore.dispatchEvent(evento);
     };
+    
     ws.reconnect();
     setStore(newStore);
   }, [reunion]);
