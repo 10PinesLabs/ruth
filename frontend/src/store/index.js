@@ -1,6 +1,5 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import produce, { setAutoFreeze } from 'immer';
-import Backend from '../api/backend';
 import { reunionReducer } from "./reunion";
 import { createEvent } from './evento';
 
@@ -88,35 +87,8 @@ produce(state, (draft) => {
   }
 });
 
-const wsForwarder = (store) => (next) => (action) => {
-  if (!action.comesFromWS) {
-    // We don't dispatch actions that we send to the backend since we'll
-    // see them twice, in the future we could be smarter.
-    let state = store.getState();
-    if (state.esperandoConfirmacionDeEvento || state.esperandoEventoId) {
-      return;
-    }
-
-    next(stateEventos.iniciarEnvioDeEvento());
-    Backend.publicarEvento({
-      reunionId: state.reunion.id,
-      ...action,
-    })
-      .then(({ id }) => {
-        next(stateEventos.eventoConfirmadoPorBackend(id));
-      })
-      .catch((e) => {
-        console.error('el backend fallo');
-        console.error(e);
-        next(stateEventos.eventoRechazadoPorBackend());
-      });
-  } else {
-    next(action);
-  }
-};
-
 export default () =>
   configureStore({
     reducer: stateReducer,
-    middleware: [...getDefaultMiddleware(), wsForwarder],
+    middleware: [...getDefaultMiddleware()],
   });

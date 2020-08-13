@@ -13,7 +13,6 @@ export const reunionEventos = {
   comenzarReunion: (reunion) =>
     createEvent(reunionEventoTypes.EMPEZAR_REUNION, {
       reunion,
-      comesFromWS:true
     }),
   finalizarReunionActual: () => 
     createEvent(reunionEventoTypes.TERMINAR_REUNION),

@@ -1,8 +1,5 @@
 // eslint-disable no-console
-import { useEffect, useState } from 'react';
 import { batch } from 'react-redux';
-import createStore from './store';
-import { reunionEventos } from "./store/reunion";
 
 function getWebSocket(lastEvent) {
   const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
@@ -32,39 +29,15 @@ export class ReconnectingWebSocket {
 
     this.websocket.onmessage = (mensaje) => {
       batch(() => {
-        JSON.parse(mensaje.data).forEach((rawEvento) => {
-          const nextEvent = {
-            ...rawEvento,
-            comesFromWS: true,
-          };
-
+        JSON.parse(mensaje.data).forEach((evento) => {
           if (this.onmessage) {
-            this.onmessage(nextEvent);
+            this.onmessage(evento);
           } else {
             console.error('got message but onmessage was not set');
           }
-          this.lastEvent = nextEvent.id;
+          this.lastEvent = evento.id;
         });
       });
     };
   }
-}
-
-export function useRuthConnectedStore(reunion) {
-  const [store, setStore] = useState();
-
-  useEffect(() => {
-    if (!reunion || !reunion.abierta) {
-      return;
-    }
-    const ws = new ReconnectingWebSocket();
-    const newStore = createStore();
-    newStore.dispatch(reunionEventos.comenzarReunion(reunion));
-    ws.onmessage = (evento) => {
-      newStore.dispatch(evento);
-    };
-    ws.reconnect();
-    setStore(newStore);
-  }, [reunion]);
-  return store;
 }
