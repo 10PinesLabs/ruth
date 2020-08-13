@@ -16,7 +16,7 @@ export const RuthStore = (reunion) => {
     const newStore = createStore();
     const next = newStore.dispatch
 
-    newStore.dispatch = enviarEventoAlBackend
+    newStore.dispatch = enviarEventoAlBackend(newStore, next)
 
     newStore.reduceEvent = next
     newStore.reduceEvent(reunionEventos.comenzarReunion(reunion));
@@ -33,15 +33,16 @@ export const RuthStore = (reunion) => {
 
   const crearEventoDeBackend = (action, state) => {
     return {
-      reunionId: state.reunion.id,
+      reunionId: state.reunion?.id,
       ...action,
     }
   }
 
-  const enviarEventoAlBackend = (action) => {
+  const enviarEventoAlBackend = (store, next) => (action) => {
+    const state = store.getState();
+
     return new Promise((resolve, reject) => {
       
-      let state = newStore.getState();
       const evento = crearEventoDeBackend(action, state)
       if (state.esperandoConfirmacionDeEvento || state.esperandoEventoId) {
         return;
