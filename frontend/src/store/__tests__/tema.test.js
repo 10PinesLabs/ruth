@@ -69,6 +69,30 @@ describe(`#tema reducer`, () => {
     expect(state.tiempoInactivo).toEqual(tiempoInactivo)
   })
 
+  it("cuando se reabre multiples veces el tema el tiempo inactivo es igual a la suma de todos los tiempos inactivos", ()=> {
+    let idDeTema = 4;
+    let fechaDeInicio = new Date(2020,10,2,10,40);
+    let fechaDeFin = new Date(2020,10,2,10,50);
+    let fechaDeReapertura = new Date(2020,10,2,11);
+    let fechaDeSegundoFin = new Date(2020,10,2,11,10);
+    let fechaDeSegundaReapertura = new Date(2020,10,2,11,20);
+
+    let primerTiempoInactivo = fechaDeReapertura-fechaDeFin
+    let segundoTiempoInactivo = fechaDeSegundaReapertura - fechaDeSegundoFin
+    let tiempoInactivoTotal = primerTiempoInactivo + segundoTiempoInactivo
+
+    applyEvento(eventoConFecha(temaEventos.empezarTema(idDeTema), fechaDeInicio));
+    applyEvento(eventoConFecha(temaEventos.terminarTema(idDeTema), fechaDeFin));
+    applyEvento(eventoConFecha(temaEventos.reabrirTema(idDeTema), fechaDeReapertura))
+    applyEvento(eventoConFecha(temaEventos.terminarTema(idDeTema), fechaDeSegundoFin))
+    applyEvento(eventoConFecha(temaEventos.reabrirTema(idDeTema), fechaDeSegundaReapertura))
+
+
+    expect(state.inicio).toEqual(fechaDeInicio.toISOString());
+    expect(state.fin).toEqual(null);
+    expect(state.tiempoInactivo).toEqual(tiempoInactivoTotal)
+  })
+
   it("al intentar reabrir un tema que aun no se inicio no se hace nada", ()=> {
     let idDeTema = 4;
     let fechaDeReapertura = new Date();
