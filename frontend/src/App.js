@@ -14,7 +14,7 @@ import { Provider } from 'react-redux';
 
 const App = ({ usuario }) => {
   const [reunion, setReunion] = useState();
-
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       const reunionResponse = await backend.getReunion();
@@ -23,11 +23,24 @@ const App = ({ usuario }) => {
     fetchData();
   }, []);
 
-  const store = useRuthConnectedStore(reunion);
+  const store =  useRuthConnectedStore(reunion);
+  
+  const selectAppIsLoading = (state) => {
+    return state.appIsLoading
+  }
+
+  const handleStateChange = () => {
+    const isAppLoading = selectAppIsLoading(store.getState())
+    if(isAppLoading!==isLoading) setIsLoading(isAppLoading)
+  }
 
   const handleReunionIniciada = (nuevaReunion) => {
     setReunion(nuevaReunion);
   };
+
+  if(store){
+    store.subscribe(handleStateChange)
+  }
 
   useEffect(() => {
     toast.configure({
@@ -36,6 +49,8 @@ const App = ({ usuario }) => {
       transition: Slide,
     });
   }, []);
+
+
 
   if (!reunion) {
     return <Loading />;
@@ -48,7 +63,8 @@ const App = ({ usuario }) => {
     </>;
   }
 
-  if (!store) {
+
+  if (isLoading) {
     return <Loading />;
   }
 
