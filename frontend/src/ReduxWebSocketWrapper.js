@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import { batch } from 'react-redux';
 import createStore from './store';
-import { reunionEventos } from "./store/reunion";
 
 function getWebSocket(lastEvent) {
   const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
