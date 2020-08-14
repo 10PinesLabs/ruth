@@ -32,15 +32,17 @@ export default function () {
     const eventoInicial = {
       type: 'Una reunion es comenzada',
       reunion: await ReunionController(context).reunion(),
+      appIsLoading: eventos.length !== 0,
     };
 
     ws.send(
       JSON.stringify([
         eventoInicial,
-        ...eventos.map((evento) => ({
+        ...eventos.map((evento, index) => ({
           ...evento.evento,
           id: evento.id,
           reunionId: evento.reunionId,
+          appIsLoading: index === eventos.length,
         })),
       ]),
     );
