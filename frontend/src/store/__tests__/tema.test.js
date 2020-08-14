@@ -53,7 +53,7 @@ describe(`#tema reducer`, () => {
 
   });
 
-  it("cuando el evento es de tipo reabrir tema se le quita el inicio y se le agrega un tiempo inactivo igual a la cantidad de tiempo transcurrido entre el cierre del tema y la nueva apertura", ()=> {
+  it("cuando el evento es de tipo reabrir tema se le quita el fin y se le agrega un tiempo inactivo igual a la cantidad de tiempo transcurrido entre el cierre del tema y la nueva apertura", ()=> {
     let idDeTema = 4;
     let fechaDeInicio = new Date(2020,10,2,10,40);
     let fechaDeFin = new Date(2020,10,2,10,50);
