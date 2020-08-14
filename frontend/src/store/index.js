@@ -21,6 +21,7 @@ eventoRechazadoPorBackend: () => createEvent(stateEventoTypes.ENVIO_RECHAZADO),
 const INITIAL_STATE = {
   reunion: null,
   ultimoEventoId: null,
+  appIsLoading:true,
   esperandoEventoId: null,
   esperandoConfirmacionDeEvento: false,
   eventosEncolados: [],
@@ -83,7 +84,7 @@ produce(state, (draft) => {
       }
 
       const newState = reunionReducer(draft, action);
-      return { ...newState, esperandoEventoId, eventosEncolados };
+      return { ...newState, esperandoEventoId, eventosEncolados,  appIsLoading: typeof action.appIsLoading != 'undefined' ? action.appIsLoading : draft.appIsLoading};
     }
   }
 });
