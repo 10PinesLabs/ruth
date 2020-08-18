@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-export const CardContainer = styled.div(({isTalking,sePuedeReaccionar}) => `
+export const CardContainer = styled.div(({size}) => `
   background: linear-gradient(145deg, #c7c7c7, #ececec);
   box-shadow: 5px 5px 10px #828282, -5px -5px 10px #ffffff;
   border-radius: 7px;
   position:relative;
-  min-width: 16.5em;
+  min-width: ${ size === "small" ? '13em' : '16.5em'};
   margin-top: 0.7em;
 `);
 
@@ -25,12 +25,12 @@ export const CardInfoContainer = styled.div`
   background-color: #ddddddab;
 `;
 
-export const UserAvatar = styled.div(({isTalking, avatar}) => `
+export const UserAvatar = styled.div(({size, avatar}) => `
   background-image: url(${avatar});
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  min-height: 17.2em;
+  min-height: ${ size==='small' ? '13em' : '17.2em' };
   border-radius: 7px 7px 0 0;
   display: flex;
   align-items: flex-end;

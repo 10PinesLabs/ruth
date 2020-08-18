@@ -10,7 +10,7 @@ import { faEject } from '@fortawesome/free-solid-svg-icons'
 
 const ParticipantData = (props) => {
   return <>
-    <UserAvatar isTalking={props.talking} avatar={getGravatarUrlFor(props.usuario.email)}>
+    <UserAvatar isTalking={props.talking} avatar={getGravatarUrlFor(props.usuario.email)} size={props.size} >
     <CardInfoContainer>
       <CardName isInteractive={props.interactive}> {props.usuario.nombre} </CardName>
       <ParticipantCounter isInteractive={props.interactive} estadoOrador={props.estadoOrador}/>
@@ -19,7 +19,7 @@ const ParticipantData = (props) => {
   </>;
 }
 
-const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant, isParticipantTalking, interactive, kickear, finTema, usuario}) => {
+const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant, isParticipantTalking, interactive, kickear, finTema, usuario, size}) => {
   const estadoOrador = () => {
     if (estaEncolado()) {
       return {detalle: 'encolado'};
@@ -55,6 +55,7 @@ const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant
         sePuedeReaccionar={sePuedeReaccionar}
         isInteractive={interactive}
         isTalking={isParticipantTalking}
+        size={size}
       >
         {interactive && <Cerrar onClick={() => setOradorAKickear(participant.usuario)}><FontAwesomeIcon icon={faEject}/></Cerrar>}
         <ModalDeConfirmacion
@@ -71,7 +72,9 @@ const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant
                 talking={isParticipantTalking}
                 usuario={participant.usuario}
                 interactive={interactive}
-                estadoOrador={estadoOrador()}/>
+                estadoOrador={estadoOrador()}
+                size={size}
+                />
               <TalkingReactions
               usuario={usuario}
               dispatchEvent={dispatchEvent}
@@ -84,6 +87,7 @@ const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant
             usuario={participant.usuario}
             interactive={interactive}
             estadoOrador={estadoOrador()}
+            size={size}
           />
         }
 
@@ -93,9 +97,9 @@ const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant
 
 export default ParticipantsCard;
 
-const SkeletonComponent = ({interactive, isParticipantTalking}) =>
-  <CardContainer isInteractive={interactive} isTalking={isParticipantTalking}>
-    <UserAvatar><SkeletonBlock/></UserAvatar>
+const SkeletonComponent = ({interactive, isParticipantTalking, size}) =>
+  <CardContainer isInteractive={interactive} isTalking={isParticipantTalking} size={size}>
+    <UserAvatar size={size}><SkeletonBlock/></UserAvatar>
     <CardInfoContainer style={{display: 'flex', alignItems: 'space-between'}}>
       <SkeletonLine/>
       <SkeletonLine/>
