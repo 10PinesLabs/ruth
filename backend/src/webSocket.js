@@ -28,8 +28,8 @@ export default function () {
     const lastEvent = parserLastEvent(req);
     const eventos = await context.eventosRepo.findEventosUltimaReunion(lastEvent);
 
-    const conexionExitosa = {
-      type: 'Conexion exitosa',
+    const cargaExitosa = {
+      type: 'Carga exitosa',
       appIsLoading: false,
     };
 
@@ -40,7 +40,7 @@ export default function () {
           id: evento.id,
           reunionId: evento.reunionId,
         })),
-        conexionExitosa,
+        cargaExitosa,
       ]),
     );
   };

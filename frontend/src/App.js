@@ -15,6 +15,7 @@ import { Provider } from 'react-redux';
 const App = ({ usuario }) => {
   const [reunion, setReunion] = useState();
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const fetchData = async () => {
       const reunionResponse = await backend.getReunion();
