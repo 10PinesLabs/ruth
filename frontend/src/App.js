@@ -23,7 +23,7 @@ const App = ({ usuario }) => {
     fetchData();
   }, []);
 
-  const store =  useRuthConnectedStore(reunion);
+  const store = useRuthConnectedStore(reunion);
   
   const selectAppIsLoading = (state) => {
     return state.appIsLoading
@@ -49,8 +49,6 @@ const App = ({ usuario }) => {
       transition: Slide,
     });
   }, []);
-
-
 
   if (!reunion) {
     return <Loading />;
