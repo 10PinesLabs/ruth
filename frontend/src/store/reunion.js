@@ -3,15 +3,15 @@ import { createEvent } from "./evento";
 import { temaReducer } from "./tema";
 
 export const reunionEventoTypes = {
-  EMPEZAR_REUNION: "Una reunion es comenzada",
+  CONECTARSE_A_REUNION: "Una reunion es comenzada",
   TERMINAR_REUNION: "La reunion fue finalizada"
 };
 
 export const INITIAL_REUNION_STATE = {}
 
 export const reunionEventos = {
-  comenzarReunion: (reunion) =>
-    createEvent(reunionEventoTypes.EMPEZAR_REUNION, {
+  conectarseAReunion: (reunion) =>
+    createEvent(reunionEventoTypes.CONECTARSE_A_REUNION, {
       reunion,
       comesFromWS:true
     }),
@@ -24,7 +24,7 @@ export const reunionReducer = (state, action) =>
   produce(state, (draft) => {
     draft.ultimoEventoId = action.id;
     switch (action.type) {
-      case reunionEventoTypes.EMPEZAR_REUNION: {
+      case reunionEventoTypes.CONECTARSE_A_REUNION: {
         draft.reunion = action.reunion;
         draft.reunion.temas = action.reunion.temas
           .map((tema) => temaReducer(tema, action))

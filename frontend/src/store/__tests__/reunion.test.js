@@ -116,7 +116,7 @@ describe(`#reunion reducer`, () => {
   });
 
   it("con un evento del tipo empezar reunion se reordenan todos los temas recibidos", () => {
-    applyEvento(reunionEventos.comenzarReunion(reunionConTemas));
+    applyEvento(reunionEventos.conectarseAReunion(reunionConTemas));
 
     expect(state).toMatchObject({
       reunion: {
