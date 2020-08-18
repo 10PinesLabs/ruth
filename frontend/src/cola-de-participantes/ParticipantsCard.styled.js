@@ -5,7 +5,7 @@ export const CardContainer = styled.div(({size}) => `
   box-shadow: 5px 5px 10px #828282, -5px -5px 10px #ffffff;
   border-radius: 7px;
   position:relative;
-  min-width: ${ size === "small" ? '13em' : '16.5em'};
+  width: ${ size === "small" ? '13em' : '16.5em'};
   margin-top: 0.7em;
 `);
 

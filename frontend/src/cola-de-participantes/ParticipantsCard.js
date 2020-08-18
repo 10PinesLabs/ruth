@@ -67,12 +67,6 @@ const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant
 
         {(sePuedeReaccionar) ?
           <>
-            <TalkingReactions
-              usuario={usuario}
-              dispatchEvent={dispatchEvent}
-              participant={participant}
-              tema={tema}
-            />
             <ParticipantDataReactableContainer>
               <ParticipantData
                 talking={isParticipantTalking}
