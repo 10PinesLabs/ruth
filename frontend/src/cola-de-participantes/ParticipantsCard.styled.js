@@ -20,6 +20,14 @@ export const ParticipantDataReactableContainer = styled.div(() => `
 `
 );
 
+export const CardInfoFooter = styled.div`
+  display: inline-flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+`;
+
 export const CardInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -28,6 +36,12 @@ export const CardInfoContainer = styled.div`
   height: 100%;
   width: 100%;
   margin: 0.5em 0;
+`;
+
+export const TalkingAnimationContainer = styled.div`
+  position: absolute;
+  left:20%;
+  
 `;
 
 export const UserAvatar = styled.div(({isTalking, avatar}) => `

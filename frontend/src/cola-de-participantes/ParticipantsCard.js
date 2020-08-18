@@ -1,17 +1,22 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import ParticipantCounter from './ParticipantCounter';
-import {CardContainer, CardInfoContainer, CardName, Cerrar,ParticipantDataReactableContainer, UserAvatar,} from './ParticipantsCard.styled';
+import {CardContainer, CardInfoContainer,CardInfoFooter, CardName, Cerrar,TalkingAnimationContainer,ParticipantDataReactableContainer, UserAvatar,} from './ParticipantsCard.styled';
 import getGravatarUrlFor from '../api/gravatar';
 import {SkeletonBlock, SkeletonLine} from "../skeleton/Skeleton.styled";
 import {ModalDeConfirmacion} from "../tipos-vista-principal/Modal";
 import {TalkingReactions} from "./TalkingReactions";
+import { colors } from '../styles/theme';
+import BeatLoader from 'react-spinners/BeatLoader';
 
 const ParticipantData = (props) => {
   return <>
     <UserAvatar isTalking={props.talking} avatar={getGravatarUrlFor(props.usuario.email)}/>
     <CardInfoContainer>
-      <CardName isInteractive={props.interactive}> {props.usuario.nombre} </CardName>
-      <ParticipantCounter isInteractive={props.interactive} estadoOrador={props.estadoOrador}/>
+      <CardName isInteractive={props.interactive}>{props.usuario.nombre} </CardName>
+      <CardInfoFooter>
+        { props.talking && <TalkingAnimation/> } 
+        <ParticipantCounter isInteractive={props.interactive} estadoOrador={props.estadoOrador}/>
+      </CardInfoFooter>
     </CardInfoContainer>
   </>;
 }
@@ -19,12 +24,15 @@ const ParticipantData = (props) => {
 const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant, isParticipantTalking, interactive, kickear, finTema, usuario, tema}) => {
   const estadoOrador = () => {
     if (estaEncolado()) {
-      return {detalle: 'encolado'};
+      return { detalle: 'encolado' };
     }
     if (hablo()) {
-      return {detalle: 'hablo', seconds: Math.ceil((participant.fin - participant.inicio) / 1000)};
+      return { detalle: 'hablo', seconds: Math.ceil(( participant.fin - participant.inicio ) / 1000) };
     }
-    return {detalle: finTema? 'hablo' : 'hablando', seconds: Math.ceil(((Date.parse(finTema) || Date.now()) - participant.inicio) / 1000)};
+    return {
+      detalle: finTema ? 'hablo' : 'hablando',
+      seconds: Math.ceil(( ( Date.parse(finTema) || Date.now() ) - participant.inicio ) / 1000)
+    };
   };
 
   const hablo = () => {
@@ -86,15 +94,21 @@ const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant
         }
 
     </CardContainer>
-  ) : <div> Nadie esta hablando</div>);
+  ) : <div> Nadie esta hablando</div> );
 };
 
 export default ParticipantsCard;
 
-const SkeletonComponent = ({interactive, isParticipantTalking}) =>
-  <CardContainer isInteractive={interactive} isTalking={isParticipantTalking}>
+const TalkingAnimation = () => (
+  <TalkingAnimationContainer>
+    <BeatLoader size="0.3em" color={ colors.primary }/>
+  </TalkingAnimationContainer>
+)
+
+const SkeletonComponent = ({ interactive, isParticipantTalking }) =>
+  <CardContainer isInteractive={ interactive } isTalking={ isParticipantTalking }>
     <UserAvatar><SkeletonBlock/></UserAvatar>
-    <CardInfoContainer style={{display: 'flex', alignItems: 'space-between'}}>
+    <CardInfoContainer style={ { display: 'flex', alignItems: 'space-between' } }>
       <SkeletonLine/>
       <SkeletonLine/>
     </CardInfoContainer>
