@@ -85,7 +85,8 @@ produce(state, (draft) => {
       }
 
       const newState = reunionReducer(draft, action);
-      return { ...newState, esperandoEventoId, eventosEncolados,  appIsLoading: typeof action.appIsLoading != 'undefined' ? action.appIsLoading : draft.appIsLoading};
+      const isAppLoading =  typeof action.appIsLoading != 'undefined' ? action.appIsLoading : draft.appIsLoading
+      return { ...newState, esperandoEventoId, eventosEncolados,  appIsLoading: isAppLoading};
     }
   }
 });
