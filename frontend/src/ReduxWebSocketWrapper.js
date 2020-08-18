@@ -58,6 +58,7 @@ export function useRuthConnectedStore(reunion) {
     }
     const ws = new ReconnectingWebSocket();
     const newStore = createStore();
+    newStore.dispatch(reunionEventos.conectarseAReunion(reunion));
     ws.onmessage = (evento) => {
       newStore.dispatch(evento);
     };
