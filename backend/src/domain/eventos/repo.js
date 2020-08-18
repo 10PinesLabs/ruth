@@ -18,7 +18,7 @@ export default class EventosRepo {
     return models.Evento.findAll({ where: whereClause, order: [['id', 'ASC']] });
   }
 
-  guardarEvento({ evento, temaId, reunionId }) {
-    return models.Evento.create({ evento, temaId, reunionId });
+  guardarEvento({ evento, idTema, reunionId }) {
+    return models.Evento.create({ evento, idTema, reunionId });
   }
 }
