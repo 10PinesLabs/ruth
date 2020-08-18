@@ -1,4 +1,4 @@
-import oradoresReducer, { INITIAL_ORADORES_STATE, tipoDeEvento } from '../oradores';
+import {oradoresReducer, INITIAL_ORADORES_STATE, oradorEventoTypes } from '../oradores';
 
 const orador = (usuario, inicio, fin, instancia) => ({
   usuario, inicio: inicio || null, fin: fin || null, instanciaDeHabla: instancia || 0, reacciones: { "redondeando": [], "thumbsDown": [], "thumbsUp": []}
@@ -19,25 +19,25 @@ describe('#oradoresReducer reducer', () => {
 
 
   const desencolar = (usuario, fecha) => ({
-    type: tipoDeEvento.DESENCOLAR,
+    type: oradorEventoTypes.DESENCOLAR,
     fecha: fecha || conseguirFecha(),
     usuario,
   });
 
   const levantarMano = (usuario, fecha) => ({
-    type: tipoDeEvento.LEVANTAR_MANO,
+    type: oradorEventoTypes.LEVANTAR_MANO,
     fecha: fecha || conseguirFecha(),
     usuario,
   });
 
   const dejarDeHablar = (usuario, fecha) => ({
-    type: tipoDeEvento.DEJAR_DE_HABLAR,
+    type: oradorEventoTypes.DEJAR_DE_HABLAR,
     fecha: fecha || conseguirFecha(),
     usuario,
   });
 
   const kickear = (usuario, usuarioKickeado, fecha) => ({
-    type: tipoDeEvento.KICKEAR,
+    type: oradorEventoTypes.KICKEAR,
     fecha: fecha || conseguirFecha(),
     usuario,
     kickearA: usuarioKickeado,
@@ -58,7 +58,7 @@ describe('#oradoresReducer reducer', () => {
     expect(state).toEqual(INITIAL_ORADORES_STATE);
   });
 
-  describe(`#${tipoDeEvento.LEVANTAR_MANO}`, () => {
+  describe(`#${oradorEventoTypes.LEVANTAR_MANO}`, () => {
     it("cuando un orador pide hablar y no hay nadie en la cola, es el orador 'talking'", () => {
       applyEvento(levantarMano(elUsuario(1)));
 
@@ -94,7 +94,7 @@ describe('#oradoresReducer reducer', () => {
     });
   });
 
-  describe(`#${tipoDeEvento.DESENCOLAR}`, () => {
+  describe(`#${oradorEventoTypes.DESENCOLAR}`, () => {
     it('si no estaba encolado, no hace nada', () => {
       applyEvento(levantarMano(elUsuario(1)));
       applyEvento(levantarMano(elUsuario(2)));
@@ -149,7 +149,7 @@ describe('#oradoresReducer reducer', () => {
     });
   });
 
-  describe(`#${tipoDeEvento.DEJAR_DE_HABLAR}`, () => {
+  describe(`#${oradorEventoTypes.DEJAR_DE_HABLAR}`, () => {
     it('si el orador no esta encolado, no hace nada', () => {
       applyEvento(dejarDeHablar(elUsuario(1)));
 
@@ -213,7 +213,7 @@ describe('#oradoresReducer reducer', () => {
     });
   });
 
-  describe(`#${tipoDeEvento.KICKEAR}`, () => {
+  describe(`#${oradorEventoTypes.KICKEAR}`, () => {
 
     it('Si hay alguien hablando y hay mas gente encolada, saca al orador y pone al que sigue', () => {
       applyEvento(levantarMano(elUsuario(1)));

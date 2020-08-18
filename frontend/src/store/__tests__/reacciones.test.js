@@ -1,4 +1,4 @@
-import reaccionesReducer, { INITIAL_REACCIONES_STATE, reactionTypes } from '../reacciones';
+import {reaccionesReducer, INITIAL_REACCIONES_STATE, reaccionEventoTypes } from '../reacciones';
 import { reacciones } from '../../mobile/actions';
 
 const elEmail = (n) => `unEmail${n || ''}`;
@@ -25,26 +25,26 @@ describe('reaccionesReducer', () => {
   const conseguirFecha = () => fakeFecha;
 
   const reaccionar = (nombre, usuario, fecha) => ({
-    type: reactionTypes.REACCIONAR,
+    type: reaccionEventoTypes.REACCIONAR,
     fecha: fecha || conseguirFecha(),
     usuario,
     nombre,
   });
 
   const desreaccionar = (nombre, usuario, fecha) => ({
-    type: reactionTypes.DESREACCIONAR,
+    type: reaccionEventoTypes.DESREACCIONAR,
     fecha: fecha || conseguirFecha(),
     usuario,
     nombre,
   });
 
   const reiniciar = (usuario, fecha) => ({
-    type: reactionTypes.REINICIAR,
+    type: reaccionEventoTypes.REINICIAR,
     fecha: fecha || conseguirFecha(),
     usuario,
   });
 
-  describe(`#${reactionTypes.REINICIAR}`, () => {
+  describe(`#${reaccionEventoTypes.REINICIAR}`, () => {
     it('reinicia todas las acciones', () => {
       applyEvento(reiniciar(elUsuario(1)));
 
@@ -52,7 +52,7 @@ describe('reaccionesReducer', () => {
     });
   });
 
-  describe(`#${reactionTypes.REACCIONAR}`, () => {
+  describe(`#${reaccionEventoTypes.REACCIONAR}`, () => {
     it('si el usuario no envio esa reaccion, la agrega', () => {
       applyEvento(reaccionar('x', elUsuario()));
 
@@ -105,7 +105,7 @@ describe('reaccionesReducer', () => {
     });
   });
 
-  describe(`#${reactionTypes.DESREACCIONAR}`, () => {
+  describe(`#${reaccionEventoTypes.DESREACCIONAR}`, () => {
     it('si el usuario ya habia reaccionado, quita la reaccion', () => {
       applyEvento(reaccionar(reacciones.SLACK, elUsuario()));
 

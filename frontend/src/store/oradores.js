@@ -1,8 +1,9 @@
 import { produce } from 'immer';
 import { TiposReaccionAlHablar } from "../cola-de-participantes/TalkingReactions";
-const _ = require('lodash');
+import { createEvent } from "./evento";
+import lodash from "lodash";
 
-export const tipoDeEvento = {
+export const oradorEventoTypes = {
   LEVANTAR_MANO: 'Quiero Hablar',
   DEJAR_DE_HABLAR: 'Quiero Dejar de Hablar',
   DESENCOLAR: 'Quiero Desencolarme',
@@ -12,18 +13,36 @@ export const tipoDeEvento = {
   RESUMIR_A_ORADOR: 'Actualizar resumen de orador'
 };
 
-
-function hayAlguienHablando(state) {
-  return state.actual !== null;
-}
-
-function estaEncoladoParaHablar(draft, usuario) {
-  return draft.cola.some((orador) => orador.usuario.nombre === usuario.nombre);
-}
-
-function estaHablando(draft, nombre) {
-  return draft.actual && draft.actual.usuario.nombre === nombre;
-}
+export const oradorEventos = {
+  levantarMano: (usuario, idTema) =>
+    createEvent(oradorEventoTypes.LEVANTAR_MANO, { usuario, idTema }),
+  dejarDeHablar: (usuario, idTema) =>
+    createEvent(oradorEventoTypes.DEJAR_DE_HABLAR, { usuario, idTema }),
+  desencolar: (usuario, idTema) =>
+    createEvent(oradorEventoTypes.DESENCOLAR, { usuario, idTema }),
+  kickear: (usuario, idTema) =>
+    createEvent(oradorEventoTypes.KICKEAR, { kickearA: usuario, idTema }),
+  reaccionarAOrador: (reaccion, usuario, instanciaDeHabla, idTema) =>
+    createEvent(oradorEventoTypes.REACCIONAR_A_ORADOR, {
+      reaccion,
+      usuario,
+      instanciaDeHabla,
+      idTema
+    }),
+  desreaccionarAOrador: (reaccion, usuario, instanciaDeHabla, idTema) =>
+    createEvent(oradorEventoTypes.DESREACCIONAR_A_ORADOR, {
+      reaccion,
+      usuario,
+      instanciaDeHabla,
+      idTema
+    }),
+  resumirAOrador: (indexExposicion, resumen, idTema) =>
+    createEvent(oradorEventoTypes.RESUMIR_A_ORADOR, {
+      indexExposicion,
+      resumen,
+      idTema
+    }),
+};
 
 export const INITIAL_ORADORES_STATE = {
   pasados: [],
@@ -31,10 +50,11 @@ export const INITIAL_ORADORES_STATE = {
   cola: [],
 };
 
-export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft) => {
+export const oradoresReducer = (state = INITIAL_ORADORES_STATE, evento) =>
+produce(state, (draft) => {
   const { usuario, fecha } = evento;
   switch (evento.type) {
-    case tipoDeEvento.KICKEAR: {
+    case oradorEventoTypes.KICKEAR: {
       if (!estaHablando(draft, evento.kickearA.nombre)) {
         return;
       }
@@ -52,7 +72,7 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
       draft.actual = nextOrador;
       break;
     }
-    case tipoDeEvento.LEVANTAR_MANO: {
+    case oradorEventoTypes.LEVANTAR_MANO: {
       // Si la persona ya esta hablando o esta encolado no hacemos nada
       if (estaEncoladoParaHablar(draft, usuario) || estaHablando(draft, usuario.nombre)) {
         return;
@@ -76,14 +96,14 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
       break;
     }
 
-    case tipoDeEvento.DESENCOLAR: {
+    case oradorEventoTypes.DESENCOLAR: {
       if (estaHablando(draft, usuario.nombre)) {
         return;
       }
       draft.cola = draft.cola.filter((orador) => orador.usuario.nombre !== usuario.nombre);
       break;
     }
-    case tipoDeEvento.DEJAR_DE_HABLAR: {
+    case oradorEventoTypes.DEJAR_DE_HABLAR: {
       if (!estaHablando(draft, usuario.nombre)) {
         return;
       }
@@ -101,13 +121,13 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
       draft.actual = nextOrador;
       break;
     }
-    case tipoDeEvento.DESREACCIONAR_A_ORADOR: {
+    case oradorEventoTypes.DESREACCIONAR_A_ORADOR: {
 
-      _.set(draft, `actual.reacciones.${evento.reaccion}`,listaDeReaccionSinUsuarioReaccionante(evento.reaccion));
-      
+      lodash.set(draft, `actual.reacciones.${evento.reaccion}`,listaDeReaccionSinUsuarioReaccionante(evento.reaccion));
+
       break;
     }
-    case tipoDeEvento.REACCIONAR_A_ORADOR: {
+    case oradorEventoTypes.REACCIONAR_A_ORADOR: {
 
       const nuevaReaccion = {email: evento.usuario.email, instanciaDeHabla: evento.instanciaDeHabla};
 
@@ -125,10 +145,10 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
 
       break;
     }
-    case tipoDeEvento.RESUMIR_A_ORADOR:{
+    case oradorEventoTypes.RESUMIR_A_ORADOR: {
       if(draft.pasados.length>evento.indexExposicion){
         draft.pasados[evento.indexExposicion].resumen = evento.resumen
-      }else
+      }else 
       draft.actual.resumen = evento.resumen
       break;
     }
@@ -143,5 +163,16 @@ export default (state = INITIAL_ORADORES_STATE, evento) => produce(state, (draft
       reaccion.instanciaDeHabla === evento.instanciaDeHabla
     );
 }
-
 });
+
+function hayAlguienHablando(state) {
+  return state.actual !== null;
+}
+
+function estaEncoladoParaHablar(draft, usuario) {
+  return draft.cola.some((orador) => orador.usuario.nombre === usuario.nombre);
+}
+
+function estaHablando(draft, nombre) {
+  return draft.actual && draft.actual.usuario.nombre === nombre;
+}
