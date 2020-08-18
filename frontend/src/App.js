@@ -51,7 +51,7 @@ const App = ({ usuario }) => {
     });
   }, []);
 
-  if (!reunion) {
+  if (!reunion || isLoading) {
     return <Loading />;
   }
 
@@ -60,11 +60,6 @@ const App = ({ usuario }) => {
       <GlobalStyle/>
       <EmpezarReunion {...reunion} handleReunionIniciada={handleReunionIniciada}/>
     </>;
-  }
-
-
-  if (isLoading) {
-    return <Loading />;
   }
 
   return <>
