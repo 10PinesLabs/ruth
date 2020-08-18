@@ -1,5 +1,4 @@
 import context from '~/context';
-import ReunionController from './domain/reuniones/controller';
 
 function parserLastEvent(req) {
   const lastEventId = parseInt(req.query.lastEvent, 10);
@@ -29,21 +28,19 @@ export default function () {
     const lastEvent = parserLastEvent(req);
     const eventos = await context.eventosRepo.findEventosUltimaReunion(lastEvent);
 
-    const eventoInicial = {
-      type: 'Una reunion es comenzada',
-      reunion: await ReunionController(context).reunion(),
-      appIsLoading: eventos.length !== 0,
+    const conexionExitosa = {
+      type: 'Conexion exitosa',
+      appIsLoading: false,
     };
 
     ws.send(
       JSON.stringify([
-        eventoInicial,
-        ...eventos.map((evento, index) => ({
+        ...eventos.map((evento) => ({
           ...evento.evento,
           id: evento.id,
           reunionId: evento.reunionId,
-          appIsLoading: index === eventos.length,
         })),
+        conexionExitosa,
       ]),
     );
   };
