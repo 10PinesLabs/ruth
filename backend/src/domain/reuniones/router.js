@@ -10,6 +10,6 @@ const controller = ReunionController(context);
 
 router.get('/reunionActual', asyncMiddleware(controller.reunion));
 router.post('/reunionDeRoots', asyncMiddleware(controller.crear));
-router.put('/reunionActual', asyncMiddleware(controller.actualizar));
+router.put('/reunionActual', controller.actualizar);
 
 export default router;
