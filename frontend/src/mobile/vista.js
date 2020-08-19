@@ -96,7 +96,7 @@ const Vista = ({
 
   const inQueueIcon = () => (faTimes);
 
-  const TalkButton = ({children, color = colors.primary, ...props}) => {
+  const MobileCallToActionButton = ({children, color = colors.primary, ...props}) => {
     return (
       <Button
         variant="outlined"
@@ -142,7 +142,7 @@ const Vista = ({
     if (isTalking) {
       microphone = (
         <MicrophoneContainer>
-          <TalkButton
+          <MobileCallToActionButton
             pressed={true}
             color="black"
             onClick={onWannaStopTalkClick}
@@ -151,13 +151,13 @@ const Vista = ({
             }
           >
             Dejar de hablar
-          </TalkButton>
+          </MobileCallToActionButton>
         </MicrophoneContainer>
       );
     } else if (wannaTalk) {
       microphone = (
         <MicrophoneContainer>
-          <TalkButton
+          <MobileCallToActionButton
             pressed={true}
             onClick={onWannaStopTalkClick}
             color="black"
@@ -170,12 +170,12 @@ const Vista = ({
             }
           >
             Desencolarse
-          </TalkButton>
+          </MobileCallToActionButton>
         </MicrophoneContainer>
       );
     } else {
       microphone = (
-        <TalkButton
+        <MobileCallToActionButton
           pressed={false}
           onClick={onWannaTalkClick}
           startIcon={
@@ -187,12 +187,12 @@ const Vista = ({
           }
         >
           Quiero hablar
-        </TalkButton>
+        </MobileCallToActionButton>
       );
     }
   } else {
     microphone = (
-      <TalkButton
+      <MobileCallToActionButton
         pressed={false}
         color="#ff3b3b8c"
         startIcon={
@@ -200,7 +200,7 @@ const Vista = ({
         }
       >
         Aun no
-      </TalkButton>
+      </MobileCallToActionButton>
     );
   }
 

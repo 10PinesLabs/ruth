@@ -38,7 +38,6 @@ export function TalkingReactions({dispatch, participant, usuario, tema}) {
 
     function onReaction(tipoReaccion) {
         return (tipoEvento) => {
-            console.log(tipoReaccion)
             dispatch(tipoEvento(tipoReaccion, usuario, participant.instanciaDeHabla, tema.id));
         }
     }
