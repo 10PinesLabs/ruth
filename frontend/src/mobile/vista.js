@@ -253,7 +253,7 @@ const Vista = ({
             usuario={usuario}
             interactive
             isParticipantTalking
-            dispatchEvent={dispatchEvent}
+            dispatch={dispatch}
             kickear={kickear}
             participant={participant}
             tema={tema}/>
