@@ -22,7 +22,9 @@ import {
   MicrophoneContainer,
   ReactionsContainer,
   SpeakerAreaContainer,
-  CantidadDeOradoresContainer
+  CantidadDeOradoresContainer,
+  TitleContainer,
+  TitleDecoration
 } from './vista.styled';
 import { oradorEventos } from '../store/oradores';
 import { CardInteractionsContainer } from '../components/InteractionsContainer.styled';
@@ -210,9 +212,14 @@ const Vista = ({
           <LogoLabel> Ruth </LogoLabel>
         </LogoHeader>
         <CardInteractionsContainer>
-          <SubjectTitle>
-            {showSkeleton ? <SkeletonLine/> : title}
-          </SubjectTitle>
+          <TitleContainer>
+            <TitleDecoration>TEMA</TitleDecoration>
+            <SubjectTitle>
+              {showSkeleton ? <SkeletonLine/> : title}
+            </SubjectTitle>
+            
+          </TitleContainer>
+          
           {showSkeleton
             ? <ReactionsContainer height={6}>
                 <ReactionSkeletonContainer><SkeletonCircle/></ReactionSkeletonContainer>
