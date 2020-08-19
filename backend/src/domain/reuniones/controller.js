@@ -27,10 +27,16 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
     return { ...(reunion.toJSON()), temas: temasNuevos.map((t) => t.toJSON()) };
   },
 
-  actualizar: async (req) => {
+  actualizar: async (req, res) => {
     const { abierta, temas } = req.body;
 
     const reunionAActualizar = await repoReuniones.findLastCreated();
+
+    if (reunionAActualizar.abierta === abierta) {
+      res.status(400).send();
+      return;
+    }
+    res.status(200).send();
     await reunionAActualizar.update({ abierta });
 
     if (!abierta) {
