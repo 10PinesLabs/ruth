@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import ParticipantCounter from './ParticipantCounter';
-import {CardContainer, CardInfoContainer, CardName, Cerrar,ParticipantDataReactableContainer, UserAvatar,} from './ParticipantsCard.styled';
+import {CardContainer, CardInfoContainer, CardName, Cerrar,ParticipantDataReactableContainer, UserAvatar, NoCardContainer,} from './ParticipantsCard.styled';
 import getGravatarUrlFor from '../api/gravatar';
 import {SkeletonBlock, SkeletonLine} from "../skeleton/Skeleton.styled";
 import {ModalDeConfirmacion} from "../tipos-vista-principal/Modal";
@@ -93,7 +93,7 @@ const ParticipantsCard = ({sePuedeReaccionar = false, dispatch, participant, isP
         }
 
     </CardContainer>
-  ) : <div style={{color:'gray'}}> Nadie esta hablando</div>);
+  ) : <NoCardContainer>Nadie esta hablando</NoCardContainer>);
 };
 
 export default ParticipantsCard;

@@ -64,3 +64,7 @@ export const Cerrar = styled.div`
   color:red;
 
 `;
+
+export const NoCardContainer = styled.div`
+  color:gray;
+`;
