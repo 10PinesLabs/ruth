@@ -116,7 +116,7 @@ export const SpeakerAreaContainer = styled.div`
     align-items: center;
 `;
 
-export const CantidadDeOradores = styled.div`
+export const CantidadDeOradoresContainer = styled.div`
     position:absolute;
     top:40%;
     left: -33%;

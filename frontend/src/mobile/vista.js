@@ -22,7 +22,7 @@ import {
   MicrophoneContainer,
   ReactionsContainer,
   SpeakerAreaContainer,
-  CantidadDeOradores
+  CantidadDeOradoresContainer
 } from './vista.styled';
 import { oradorEventos } from '../store/oradores';
 import { CardInteractionsContainer } from '../components/InteractionsContainer.styled';
@@ -32,6 +32,7 @@ import { reacciones } from './actions';
 import { faSlack } from '@fortawesome/free-brands-svg-icons';
 import { colors } from '../../src/styles/theme.js'
 import Button from '@material-ui/core/Button';
+import { CantidadDeOradores } from './CantidadDeOradores'
 
 const logoImage = 'https://res-4.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_'
   + '256,f_auto,q_auto:eco/wuhk5weer0fkhmh2oyhv';
@@ -143,7 +144,6 @@ const Vista = ({
       microphone = (
         <MicrophoneContainer>
           <MobileCallToActionButton
-            pressed={true}
             color="black"
             onClick={onWannaStopTalkClick}
             startIcon={
@@ -158,7 +158,6 @@ const Vista = ({
       microphone = (
         <MicrophoneContainer>
           <MobileCallToActionButton
-            pressed={true}
             onClick={onWannaStopTalkClick}
             color="black"
             startIcon={
@@ -176,7 +175,6 @@ const Vista = ({
     } else {
       microphone = (
         <MobileCallToActionButton
-          pressed={false}
           onClick={onWannaTalkClick}
           startIcon={
             <FontAwesomeIcon
@@ -193,7 +191,6 @@ const Vista = ({
   } else {
     microphone = (
       <MobileCallToActionButton
-        pressed={false}
         color="#ff3b3b8c"
         startIcon={
           <FontAwesomeIcon icon={faHandPaper} color={"#ff3b3b8c"} size={"2x"} />
@@ -230,21 +227,13 @@ const Vista = ({
       <ParticipantsContainer>
         <SpeakerAreaContainer>
           { queuedParticipants?.length>0 &&
-          <CantidadDeOradores>
-            {wannaTalk ? (
-              <>
-                <b>+{remainingParticipantsUpToUser-1}</b>
-                <br />
-                Delante <br/>tuyo
-              </>
-            ) : (
-              <>
-                <b>+{queuedParticipants?.length}</b>
-                <br />
-                Encolados
-              </>
-            )}
-          </CantidadDeOradores>
+          <CantidadDeOradoresContainer>
+            <CantidadDeOradores
+             wannaTalk={wannaTalk}
+             queuedParticipants={queuedParticipants}
+             remainingParticipantsUpToUser={remainingParticipantsUpToUser}
+             />
+          </CantidadDeOradoresContainer>
             }
           <ParticipantsCard
             sePuedeReaccionar={
