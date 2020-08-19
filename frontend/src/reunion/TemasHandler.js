@@ -30,7 +30,7 @@ class TemasHandler extends React.Component {
   render() {
     return <VistaTemas
       usuario={this.props.usuario}
-      temas={this.props.temas}
+      temas={this.props.reunion.temas}
       actualizarTema={this.requestActualizarTema}
       cerrarReunion={this.cerrarReunion}
     />;
@@ -39,7 +39,6 @@ class TemasHandler extends React.Component {
 
 
 const mapStateToProps = (state) => ({
-  temas: state.reunion.temas,
   reunion: state.reunion,
 });
 export default connect(mapStateToProps)(TemasHandler);
