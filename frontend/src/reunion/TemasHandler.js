@@ -13,6 +13,12 @@ class TemasHandler extends React.Component {
   };
 
   cerrarReunion = (temas) => {
+
+    if(!this.props.reunion.abierta){
+      toast.error('La reunion ya fue finalizada')
+      return
+    }
+
     backend.cerrarReunion(temas)
       .then(() => {
         this.props.dispatch(reunionEventos.finalizarReunionActual());
@@ -34,5 +40,6 @@ class TemasHandler extends React.Component {
 
 const mapStateToProps = (state) => ({
   temas: state.reunion.temas,
+  reunion: state.reunion,
 });
 export default connect(mapStateToProps)(TemasHandler);
