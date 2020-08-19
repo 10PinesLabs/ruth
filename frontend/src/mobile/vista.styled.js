@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { colors } from '../styles/theme';
 
 export const MobileUsableArea = styled.div`
     width: 100%;
@@ -109,9 +108,17 @@ export const ReactionsContainer = styled.div`
 `;
 
 export const SpeakerAreaContainer = styled.div`
-    width: 100%;
     height: 100%;
     display: flex;
+    position:relative;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
 `;
+
+export const CantidadDeOradores = styled.div`
+    position:absolute;
+    top:40%;
+    left: -33%;
+    color:gray;
+`

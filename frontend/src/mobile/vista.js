@@ -21,7 +21,8 @@ import {
   TopSectionContainer,
   MicrophoneContainer,
   ReactionsContainer,
-  SpeakerAreaContainer
+  SpeakerAreaContainer,
+  CantidadDeOradores
 } from './vista.styled';
 import { oradorEventos } from '../store/oradores';
 import { CardInteractionsContainer } from '../components/InteractionsContainer.styled';
@@ -66,7 +67,8 @@ const Vista = ({
   redondear,
   wannaTalk,
   isTalking,
-  tema
+  tema,
+  queuedParticipants
 }) => {
   const handleReaction = (nombre, estaReaccionado) => {
     const evento = estaReaccionado ? reaccionEventos.desreaccionar(usuario, nombre, tema.id) :  reaccionEventos.reaccionar(usuario, nombre, tema.id);
@@ -167,7 +169,7 @@ const Vista = ({
               />
             }
           >
-            Desencolarse ({remainingParticipantsUpToUser})
+            Desencolarse
           </TalkButton>
         </MicrophoneContainer>
       );
@@ -227,8 +229,27 @@ const Vista = ({
       </TopSectionContainer>
       <ParticipantsContainer>
         <SpeakerAreaContainer>
+          { queuedParticipants?.length>0 &&
+          <CantidadDeOradores>
+            {wannaTalk ? (
+              <>
+                <b>+{remainingParticipantsUpToUser-1}</b>
+                <br />
+                Delante <br/>tuyo
+              </>
+            ) : (
+              <>
+                <b>+{queuedParticipants?.length}</b>
+                <br />
+                Encolados
+              </>
+            )}
+          </CantidadDeOradores>
+            }
           <ParticipantsCard
-            sePuedeReaccionar={process.env.REACT_APP_MINUTA_PERMITIDA === 'true'}
+            sePuedeReaccionar={
+              process.env.REACT_APP_MINUTA_PERMITIDA === "true"
+            }
             usuario={usuario}
             interactive
             isParticipantTalking

@@ -21,7 +21,7 @@ export const CardInfoContainer = styled.div`
   padding: 2px 0px;
   justify-content: space-between;
   width: 100%;
-  font-size:1.3em;
+  font-size: 1.06em;
   background-color: #ddddddab;
 `;
 

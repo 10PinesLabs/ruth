@@ -6,7 +6,7 @@ export const StyledClockContainer = styled.div(({ isInteractive }) => `
   font-family: ${font.h1};
   font-size: 1em  ;
   width: 60px;
-  text-align: rigth;
+  text-align: center;
   margin-right: 2px;
   font-weight: bold;
 `);

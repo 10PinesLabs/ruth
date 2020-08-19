@@ -92,7 +92,7 @@ const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant
         }
 
     </CardContainer>
-  ) : <div> Nadie esta hablando</div>);
+  ) : <div style={{color:'gray'}}> Nadie esta hablando</div>);
 };
 
 export default ParticipantsCard;
