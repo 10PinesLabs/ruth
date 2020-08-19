@@ -125,6 +125,6 @@ export const SpeakerAreaContainer = styled.div`
 export const CantidadDeOradoresContainer = styled.div`
     position:absolute;
     top:40%;
-    lleft: -43%;
+    left: -36%;
     color:gray;
 `
