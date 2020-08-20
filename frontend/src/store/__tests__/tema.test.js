@@ -15,13 +15,14 @@ describe(`#tema reducer`, () => {
     return {...evento, fecha}
   }
 
+  const idDeTema = 4;
+
   it("con un evento desconocido, no hace nada", () => {
     applyEvento({ type: "UNKNOWN" });
     expect(state).toEqual(INITIAL_STATE);
   });
 
   it("cuando el evento es de tipo empezar tema, se le pone la fecha del evento como inicio al tema al tema", () => {
-    let idDeTema = 4;
     let fechaDeGeneracionDeEvento = new Date();
     applyEvento(eventoConFecha(temaEventos.empezarTema(idDeTema),fechaDeGeneracionDeEvento));
 
@@ -31,7 +32,6 @@ describe(`#tema reducer`, () => {
   });
 
   it("cuando el evento es de tipo terminar tema y no tiene fecha de inicio no hace nada", () => {
-    let idDeTema = 4;
     let fechaDeGeneracionDeEvento = new Date();
 
     applyEvento(eventoConFecha(temaEventos.terminarTema(idDeTema), fechaDeGeneracionDeEvento));
@@ -41,12 +41,11 @@ describe(`#tema reducer`, () => {
   });
 
   it("cuando el evento es de tipo terminar tema se le pone la fecha del evento a fin", () => {
-    let idDeTema = 4;
     let fechaDeInicio = new Date();
     let fechaDeFin = new  Date();
 
-    applyEvento(eventoConFecha(temaEventos.empezarTema(4), fechaDeInicio));
-    applyEvento(eventoConFecha(temaEventos.terminarTema(4), fechaDeFin));
+    applyEvento(eventoConFecha(temaEventos.empezarTema(idDeTema), fechaDeInicio));
+    applyEvento(eventoConFecha(temaEventos.terminarTema(idDeTema), fechaDeFin));
 
     expect(state.inicio).toEqual(fechaDeInicio.toISOString());
     expect(state.fin).toEqual(fechaDeFin.toISOString());
@@ -54,7 +53,6 @@ describe(`#tema reducer`, () => {
   });
 
   it("cuando el evento es de tipo reabrir tema se le quita el fin y se le agrega un tiempo inactivo igual a la cantidad de tiempo transcurrido entre el cierre del tema y la nueva apertura", ()=> {
-    let idDeTema = 4;
     let fechaDeInicio = new Date(2020,10,2,10,40);
     let fechaDeFin = new Date(2020,10,2,10,50);
     let fechaDeReapertura = new Date(2020,10,2,11);
@@ -70,7 +68,6 @@ describe(`#tema reducer`, () => {
   })
 
   it("cuando se reabre multiples veces el tema el tiempo inactivo es igual a la suma de todos los tiempos inactivos", ()=> {
-    let idDeTema = 4;
     let fechaDeInicio = new Date(2020,10,2,10,40);
     let fechaDeFin = new Date(2020,10,2,10,50);
     let fechaDeReapertura = new Date(2020,10,2,11);
@@ -94,7 +91,6 @@ describe(`#tema reducer`, () => {
   })
 
   it("al intentar reabrir un tema que aun no se inicio no se hace nada", ()=> {
-    let idDeTema = 4;
     let fechaDeReapertura = new Date();
   
     applyEvento(eventoConFecha(temaEventos.reabrirTema(idDeTema), fechaDeReapertura))
@@ -105,7 +101,6 @@ describe(`#tema reducer`, () => {
   })
 
   it("al intentar reabrir un tema que aun sigue activo no se hace nada", ()=> {
-    let idDeTema = 4;
     let fechaDeInicio = new Date(2020,10,2,10,40);
     let fechaDeReapertura = new Date();
   

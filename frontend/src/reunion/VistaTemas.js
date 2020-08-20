@@ -30,7 +30,8 @@ const VistaTemas = ({dispatch, cerrarReunion, temas, usuario}) => {
 
   const empezarTema = () => {
     if (temaSeleccionado.inicio !== null) {
-      return toast.error('No se puede iniciar un tema que ya fue iniciado');
+      toast.error('No se puede iniciar un tema que ya fue iniciado');
+      return 
     }
     if(existeUnTemaEmpezado()){
       return toast.error('Ya hay otro tema en curso');
