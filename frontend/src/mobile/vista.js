@@ -194,6 +194,7 @@ const Vista = ({
     microphone = (
       <MobileCallToActionButton
         color="#ff3b3b8c"
+        disabled
         startIcon={
           <FontAwesomeIcon icon={faHandPaper} color={"#ff3b3b8c"} size={"2x"} />
         }
