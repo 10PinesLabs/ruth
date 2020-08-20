@@ -34,7 +34,8 @@ const VistaTemas = ({dispatch, cerrarReunion, temas, usuario}) => {
       return 
     }
     if(existeUnTemaEmpezado()){
-      return toast.error('Ya hay otro tema en curso');
+      toast.error('Ya hay otro tema en curso');
+      return
     }
     dispatch(temaEventos.empezarTema(temaSeleccionado.id))
   };
@@ -54,7 +55,8 @@ const VistaTemas = ({dispatch, cerrarReunion, temas, usuario}) => {
 
   const reabrirTema = () => {
     if(existeUnTemaEmpezado()){
-      return toast.error('Ya hay otro tema en curso');
+      toast.error('Ya hay otro tema en curso');
+      return
     }
     dispatch(temaEventos.reabrirTema(temaSeleccionado.id))
     toast.success('Tema reabierto');
