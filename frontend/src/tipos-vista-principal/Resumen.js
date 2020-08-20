@@ -17,7 +17,7 @@ const tiposDeTema = {
   'proponerPinos': DescripcionPropuestaPinos,
 };
 
-const Resumen = ({tema, retrocederTema, empezarTema, avanzarTema, temaActivo, terminarTema}) => {
+const Resumen = ({tema, retrocederTema, empezarTema, avanzarTema, temaActivo, terminarTema, reabrirTema}) => {
   const props = useSpring({opacity: 1, from: {opacity: 0}});
   const DescripcionDelTema = tiposDeTema[tema.tipo];
   const [open, setOpen] = useState(false);
@@ -37,8 +37,8 @@ const Resumen = ({tema, retrocederTema, empezarTema, avanzarTema, temaActivo, te
           <Button onClick={empezarTema}>Empezar Tema</Button>}
           {tema.inicio &&
           <Zoom in style={{transitionDelay: '100ms'}}>
-            <SecondaryButton disabled={!temaActivo} onClick={() => setOpen(true)}>
-              Terminar Tema
+            <SecondaryButton onClick={() => temaActivo ? setOpen(true) : reabrirTema()}>
+              { temaActivo ? 'Terminar Tema' : 'Reabrir tema' }
             </SecondaryButton>
           </Zoom>
           }
