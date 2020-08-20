@@ -1,22 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import ParticipantCounter from './ParticipantCounter';
-import {CardContainer, CardInfoContainer, CardName, Cerrar,ParticipantDataReactableContainer, UserAvatar,} from './ParticipantsCard.styled';
+import {CardContainer, CardInfoContainer, CardName, Cerrar,ParticipantDataReactableContainer, UserAvatar, NoCardContainer,} from './ParticipantsCard.styled';
 import getGravatarUrlFor from '../api/gravatar';
 import {SkeletonBlock, SkeletonLine} from "../skeleton/Skeleton.styled";
 import {ModalDeConfirmacion} from "../tipos-vista-principal/Modal";
 import {TalkingReactions} from "./TalkingReactions";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEject } from '@fortawesome/free-solid-svg-icons'
 
 const ParticipantData = (props) => {
   return <>
-    <UserAvatar isTalking={props.talking} avatar={getGravatarUrlFor(props.usuario.email)}/>
+    <UserAvatar isTalking={props.talking} avatar={getGravatarUrlFor(props.usuario.email)} size={props.size} >
     <CardInfoContainer>
       <CardName isInteractive={props.interactive}> {props.usuario.nombre} </CardName>
       <ParticipantCounter isInteractive={props.interactive} estadoOrador={props.estadoOrador}/>
     </CardInfoContainer>
+    </UserAvatar>
   </>;
 }
 
-const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant, isParticipantTalking, interactive, kickear, finTema, usuario, tema}) => {
+const ParticipantsCard = ({sePuedeReaccionar = false, dispatch, participant, isParticipantTalking, interactive, kickear, finTema, usuario, size, tema}) => {
   const estadoOrador = () => {
     if (estaEncolado()) {
       return {detalle: 'encolado'};
@@ -52,8 +55,9 @@ const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant
         sePuedeReaccionar={sePuedeReaccionar}
         isInteractive={interactive}
         isTalking={isParticipantTalking}
+        size={size}
       >
-        {interactive && <Cerrar onClick={() => setOradorAKickear(participant.usuario)}/>}
+        {interactive && <Cerrar onClick={() => setOradorAKickear(participant.usuario)}><FontAwesomeIcon icon={faEject}/></Cerrar>}
         <ModalDeConfirmacion
           title={`¿Estás seguro que querés kickear a ${oradorAKickear && (oradorAKickear.nombre || '')}?`}
           open={Boolean(oradorAKickear)}
@@ -63,18 +67,20 @@ const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant
 
         {(sePuedeReaccionar) ?
           <>
-            <TalkingReactions
-              usuario={usuario}
-              dispatchEvent={dispatchEvent}
-              participant={participant}
-              tema={tema}
-            />
             <ParticipantDataReactableContainer>
               <ParticipantData
                 talking={isParticipantTalking}
                 usuario={participant.usuario}
                 interactive={interactive}
-                estadoOrador={estadoOrador()}/>
+                estadoOrador={estadoOrador()}
+                size={size}
+                />
+              <TalkingReactions
+              usuario={usuario}
+              dispatch={dispatch}
+              participant={participant}
+              tema={tema}/>
+              
             </ParticipantDataReactableContainer>
           </> :
           <ParticipantData
@@ -82,18 +88,19 @@ const ParticipantsCard = ({sePuedeReaccionar = false, dispatchEvent, participant
             usuario={participant.usuario}
             interactive={interactive}
             estadoOrador={estadoOrador()}
+            size={size}
           />
         }
 
     </CardContainer>
-  ) : <div> Nadie esta hablando</div>);
+  ) : <NoCardContainer>Nadie esta hablando</NoCardContainer>);
 };
 
 export default ParticipantsCard;
 
-const SkeletonComponent = ({interactive, isParticipantTalking}) =>
-  <CardContainer isInteractive={interactive} isTalking={isParticipantTalking}>
-    <UserAvatar><SkeletonBlock/></UserAvatar>
+const SkeletonComponent = ({interactive, isParticipantTalking, size}) =>
+  <CardContainer isInteractive={interactive} isTalking={isParticipantTalking} size={size}>
+    <UserAvatar size={size}><SkeletonBlock/></UserAvatar>
     <CardInfoContainer style={{display: 'flex', alignItems: 'space-between'}}>
       <SkeletonLine/>
       <SkeletonLine/>

@@ -1,4 +1,4 @@
-import Grid from "@material-ui/core/Grid";
+import  Grid from "@material-ui/core/Grid";
 import {ReactionButton} from "../mobile/ReactionButton";
 import {faSync, faThumbsDown, faThumbsUp} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
@@ -19,13 +19,13 @@ class TalkingReactionButton extends React.Component {
     };
 
     render() {
-        return <Grid item xs={4} justify="center" alignItems="center" style={this.estiloGrilla}>
+        return (
             <ReactionButton
                 activeBackground={'#FFD152'}
-                isBig
+                isBig={true}
                 isActive={this.props.active} icon={this.props.icon}
                 onClick={this.handleReaction}/>
-        </Grid>;
+        )
     }
 
     handleReaction = () => {
@@ -34,11 +34,11 @@ class TalkingReactionButton extends React.Component {
     }
 }
 
-export function TalkingReactions({dispatchEvent, participant, usuario, tema}) {
+export function TalkingReactions({dispatch, participant, usuario, tema}) {
 
     function onReaction(tipoReaccion) {
         return (tipoEvento) => {
-            dispatchEvent(tipoEvento(tipoReaccion, usuario, participant.instanciaDeHabla, tema.id));
+            dispatch(tipoEvento(tipoReaccion, usuario, participant.instanciaDeHabla, tema.id));
         }
     }
 
@@ -48,8 +48,15 @@ export function TalkingReactions({dispatchEvent, participant, usuario, tema}) {
         )
     }
 
-    return <Grid container direction="column" spacing={3}
-                 style={{width: "30%", alignItems: "center", alignSelf: "flex-start"}}>
+    return (
+      <Grid
+        container
+        direction="row"
+        style={{
+          justifyContent: "space-evenly",
+          padding: "13px 0",
+        }}
+      >
         <TalkingReactionButton
             icon={faThumbsUp}
             active={didReact(TiposReaccionAlHablar.THUMBS_UP)}
@@ -65,5 +72,6 @@ export function TalkingReactions({dispatchEvent, participant, usuario, tema}) {
             active={didReact(TiposReaccionAlHablar.REDONDEAR)}
             onClick={onReaction(TiposReaccionAlHablar.REDONDEAR)}
         />
-    </Grid>;
+    </Grid>
+    );
 }

@@ -18,5 +18,6 @@ export const Titulo = styled.h1`
   text-overflow:ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  margin-left:1.4em;
 `;
 
