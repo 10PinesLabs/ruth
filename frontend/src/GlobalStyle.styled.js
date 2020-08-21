@@ -18,11 +18,11 @@ html {
   }
 
   @media (min-width: ${sizeBreakpoint.xlarge}) {
-    font-size: calc(${font.baseSize} *1.4);
+    font-size: calc(${font.baseSize} *2);
   }
 
   @media (min-width: ${sizeBreakpoint.xxlarge}) {
-    font-size: calc(${font.baseSize} *1.6);
+    font-size: calc(${font.baseSize} *2.3);
   }
   
   scroll-behavior: smooth;
