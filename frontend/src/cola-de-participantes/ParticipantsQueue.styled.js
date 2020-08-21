@@ -30,6 +30,6 @@ export const CenterCard = styled.div`
   grid-area: center;
   max-height: 12em;
   padding: 0 2rem;
-  height: 95%;
+  height: 150%;
 `;
 
