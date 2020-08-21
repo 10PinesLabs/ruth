@@ -5,9 +5,9 @@ export const CardContainer = styled.div(({size}) => `
   box-shadow: 5px 5px 10px #828282, -5px -5px 10px #ffffff;
   border-radius: 7px;
   position:relative;
-  width: ${ size === "small" ? '13em' : '14.5em'};
-  margin-top: 0.7em;
-`);
+  width: ${ size === "small" ? '10em' : '14.5em'};
+  height:100%;
+  `);
 
 export const ParticipantDataReactableContainer = styled.div(() => `
     width: 100%;  `
@@ -16,7 +16,10 @@ export const ParticipantDataReactableContainer = styled.div(() => `
 export const CardInfoContainer = styled.div`
   display: flex;
   flex-direction: row;
-  position:relative;
+  position: absolute;
+  float: left;
+  left: 0;
+  bottom: 0;
   align-items: center;
   padding: 2px 0px;
   justify-content: space-between;
@@ -25,16 +28,23 @@ export const CardInfoContainer = styled.div`
   background-color: #ddddddab;
 `;
 
-export const UserAvatar = styled.div(({size, avatar}) => `
-  background-image: url(${avatar});
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  min-height: ${ size==='small' ? '13em' : '17.2em' };
+export const UserAvatar = styled.div(({size}) => `
   border-radius: 7px 7px 0 0;
   display: flex;
+  height:100%;
+  width:100%;
   align-items: flex-end;
+  display: grid;
+  position: relative;
+  min-height:${ size === "small" ? '10em' : '14.5em'};
 `);
+
+export const Avatar = styled.img`
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+`
 
 export const CardName = styled.span`
   text-align: left;
@@ -57,6 +67,7 @@ export const Cerrar = styled.div`
   position:absolute;
   right:0em;
   top: 0em;
+  z-index: 1;
   border-radius: 0 7px 0 10px;
   opacity: 0.9;
   background: rgba(0, 0, 0, 0) linear-gradient(145deg, rgb(230, 230, 230), rgb(200, 200, 200)) repeat scroll 0% 0%;

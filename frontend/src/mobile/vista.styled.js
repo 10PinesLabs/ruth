@@ -57,6 +57,7 @@ export const ActionContainerStyle = styled.div`
     align-items: center;
     justify-content: center;
     padding-bottom: 2em;
+    margin-top:auto;
     width: 100%;
 `;
 
@@ -107,19 +108,20 @@ export const ReactionsContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 45%;
+    width: 100%;
+    max-width: 600px;
     min-width: 200px;
     justify-content: space-evenly;
     height: ${(props) => props.height}rem;
 `;
 
 export const SpeakerAreaContainer = styled.div`
-    height: 100%;
     display: flex;
     position:relative;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    margin-top: auto;
 `;
 
 export const CantidadDeOradoresContainer = styled.div`

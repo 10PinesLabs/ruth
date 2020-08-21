@@ -3,6 +3,7 @@ import {ReactionButton} from "../mobile/ReactionButton";
 import {faSync, faThumbsDown, faThumbsUp} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import { oradorEventos} from "../store/oradores";
+import {SkeletonCircle, ReactionSkeletonContainer} from "../skeleton/Skeleton.styled";
 
 export const TiposReaccionAlHablar = {
     THUMBS_UP: "thumbsUp",
@@ -34,7 +35,7 @@ class TalkingReactionButton extends React.Component {
     }
 }
 
-export function TalkingReactions({dispatch, participant, usuario, tema}) {
+export function TalkingReactions({dispatch, participant, usuario, tema, skeleton}) {
 
     function onReaction(tipoReaccion) {
         return (tipoEvento) => {
@@ -57,21 +58,31 @@ export function TalkingReactions({dispatch, participant, usuario, tema}) {
           padding: "13px 0",
         }}
       >
-        <TalkingReactionButton
-            icon={faThumbsUp}
-            active={didReact(TiposReaccionAlHablar.THUMBS_UP)}
-            onClick={onReaction(TiposReaccionAlHablar.THUMBS_UP)}
-        />
-        <TalkingReactionButton
-            icon={faThumbsDown}
-            active={didReact(TiposReaccionAlHablar.THUMBS_DOWN)}
-            onClick={onReaction(TiposReaccionAlHablar.THUMBS_DOWN)}
-        />
-        <TalkingReactionButton
-            icon={faSync}
-            active={didReact(TiposReaccionAlHablar.REDONDEAR)}
-            onClick={onReaction(TiposReaccionAlHablar.REDONDEAR)}
-        />
+        { skeleton ? 
+        <>
+            <ReactionSkeletonContainer><SkeletonCircle/></ReactionSkeletonContainer>
+            <ReactionSkeletonContainer><SkeletonCircle/></ReactionSkeletonContainer>
+            <ReactionSkeletonContainer><SkeletonCircle/></ReactionSkeletonContainer>
+        </>
+        :
+        <>
+            <TalkingReactionButton
+                icon={faThumbsUp}
+                active={didReact(TiposReaccionAlHablar.THUMBS_UP)}
+                onClick={onReaction(TiposReaccionAlHablar.THUMBS_UP)}
+            />
+            <TalkingReactionButton
+                icon={faThumbsDown}
+                active={didReact(TiposReaccionAlHablar.THUMBS_DOWN)}
+                onClick={onReaction(TiposReaccionAlHablar.THUMBS_DOWN)}
+            />
+            <TalkingReactionButton
+                icon={faSync}
+                active={didReact(TiposReaccionAlHablar.REDONDEAR)}
+                onClick={onReaction(TiposReaccionAlHablar.REDONDEAR)}
+            />
+        </>
+        }
     </Grid>
     );
 }
