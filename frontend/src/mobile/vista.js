@@ -29,7 +29,7 @@ import {
 import { oradorEventos } from '../store/oradores';
 import { CardInteractionsContainer } from '../components/InteractionsContainer.styled';
 import { reaccionEventos } from '../store/reacciones';
-import { SkeletonCircle, SkeletonLine, ReactionSkeletonContainer, SkeletonBlock } from '../skeleton/Skeleton.styled';
+import { SkeletonCircle, SkeletonLine, ReactionSkeletonContainer, SkeletonBlock, MobileCallToActionSkeletonContainer } from '../skeleton/Skeleton.styled';
 import { reacciones } from './actions';
 import { faSlack } from '@fortawesome/free-brands-svg-icons';
 import { colors } from '../../src/styles/theme.js'
@@ -256,7 +256,13 @@ const Vista = ({
             tema={tema}/>
           </SpeakerAreaContainer>
         <ActionContainerStyle>
-          {showSkeleton ? <SkeletonBlock/>: microphone}
+          {showSkeleton ? 
+            <MobileCallToActionSkeletonContainer>
+              <SkeletonBlock/>
+            </MobileCallToActionSkeletonContainer>
+            : 
+            microphone
+          }
         </ActionContainerStyle>
       </ParticipantsContainer>
     </MobileUsableArea>
