@@ -18,7 +18,7 @@ html {
   }
 
   @media (min-width: ${sizeBreakpoint.xlarge}) {
-    font-size: calc(${font.baseSize} *1.6);
+    font-size: calc(${font.baseSize} *1.4);
   }
 
   @media (min-width: ${sizeBreakpoint.xxlarge}) {

@@ -6,6 +6,9 @@ export const QueueContainer = styled.div`
   grid-template-columns: 35vw auto 35vw;
   justify-content:center;
   align-items: center;
+  @media (min-width: 1800px) {
+    font-size: 1.2em;
+  }
 `;
 
 
