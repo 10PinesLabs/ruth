@@ -22,7 +22,7 @@ html {
   }
 
   @media (min-width: ${sizeBreakpoint.xxlarge}) {
-    font-size: calc(${font.baseSize} *1.6);
+    font-size: calc(${font.baseSize} *1.5);
   }
   
   scroll-behavior: smooth;
