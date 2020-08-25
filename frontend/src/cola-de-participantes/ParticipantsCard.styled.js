@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 
-export const CardContainer = styled.div(({size}) => `
+export const CardContainer = styled.div(({type}) => `
   background: linear-gradient(145deg, #c7c7c7, #ececec);
   box-shadow: 5px 5px 10px #828282, -5px -5px 10px #ffffff;
   border-radius: 7px;
   position:relative;
-  width: ${ size === "small" ? '10em' : '14.5em'};
+  width: ${ type === "debate" ? '10em' : '14.5em'};
+  margin: 0 5px;
   height:100%;
   `);
 
@@ -28,7 +29,7 @@ export const CardInfoContainer = styled.div`
   background-color: #ddddddab;
 `;
 
-export const UserAvatar = styled.div(({size}) => `
+export const UserAvatar = styled.div(({type}) => `
   border-radius: 7px 7px 0 0;
   display: flex;
   height:100%;
@@ -36,7 +37,7 @@ export const UserAvatar = styled.div(({size}) => `
   align-items: flex-end;
   display: grid;
   position: relative;
-  min-height:${ size === "small" ? '10em' : '14.5em'};
+  min-height:${ type === "debate" ? '10em' : '14.5em'};
 `);
 
 export const Avatar = styled.img`
