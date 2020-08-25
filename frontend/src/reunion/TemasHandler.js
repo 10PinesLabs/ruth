@@ -3,7 +3,6 @@ import { toast } from 'react-toastify';
 import { connect } from 'react-redux';
 import backend from '../api/backend';
 import VistaTemas from './VistaTemas';
-import { temaEventos } from '../store/tema'
 import { reunionEventos } from '../store/reunion';
 
 class TemasHandler extends React.Component {
@@ -26,7 +25,7 @@ class TemasHandler extends React.Component {
   render() {
     return <VistaTemas
       usuario={this.props.usuario}
-      temas={this.props.temas}
+      temas={this.props.reunion.temas}
       dispatch={this.props.dispatch}
       cerrarReunion={this.cerrarReunion}
     />;
