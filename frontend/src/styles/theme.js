@@ -43,7 +43,7 @@ export const sizeBreakpoint = {
   small: '768px',
   medium: '1024px',
   large: '1366px',
-  xlarge: '1920px',
+  xlarge: '1800px',
   xxlarge: '2560px',
 };
 
