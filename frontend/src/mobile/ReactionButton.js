@@ -13,7 +13,6 @@ export class ReactionButton extends React.Component {
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
-    margin: '0 13px',
     justifyContent: 'center',
     opacity: this.props.isDisabled ? '0.5' : (this.props.isActive? '1' : '0.7'),
     background: this.getBackgroundColor(),

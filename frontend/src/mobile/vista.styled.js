@@ -131,3 +131,7 @@ export const CantidadDeOradoresContainer = styled.div`
     font-size: 0.9em;
     color:gray;
 `
+
+export const TemaReactionButtonContainer = styled.div`
+    margin: 0 13px;
+`

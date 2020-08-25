@@ -24,7 +24,8 @@ import {
   SpeakerAreaContainer,
   CantidadDeOradoresContainer,
   TitleContainer,
-  TitleDecoration
+  TitleDecoration,
+  TemaReactionButtonContainer
 } from './vista.styled';
 import { oradorEventos } from '../store/oradores';
 import { CardInteractionsContainer } from '../components/InteractionsContainer.styled';
@@ -116,24 +117,32 @@ const Vista = ({
   if (temaEmpezado) {
     botonesDeReaccion = (
       <ReactionsContainer height={6}>
-        <ReactionButton
-          isBig isActive={thumbsUp}
-          isDisabled={thumbsDown} icon={faThumbsUp}
-          activeBackground={colors.thumbsUp}
-          onClick={() => handleReaction(reacciones.THUMBS_UP, thumbsUp)}/>
-        <ReactionButton
-          isBig isActive={thumbsDown}
-          isDisabled={thumbsUp} icon={faThumbsDown}
-          activeBackground={colors.thumbsDown}
-          onClick={() => handleReaction(reacciones.THUMBS_DOWN, thumbsDown)}/>
-        <ReactionButton
-          activeBackground={colors.slack}
-          isBig isActive={slack} icon={faSlack}
-          onClick={() => handleReaction(reacciones.SLACK, slack)}/>
-        <ReactionButton
-          isBig isActive={redondear} icon={faSync}
-          activeBackground={colors.roundUp}
-          onClick={() => handleReaction(reacciones.REDONDEAR, redondear)}/>
+        <TemaReactionButtonContainer>
+          <ReactionButton
+            isBig isActive={thumbsUp}
+            isDisabled={thumbsDown} icon={faThumbsUp}
+            activeBackground={colors.thumbsUp}
+            onClick={() => handleReaction(reacciones.THUMBS_UP, thumbsUp)}/>
+        </TemaReactionButtonContainer>
+        <TemaReactionButtonContainer>
+          <ReactionButton
+            isBig isActive={thumbsDown}
+            isDisabled={thumbsUp} icon={faThumbsDown}
+            activeBackground={colors.thumbsDown}
+            onClick={() => handleReaction(reacciones.THUMBS_DOWN, thumbsDown)}/>
+        </TemaReactionButtonContainer>
+        <TemaReactionButtonContainer>
+          <ReactionButton
+            activeBackground={colors.slack}
+            isBig isActive={slack} icon={faSlack}
+            onClick={() => handleReaction(reacciones.SLACK, slack)}/>
+        </TemaReactionButtonContainer>
+        <TemaReactionButtonContainer>
+          <ReactionButton
+            isBig isActive={redondear} icon={faSync}
+            activeBackground={colors.roundUp}
+            onClick={() => handleReaction(reacciones.REDONDEAR, redondear)}/>
+        </TemaReactionButtonContainer>
       </ReactionsContainer>
     );
   } else {
@@ -223,10 +232,26 @@ const Vista = ({
           
           {showSkeleton
             ? <ReactionsContainer height={6}>
-                <ReactionSkeletonContainer><SkeletonCircle/></ReactionSkeletonContainer>
-                <ReactionSkeletonContainer><SkeletonCircle/></ReactionSkeletonContainer>
-                <ReactionSkeletonContainer><SkeletonCircle/></ReactionSkeletonContainer>
-                <ReactionSkeletonContainer><SkeletonCircle/></ReactionSkeletonContainer>
+                <TemaReactionButtonContainer>
+                  <ReactionSkeletonContainer>
+                    <SkeletonCircle/>
+                  </ReactionSkeletonContainer>
+                </TemaReactionButtonContainer>
+                <TemaReactionButtonContainer>
+                  <ReactionSkeletonContainer>
+                    <SkeletonCircle/>
+                  </ReactionSkeletonContainer>
+                </TemaReactionButtonContainer>
+                <TemaReactionButtonContainer>
+                  <ReactionSkeletonContainer>
+                    <SkeletonCircle/>
+                  </ReactionSkeletonContainer>
+                </TemaReactionButtonContainer>
+                <TemaReactionButtonContainer>
+                  <ReactionSkeletonContainer>
+                    <SkeletonCircle/>
+                  </ReactionSkeletonContainer>
+                </TemaReactionButtonContainer>
             </ReactionsContainer>
             : botonesDeReaccion
           }
