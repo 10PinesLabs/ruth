@@ -1,7 +1,7 @@
 {
   "name": "ruth",
   "version": "1.0.0",
-  "description": "Presentacionse roots",
+  "description": "Gestión de la reunión de roots",
   "main": "index.js",
   "scripts": {
     "start": "cd backend/build && node index.js",

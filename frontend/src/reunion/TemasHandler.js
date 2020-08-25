@@ -8,10 +8,6 @@ import { reunionEventos } from '../store/reunion';
 
 class TemasHandler extends React.Component {
 
-  requestActualizarTema = (datosTema) => {
-    this.props.dispatch( datosTema.fin ? temaEventos.terminarTema(datosTema.id)  : temaEventos.empezarTema(datosTema.id));
-  };
-
   cerrarReunion = (temas) => {
 
     if(!this.props.reunion.abierta){
@@ -30,8 +26,8 @@ class TemasHandler extends React.Component {
   render() {
     return <VistaTemas
       usuario={this.props.usuario}
-      temas={this.props.reunion.temas}
-      actualizarTema={this.requestActualizarTema}
+      temas={this.props.temas}
+      dispatch={this.props.dispatch}
       cerrarReunion={this.cerrarReunion}
     />;
   }
