@@ -8,10 +8,6 @@ import { reunionEventos } from '../store/reunion';
 
 class TemasHandler extends React.Component {
 
-  requestActualizarTema = (datosTema) => {
-    this.props.dispatch( datosTema.fin ? temaEventos.terminarTema(datosTema.id)  : temaEventos.empezarTema(datosTema.id));
-  };
-
   cerrarReunion = (temas) => {
     backend.cerrarReunion(temas)
       .then(() => {
