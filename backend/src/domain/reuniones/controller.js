@@ -33,11 +33,12 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
     const reunionAActualizar = await repoReuniones.findLastCreated();
 
     if (reunionAActualizar.abierta === abierta) {
-      res.status(400).send();
+      res.sendStatus(400);
       return;
     }
-    res.status(200).send();
+
     await reunionAActualizar.update({ abierta });
+    res.sendStatus(200);
 
     if (!abierta) {
       notificador.notificarOwnersDeActionItemsDeReunion(temas);
