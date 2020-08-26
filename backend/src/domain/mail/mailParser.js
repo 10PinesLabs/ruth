@@ -49,7 +49,13 @@ const componerMailResumen = (reunion, temas, fecha) => {
       <p>Temas:</p> 
       <ul> 
         <% temas.forEach((tema) => { %>
-            <li> <%= tema.titulo %> </li>
+         <li> 
+          <% if(tema.inicio){ %>
+              <b><%= tema.titulo %></b>
+            <% } else{ %>  
+              <%= tema.titulo %>
+          <% } %>
+          </li>
         <% }) %> 
       </ul>
       <% temasAListar.forEach((tema) => { %>

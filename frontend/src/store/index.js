@@ -1,6 +1,7 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import produce, { setAutoFreeze } from 'immer';
 import { reunionReducer } from "./reunion";
+import { toast } from 'react-toastify';
 import { createEvent } from './evento';
 
 setAutoFreeze(false);
@@ -87,8 +88,17 @@ produce(state, (draft) => {
   }
 });
 
+const reunionAbiertaCheckMiddleware = (store) => (next) => (action) => {
+  let state = store.getState();
+  if(!state.reunion || state.reunion.abierta){
+    next(action)
+  }else{
+    toast.error('La reunion ya fue finalizada')
+  }
+}
+
 export default () =>
   configureStore({
     reducer: stateReducer,
-    middleware: [...getDefaultMiddleware()],
+    middleware: [...getDefaultMiddleware(), reunionAbiertaCheckMiddleware],
   });

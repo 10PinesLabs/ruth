@@ -29,6 +29,7 @@ const Mobile = ({
       <Vista
         {...props}
         remainingParticipantsUpToUser={(queuedParticipants && remainingParticipantsUpToUser(queuedParticipants)) || 0}
+        queuedParticipants={queuedParticipants}
         usuario={usuario}
         dispatch={dispatch}
         wannaTalk={Boolean(tema && tema.oradores.cola.find(esUsuarioActual))}
