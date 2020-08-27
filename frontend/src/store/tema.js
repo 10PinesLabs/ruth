@@ -5,6 +5,7 @@ import { actionItemReducer } from "./actionItem";
 import { reaccionesReducer } from "./reacciones";
 import { historicoDeReaccionesReducer } from "./historicoDeReacciones";
 import { createEvent } from "./evento";
+import { oradorAcciones } from "./oradores"
 
 export const temaEventoTypes = {
   EMPEZAR_TEMA: "Se le da comienzo a un tema",
@@ -40,9 +41,14 @@ export const temaReducer = (state = INITIAL_TEMA_STATE, action) =>
 
       case temaEventoTypes.TERMINAR_TEMA: {
         const ahora = new Date(action.fecha).toISOString();
-        if (draft.fin === null && draft.inicio !== null) {
-          draft.fin = ahora;
-        }
+
+        if (draft.fin !== null || draft.inicio === null)
+          return;
+
+        draft.fin = ahora;
+        if(draft.oradores.actual)
+          oradorAcciones.detenerOradorActual(draft.oradores, action.fecha)
+        
         break;
       }
 

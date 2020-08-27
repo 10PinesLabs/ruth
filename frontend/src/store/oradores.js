@@ -50,6 +50,15 @@ export const INITIAL_ORADORES_STATE = {
   cola: [],
 };
 
+export const oradorAcciones = {
+  detenerOradorActual: (draft, fecha) => {
+      const oradorActual = draft.actual;
+      oradorActual.fin = fecha;
+      draft.pasados.push(oradorActual);
+      draft.actual = null;
+  }
+}
+
 export const oradoresReducer = (state = INITIAL_ORADORES_STATE, evento) =>
 produce(state, (draft) => {
   const { usuario, fecha } = evento;
@@ -58,13 +67,11 @@ produce(state, (draft) => {
       if (!estaHablando(draft, evento.kickearA.nombre)) {
         return;
       }
-      const oradorActual = draft.actual;
-      oradorActual.fin = fecha;
-      draft.pasados.push(oradorActual);
+      
+      oradorAcciones.detenerOradorActual(draft, fecha)
 
       const nextOrador = draft.cola.shift();
       if (!nextOrador) {
-        draft.actual = null;
         return;
       }
 
@@ -107,13 +114,11 @@ produce(state, (draft) => {
       if (!estaHablando(draft, usuario.nombre)) {
         return;
       }
-      const oradorActual = draft.actual;
-      oradorActual.fin = fecha;
-      draft.pasados.push(oradorActual);
+
+      oradorAcciones.detenerOradorActual(draft, fecha)
 
       const nextOrador = draft.cola.shift();
       if (!nextOrador) {
-        draft.actual = null;
         return;
       }
 
