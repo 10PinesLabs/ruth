@@ -5,7 +5,7 @@ import GlobalStyle from './GlobalStyle.styled';
 import EmpezarReunion from './empezar-reunion/EmpezarReunion';
 import backend from './api/backend';
 import './toast.css';
-import { RuthStore } from './RuthStore';
+import { useRuthStore } from './RuthStore';
 import Mobile from './mobile';
 import TemasHandler from './reunion/TemasHandler';
 import NotFound from './common-pages/NotFound';
@@ -23,7 +23,7 @@ const App = ({ usuario }) => {
     fetchData();
   }, []);
 
-  const store = RuthStore(reunion);
+  const store = useRuthStore(reunion);
 
   const handleReunionIniciada = (nuevaReunion) => {
     setReunion(nuevaReunion);

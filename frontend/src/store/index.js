@@ -14,7 +14,7 @@ export const stateEventoTypes = {
 
 export const stateEventos = {
 iniciarEnvioDeEvento: () => createEvent(stateEventoTypes.INICIAR_ENVIO),
-eventoConfirmadoPorBackend: (id) => createEvent(stateEventoTypes.ENVIO_CONFIRMADO, {id}),
+eventoConfirmadoPorBackend: (idConfirmado) => createEvent(stateEventoTypes.ENVIO_CONFIRMADO, {idConfirmado}),
 eventoRechazadoPorBackend: () => createEvent(stateEventoTypes.ENVIO_RECHAZADO),
 }
 
@@ -37,15 +37,17 @@ produce(state, (draft) => {
     }
     case stateEventoTypes.ENVIO_CONFIRMADO: {
       if (draft.esperandoConfirmacionDeEvento) {
-        if (draft.eventosEncolados.some((eventoId) => eventoId === action.payload)) {
+        if (draft.eventosEncolados.some((eventoId) => eventoId === action.idConfirmado)) {
           // el evento ya llego antes de que el backend nos confirmara asi que
           // No estamos esperando nada
           draft.eventosEncolados = [];
           draft.esperandoConfirmacionDeEvento = false;
           draft.esperandoEventoId = null;
+        console.log("Se libera la UI desde TCP")
+
         } else {
           draft.esperandoConfirmacionDeEvento = false;
-          draft.esperandoEventoId = action.payload;
+          draft.esperandoEventoId = action.idConfirmado;
         }
       } else {
         console.warn('me llego un evento confirmado mientras no estaba esperando confirmacion...');
@@ -71,6 +73,7 @@ produce(state, (draft) => {
         // ids de los mensajes que me llegan a la lista de mensajes que me llegaron
         // por si alguno de esos es el mensaje que yo mande
         eventosEncolados = [...eventosEncolados, action.id];
+        console.log("Llega ws")
       }
 
       if (draft.esperandoEventoId) {
@@ -79,6 +82,7 @@ produce(state, (draft) => {
         // UI para hacer cosas
         if (draft.esperandoEventoId === action.id) {
           esperandoEventoId = null;
+          console.log("Se libera la UI desde Ws")
         }
       }
 

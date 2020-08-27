@@ -55,7 +55,8 @@ const VistaTemas = ({dispatch, cerrarReunion, temas, usuario}) => {
 
   const reabrirTema = () => {
     if(existeUnTemaEmpezado()){
-      toast.error('Ya hay otro tema en curso');
+      let temaEmpezado = temas.find(tema => estaElTemaEmpezado(tema));
+      dispatch(temaEventos.terminarTema(temaEmpezado.id)).then(dispatch(temaEventos.reabrirTema(temaSeleccionado.id)))
       return
     }
     dispatch(temaEventos.reabrirTema(temaSeleccionado.id))

@@ -4,9 +4,11 @@ import { stateEventos } from "./store/index"
 import Backend from "./api/backend"
 import { useEffect, useState } from 'react';
 import { ReconnectingWebSocket } from "./ReduxWebSocketWrapper"
+import _ from "lodash"
 
-export const RuthStore = (reunion) => {
+export const useRuthStore = (reunion) => {
   const [store, setStore] = useState();
+  const eventosEnEspera = [];
 
   useEffect(() => {
     if (!reunion || !reunion.abierta) {
@@ -23,27 +25,30 @@ export const RuthStore = (reunion) => {
 
     ws.onmessage = (evento) => {
       newStore.reduceEvent(evento);
+
+      const indexDeEventoEnEsperaIndex = eventosEnEspera.findIndex(
+        (eventosEnEspera) => _.matches(eventosEnEspera.evento, evento) && !eventosEnEspera.confirmado
+      );
+        if (indexDeEventoEnEsperaIndex >= 0) {
+        eventosEnEspera[indexDeEventoEnEsperaIndex].confirmarWs()
+      }
+
+      console.log(eventosEnEspera)
+
     };
     
     ws.reconnect();
     setStore(newStore);
   }, [reunion]);
-  return store;
-}
-
-  const crearEventoDeBackend = (action, state) => {
-    return {
-      reunionId: state.reunion?.id,
-      ...action,
-    }
-  }
 
   const enviarEventoAlBackend = (store, next) => (action) => {
     const state = store.getState();
+    let esperaDeEvento;
+    const evento = crearEventoDeBackend(action, state)
 
-    return new Promise((resolve, reject) => {
-      
-      const evento = crearEventoDeBackend(action, state)
+    const promesaDeEvento = new Promise((resolve, reject) => {
+      esperaDeEvento = crearEsperaDeEvento(evento, resolve)
+
       if (state.esperandoConfirmacionDeEvento || state.esperandoEventoId) {
         return;
       }
@@ -51,8 +56,9 @@ export const RuthStore = (reunion) => {
       next(stateEventos.iniciarEnvioDeEvento());
       Backend.publicarEvento(evento)
         .then(({ id }) => {
+          console.log(id)
           next(stateEventos.eventoConfirmadoPorBackend(id));
-          resolve()
+          esperaDeEvento.confirmarBackend()
         })
         .catch((e) => {
           console.error('el backend fallo');
@@ -61,6 +67,41 @@ export const RuthStore = (reunion) => {
           reject()
         });
       })
+
+    eventosEnEspera.push(esperaDeEvento)
+    return promesaDeEvento;
 };
 
+  const crearEventoDeBackend = (action, state) => {
+    return {
+      reunionId: state.reunion?.id,
+      ...action,
+    }
+  }
 
+  const crearEsperaDeEvento = (evento, resolve) => {
+    return {
+      evento,
+      confirmoBackend: false,
+      confirmoWs:false,
+      resuelto:false,
+      confirmarBackend: function (){
+        this.confirmoBackend = true;
+        this.comprobarConfirmacion();
+      },
+      confirmarWs: function(){
+        this.confirmoWs = true;
+        this.comprobarConfirmacion();
+      },
+      comprobarConfirmacion: function () {
+        if (this.confirmoBackend && this.confirmoWs){
+          console.log("se resuelve el evento")
+          resolve();
+          this.resuelto = true;
+        } 
+      },
+    };
+  };
+
+  return store;
+}
