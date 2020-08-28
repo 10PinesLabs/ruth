@@ -9,12 +9,12 @@ import { useRuthConnectedStore } from './ReduxWebSocketWrapper';
 import Mobile from './mobile';
 import TemasHandler from './reunion/TemasHandler';
 import NotFound from './common-pages/NotFound';
-import Loading from './common-pages/Loading';
 import { Provider } from 'react-redux';
+import LoadingSwitcher from './LoadingSwitcher'
+import Loading from './common-pages/Loading';
 
 const App = ({ usuario }) => {
   const [reunion, setReunion] = useState();
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,22 +26,9 @@ const App = ({ usuario }) => {
 
   const store = useRuthConnectedStore(reunion);
   
-  const selectAppIsLoading = (state) => {
-    return state.appIsLoading
-  }
-
-  const handleStateChange = () => {
-    const isAppLoading = selectAppIsLoading(store.getState())
-    if(isAppLoading!==isLoading) setIsLoading(isAppLoading)
-  }
-
   const handleReunionIniciada = (nuevaReunion) => {
     setReunion(nuevaReunion);
   };
-
-  if(store){
-    store.subscribe(handleStateChange)
-  }
 
   useEffect(() => {
     toast.configure({
@@ -51,25 +38,27 @@ const App = ({ usuario }) => {
     });
   }, []);
 
-  if (!reunion || isLoading) {
-    return <Loading />;
+  if(!store){
+    return <Loading/>
   }
 
-  if (reunion.abierta !== true) {
-    return <>
-      <GlobalStyle/>
-      <EmpezarReunion {...reunion} handleReunionIniciada={handleReunionIniciada}/>
-    </>;
+  if(reunion && !reunion.abierta){
+    return  <>
+    <GlobalStyle/>
+    <EmpezarReunion {...reunion} handleReunionIniciada={handleReunionIniciada}/>
+  </>
   }
 
   return <>
     <GlobalStyle/>
     <Provider store={store}>
-      <Switch>
-        <Route exact path="/" component={() => <Mobile usuario={usuario}/>}/>
-        <Route exact path="/presentador" component={() => <TemasHandler usuario={usuario} />} />
-        <Route path="*" component={NotFound} />
-      </Switch>
+      <LoadingSwitcher>
+          <Switch>
+            <Route exact path="/" component={() => <Mobile usuario={usuario}/>}/>
+            <Route exact path="/presentador" component={() => <TemasHandler usuario={usuario} />} />
+            <Route path="*" component={NotFound} />
+          </Switch>
+      </LoadingSwitcher>
     </Provider>
   </>;
 };
