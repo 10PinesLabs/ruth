@@ -10,14 +10,12 @@ export const reunionEventoTypes = {
 export const INITIAL_REUNION_STATE = {}
 
 export const reunionEventos = {
-  comenzarReunion: (reunion) =>
-    createEvent(reunionEventoTypes.EMPEZAR_REUNION, {
-      reunion,
-      comesFromWS:true
-    }),
-  finalizarReunionActual: () => 
-    createEvent(reunionEventoTypes.TERMINAR_REUNION),
-  
+  comenzarReunion: (reunion) => ({
+    type: reunionEventoTypes.EMPEZAR_REUNION,
+    reunion,
+  }),
+  finalizarReunionActual: () => createEvent(reunionEventoTypes.TERMINAR_REUNION),
+
 };
 
 export const reunionReducer = (state, action) =>

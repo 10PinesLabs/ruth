@@ -1,23 +1,26 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import produce, { setAutoFreeze } from 'immer';
-import Backend from '../api/backend';
-import { reunionReducer } from "./reunion";
 import { toast } from 'react-toastify';
+import { combineEpics, createEpicMiddleware } from 'redux-observable';
+import { applyMiddleware } from 'redux';
+import Backend from '../api/backend';
+import { reunionReducer } from './reunion';
 import { createEvent } from './evento';
+import { enviarEvento, publicarEvento } from '../epics/Evento';
 
 setAutoFreeze(false);
 
 export const stateEventoTypes = {
   INICIAR_ENVIO: 'iniciarEnvioDeEvento',
   ENVIO_CONFIRMADO: 'eventoConfirmadoPorBackend',
-  ENVIO_RECHAZADO: 'eventoRechazadoPorBackend'
-}
+  ENVIO_RECHAZADO: 'eventoRechazadoPorBackend',
+};
 
 export const stateEventos = {
-iniciarEnvioDeEvento: () => createEvent(stateEventoTypes.INICIAR_ENVIO),
-eventoConfirmadoPorBackend: (id) => createEvent(stateEventoTypes.ENVIO_CONFIRMADO, {id}),
-eventoRechazadoPorBackend: () => createEvent(stateEventoTypes.ENVIO_RECHAZADO),
-}
+  iniciarEnvioDeEvento: () => createEvent(stateEventoTypes.INICIAR_ENVIO),
+  eventoConfirmadoPorBackend: (id) => createEvent(stateEventoTypes.ENVIO_CONFIRMADO, { id }),
+  eventoRechazadoPorBackend: () => createEvent(stateEventoTypes.ENVIO_RECHAZADO),
+};
 
 const INITIAL_STATE = {
   reunion: null,
@@ -27,8 +30,7 @@ const INITIAL_STATE = {
   eventosEncolados: [],
 };
 
-export const stateReducer = (state = INITIAL_STATE, action) =>
-produce(state, (draft) => {
+export const stateReducer = (state = INITIAL_STATE, action) => produce(state, (draft) => {
   switch (action.type) {
     case stateEventoTypes.INICIAR_ENVIO: {
       draft.esperandoConfirmacionDeEvento = true;
@@ -93,7 +95,7 @@ const wsForwarder = (store) => (next) => (action) => {
   if (!action.comesFromWS) {
     // We don't dispatch actions that we send to the backend since we'll
     // see them twice, in the future we could be smarter.
-    let state = store.getState();
+    const state = store.getState();
     if (state.esperandoConfirmacionDeEvento || state.esperandoEventoId) {
       return;
     }
@@ -117,16 +119,24 @@ const wsForwarder = (store) => (next) => (action) => {
 };
 
 const reunionAbiertaCheckMiddleware = (store) => (next) => (action) => {
-  let state = store.getState();
-  if(!state.reunion || state.reunion.abierta){
-    next(action)
-  }else{
-    toast.error('La reunion ya fue finalizada')
+  const state = store.getState();
+  if (!state.reunion || state.reunion.abierta) {
+    next(action);
+  } else {
+    toast.error('La reunion ya fue finalizada');
   }
-}
+};
 
-export default () =>
-  configureStore({
+export default () => {
+  const rootEpic = combineEpics(publicarEvento, enviarEvento);
+  const epicMiddleware = createEpicMiddleware();
+
+  const store = configureStore({
     reducer: stateReducer,
-    middleware: [...getDefaultMiddleware(), reunionAbiertaCheckMiddleware, wsForwarder],
+    middleware: [...getDefaultMiddleware(), reunionAbiertaCheckMiddleware, epicMiddleware],
   });
+
+  epicMiddleware.run(rootEpic);
+
+  return store;
+};
