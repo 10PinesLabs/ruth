@@ -9,9 +9,9 @@ import { useRuthConnectedStore } from './ReduxWebSocketWrapper';
 import Mobile from './mobile';
 import TemasHandler from './reunion/TemasHandler';
 import NotFound from './common-pages/NotFound';
+import Loading from './common-pages/Loading';
 import { Provider } from 'react-redux';
 import LoadingSwitcher from './LoadingSwitcher'
-import Loading from './common-pages/Loading';
 
 const App = ({ usuario }) => {
   const [reunion, setReunion] = useState();
@@ -25,7 +25,7 @@ const App = ({ usuario }) => {
   }, []);
 
   const store = useRuthConnectedStore(reunion);
-  
+
   const handleReunionIniciada = (nuevaReunion) => {
     setReunion(nuevaReunion);
   };
@@ -40,15 +40,16 @@ const App = ({ usuario }) => {
 
 
   if(reunion && !reunion.abierta){
-    return  <>
-    <GlobalStyle/>
-    <EmpezarReunion {...reunion} handleReunionIniciada={handleReunionIniciada}/>
-  </>
+    return <>
+      <GlobalStyle/>
+      <EmpezarReunion {...reunion} handleReunionIniciada={handleReunionIniciada}/>
+    </>;
   }
 
-  if(!store){
-    return <Loading/>
+  if (!store) {
+    return <Loading />;
   }
+
   return <>
     <GlobalStyle/>
     <Provider store={store}>
