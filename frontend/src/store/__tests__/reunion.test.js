@@ -4,7 +4,7 @@ import { temaReducer } from "../tema"
 describe(`#reunion reducer`, () => {
   let state;
 
-  const temaObligatorioConMenorPrioridad = {
+  const temaObligatorioConMayorPrioridad = {
     tipo: "conDescripcion",
     id: 796,
     duracion: "MEDIO",
@@ -24,7 +24,7 @@ describe(`#reunion reducer`, () => {
     cantidadDeMinutosDelTema: 60,
   };
 
-  const temaObligatorioConMayorPrioridad = {
+  const temaObligatorioConMenorPrioridad = {
     tipo: "conDescripcion",
     id: 400,
     duracion: "MEDIO",
@@ -44,7 +44,7 @@ describe(`#reunion reducer`, () => {
     cantidadDeMinutosDelTema: 60,
   };
 
-  const temaNoObligatorioConMayorPrioridad = {
+  const temaNoObligatorioConMenorPrioridad = {
     tipo: "conDescripcion",
     id: 799,
     duracion: "CORTO",
@@ -64,7 +64,7 @@ describe(`#reunion reducer`, () => {
     cantidadDeMinutosDelTema: 60,
   };
 
-  const temaNoObligatorioConMenorPrioridad = {
+  const temaNoObligatorioConMayorPrioridad = {
     tipo: "conDescripcion",
     id: 795,
     duracion: "CORTO",
@@ -86,10 +86,10 @@ describe(`#reunion reducer`, () => {
 
   const reunionConTemas = {
     temas: [
-      temaNoObligatorioConMayorPrioridad,
-      temaObligatorioConMenorPrioridad,
       temaNoObligatorioConMenorPrioridad,
       temaObligatorioConMayorPrioridad,
+      temaNoObligatorioConMayorPrioridad,
+      temaObligatorioConMenorPrioridad,
     ],
   };
 
@@ -115,7 +115,7 @@ describe(`#reunion reducer`, () => {
     expect(state).toEqual({ ultimoEventoId: idDeEvento });
   });
 
-  it("con un evento del tipo empezar reunion se reordenan todos los temas recibidos", () => {
+  it("con un evento del tipo empezar reunion se reordenan todos los temas recibidos donde primero vienen los temas obligatorios ordenados por prioridad de menor a mayor y luego los no obligatorios idem", () => {
     applyEvento(reunionEventos.conectarseAReunion(reunionConTemas));
 
     expect(state).toMatchObject({

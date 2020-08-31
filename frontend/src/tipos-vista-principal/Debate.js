@@ -1,5 +1,5 @@
 import React from 'react';
-import {GraphsAndLabelsContainer, GraphsContainer, ReactionsContainer, SubDebateContainer} from "../debate-handler/Debate.styled";
+import {GraphsAndLabelsContainer, GraphsContainer, ReactionsContainer, SubDebateContainer, ParticipantsContainer} from "../debate-handler/Debate.styled";
 import ParticipantsQueue from "../cola-de-participantes/ParticipantsQueue";
 import ChartBar from "../chart/chartBar";
 import ChartLine from "../chart/chartLine";
@@ -29,7 +29,9 @@ const Debate = ({tema}) => {
           <ReactionsIcons/>
         </ReactionsContainer>
       </GraphsAndLabelsContainer>
-      <ParticipantsQueue participants={debateData.participants} finTema={tema.fin}/>
+      <ParticipantsContainer>
+        <ParticipantsQueue participants={debateData.participants} finTema={tema.fin}/>
+      </ParticipantsContainer>
     </SubDebateContainer>
   );
 };

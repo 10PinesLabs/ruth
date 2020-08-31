@@ -7,11 +7,9 @@ export class ReactionButton extends React.Component {
   getReactionButtonStyle = () => {
 
   return ({
-    height: this.props.isBig ? '3.5em' : '2.5em',
-    width: this.props.isBig ? '3.5em' : '2.5em',
+    height: this.props.isBig ? '3em' : '2.5em',
+    minWidth: this.props.isBig ? '3em' : '2.5em',
     borderRadius: '50%',
-    marginRight: '0.5em',
-    marginLeft: '0.5em',
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
