@@ -1,8 +1,7 @@
 import VotacionDeRoots from '../votacionDeRoots/votacionDeRoots';
-import enviarResumenPorMail from '~/domain/mail/mail';
-import notificador from './notificador';
 
-const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas }) => ({
+const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas },
+  notificador, enviarResumenPorMail) => ({
   reunion: async () => {
     const reunion = await repoReuniones.findLastCreated();
     if (!reunion) {
