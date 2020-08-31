@@ -15,7 +15,7 @@ export const stateEventoTypes = {
 
 export const stateEventos = {
 iniciarEnvioDeEvento: () => createEvent(stateEventoTypes.INICIAR_ENVIO),
-eventoConfirmadoPorBackend: (id) => createEvent(stateEventoTypes.ENVIO_CONFIRMADO, {id}),
+eventoConfirmadoPorBackend: (idConfirmado) => createEvent(stateEventoTypes.ENVIO_CONFIRMADO, {idConfirmado}),
 eventoRechazadoPorBackend: () => createEvent(stateEventoTypes.ENVIO_RECHAZADO),
 }
 
@@ -38,7 +38,7 @@ produce(state, (draft) => {
     }
     case stateEventoTypes.ENVIO_CONFIRMADO: {
       if (draft.esperandoConfirmacionDeEvento) {
-        if (draft.eventosEncolados.some((eventoId) => eventoId === action.payload)) {
+        if (draft.eventosEncolados.some((eventoId) => eventoId === action.idConfirmado)) {
           // el evento ya llego antes de que el backend nos confirmara asi que
           // No estamos esperando nada
           draft.eventosEncolados = [];
@@ -46,7 +46,7 @@ produce(state, (draft) => {
           draft.esperandoEventoId = null;
         } else {
           draft.esperandoConfirmacionDeEvento = false;
-          draft.esperandoEventoId = action.payload;
+          draft.esperandoEventoId = action.idConfirmado;
         }
       } else {
         console.warn('me llego un evento confirmado mientras no estaba esperando confirmacion...');
