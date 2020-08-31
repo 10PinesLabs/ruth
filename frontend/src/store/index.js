@@ -10,7 +10,8 @@ setAutoFreeze(false);
 export const stateEventoTypes = {
   INICIAR_ENVIO: 'iniciarEnvioDeEvento',
   ENVIO_CONFIRMADO: 'eventoConfirmadoPorBackend',
-  ENVIO_RECHAZADO: 'eventoRechazadoPorBackend'
+  ENVIO_RECHAZADO: 'eventoRechazadoPorBackend',
+  CARGA_EXITOSA: 'Carga exitosa',
 }
 
 export const stateEventos = {
@@ -65,6 +66,10 @@ produce(state, (draft) => {
       }
       break;
     }
+    case stateEventoTypes.CARGA_EXITOSA:{
+      draft.appIsLoading = false
+      break;
+    }
     default: {
       let { esperandoEventoId, eventosEncolados, esperandoConfirmacionDeEvento } = draft;
 
@@ -85,8 +90,7 @@ produce(state, (draft) => {
       }
 
       const newState = reunionReducer(draft, action);
-      const isAppLoading =  typeof action.appIsLoading != 'undefined' ? action.appIsLoading : draft.appIsLoading
-      return { ...newState, esperandoEventoId, eventosEncolados,  appIsLoading: isAppLoading};
+      return { ...newState, esperandoEventoId, eventosEncolados };
     }
   }
 });

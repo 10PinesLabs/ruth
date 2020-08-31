@@ -38,9 +38,6 @@ const App = ({ usuario }) => {
     });
   }, []);
 
-  if(!store){
-    return <Loading/>
-  }
 
   if(reunion && !reunion.abierta){
     return  <>
@@ -49,6 +46,9 @@ const App = ({ usuario }) => {
   </>
   }
 
+  if(!store){
+    return <Loading/>
+  }
   return <>
     <GlobalStyle/>
     <Provider store={store}>

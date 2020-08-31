@@ -30,7 +30,6 @@ export default function () {
 
     const cargaExitosa = {
       type: 'Carga exitosa',
-      appIsLoading: false,
     };
 
     ws.send(
