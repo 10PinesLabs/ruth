@@ -1,4 +1,4 @@
-import { actualizarTemaTratadoEnRoots } from './actualizadorMinutaRoots';
+import actualizarTemaTratadoEnRoots from './actualizadorMinutaRoots';
 
 const mockTema = {
   id: 4,

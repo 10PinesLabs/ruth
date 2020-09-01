@@ -1,7 +1,7 @@
 import VotacionDeRoots from '../votacionDeRoots/votacionDeRoots';
 import enviarResumenPorMail from '~/domain/mail/mail';
 import notificador from './notificador';
-import { actualizarTemaTratadoEnRoots } from './actualizadorMinutaRoots';
+import actualizarTemaTratadoEnRoots from './actualizadorMinutaRoots';
 
 const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas }, requester) => ({
   reunion: async () => {
