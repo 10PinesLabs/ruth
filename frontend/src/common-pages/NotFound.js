@@ -2,6 +2,7 @@ import React from "react";
 import {Botonera, Descripcion, Imagen, PageContainer, Parrafo, Titulo} from "./CommonPages.styled";
 import {Button, SecondaryButton} from "../components/Button.styled";
 import {useSpring} from "react-spring";
+import {withRouter} from 'react-router-dom'
 
 const NotFound = ({history}) => {
   const props = useSpring({
@@ -27,4 +28,4 @@ const NotFound = ({history}) => {
   );
 };
 
-export default NotFound;
+export default withRouter(NotFound);
