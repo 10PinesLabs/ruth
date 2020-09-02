@@ -1,8 +1,9 @@
 import VotacionDeRoots from '../votacionDeRoots/votacionDeRoots';
 import enviarResumenPorMail from '~/domain/mail/mail';
 import notificador from './notificador';
+import actualizarTemaTratadoEnRoots from './actualizadorMinutaRoots';
 
-const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas }) => ({
+const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas }, requester) => ({
   reunion: async () => {
     const reunion = await repoReuniones.findLastCreated();
     if (!reunion) {
@@ -35,7 +36,8 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
 
     if (!abierta) {
       notificador.notificarOwnersDeActionItemsDeReunion(temas);
-      await enviarResumenPorMail(reunionAActualizar, req.body.temas);
+      //await enviarResumenPorMail(reunionAActualizar, req.body.temas);
+      await actualizarTemaTratadoEnRoots(requester, req.body.temas);
     }
   },
 
