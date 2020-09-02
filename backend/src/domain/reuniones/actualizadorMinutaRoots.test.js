@@ -5,7 +5,7 @@ const mockTema = {
 };
 
 const mockRequester = {
-  patch: jest.fn(),
+  patch: jest.fn().mockResolvedValue(204),
 };
 
 describe('Al actualizar un tema en roots', () => {
