@@ -37,7 +37,7 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
     if (!abierta) {
       notificador.notificarOwnersDeActionItemsDeReunion(temas);
       //await enviarResumenPorMail(reunionAActualizar, req.body.temas);
-      await actualizarTemaTratadoEnRoots(requester, req.body.temas);
+      await req.body.temas.forEach(tema => actualizarTemaTratadoEnRoots(requester, tema));
     }
   },
 
