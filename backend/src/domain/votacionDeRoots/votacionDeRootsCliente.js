@@ -18,8 +18,22 @@ function getTemasRootsMock() {
 
 const getTemasRoots = process.env.NODE_ENV === 'test' ? getTemasRootsMock : getTemasRootsDeVerdad;
 
+const urlApiMinutaDeTema = (temaId) => `/api/v2/temas/${temaId}/temaDeMinuta?apiKey=${process.env.TEMAS_ROOTS_API_KEY}`;
+
+const actualizarMinutaDeTema = async (requester, tema) => {
+  if (process.env.NODE_ENV === 'test') return;
+  console.log('Se realiza el envio de minutas de ', tema);
+  requester.patch(process.env.TEMAS_ROOTS_HOST + urlApiMinutaDeTema(tema.id), {
+    fueTratado: true,
+  }).catch((error) => {
+    console.log('El envio de la minuta resulto en un error', error);
+  });
+};
+
+
 const VotacionCliente = {
   getTemasRoots,
+  actualizarMinutaDeTema,
 };
 
 export default VotacionCliente;

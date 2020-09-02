@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     cantidadDeMinutosDelTema: DataTypes.INTEGER,
     prioridad: DataTypes.INTEGER,
     mailDelAutor: DataTypes.STRING,
+    votacionDeRootsId: DataTypes.INTEGER,
   }, {});
   Tema.associate = function (models) {
     Tema.Reunion = Tema.belongsTo(models.Reunion, { foreignKey: 'reunionId' });

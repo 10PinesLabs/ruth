@@ -1,5 +1,5 @@
-import { pick } from 'lodash';
 import models from '~/database/models';
+import sasnitizarTema from '~/domain/temas/sanitizar';
 
 export default class TemasRepo {
   findAll() {
@@ -20,8 +20,7 @@ export default class TemasRepo {
 
   guardarTemas(reunion, temas) {
     return models.Tema.bulkCreate(temas.map((tema) => {
-      const temaSanitizado = pick(tema, ['tipo', 'titulo', 'descripcion', 'duracion', 'autor', 'obligatoriedad',
-        'linkDePresentacion', 'propuestas', 'temasParaRepasar', 'cantidadDeMinutosDelTema', 'prioridad', 'mailDelAutor']);
+      const temaSanitizado = sasnitizarTema(tema);
       return { ...temaSanitizado, reunionId: reunion.id };
     }));
   }

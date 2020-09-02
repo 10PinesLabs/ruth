@@ -1,7 +1,6 @@
 import VotacionDeRoots from '../votacionDeRoots/votacionDeRoots';
 import enviarResumenPorMail from '~/domain/mail/mail';
 import notificador from './notificador';
-import actualizarTemaTratadoEnRoots from './actualizadorMinutaRoots';
 
 const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas }, requester) => ({
   reunion: async () => {
@@ -36,8 +35,9 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
 
     if (!abierta) {
       notificador.notificarOwnersDeActionItemsDeReunion(temas);
-      //await enviarResumenPorMail(reunionAActualizar, req.body.temas);
-      await req.body.temas.forEach(tema => actualizarTemaTratadoEnRoots(requester, tema));
+      // await enviarResumenPorMail(reunionAActualizar, req.body.temas);
+      const temasTratados = req.body.temas.filter((tema) => tema.inicio != null);
+      await temasTratados.forEach((tema) => VotacionDeRoots.actualizarMinutaDeTema(requester, tema));
     }
   },
 

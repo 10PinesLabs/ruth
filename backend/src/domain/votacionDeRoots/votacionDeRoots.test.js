@@ -1,4 +1,4 @@
-import { getTemasRoots } from './votacionDeRoots';
+import { getTemasRoots, actualizarMinutaDeTema } from './votacionDeRoots';
 import fixture from './temas-fixture.json';
 
 import VotacionCliente from './votacionDeRootsCliente';
@@ -7,6 +7,13 @@ jest.mock('./votacionDeRootsCliente', () => ({
   getTemasRoots: jest.fn(),
 }));
 
+const mockTema = {
+  id: 4,
+};
+
+const mockRequester = {
+  patch: jest.fn().mockResolvedValue(204),
+};
 
 describe('#getTemasRoots', () => {
   describe('con un cliente mockeado', () => {
@@ -54,5 +61,18 @@ describe('#getTemasRoots', () => {
         expect.not.objectContaining({ algoDeMas: expect.anything() }),
       ));
     });
+  });
+});
+
+
+describe('Al actualizar un tema en roots', () => {
+  test('el primer argumento es la url de la api', async () => {
+    await actualizarMinutaDeTema(mockRequester, mockTema);
+    expect(mockRequester.patch.mock.calls[0][0]).toBe(`${process.env.TEMAS_ROOTS_HOST}/api/v2/temas/4/temaDeMinuta?apiKey=${process.env.TEMAS_ROOTS_API_KEY}`);
+  });
+
+  test('hace patch a que el tema fue tratado', async () => {
+    await actualizarMinutaDeTema(mockRequester, mockTema);
+    expect(mockRequester.patch.mock.calls[0][1]).toEqual({ fueTratado: true });
   });
 });

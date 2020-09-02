@@ -1,9 +1,8 @@
 import Cliente from './votacionDeRootsCliente';
-import sanitizar from '~/domain/temas/sanitizar';
 
 const VotacionDeRoots = {
-  getTemasRoots: () => Cliente.getTemasRoots()
-    .then((temas) => temas.map(sanitizar)),
+  getTemasRoots: () => Cliente.getTemasRoots(),
+  actualizarMinutaDeTema: (requester, tema) => Cliente.actualizarMinutaDeTema(requester, tema),
 };
 
 export default VotacionDeRoots;
