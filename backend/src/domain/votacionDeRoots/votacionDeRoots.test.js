@@ -1,4 +1,4 @@
-import { getTemasRoots, actualizarMinutaDeTema } from './votacionDeRoots';
+import { getTemasRoots } from './votacionDeRoots';
 import fixture from './temas-fixture.json';
 
 import VotacionCliente from './votacionDeRootsCliente';
@@ -7,8 +7,10 @@ jest.mock('./votacionDeRootsCliente', () => ({
   getTemasRoots: jest.fn(),
 }));
 
+const { actualizarMinutaDeTema } = jest.requireActual('./votacionDeRootsCliente');
+
 const mockTema = {
-  id: 4,
+  votacionDeRootsId: 4,
 };
 
 const mockRequester = {
