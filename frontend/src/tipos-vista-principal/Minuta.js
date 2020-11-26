@@ -211,14 +211,14 @@ const Minuta = ({ dispatch, tema }) => {
               {textoBotonCreadorActionItems()}
               </BotonParaAbrirDesplegable>
               <Collapse in={isCreadorActionItemCerrado}>
-              <Box
-                display={"flex"}
-                width={1}
-                justifyContent={"center"}
-              >
-              <ActionItemEditor onSubmit={agregarActionItem}/>
-            </Box>
-          </Collapse>
+                <Box
+                  display={"flex"}
+                  width={1}
+                  justifyContent={"center"}
+                >
+                  <ActionItemEditor onSubmit={agregarActionItem}/>
+                </Box>
+              </Collapse>
               <ListaActionItems actionItems={tema.actionItems} alBorrar={borrarActionItem} onEdit={editarActionItem} />
             </Grid>
           </Grid>
