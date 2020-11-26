@@ -43,7 +43,7 @@ export function ConclusionTitle(props) {
   return <h1 {...props} className={classes.conclusionTitle}>{props.children}</h1>;
 }
 
-export const BotonParaAbrirResumen = styled(Button)`
+export const BotonParaAbrirDesplegable = styled(Button)`
   && { 
     color: ${colors.primary};
     font-weight: bold;
