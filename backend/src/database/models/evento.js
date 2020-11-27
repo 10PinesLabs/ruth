@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
 
   Evento.associate = (models) => {
-    Evento.Tema = Evento.belongsTo(models.Tema, { foreignKey: 'temaId' });
+    Evento.Tema = Evento.belongsTo(models.Tema, { foreignKey: 'idTema' });
     Evento.Reunion = Evento.belongsTo(models.Reunion, { foreignKey: 'reunionId' });
   };
 
