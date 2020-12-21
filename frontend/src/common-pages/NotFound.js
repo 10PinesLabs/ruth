@@ -12,16 +12,16 @@ const NotFound = ({history}) => {
   return (
     <PageContainer style={props}>
       <Imagen src={'./404.png'}/>
-      <Titulo> Whoops! </Titulo>
+      <Titulo> Ups! </Titulo>
       <Descripcion>
         <Parrafo>
-          Parece que la pagina que estas buscando ya no existe o no esta disponible por ahora.
+          La página que estás buscando no existe o no está disponible.
         </Parrafo>
-        <Parrafo> Dejanos ayudarte, elige a donde quieres ir: </Parrafo>
+        <Parrafo> Podés entrar a: </Parrafo>
       </Descripcion>
       <Botonera>
         <Button onClick={() => history.push('/')}> Modo espectador </Button>
-        <SecondaryButton onClick={() => history.push('/presentador')}> Modo presentacion </SecondaryButton>
+        <SecondaryButton onClick={() => history.push('/presentador')}> Modo presentador </SecondaryButton>
       </Botonera>
     </PageContainer>
   );
