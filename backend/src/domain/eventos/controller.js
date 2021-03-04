@@ -6,8 +6,9 @@ const Controller = (wss) => {
 
   return ({
     publicar: async (req, res) => {
-      await lock.acquire('event', async () => {
-        const eventoRaw = req.body;
+      const eventoRaw = req.body;
+
+      await lock.acquire(`event/${eventoRaw.reunionId}`, async () => {
 
         const contenidoEvento = {
           ...eventoRaw,
