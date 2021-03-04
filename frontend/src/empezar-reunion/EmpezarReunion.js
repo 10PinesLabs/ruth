@@ -9,7 +9,7 @@ import {
   FlexContainer,
   BotonesContainer,
   TextContainer,
-  BotonDeCreacionContainer, CancelButton,
+  BotonDeCreacionContainer, CancelButton, WhiteThemedTextfield, FormContainer, CrearButton,
 } from './EmpezarReunion.styled';
 import backend from '../api/backend';
 import BotonParaIniciarReunion from './BotonParaIniciarReunion';
@@ -62,9 +62,9 @@ class EmpezarReunion extends React.Component {
         <>
 
           <div style={{'display': "flex",    width: "100%",
-            height: "100%"}}>
-            <div style={{width: "27%","border-right": "1px solid silver",display:"flex",justifyContent: "flex-start", "flex-direction": "column","padding": "1em",backgroundColor: "#68c9b2"}}>
-              <LeyendaEmpresa>10 Pines</LeyendaEmpresa>
+            height: "100%",backgroundColor: "#68c9b2"}}>
+            <div style={{width: "27%",display:"flex",justifyContent: "flex-start", "flex-direction": "column","padding": "1em"}}>
+              <LeyendaEmpresa>10 Pines  <b style={{fontStyle: 'italic',color: "white"}}>Ruth</b></LeyendaEmpresa>
               <ExtensionLeyendaEmpresa>Creative Software Development</ExtensionLeyendaEmpresa>
 
               <BotonParaIniciarReunion
@@ -80,29 +80,29 @@ class EmpezarReunion extends React.Component {
                   handleEmpezarReunion={() => this.setState({mostrarFormulario: true })}
                   texto="Empezar Reunión rápida"/>
               {this.state.mostrarFormulario &&
-              <>
+              <FormContainer>
                 <TextContainer>
-                  <ThemedTextfield value={this.state.tema} onChange={(event) => this.setState({tema: event.target.value})} multiline label="Tema propuesto"/>
-                  <ThemedTextfield value={this.state.autor} onChange={(event) => this.setState({autor: event.target.value})} multiline label="Autor"/>
-                  <ThemedTextfield value={this.state.descripcion} onChange={(event) => this.setState({descripcion: event.target.value})} multiline label="Descripcion"/>
-                  <ThemedTextfield value={this.state.urlDePresentacion} onChange={(event) => this.setState({urlDePresentacion: event.target.value})} multiline label="Url de presentacion"/>
+                  <ThemedTextfield color='white' value={this.state.tema} onChange={(event) => this.setState({tema: event.target.value})} multiline label="Tema propuesto"/>
+                  <WhiteThemedTextfield value={this.state.autor} onChange={(event) => this.setState({autor: event.target.value})} multiline label="Autor"/>
+                  <WhiteThemedTextfield value={this.state.descripcion} onChange={(event) => this.setState({descripcion: event.target.value})} multiline label="Descripcion"/>
+                  <WhiteThemedTextfield value={this.state.urlDePresentacion} onChange={(event) => this.setState({urlDePresentacion: event.target.value})} multiline label="Url de presentacion"/>
                 </TextContainer>
                 <BotonDeCreacionContainer>
                   <CancelButton
                       onClick={() => this.setState({mostrarFormulario: false,tema: "", descripcion: "",urlDePresentacion: ""})}
                   > Cancelar </CancelButton>
 
-                  <Button
+                  <CrearButton
                       onClick={() => this.handleEmpezarReunion({reunionDeRoots: false, tema: this.state.tema, descripcion: this.state.descripcion,urlDePresentacion : this.state.urlDePresentacion,autor: this.state.autor })}
-                  > Crear </Button>
+                  > Crear </CrearButton>
                 </BotonDeCreacionContainer>
-              </>
+              </FormContainer>
               }
             </div>
-            <div style={{width: "70%",padding: "1em"}}>
-              <h2>Reuniones Abiertas</h2>
+            <div style={{width: "70%",padding: "2em", backgroundColor: "white",borderRadius: "30px", margin: "1em"}}>
+              <span style={{fontSize: "1.7em",marginBottom: "1em" }}>Reuniones Abiertas</span>
 
-              <div style={{height: "100%",overflowY: "scroll"}}>
+              <div style={{height: "95%",overflowY: "scroll"}}>
                 <ReunionActivas/>
               </div>
             </div>

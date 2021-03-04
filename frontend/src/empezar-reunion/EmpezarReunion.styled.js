@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { font } from '../styles/theme';
+import {font, ThemedTextfield} from '../styles/theme';
 import {Button, SecondaryButton} from "../components/Button.styled";
 
 export const BotonesContainer = styled.div`
@@ -29,6 +29,9 @@ export const HomeImage = styled.img`
   margin: 0 4rem;
 `;
 
+export const WhiteThemedTextfield = styled(ThemedTextfield)`
+    ;
+`;
 
 export const BotonDeCreacionContainer = styled.div`
     display: flex;
@@ -37,8 +40,18 @@ export const BotonDeCreacionContainer = styled.div`
 
 export const CancelButton = styled(SecondaryButton)`
     margin-right: 5px;
+    padding: 0.5em 1em
 `;
 
+export const CrearButton = styled(Button)`
+    padding: 0.5em 1em
+`;
+
+export const FormContainer = styled.div`
+    border-radius: 10px;
+    background: whitesmoke;
+    padding: 1em;
+`;
 
 
 export const TitleAndButton = styled.div`

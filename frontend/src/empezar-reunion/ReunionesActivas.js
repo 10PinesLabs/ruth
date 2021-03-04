@@ -36,7 +36,7 @@ export const ReunionActivas = () => {
         return <CircularProgress/>
     }
 
-    return<>
+    return <>
         <TablaPinos>
             <Paper>
                 <Table aria-label="customized table">
