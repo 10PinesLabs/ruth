@@ -2,12 +2,12 @@ import { Op } from 'sequelize';
 import models from '~/database/models';
 
 export default class EventosRepo {
-  conseguirUltimoEventoId = async () =>  {
+  async conseguirUltimoEventoId(){
     const ultimaReunionId = await models.Reunion.max('id');
     return ultimaReunionId && models.Evento.max('id', { where: { reunionId: ultimaReunionId } });
   }
 
-  findEventosParaReunion = (lastEvent = undefined, reunionId) => {
+  findEventosParaReunion(lastEvent = undefined, reunionId){
     const whereClause = { reunionId };
 
     if (lastEvent) {
@@ -17,7 +17,7 @@ export default class EventosRepo {
     return models.Evento.findAll({ where: whereClause, order: [['id', 'ASC']] });
   }
 
-  guardarEvento = ({ evento, temaId, reunionId }) => {
+  guardarEvento({ evento, temaId, reunionId }){
     return models.Evento.create({ evento, temaId, reunionId });
   }
 }
