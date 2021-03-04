@@ -29,9 +29,6 @@ export const HomeImage = styled.img`
   margin: 0 4rem;
 `;
 
-export const WhiteThemedTextfield = styled(ThemedTextfield)`
-    ;
-`;
 
 export const BotonDeCreacionContainer = styled.div`
     display: flex;

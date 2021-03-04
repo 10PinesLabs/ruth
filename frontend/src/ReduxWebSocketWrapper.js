@@ -34,7 +34,6 @@ export class ReconnectingWebSocket {
     this.websocket.onmessage = (mensaje) => {
       batch(() => {
         JSON.parse(mensaje.data).forEach((rawEvento) => {
-          debugger
           if(rawEvento.reunionId === this.reunionId) {
             const nextEvent = {
               ...rawEvento,
