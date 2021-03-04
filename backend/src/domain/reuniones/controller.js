@@ -35,12 +35,12 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
   crear: async (req) => {
     const esReunionDeRoots = req.body.reunionDeRoots;
     const { tema } = req.body;
-    const { urlDePresentacion, descripcionDelTema, autor } = req.body;
+    const { urlDePresentacion, descripcion, autor } = req.body;
 
     const { abierta } = req.body;
     const temas = esReunionDeRoots
       ? await VotacionDeRoots.getTemasRoots()
-      : [crearTema(tema, descripcionDelTema, urlDePresentacion, autor)];
+      : [crearTema(tema, descripcion, urlDePresentacion, autor)];
     const reunion = await repoReuniones.create({ abierta });
     const temasNuevos = await repoTemas.guardarTemas(reunion, temas);
     return { ...(reunion.toJSON()), temas: temasNuevos.map((t) => t.toJSON()) };
