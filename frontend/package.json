@@ -22,7 +22,7 @@
     "react-dom": "^16.11.0",
     "react-google-slides": "^1.0.2",
     "react-redux": "^7.1.3",
-    "react-router-dom": "^5.1.2",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "^3.3.0",
     "react-spring": "^8.0.27",
     "react-toastify": "^5.4.1",

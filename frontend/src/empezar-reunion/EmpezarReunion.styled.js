@@ -1,6 +1,14 @@
 import styled from 'styled-components';
 import { font } from '../styles/theme';
 
+export const BotonesContainer = styled.div`
+  margin-bottom: 3rem;
+`;
+export const TextContainer = styled.div`
+  margin-bottom: 2rem;
+`;
+
+
 export const EmpezarRootsContainer = styled.div`
   display: flex;
   justify-content: space-evenly;

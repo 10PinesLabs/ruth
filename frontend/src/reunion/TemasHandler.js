@@ -9,7 +9,7 @@ import { reunionEventos } from '../store/reunion';
 class TemasHandler extends React.Component {
 
   cerrarReunion = (temas) => {
-    backend.cerrarReunion(temas)
+    backend.cerrarReunion(this.props.reunionId,temas)
       .then(() => {
         this.props.dispatch(reunionEventos.finalizarReunionActual());
       })
@@ -30,5 +30,6 @@ class TemasHandler extends React.Component {
 
 const mapStateToProps = (state) => ({
   temas: state.reunion.temas,
+  reunionId: state.reunion.id,
 });
 export default connect(mapStateToProps)(TemasHandler);

@@ -7,7 +7,7 @@ class BotonParaIniciarReunion extends React.Component {
     if (this.props.cargando) {
       return (<CircularProgress />);
     }
-    return (<Button onClick={this.props.handleEmpezarReunion}>Empezar Reunión</Button>);
+    return (<Button onClick={this.props.handleEmpezarReunion}>{this.props.texto}</Button>);
   }
 }
 

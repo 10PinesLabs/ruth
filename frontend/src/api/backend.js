@@ -3,20 +3,20 @@ import Requester from './requester';
 const requester = Requester.createDefaultRequester();
 
 const Backend = {
-  getReunion() {
-    return requester.get('/reunionActual');
+  getReunion(id) {
+    return requester.get('/reunionActual/'+id);
   },
 
   publicarEvento(evento) {
     return requester.post('/eventos', evento);
   },
 
-  empezarReunion() {
-    return requester.post('/reunionDeRoots', { abierta: true });
+  empezarReunion(opcionesDeReunion) {
+    return requester.post('/reunionDeRoots', { abierta: true,...opcionesDeReunion });
   },
 
-  cerrarReunion(temas) {
-    return requester.put('/reunionActual', { abierta: false, temas });
+  cerrarReunion(id,temas) {
+    return requester.put('/reunionActual', { id,abierta: false, temas });
   },
 
   getPerfil() {

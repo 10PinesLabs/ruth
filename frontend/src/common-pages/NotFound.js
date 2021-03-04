@@ -15,7 +15,7 @@ const NotFound = ({history}) => {
       <Titulo> Ups! </Titulo>
       <Descripcion>
         <Parrafo>
-          La página que estás buscando no existe o no está disponible.
+          La página que estás buscando no existe o no está disponiblexd.
         </Parrafo>
         <Parrafo> Podés entrar a: </Parrafo>
       </Descripcion>
