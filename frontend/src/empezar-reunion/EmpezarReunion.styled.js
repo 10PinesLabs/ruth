@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { font } from '../styles/theme';
+import {Button, SecondaryButton} from "../components/Button.styled";
 
 export const BotonesContainer = styled.div`
   margin-bottom: 3rem;
@@ -27,6 +28,18 @@ export const HomeImage = styled.img`
   width: 100%;
   margin: 0 4rem;
 `;
+
+
+export const BotonDeCreacionContainer = styled.div`
+    display: flex;
+    justify-content: flex-end;
+`;
+
+export const CancelButton = styled(SecondaryButton)`
+    margin-right: 5px;
+`;
+
+
 
 export const TitleAndButton = styled.div`
   display: flex;

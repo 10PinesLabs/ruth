@@ -25,6 +25,10 @@ const Backend = {
 
   getUsuarios() {
     return requester.get('/usuarios');
+  },
+
+  obtenerReunionesAbiertas(){
+    return requester.get('/reuniones/abiertas');
   }
 };
 

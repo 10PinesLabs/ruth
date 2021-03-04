@@ -2,11 +2,21 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import {
-  EmpezarRootsContainer, Title, TitleAndButton, HomeImage, FlexContainer, BotonesContainer, TextContainer,
+  EmpezarRootsContainer,
+  Title,
+  TitleAndButton,
+  HomeImage,
+  FlexContainer,
+  BotonesContainer,
+  TextContainer,
+  BotonDeCreacionContainer, CancelButton,
 } from './EmpezarReunion.styled';
 import backend from '../api/backend';
 import BotonParaIniciarReunion from './BotonParaIniciarReunion';
-import {ThemedTextfield} from "../styles/theme";
+import {colors, ThemedTextfield} from "../styles/theme";
+import {Button} from "../components/Button.styled";
+import {ReunionActivas} from "./ReunionesActivas";
+import {ExtensionLeyendaEmpresa, LeyendaEmpresa, Temas} from "../temario/Temario.styled";
 
 class EmpezarReunion extends React.Component {
   constructor(props) {
@@ -15,6 +25,7 @@ class EmpezarReunion extends React.Component {
     this.state = {
       tema: "",
       descripcion: "",
+      mostrarFormulario: false,
       urlDePresentacion: "",
       cargando: false,
     };
@@ -48,24 +59,13 @@ class EmpezarReunion extends React.Component {
 
   render() {
     return (
-      <FlexContainer>
-        <EmpezarRootsContainer>
-          <TitleAndButton>
-            <Title>No hay ninguna reunión activa</Title>
-            <div>
-              <BotonesContainer>
+        <>
 
-                <TextContainer>
-                  <ThemedTextfield value={this.state.tema} onChange={(event) => this.setState({tema: event.target.value})} multiline label="Tema propuesto"/>
-                  <ThemedTextfield value={this.state.descripcion} onChange={(event) => this.setState({descripcion: event.target.value})} multiline label="Descripcion"/>
-                  <ThemedTextfield value={this.state.urlDePresentacion} onChange={(event) => this.setState({urlDePresentacion: event.target.value})} multiline label="Url de presentacion"/>
-                </TextContainer>
-
-                <BotonParaIniciarReunion
-                    cargando={this.state.cargando}
-                    handleEmpezarReunion={() => this.handleEmpezarReunion({reunionDeRoots: false, tema: this.state.tema, descripcion: this.state.descripcion,urlDePresentacion : this.state.urlDePresentacion })}
-                    texto="Empezar Reunión rápida"/>
-              </BotonesContainer>
+          <div style={{'display': "flex",    width: "100%",
+            height: "100%"}}>
+            <div style={{width: "27%","border-right": "1px solid silver",display:"flex",justifyContent: "flex-start", "flex-direction": "column","padding": "1em",backgroundColor: "#68c9b2"}}>
+              <LeyendaEmpresa>10 Pines</LeyendaEmpresa>
+              <ExtensionLeyendaEmpresa>Creative Software Development</ExtensionLeyendaEmpresa>
 
               <BotonParaIniciarReunion
                   cargando={this.state.cargando}
@@ -73,11 +73,41 @@ class EmpezarReunion extends React.Component {
                   texto="Empezar Reunión de Root"
               />
 
+              <BotonParaIniciarReunion
+                  disabled={this.state.mostrarFormulario}
+                  cargando={this.state.cargando}
+                  handleEmpezarReunion={() => this.setState({mostrarFormulario: true })}
+                  texto="Empezar Reunión rápida"/>
+              {this.state.mostrarFormulario &&
+              <>
+                <TextContainer>
+                  <ThemedTextfield value={this.state.tema} onChange={(event) => this.setState({tema: event.target.value})} multiline label="Tema propuesto"/>
+                  <ThemedTextfield value={this.state.autor} onChange={(event) => this.setState({autor: event.target.value})} multiline label="Autor"/>
+                  <ThemedTextfield value={this.state.descripcion} onChange={(event) => this.setState({descripcion: event.target.value})} multiline label="Descripcion"/>
+                  <ThemedTextfield value={this.state.urlDePresentacion} onChange={(event) => this.setState({urlDePresentacion: event.target.value})} multiline label="Url de presentacion"/>
+                </TextContainer>
+                <BotonDeCreacionContainer>
+                  <CancelButton
+                      onClick={() => this.setState({mostrarFormulario: false,tema: "", descripcion: "",urlDePresentacion: ""})}
+                  > Cancelar </CancelButton>
+
+                  <Button
+                      onClick={() => this.handleEmpezarReunion({reunionDeRoots: false, tema: this.state.tema, descripcion: this.state.descripcion,urlDePresentacion : this.state.urlDePresentacion,autor: this.state.autor })}
+                  > Crear </Button>
+                </BotonDeCreacionContainer>
+              </>
+              }
             </div>
-          </TitleAndButton>
-          <HomeImage src="./home.svg" alt="Home"/>
-        </EmpezarRootsContainer>
-      </FlexContainer>
+            <div style={{width: "70%",padding: "1em"}}>
+              <h2>Reuniones Abiertas</h2>
+
+              <div style={{height: "100%",overflowY: "scroll"}}>
+                <ReunionActivas/>
+              </div>
+            </div>
+          </div>
+
+        </>
     );
   }
 }

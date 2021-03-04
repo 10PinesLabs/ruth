@@ -4,10 +4,10 @@ import { batch } from 'react-redux';
 import createStore from './store';
 import { reunionEventos } from "./store/reunion";
 
-function getWebSocket(lastEvent) {
+function getWebSocket(lastEvent,reunionId) {
   const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
   const host = process.env.NODE_ENV === 'production' ? window.location.host : 'localhost:8760';
-  return new WebSocket(`${protocol}://${host}/api/ws?lastEvent=${lastEvent}`);
+  return new WebSocket(`${protocol}://${host}/api/ws?lastEvent=${lastEvent}&reunionId=${reunionId}`);
 }
 
 export class ReconnectingWebSocket {
@@ -18,7 +18,7 @@ export class ReconnectingWebSocket {
   }
 
   reconnect() {
-    this.websocket = getWebSocket(this.lastEvent);
+    this.websocket = getWebSocket(this.lastEvent,this.reunionId);
 
     this.websocket.onclose = () => {
       console.log('Socket was closed');

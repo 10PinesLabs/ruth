@@ -2,13 +2,13 @@ import VotacionDeRoots from '../votacionDeRoots/votacionDeRoots';
 import enviarResumenPorMail from '~/domain/mail/mail';
 import notificador from './notificador';
 
-function crearTema(tema, descripcionDelTema, urlDePresentacion) {
+function crearTema(tema, descripcionDelTema, urlDePresentacion, autor) {
   return {
     tipo: 'conDescripcion',
     titulo: tema,
     descripcion: descripcionDelTema || 'Sin descripcion',
     duracion: 'CORTO',
-    autor: 'Root',
+    autor: autor || 'Root Generico',
     obligatoriedad: 'NO_OBLIGATORIO',
     linkDePresentacion: urlDePresentacion || '',
     propuestas: null,
@@ -35,13 +35,12 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
   crear: async (req) => {
     const esReunionDeRoots = req.body.reunionDeRoots;
     const { tema } = req.body;
-    const descripcionDelTema = req.body.descripcion;
-    const { urlDePresentacion } = req.body;
+    const { urlDePresentacion, descripcionDelTema, autor } = req.body;
 
     const { abierta } = req.body;
     const temas = esReunionDeRoots
       ? await VotacionDeRoots.getTemasRoots()
-      : [crearTema(tema, descripcionDelTema, urlDePresentacion)];
+      : [crearTema(tema, descripcionDelTema, urlDePresentacion, autor)];
     const reunion = await repoReuniones.create({ abierta });
     const temasNuevos = await repoTemas.guardarTemas(reunion, temas);
     return { ...(reunion.toJSON()), temas: temasNuevos.map((t) => t.toJSON()) };
@@ -56,6 +55,18 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
       notificador.notificarOwnersDeActionItemsDeReunion(temas);
       await enviarResumenPorMail(reunionAActualizar, req.body.temas);
     }
+  },
+
+  obtenerAbiertas: async () => {
+    const reuniones = await repoReuniones.findAllOpened();
+    const reunionesPromises = reuniones.map(async (reunion) => {
+      // Terrible N+1, sacar esto a futuro :)
+      const temas = await repoTemas.findTemasDeReunion(reunion.id);
+
+      return { ...reunion.toJSON(), temas };
+    });
+    const reunionesConTemas = await Promise.all(reunionesPromises);
+    return { reuniones: reunionesConTemas };
   },
 
 });

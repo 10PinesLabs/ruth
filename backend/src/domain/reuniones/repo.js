@@ -14,6 +14,14 @@ export default class ReunionesRepo {
     return models.Reunion.create({ abierta });
   }
 
+  findAllOpened() {
+    return models.Reunion.findAll({
+      where: {
+        abierta: true,
+      },
+    });
+  }
+
   save(reunion) {
     models.Reunion.update(reunion);
   }

@@ -19,14 +19,16 @@ export default function () {
     }, 20000);
     ws.on('close', (code, reason) => {
       clearInterval(timeoutHandler);
-      console.log(`closed connection (${code}) with reason: '${reason}'`)
+      console.log(`closed connection (${code}) with reason: '${reason}'`);
     });
     ws.on('pong', (message) => {
       const timeDelta = getCurrentTimestamp() - parseInt(message.toString(), 10);
       console.log(`Pong took to respond: ${timeDelta}ms`);
     });
     const lastEvent = parserLastEvent(req);
-    const eventos = await context.eventosRepo.findEventosUltimaReunion(lastEvent);
+    const reunionId = parseInt(req.query.reunionId, 10);
+
+    const eventos = await context.eventosRepo.findEventosParaReunion(lastEvent, reunionId);
     ws.send(JSON.stringify(
       eventos.map((evento) => ({
         ...evento.evento,
