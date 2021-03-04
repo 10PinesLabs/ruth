@@ -68,6 +68,7 @@ class EmpezarReunion extends React.Component {
               <ExtensionLeyendaEmpresa>Creative Software Development</ExtensionLeyendaEmpresa>
 
               <BotonParaIniciarReunion
+                  disabled={true}
                   cargando={this.state.cargando}
                   handleEmpezarReunion={() => this.handleEmpezarReunion({reunionDeRoots: true})}
                   texto="Empezar Reunión de Root"
