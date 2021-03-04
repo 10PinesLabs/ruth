@@ -19,7 +19,8 @@ const BackofficeController = () => ({
       root: esRoot,
     };
 
-    if (esRoot) {
+    //Posiblemente queramos esto por
+    if (esRoot || process.env.permite_no_roots === "true") {
       context.usuariosRepo.guardarOActualizarUsuario(req.session.usuario);
     }
 
