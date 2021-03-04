@@ -30,7 +30,7 @@ class Temario extends React.Component {
                            onClick={this.props.cerrarReunion}
                            disabled={false}>Cerrar Reunión</SecondaryButton>
         </ContenidoTemario>
-        <Arrow src="./pino-blanco.svg"
+        <Arrow src="/pino-blanco.svg"
                onMouseEnter={() => this.setState({ isActive: true })} />
       </Temas>
       </TemarioContainer>

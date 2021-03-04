@@ -8,9 +8,9 @@ class InfoTema extends React.Component {
   imagenObligatoriedad = (obligatoriedad) => {
     switch (obligatoriedad) {
       case 'OBLIGATORIO':
-        return './tema-obligatorio.svg';
+        return '/tema-obligatorio.svg';
       case 'NO_OBLIGATORIO':
-        return './tema-no-obligatorio.svg';
+        return '/tema-no-obligatorio.svg';
       default:
         return null;
     }
@@ -23,7 +23,7 @@ class InfoTema extends React.Component {
     return (
       <InfoTemaContainer>
         <InfoItem src={getGravatarUrlFor(mailDelAutor)} altText="Usuarie" descripcion={autor} isAvatar={true}/>
-        <InfoItem src={'./duracion.svg'} altText="Pino" descripcion={`${cantidadDeMinutosDelTema} min.`}/>
+        <InfoItem src={'/duracion.svg'} altText="Pino" descripcion={`${cantidadDeMinutosDelTema} min.`}/>
         <InfoItem src={this.imagenObligatoriedad(obligatoriedad)} altText="Obligatorio" descripcion={diccObligatoriedad[obligatoriedad]}/>
       </InfoTemaContainer>
     );
