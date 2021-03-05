@@ -24,7 +24,7 @@ class Temario extends React.Component {
         <ExtensionLeyendaEmpresa>Creative Software Development</ExtensionLeyendaEmpresa>
         <ContenidoTemario>
           <div style={{marginBottom: "1em"}}>
-            <QRCode value={`${window.location.origin}/${this.props.reunionId}`}/>
+            <QRCode value={`${window.location.origin}/${this.props.reunionId}/`}/>
           </div>
           <Titulo> Temario </Titulo>
           <ListaTemario temas = {this.props.temas}
