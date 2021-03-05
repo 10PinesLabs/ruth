@@ -25,14 +25,6 @@ const Reunion = ({ usuario }) => {
 
   const store = useRuthConnectedStore(reunion);
 
-  useEffect(() => {
-    toast.configure({
-      position: toast.POSITION.BOTTOM_CENTER,
-      autoClose: 5000,
-      transition: Slide,
-    });
-  }, []);
-
   if (!reunion) {
     return <Loading />;
   }
