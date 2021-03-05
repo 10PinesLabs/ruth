@@ -4,6 +4,7 @@ import {
 } from './Temario.styled';
 import ListaTemario from './ListaTemario';
 import {SecondaryButton} from "../components/Button.styled";
+import QRCode from "qrcode.react";
 
 class Temario extends React.Component {
   constructor(props) {
@@ -22,6 +23,9 @@ class Temario extends React.Component {
         <LeyendaEmpresa>10 Pines</LeyendaEmpresa>
         <ExtensionLeyendaEmpresa>Creative Software Development</ExtensionLeyendaEmpresa>
         <ContenidoTemario>
+          <div style={{marginBottom: "1em"}}>
+            <QRCode value={`${window.location.origin}/${this.props.reunionId}`}/>
+          </div>
           <Titulo> Temario </Titulo>
           <ListaTemario temas = {this.props.temas}
                         temaActual={this.props.temaActual}

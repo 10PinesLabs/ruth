@@ -24,6 +24,7 @@ class TemasHandler extends React.Component {
       usuario={this.props.usuario}
       temas={this.props.temas}
       dispatch={this.props.dispatch}
+      reunionId={this.props.reunionId}
       cerrarReunion={this.cerrarReunion}
     />;
   }
