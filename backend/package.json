@@ -6,7 +6,7 @@
     "clean": "rimraf build frontend",
     "build": "babel src --out-dir build",
     "lint": "eslint 'src/**/*.js' --fix",
-    "migrate": "sequelize db:migrate db:seed",
+    "migrate": "",
     "start:dev": "nodemon --inspect=9529 --exec babel-node src/index.js",
     "test": "jest",
     "sequelize": "sequelize"
