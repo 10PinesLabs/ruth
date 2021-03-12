@@ -4,7 +4,7 @@ const requester = Requester.createDefaultRequester();
 
 const Backend = {
   getReunion(id) {
-    return requester.get('/reunionActual/'+id);
+    return requester.get('/reunion/'+id);
   },
 
   publicarEvento(evento) {
@@ -16,7 +16,7 @@ const Backend = {
   },
 
   cerrarReunion(id,temas) {
-    return requester.put('/reunionActual', { id,abierta: false, temas });
+    return requester.put('/reunion', { id,abierta: false, temas });
   },
 
   getPerfil() {

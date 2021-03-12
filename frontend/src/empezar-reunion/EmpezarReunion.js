@@ -65,7 +65,6 @@ class EmpezarReunion extends React.Component {
 
   render() {
     return (
-        <>
           <ReunionesContainer>
             <EmpezarReunionContainer>
               <LeyendaEmpresa>10 Pines  <RuthTitle>Ruth</RuthTitle></LeyendaEmpresa>
@@ -111,7 +110,6 @@ class EmpezarReunion extends React.Component {
               </ReunionesActivasWrapper>
             </ReunionesActivasContainer>
           </ReunionesContainer>
-        </>
     );
   }
 }

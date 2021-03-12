@@ -20,7 +20,7 @@ const App = ({ usuario }) => {
         <GlobalStyle/>
             <Switch>
                 <Route exact path="/" component={() => <EmpezarReunion usuario={usuario}/>}/>
-                <Route exact path="/:reunionId/*" component={() => <Reunion usuario={usuario} />} />
+                <Route exact path="/:reunionId" component={() => <Reunion usuario={usuario} />} />
                 <Route path="*" component={NotFound} />
             </Switch>
     </>;
