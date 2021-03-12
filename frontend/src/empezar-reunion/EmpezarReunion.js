@@ -2,16 +2,9 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import {
-  EmpezarRootsContainer,
-  Title,
-  TitleAndButton,
-  HomeImage,
-  FlexContainer,
-  BotonesContainer,
   TextContainer,
   BotonDeCreacionContainer,
   CancelButton,
-  WhiteThemedTextfield,
   FormContainer,
   CrearButton,
   ReunionesActivasContainer,
@@ -19,8 +12,7 @@ import {
 } from './EmpezarReunion.styled';
 import backend from '../api/backend';
 import BotonParaIniciarReunion from './BotonParaIniciarReunion';
-import {colors, ThemedTextfield} from "../styles/theme";
-import {Button} from "../components/Button.styled";
+import {ThemedTextfield} from "../styles/theme";
 import {ReunionActivas} from "./ReunionesActivas";
 import {ExtensionLeyendaEmpresa, LeyendaEmpresa, Temas} from "../temario/Temario.styled";
 
