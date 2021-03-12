@@ -2,6 +2,7 @@
 export default (sequelize, DataTypes) => {
   const Reunion = sequelize.define('Reunion', {
     abierta: DataTypes.BOOLEAN,
+    nombre: DataTypes.TEXT,
   }, {});
 
   Reunion.associate = (models) => {

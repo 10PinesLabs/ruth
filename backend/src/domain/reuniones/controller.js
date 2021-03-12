@@ -2,6 +2,14 @@ import VotacionDeRoots from '../votacionDeRoots/votacionDeRoots';
 import enviarResumenPorMail from '~/domain/mail/mail';
 import notificador from './notificador';
 
+function validarReunionRapida(req){
+  const { tema, autor,nombre } = req.body;
+  if(tema == "" || nombre == "" || autor == ""){
+    throw new Error("Faltan campos en la reunion")
+  }
+}
+
+
 function crearTema(tema, descripcionDelTema, urlDePresentacion, autor) {
   return {
     tipo: 'conDescripcion',
@@ -34,14 +42,17 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
 
   crear: async (req) => {
     const esReunionDeRoots = req.body.reunionDeRoots;
-    const { tema } = req.body;
-    const { urlDePresentacion, descripcion, autor } = req.body;
+    if(!esReunionDeRoots){
+      validarReunionRapida(req)
+    }
+    const { tema, urlDePresentacion, descripcion, autor,nombre } = req.body;
 
     const { abierta } = req.body;
+    const nombreDeReunion = esReunionDeRoots ? "Reunion de Roots" : nombre;
     const temas = esReunionDeRoots
       ? await VotacionDeRoots.getTemasRoots()
       : [crearTema(tema, descripcion, urlDePresentacion, autor)];
-    const reunion = await repoReuniones.create({ abierta });
+    const reunion = await repoReuniones.create({ abierta,nombre:nombreDeReunion });
     const temasNuevos = await repoTemas.guardarTemas(reunion, temas);
     return { ...(reunion.toJSON()), temas: temasNuevos.map((t) => t.toJSON()) };
   },
