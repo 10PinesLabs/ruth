@@ -15,7 +15,7 @@ function crearTema(tema, descripcionDelTema, urlDePresentacion, autor) {
     temasParaRepasar: null,
     cantidadDeMinutosDelTema: 30,
     prioridad: 1,
-    mailDelAutor: 'santiagoparedes97@gmail.com',
+    mailDelAutor: 'roots@10pines.com',
   };
 }
 

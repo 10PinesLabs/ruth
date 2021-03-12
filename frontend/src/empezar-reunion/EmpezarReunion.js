@@ -9,7 +9,13 @@ import {
   FlexContainer,
   BotonesContainer,
   TextContainer,
-  BotonDeCreacionContainer, CancelButton, WhiteThemedTextfield, FormContainer, CrearButton,
+  BotonDeCreacionContainer,
+  CancelButton,
+  WhiteThemedTextfield,
+  FormContainer,
+  CrearButton,
+  ReunionesActivasContainer,
+  ReunionesActivasTitle, ReunionesActivasWrapper, ReunionesContainer, EmpezarReunionContainer, RuthTitle,
 } from './EmpezarReunion.styled';
 import backend from '../api/backend';
 import BotonParaIniciarReunion from './BotonParaIniciarReunion';
@@ -60,11 +66,9 @@ class EmpezarReunion extends React.Component {
   render() {
     return (
         <>
-
-          <div style={{'display': "flex",    width: "100%",
-            height: "100%",backgroundColor: "#68c9b2"}}>
-            <div style={{width: "27%",display:"flex",justifyContent: "flex-start", "flex-direction": "column","padding": "1em"}}>
-              <LeyendaEmpresa>10 Pines  <b style={{fontStyle: 'italic',color: "white"}}>Ruth</b></LeyendaEmpresa>
+          <ReunionesContainer>
+            <EmpezarReunionContainer>
+              <LeyendaEmpresa>10 Pines  <RuthTitle>Ruth</RuthTitle></LeyendaEmpresa>
               <ExtensionLeyendaEmpresa>Creative Software Development</ExtensionLeyendaEmpresa>
 
               <BotonParaIniciarReunion
@@ -98,16 +102,15 @@ class EmpezarReunion extends React.Component {
                 </BotonDeCreacionContainer>
               </FormContainer>
               }
-            </div>
-            <div style={{width: "70%",padding: "2em", backgroundColor: "white",borderRadius: "30px", margin: "1em"}}>
-              <span style={{fontSize: "1.7em",marginBottom: "1em" }}>Reuniones Abiertas</span>
+            </EmpezarReunionContainer>
+            <ReunionesActivasContainer>
+              <ReunionesActivasTitle>Reuniones Abiertas</ReunionesActivasTitle>
 
-              <div style={{height: "95%",overflowY: "scroll"}}>
+              <ReunionesActivasWrapper>
                 <ReunionActivas/>
-              </div>
-            </div>
-          </div>
-
+              </ReunionesActivasWrapper>
+            </ReunionesActivasContainer>
+          </ReunionesContainer>
         </>
     );
   }

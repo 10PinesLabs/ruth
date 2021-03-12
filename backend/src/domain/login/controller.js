@@ -19,8 +19,9 @@ const BackofficeController = () => ({
       root: esRoot,
     };
 
-    //#Todo ponre la validacion si se va a usar en ruth
-    context.usuariosRepo.guardarOActualizarUsuario(req.session.usuario);
+    if (esRoot) {
+      context.usuariosRepo.guardarOActualizarUsuario(req.session.usuario);
+    }
 
     return ['\n',
       '<!DOCTYPE html>',

@@ -9,6 +9,27 @@ export const TextContainer = styled.div`
   margin-bottom: 2rem;
 `;
 
+export const EmpezarReunionButton = styled(Button)`
+  margin: 1em 0;
+`;
+
+export const ReunionesActivasContainer = styled.div`
+  width: 70%;
+  padding: 2em; 
+  background-color: white;
+  border-radius: 30px;
+  margin: 1em;
+` ;
+
+export const ReunionesActivasTitle = styled.span`
+  font-size: 1.7em;
+  margin-bottom: 1em;
+` ;
+
+export const ReunionesActivasWrapper = styled.span`
+  height: 95%;
+  overflow-y: scroll;
+` ;
 
 export const EmpezarRootsContainer = styled.div`
   display: flex;
@@ -59,9 +80,33 @@ export const TitleAndButton = styled.div`
   flex-wrap: wrap;
 `;
 
+export const ReunionesContainer = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-color: #68c9b2
+`;
+
+export const EmpezarReunionContainer = styled.div`
+  width: 27%;
+  display: flex;
+  justify-content: flex-start; 
+  flex-direction: column;
+  padding: 1em;
+`;
+
+export const RuthTitle = styled.b`
+  font-style: italic;
+  color: white;
+`;
+
+
+
 export const Title = styled.h1`
   font-size: ${font.sizeH1} ;
   font-family: ${font.h1};
   text-align: center;
   max-width: 10em;
 `;
+
+
