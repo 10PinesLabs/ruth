@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Slide, toast } from 'react-toastify';
-import {Route, Switch, useParams} from 'react-router-dom';
+import { Route, Switch, useParams } from 'react-router-dom';
 import GlobalStyle from './GlobalStyle.styled';
 import EmpezarReunion from './empezar-reunion/EmpezarReunion';
 import backend from './api/backend';
@@ -14,14 +14,14 @@ import { Provider } from 'react-redux';
 
 const Reunion = ({ usuario }) => {
   const [reunion, setReunion] = useState();
-  const { reunionId } = useParams()
+  const { reunionId } = useParams();
   useEffect(() => {
     const fetchData = async () => {
       const reunionResponse = await backend.getReunion(reunionId);
       setReunion(reunionResponse);
     };
     fetchData();
-  }, []);
+  }, [reunionId]);
 
   const store = useRuthConnectedStore(reunion);
 
@@ -37,7 +37,7 @@ const Reunion = ({ usuario }) => {
     <GlobalStyle/>
     <Provider store={store}>
         <Route exact path="/:reunionId/presentador" component={() => <TemasHandler usuario={usuario} />} />
-        <Route exact path="/:reunionId/" component={() => <Mobile usuario={usuario}/>}/>
+        <Route exact path="/:reunionId" component={() => <Mobile usuario={usuario}/>}/>
     </Provider>
   </>;
 };

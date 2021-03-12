@@ -27,7 +27,7 @@ export default function () {
     });
     const lastEvent = parserLastEvent(req);
     const reunionId = parseInt(req.query.reunionId, 10);
-
+    ws.reunionId = reunionId;
     const eventos = await context.eventosRepo.findEventosParaReunion(lastEvent, reunionId);
     ws.send(JSON.stringify(
       eventos.map((evento) => ({
