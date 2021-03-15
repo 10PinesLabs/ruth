@@ -1,11 +1,10 @@
 import React from 'react';
 import { createBrowserHistory } from 'history';
-import { Router } from 'react-router-dom';
-import App from './App';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Backend from './api/backend';
 import Loading from "./common-pages/Loading";
+import App from "./App";
 
-const history = createBrowserHistory();
 
 export default class Authenticator extends React.Component {
   state = {
@@ -30,7 +29,7 @@ export default class Authenticator extends React.Component {
     if (cargando || !usuario) return <Loading />;
 
     return (
-      <Router history={history}>
+      <Router>
         <App usuario={usuario}/>
       </Router>
     );

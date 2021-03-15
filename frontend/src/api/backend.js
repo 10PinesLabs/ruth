@@ -3,20 +3,20 @@ import Requester from './requester';
 const requester = Requester.createDefaultRequester();
 
 const Backend = {
-  getReunion() {
-    return requester.get('/reunionActual');
+  getReunion(id) {
+    return requester.get('/reunion/'+id);
   },
 
   publicarEvento(evento) {
     return requester.post('/eventos', evento);
   },
 
-  empezarReunion() {
-    return requester.post('/reunionDeRoots', { abierta: true });
+  empezarReunion(opcionesDeReunion) {
+    return requester.post('/reunionDeRoots', { abierta: true,...opcionesDeReunion });
   },
 
-  cerrarReunion(temas) {
-    return requester.put('/reunionActual', { abierta: false, temas });
+  cerrarReunion(id,temas) {
+    return requester.put('/reunion', { id,abierta: false, temas });
   },
 
   getPerfil() {
@@ -25,6 +25,10 @@ const Backend = {
 
   getUsuarios() {
     return requester.get('/usuarios');
+  },
+
+  obtenerReunionesAbiertas(){
+    return requester.get('/reuniones/abiertas');
   }
 };
 

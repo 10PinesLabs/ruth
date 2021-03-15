@@ -5,13 +5,15 @@ import backend from '../api/backend';
 import VistaTemas from './VistaTemas';
 import { temaEventos } from '../store/tema'
 import { reunionEventos } from '../store/reunion';
+import {withRouter} from "react-router-dom";
 
 class TemasHandler extends React.Component {
 
   cerrarReunion = (temas) => {
-    backend.cerrarReunion(temas)
+    backend.cerrarReunion(this.props.reunionId,temas)
       .then(() => {
         this.props.dispatch(reunionEventos.finalizarReunionActual());
+        this.props.history.push("/");
       })
       .then(() => toast.success('Reunión finalizada'))
       .catch(() => {toast.error('No se pudo finalizar la reunión')});
@@ -30,5 +32,6 @@ class TemasHandler extends React.Component {
 
 const mapStateToProps = (state) => ({
   temas: state.reunion.temas,
+  reunionId: state.reunion.id,
 });
-export default connect(mapStateToProps)(TemasHandler);
+export default connect(mapStateToProps)(withRouter(TemasHandler));

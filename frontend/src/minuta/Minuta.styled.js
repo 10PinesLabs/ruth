@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
     alignSelf: "center",
     marginBottom: theme.spacing(1),
     borderCollapse: "collapse",
-    borderBottom: "2px solid rgba(0, 0, 0, 0.2)"
+    borderBottom: "2px solid rgba(0, 0, 0, 0.2)",
   },
   conclusionTextarea: {
     width: "100%",

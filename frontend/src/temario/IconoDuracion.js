@@ -7,7 +7,7 @@ class IconoDuracion extends React.Component {
   tipoImagen = (tema) => {
     switch (tema.obligatoriedad) {
       case 'OBLIGATORIO':
-        return './tema-obligatorio.svg';
+        return '/tema-obligatorio.svg';
       case 'NO_OBLIGATORIO':
         return this.tipoDuracion(tema.duracion);
       default:
@@ -18,11 +18,11 @@ class IconoDuracion extends React.Component {
   tipoDuracion = (duracion) => {
     switch (duracion) {
       case 'CORTO':
-        return './tema-corto.svg';
+        return '/tema-corto.svg';
       case 'MEDIO':
-        return './tema-mediano.svg';
+        return '/tema-mediano.svg';
       case 'LARGO':
-        return './tema-largo.svg';
+        return '/tema-largo.svg';
       default:
         return null;
     }
