@@ -23,8 +23,10 @@ class EmpezarReunion extends React.Component {
     this.state = {
       tema: "",
       descripcion: "",
+      autor: "",
       mostrarFormulario: false,
       urlDePresentacion: "",
+      nombre: "",
       cargando: false,
     };
   }
@@ -63,7 +65,6 @@ class EmpezarReunion extends React.Component {
               <ExtensionLeyendaEmpresa>Creative Software Development</ExtensionLeyendaEmpresa>
 
               <BotonParaIniciarReunion
-                  disabled={true}
                   cargando={this.state.cargando}
                   handleEmpezarReunion={() => this.handleEmpezarReunion({reunionDeRoots: true})}
                   texto="Empezar Reunión de Root"
@@ -77,8 +78,9 @@ class EmpezarReunion extends React.Component {
               {this.state.mostrarFormulario &&
               <FormContainer>
                 <TextContainer>
-                  <ThemedTextfield  value={this.state.tema} onChange={(event) => this.setState({tema: event.target.value})} multiline label="Tema propuesto"/>
-                  <ThemedTextfield value={this.state.autor} onChange={(event) => this.setState({autor: event.target.value})} multiline label="Autor"/>
+                  <ThemedTextfield required value={this.state.nombre} onChange={(event) => this.setState({nombre: event.target.value})} multiline label="Nombre de Reunion"/>
+                  <ThemedTextfield required value={this.state.tema} onChange={(event) => this.setState({tema: event.target.value})} multiline label="Tema propuesto"/>
+                  <ThemedTextfield required value={this.state.autor} onChange={(event) => this.setState({autor: event.target.value})} multiline label="Autor"/>
                   <ThemedTextfield value={this.state.descripcion} onChange={(event) => this.setState({descripcion: event.target.value})} multiline label="Descripcion"/>
                   <ThemedTextfield value={this.state.urlDePresentacion} onChange={(event) => this.setState({urlDePresentacion: event.target.value})} multiline label="Url de presentacion"/>
                 </TextContainer>
@@ -88,7 +90,7 @@ class EmpezarReunion extends React.Component {
                   > Cancelar </CancelButton>
 
                   <CrearButton
-                      onClick={() => this.handleEmpezarReunion({reunionDeRoots: false, tema: this.state.tema, descripcion: this.state.descripcion,urlDePresentacion : this.state.urlDePresentacion,autor: this.state.autor })}
+                      onClick={() => this.handleEmpezarReunion({reunionDeRoots: false, tema: this.state.tema, descripcion: this.state.descripcion,urlDePresentacion : this.state.urlDePresentacion,autor: this.state.autor,nombre: this.state.nombre })}
                   > Crear </CrearButton>
                 </BotonDeCreacionContainer>
               </FormContainer>

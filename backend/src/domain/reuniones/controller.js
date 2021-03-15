@@ -69,6 +69,7 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
   },
 
   obtenerAbiertas: async () => {
+
     const reuniones = await repoReuniones.findAllOpened();
     const reunionesPromises = reuniones.map(async (reunion) => {
       // Terrible N+1, sacar esto a futuro :)

@@ -11,7 +11,7 @@ const FilaReunion = ({reunion,history}) => {
         history.push(`/${reunion.id}/`)
     }
     return <TableRow>
-        <StyledTableCell >{reunion.temas.length > 1 ? "Reunion de Roots" : reunion.temas[0].titulo}</StyledTableCell>
+        <StyledTableCell >{reunion.temas.length > 1 ? "Reunion de Roots" : reunion.nombre || reunion.temas[0].titulo}</StyledTableCell>
         <StyledTableCell >{reunion.temas.length > 1 ? "Roots" : reunion.temas[0].autor}</StyledTableCell>
         <StyledTableCell >
             <Button onClick={onClick}>
