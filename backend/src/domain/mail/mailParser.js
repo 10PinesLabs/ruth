@@ -26,6 +26,10 @@ const componerMailResumen = (reunion, temas, fecha) => {
     return 0;
   };
 
+  const parseResumen = (resumen) => {
+    return resumen.replace('\n','<br>');
+  }
+
   const timeStampElapsed = (fin, inicio) => Math.ceil((fin - inicio) / 1000);
 
   const minutosHablando = (orador) => Math
@@ -72,8 +76,8 @@ const componerMailResumen = (reunion, temas, fecha) => {
         <ul>
             <% tema.oradores.pasados.forEach((orador) => { %>
                 <li> 
-                    <p><%= orador.usuario.nombre %> (<%= tiempoHablando(orador) %>)</p>
-                    <p>Resumen: <%= orador.resumen %></p>
+                    <p><%- orador.usuario.nombre %> (<%= tiempoHablando(orador) %>)</p>
+                    <p>Resumen: <br><%- parseResumen(orador.resumen) %></p>
                     <ul>
                           <li> Thumbs up: <%= orador.reacciones.thumbsUp.length %> </li>
                           <li> Thumbs down: <%= orador.reacciones.thumbsDown.length %> </li>
@@ -96,6 +100,7 @@ const componerMailResumen = (reunion, temas, fecha) => {
       reaccionesATema,
       tiempoHablando,
       ownersActionItem,
+      parseResumen
     }, 'utf8')
   );
 };
