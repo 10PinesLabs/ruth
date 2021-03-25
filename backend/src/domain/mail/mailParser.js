@@ -27,7 +27,7 @@ const componerMailResumen = (reunion, temas, fecha) => {
   };
 
   const parseResumen = (resumen) => {
-    return resumen.replace('\n','<br>');
+    return resumen.replaceAll('\n','<br>');
   }
 
   const timeStampElapsed = (fin, inicio) => Math.ceil((fin - inicio) / 1000);
