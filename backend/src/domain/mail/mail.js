@@ -2,6 +2,7 @@ import nodemailer from 'nodemailer';
 import componerMailResumen from '~/domain/mail/mailParser';
 
 async function enviarResumenPorMail(reunion, temas) {
+
   const esMailSeguro = () => process.env.MAIL_PORT === '465';
 
   const fechaReunion = (date) => (
@@ -9,15 +10,15 @@ async function enviarResumenPorMail(reunion, temas) {
   );
 
   const transporter = nodemailer.createTransport({
-    host: process.env.MAIL_HOST,
-    port: process.env.MAIL_PORT,
+    host: process.env.MAILGUN_SMTP_SERVER,
+    port: process.env.MAILGUN_SMTP_PORT,
     secure: esMailSeguro(),
+    requireTLS: true,
     auth: {
-      user: process.env.MAIL_USER,
-      pass: process.env.MAIL_PASS,
+      user: process.env.MAILGUN_SMTP_LOGIN,
+      pass: process.env.MAILGUN_SMTP_PASSWORD,
     },
   });
-
 
   await transporter.sendMail({
     from: `${process.env.MAIL_SENDER_NAME} <${process.env.MAIL_SENDER_ADRESS}>`,

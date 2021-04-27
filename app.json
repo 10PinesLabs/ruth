@@ -1,6 +1,7 @@
 {
     "addons": [
-        "heroku-postgresql:hobby-dev"
+        "heroku-postgresql:hobby-dev",
+        "mailgun:starter"
     ],
     "scripts": {
         "postdeploy": "cd backend && npm run migrate"
@@ -15,7 +16,8 @@
     "environments": {
         "review": {
             "addons": [
-                "heroku-postgresql:hobby-dev"
+                "heroku-postgresql:hobby-dev",
+                "mailgun:starter"
             ]
         }
     }
