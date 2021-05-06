@@ -20,7 +20,7 @@ async function enviarResumenPorMail(reunion, temas) {
 
 
   await transporter.sendMail({
-    from: `${process.env.MAIL_SENDER_NAME} <${process.env.MAIL_SENDER_ADRESS}>`,
+    from: `${process.env.MAIL_SENDER_NAME} <${process.env.MAIL_SENDER_ADDRESS}>`,
     to: process.env.MAIL_DESTINATION,
     subject: `Resumen ${reunion.nombre} - ${fechaReunion(reunion.dataValues.updatedAt)}`,
     html: componerMailResumen(reunion, temas, fechaReunion(reunion.dataValues.updatedAt)),
