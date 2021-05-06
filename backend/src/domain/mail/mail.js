@@ -18,12 +18,14 @@ async function enviarResumenPorMail(reunion, temas) {
     },
   });
 
-  await transporter.sendMail({
+  let newVar = {
     from: `${process.env.MAIL_SENDER_NAME} <${process.env.MAIL_SENDER_ADRESS}>`,
     to: process.env.MAIL_DESTINATION,
     subject: `Resumen ${reunion.nombre} - ${fechaReunion(reunion.dataValues.updatedAt)}`,
     html: componerMailResumen(reunion, temas, fechaReunion(reunion.dataValues.updatedAt)),
-  });
+  };
+  console.log(newVar)
+  await transporter.sendMail(newVar);
 }
 
 export default enviarResumenPorMail;
