@@ -27,13 +27,12 @@ const componerMailResumen = (reunion, temas, fecha) => {
   };
 
   const parseResumen = (resumen) => {
-    if(resumen){
-      return resumen.replace(/\n/g,'<br>');
+    if (resumen) {
+      return resumen.replace(/\n/g, '<br>');
     }
-    else{
-      return '';
-    }
-  }
+
+    return '';
+  };
 
   const timeStampElapsed = (fin, inicio) => Math.ceil((fin - inicio) / 1000);
 
@@ -84,9 +83,15 @@ const componerMailResumen = (reunion, temas, fecha) => {
                     <p><%- orador.usuario.nombre %> (<%= tiempoHablando(orador) %>)</p>
                     <p>Resumen: <br><%- parseResumen(orador.resumen) %></p>
                     <ul>
-                          <li> Thumbs up: <%= orador.reacciones.thumbsUp.length %> </li>
-                          <li> Thumbs down: <%= orador.reacciones.thumbsDown.length %> </li>
-                          <li> Redondear: <%= orador.reacciones.redondeando.length %> </li>
+                          <% if(orador.reacciones.thumbsUp.length){ %>
+                            <li> Thumbs up: <%= orador.reacciones.thumbsUp.length %> </li>
+                          <% } %>
+                          <% if(orador.reacciones.thumbsDown.length){ %>
+                            <li> Thumbs down: <%= orador.reacciones.thumbsDown.length %> </li>
+                          <% } %>
+                          <% if(orador.reacciones.redondeando.length){ %>
+                            <li> Thumbs down: <%= orador.reacciones.redondeando.length %> </li>
+                          <% } %>
                     </ul>
                 </li>
             <% }) %>
@@ -105,7 +110,7 @@ const componerMailResumen = (reunion, temas, fecha) => {
       reaccionesATema,
       tiempoHablando,
       ownersActionItem,
-      parseResumen
+      parseResumen,
     }, 'utf8')
   );
 };
