@@ -22,6 +22,16 @@ export default class ReunionesRepo {
     });
   }
 
+  // TODO cambiar, repite logica
+
+  findAllClosed() {
+    return models.Reunion.findAll({
+      where: {
+        abierta: false,
+      },
+    });
+  }
+
   save(reunion) {
     models.Reunion.update(reunion);
   }
