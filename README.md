@@ -4,17 +4,11 @@
 ### Desarrollo
 1. Instalar `node`. Ver la versión en el archivo `.nvmrc` (o hacer directamente `$ nvm use` y seguir las instruncciones).
 1. Instalar las dependencias con `$ npm install`.
-1. Levantar la DB con Docker en el directorio /backend con `$ docker-compose up -d --no-recreate`.
-1. Configurar las variables de ambiente del front move el archivo frontend/env.example a frontend/.env
-1. Configurar las variables de ambiente del back move el archivo backend/env.example a backend/.env, aun asi hay
-   algunar variables de ambiente que son secretas, podes preguntar en #ruth para que otro dev te los pase.
-1. Correr las migraciones con `$ npm run migrate`.
-1. Correr con `$ npm run start:dev`.  La app en `http://localhost:8761`.
+1. Levantar el backend (ver [README del backend](./backend/README.md))
+1. Levantar el frontend (ver [README del frontend](./frontend/README.md))
 
 El backend corre en  `8760`.
 El frontend corre en  `8761`.
-
-Leer cada `README` para entender más.
 
 Si se esta utilizando vscode, para poder debuggear, es necesario agregar el archivo `launch.json` a la carpeta .vscode
 
