@@ -2,10 +2,10 @@ import VotacionDeRoots from '../votacionDeRoots/votacionDeRoots';
 import enviarResumenPorMail from '~/domain/mail/mail';
 import notificador from './notificador';
 
-function validarReunionRapida(req){
-  const { tema, autor,nombre } = req.body;
-  if(tema == "" || nombre == "" || autor == ""){
-    throw new Error("Faltan campos en la reunion")
+function validarReunionRapida(req) {
+  const { tema, autor, nombre } = req.body;
+  if (tema == '' || nombre == '' || autor == '') {
+    throw new Error('Faltan campos en la reunion');
   }
 }
 
@@ -42,17 +42,19 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
 
   crear: async (req) => {
     const esReunionDeRoots = req.body.reunionDeRoots;
-    if(!esReunionDeRoots){
-      validarReunionRapida(req)
+    if (!esReunionDeRoots) {
+      validarReunionRapida(req);
     }
-    const { tema, urlDePresentacion, descripcion, autor,nombre } = req.body;
+    const {
+      tema, urlDePresentacion, descripcion, autor, nombre,
+    } = req.body;
 
     const { abierta } = req.body;
-    const nombreDeReunion = esReunionDeRoots ? "Reunion de Roots" : nombre;
+    const nombreDeReunion = esReunionDeRoots ? 'Reunion de Roots' : nombre;
     const temas = esReunionDeRoots
       ? await VotacionDeRoots.getTemasRoots()
       : [crearTema(tema, descripcion, urlDePresentacion, autor)];
-    const reunion = await repoReuniones.create({ abierta,nombre:nombreDeReunion });
+    const reunion = await repoReuniones.create({ abierta, nombre: nombreDeReunion });
     const temasNuevos = await repoTemas.guardarTemas(reunion, temas);
     return { ...(reunion.toJSON()), temas: temasNuevos.map((t) => t.toJSON()) };
   },
@@ -69,7 +71,6 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
   },
 
   obtenerAbiertas: async () => {
-
     const reuniones = await repoReuniones.findAllOpened();
     const reunionesPromises = reuniones.map(async (reunion) => {
       // Terrible N+1, sacar esto a futuro :)
@@ -81,6 +82,18 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
     return { reuniones: reunionesConTemas };
   },
 
-});
+  obtenerCerradas: async () => {
+    const reuniones = await repoReuniones.findAllClosed();
+    const reunionesPromises = reuniones.map(async (reunion) => {
+      // Terrible N+1, sacar esto a futuro :)
+      const temas = await repoTemas.findTemasDeReunion(reunion.id);
 
+      return { ...reunion.toJSON(), temas };
+    });
+    const reunionesConTemas = await Promise.all(reunionesPromises);
+    return { reuniones: reunionesConTemas };
+  },
+
+
+});
 export default ReunionController;

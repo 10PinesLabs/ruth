@@ -10,8 +10,8 @@ export default class ReunionesRepo {
     return models.Reunion.findByPk(id);
   }
 
-  create({ abierta,nombre }) {
-    return models.Reunion.create({ abierta,nombre });
+  create({ abierta, nombre }) {
+    return models.Reunion.create({ abierta, nombre });
   }
 
   findAllOpened() {
@@ -22,12 +22,19 @@ export default class ReunionesRepo {
     });
   }
 
-  // TODO cambiar, repite logica
 
   findAllClosed() {
     return models.Reunion.findAll({
       where: {
         abierta: false,
+      },
+    });
+  }
+
+  findAllWhereOpened(isOpened) {
+    return models.Reunion.findAll({
+      where: {
+        abierta: isOpened,
       },
     });
   }
