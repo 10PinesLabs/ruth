@@ -4,7 +4,7 @@ import notificador from './notificador';
 
 function validarReunionRapida(req) {
   const { tema, autor, nombre } = req.body;
-  if (tema == '' || nombre == '' || autor == '') {
+  if (tema === '' || nombre === '' || autor === '') {
     throw new Error('Faltan campos en la reunion');
   }
 }
@@ -70,8 +70,9 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
     }
   },
 
-  obtenerAbiertas: async () => {
-    const reuniones = await repoReuniones.findAllOpened();
+  obtenerReuniones: async (req) => {
+    let estaAbierta = req.query.estaAbierta.toLower === 'true';
+    const reuniones = await repoReuniones.findAllWhereOpened(estaAbierta);
     const reunionesPromises = reuniones.map(async (reunion) => {
       // Terrible N+1, sacar esto a futuro :)
       const temas = await repoTemas.findTemasDeReunion(reunion.id);
@@ -81,19 +82,6 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
     const reunionesConTemas = await Promise.all(reunionesPromises);
     return { reuniones: reunionesConTemas };
   },
-
-  obtenerCerradas: async () => {
-    const reuniones = await repoReuniones.findAllClosed();
-    const reunionesPromises = reuniones.map(async (reunion) => {
-      // Terrible N+1, sacar esto a futuro :)
-      const temas = await repoTemas.findTemasDeReunion(reunion.id);
-
-      return { ...reunion.toJSON(), temas };
-    });
-    const reunionesConTemas = await Promise.all(reunionesPromises);
-    return { reuniones: reunionesConTemas };
-  },
-
 
 });
 export default ReunionController;

@@ -34,16 +34,25 @@ describe('para reuniones cerradas', () => {
     await db.sequelize.close();
   });
 
-  test('si no hay devuelve una lista vacia', async () => {
+  test('si no hay reuniones cerradas devuelve una lista vacia', async () => {
+    const reunionesCerradas = await request(app).get('/api/reuniones?estaAbierta=false');
+
+    expect(reunionesCerradas.body.reuniones.length).toEqual(0);
+    expect(reunionesCerradas.body.reuniones).toEqual([]);
+  });
+
+  test('si hay reuniones cerradas las devuelve', async () => {
     const reunionesRepo = new ReunionesRepo();
     const repoTemas = new TemasRepo();
     const reunionCerrada = await reunionesRepo.create({ abierta: false, nombre: 'saraza' });
     await repoTemas.guardarTemas(reunionCerrada, [temaGenerico]);
 
-    const reunionesCerradas = await request(app).get('/api/reuniones/cerradas');
+    const reunionesCerradas = await request(app).get('/api/reuniones?estaAbierta=false');
 
     expect(reunionesCerradas.body.reuniones.length).toEqual(1);
     expect(reunionesCerradas.body.reuniones[0].id).toEqual(reunionCerrada.id);
     expect(reunionesCerradas.body.reuniones[0].temas[0].id).toEqual(temaGenerico.id);
   });
 });
+
+

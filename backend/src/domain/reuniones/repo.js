@@ -14,23 +14,6 @@ export default class ReunionesRepo {
     return models.Reunion.create({ abierta, nombre });
   }
 
-  findAllOpened() {
-    return models.Reunion.findAll({
-      where: {
-        abierta: true,
-      },
-    });
-  }
-
-
-  findAllClosed() {
-    return models.Reunion.findAll({
-      where: {
-        abierta: false,
-      },
-    });
-  }
-
   findAllWhereOpened(isOpened) {
     return models.Reunion.findAll({
       where: {
