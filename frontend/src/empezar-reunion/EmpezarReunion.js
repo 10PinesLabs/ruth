@@ -15,6 +15,7 @@ import BotonParaIniciarReunion from './BotonParaIniciarReunion';
 import {ThemedTextfield} from "../styles/theme";
 import {ReunionActivas} from "./ReunionesActivas";
 import {ExtensionLeyendaEmpresa, LeyendaEmpresa, Temas} from "../temario/Temario.styled";
+import FullWidthTabs from "./Tab";
 
 class EmpezarReunion extends React.Component {
   constructor(props) {
@@ -97,15 +98,10 @@ class EmpezarReunion extends React.Component {
               }
             </EmpezarReunionContainer>
             <ReunionesActivasContainer>
-              <ReunionesActivasTitle>Reuniones Abiertas</ReunionesActivasTitle>
-
-              <ReunionesActivasWrapper>
-                <ReunionActivas/>
-              </ReunionesActivasWrapper>
+              <FullWidthTabs/>
             </ReunionesActivasContainer>
           </ReunionesContainer>
     );
   }
 }
-
 export default withRouter(EmpezarReunion);

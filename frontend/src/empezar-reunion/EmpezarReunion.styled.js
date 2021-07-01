@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import {font, ThemedTextfield} from '../styles/theme';
 import {Button, SecondaryButton} from "../components/Button.styled";
+import Tab from "@material-ui/core/Tab";
 
 export const BotonesContainer = styled.div`
   margin-bottom: 3rem;
@@ -21,9 +22,11 @@ export const ReunionesActivasContainer = styled.div`
   margin: 1em;
 ` ;
 
-export const ReunionesActivasTitle = styled.span`
-  font-size: 1.7em;
-  margin-bottom: 1em;
+export const ReunionesActivasTitle = styled(Tab)`
+  > span{
+    font-size: large;
+    font-family: ${font.h1};
+  }
 ` ;
 
 export const ReunionesActivasWrapper = styled.span`
@@ -71,7 +74,6 @@ export const FormContainer = styled.div`
     padding: 1em;
 `;
 
-
 export const TitleAndButton = styled.div`
   display: flex;
   justify-content: space-around;
@@ -100,13 +102,10 @@ export const RuthTitle = styled.b`
   color: white;
 `;
 
-
-
 export const Title = styled.h1`
   font-size: ${font.sizeH1} ;
   font-family: ${font.h1};
   text-align: center;
   max-width: 10em;
 `;
-
 
