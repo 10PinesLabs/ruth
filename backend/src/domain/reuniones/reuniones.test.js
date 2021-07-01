@@ -54,3 +54,34 @@ describe('para reuniones cerradas', () => {
     expect(reunionesCerradas.body.reuniones[0].temas[0].id).toEqual(temaGenerico.id);
   });
 });
+
+describe('para reuniones abiertas', () => {
+  beforeAll(async () => {
+    await db.sequelize.sync({ force: true });
+  });
+
+  afterAll(async () => {
+    await db.sequelize.close();
+  });
+
+  test('si no hay reuniones abiertas devuelve una lista vacia', async () => {
+    const reunionesCerradas = await request(app).get('/api/reuniones?estaAbierta=true');
+
+    expect(reunionesCerradas.body.reuniones.length).toEqual(0);
+    expect(reunionesCerradas.body.reuniones).toEqual([]);
+  });
+
+  test('si hay reuniones abiertas las devuelve', async () => {
+    const reunionesRepo = new ReunionesRepo();
+    const repoTemas = new TemasRepo();
+    const reunionAbierta = await reunionesRepo.create({ abierta: true, nombre: 'unaReunion' });
+    await repoTemas.guardarTemas(reunionAbierta, [temaGenerico]);
+
+    const reunionesCerradas = await request(app).get('/api/reuniones?estaAbierta=true');
+
+    expect(reunionesCerradas.body.reuniones.length).toEqual(1);
+    expect(reunionesCerradas.body.reuniones[0].id).toEqual(reunionAbierta.id);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].id).toEqual(temaGenerico.id);
+  });
+});
+
