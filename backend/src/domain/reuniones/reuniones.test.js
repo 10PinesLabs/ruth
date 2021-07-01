@@ -54,5 +54,3 @@ describe('para reuniones cerradas', () => {
     expect(reunionesCerradas.body.reuniones[0].temas[0].id).toEqual(temaGenerico.id);
   });
 });
-
-
