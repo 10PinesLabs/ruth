@@ -28,7 +28,7 @@ export const ReunionActivas = () => {
     const history = useHistory();
     const [reuniones,setReuniones] = useState()
     useEffect(() => {
-        backend.obtenerReunionesAbiertas()
+        backend.obtenerReuniones(true)
             .then( ({reuniones}) => setReuniones(reuniones))
     }, []);
 

@@ -4,7 +4,7 @@ const requester = Requester.createDefaultRequester();
 
 const Backend = {
   getReunion(id) {
-    return requester.get('/reunion/'+id);
+    return requester.get(`/reunion/${id}`);
   },
 
   publicarEvento(evento) {
@@ -12,11 +12,11 @@ const Backend = {
   },
 
   empezarReunion(opcionesDeReunion) {
-    return requester.post('/reunionDeRoots', { abierta: true,...opcionesDeReunion });
+    return requester.post('/reunionDeRoots', { abierta: true, ...opcionesDeReunion });
   },
 
-  cerrarReunion(id,temas) {
-    return requester.put('/reunion', { id,abierta: false, temas });
+  cerrarReunion(id, temas) {
+    return requester.put('/reunion', { id, abierta: false, temas });
   },
 
   getPerfil() {
@@ -27,9 +27,10 @@ const Backend = {
     return requester.get('/usuarios');
   },
 
-  obtenerReunionesAbiertas(){
-    return requester.get('/reuniones/abiertas');
-  }
+  obtenerReuniones(estaActiva) {
+    return requester.get(`/reuniones?estaAbierta=${estaActiva}`);
+  },
 };
 
 export default Backend;
+
