@@ -1,9 +1,9 @@
 import request from 'supertest';
+import { response } from 'express';
 import ReunionesRepo from '~/domain/reuniones/repo';
 import app from '~/server';
 import db from '~/database/models';
 import TemasRepo from '~/domain/temas/repo';
-import {response} from "express";
 
 const temaGenerico = {
   autor: 'Ailen Muñoz',
@@ -51,10 +51,27 @@ describe('para reuniones cerradas', () => {
 
     const reunionesCerradas = await request(app).get('/api/reuniones?estaAbierta=false');
 
+    // código rta
     expect(response.statusCode).toEqual(200);
+    // reunion
     expect(reunionesCerradas.body.reuniones.length).toEqual(1);
     expect(reunionesCerradas.body.reuniones[0].id).toEqual(reunionCerrada.id);
+    expect(reunionesCerradas.body.reuniones[0].abierta).toEqual(reunionCerrada.abierta);
+    expect(reunionesCerradas.body.reuniones[0].nombre).toEqual(reunionCerrada.nombre);
+    // tema de la reunion
     expect(reunionesCerradas.body.reuniones[0].temas[0].id).toEqual(temaGenerico.id);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].autor).toEqual(temaGenerico.autor);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].descripcion).toEqual(temaGenerico.descripcion);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].duracion).toEqual(temaGenerico.duracion);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].linkDePresentacion).toEqual(temaGenerico.linkDePresentacion);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].mailDelAutor).toEqual(temaGenerico.mailDelAutor);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].obligatoriedad).toEqual(temaGenerico.obligatoriedad);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].prioridad).toEqual(temaGenerico.prioridad);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].propuestas).toEqual(temaGenerico.propuestas);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].reunionId).toEqual(temaGenerico.reunionId);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].temasParaRepasar).toEqual(temaGenerico.temasParaRepasar);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].tipo).toEqual(temaGenerico.tipo);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].titulo).toEqual(temaGenerico.titulo);
   });
 });
 
@@ -83,9 +100,26 @@ describe('para reuniones abiertas', () => {
 
     const reunionesCerradas = await request(app).get('/api/reuniones?estaAbierta=true');
 
+    // código rta
     expect(response.statusCode).toEqual(200);
+    // reunion
     expect(reunionesCerradas.body.reuniones.length).toEqual(1);
     expect(reunionesCerradas.body.reuniones[0].id).toEqual(reunionAbierta.id);
+    expect(reunionesCerradas.body.reuniones[0].abierta).toEqual(reunionAbierta.abierta);
+    expect(reunionesCerradas.body.reuniones[0].nombre).toEqual(reunionAbierta.nombre);
+    // tema de la reunion
     expect(reunionesCerradas.body.reuniones[0].temas[0].id).toEqual(temaGenerico.id);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].autor).toEqual(temaGenerico.autor);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].descripcion).toEqual(temaGenerico.descripcion);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].duracion).toEqual(temaGenerico.duracion);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].linkDePresentacion).toEqual(temaGenerico.linkDePresentacion);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].mailDelAutor).toEqual(temaGenerico.mailDelAutor);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].obligatoriedad).toEqual(temaGenerico.obligatoriedad);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].prioridad).toEqual(temaGenerico.prioridad);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].propuestas).toEqual(temaGenerico.propuestas);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].reunionId).toEqual(temaGenerico.reunionId);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].temasParaRepasar).toEqual(temaGenerico.temasParaRepasar);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].tipo).toEqual(temaGenerico.tipo);
+    expect(reunionesCerradas.body.reuniones[0].temas[0].titulo).toEqual(temaGenerico.titulo);
   });
 });
