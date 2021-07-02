@@ -8,6 +8,7 @@ export const CardContainer = styled.div(({type}) => `
   width: ${ type === "debate" ? '10em' : '14.5em'};
   margin: 0 5px;
   height:100%;
+  display: inline-table;
   `);
 
 export const ParticipantDataReactableContainer = styled.div(() => `
