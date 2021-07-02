@@ -25,3 +25,8 @@ export const SecondaryButton = styled(Button)`
     background: ${(props) => (!props.disabled ? colors.black10 : colors.white)};
   }
 `;
+
+export const UnirseButton = styled(Button)`
+  margin: 0.5em;
+  min-width: 11em;
+`;

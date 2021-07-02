@@ -4,19 +4,27 @@ import {CircularProgress, Paper, Table, TableBody, TableHead, TableRow} from "@m
 import {StyledTableCell} from "../minuta/TablaOradores.styled";
 import {TablaPinos} from "../minuta/Minuta.styled";
 import {useHistory} from "react-router-dom";
-import {Button} from "../components/Button.styled";
+import {UnirseButton} from "../components/Button.styled";
 
 const FilaReunion = ({reunion,history}) => {
-    const onClick = () => {
+    const handleClickUnirme = () => {
         history.push(`/${reunion.id}/`)
     }
+
+    const handleClickPresentar = () => {
+        history.push(`/${reunion.id}/presentador`)
+    }
+
     return <TableRow>
         <StyledTableCell >{reunion.temas.length > 1 ? "Reunion de Roots" : reunion.nombre || reunion.temas[0].titulo}</StyledTableCell>
         <StyledTableCell >{reunion.temas.length > 1 ? "Roots" : reunion.temas[0].autor}</StyledTableCell>
         <StyledTableCell >
-            <Button onClick={onClick}>
+            <UnirseButton onClick={handleClickPresentar}>
+                Presentar
+            </UnirseButton>
+            <UnirseButton onClick={handleClickUnirme}>
                 Unirme
-            </Button>
+            </UnirseButton>
         </StyledTableCell>
 
     </TableRow>
