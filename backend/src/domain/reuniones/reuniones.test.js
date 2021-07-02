@@ -33,90 +33,68 @@ function assertTemaValido(reunion, response, temaGuardado) {
     reunionId: reunion.id,
   };
 
-
   expect(response.body.reuniones[0].temas[0]).toEqual(temaGenericoGuardado);
 }
 
-describe('para reuniones cerradas', () => {
-  beforeAll(async () => {
+describe('para reuniones', () => {
+  beforeEach(async () => {
     await db.sequelize.sync({ force: true });
     jest
       .spyOn(global.Date, 'now')
       .mockImplementation(() => fechaDeHoy.toISOString());
   });
 
-  afterAll(async () => {
-    await db.sequelize.close();
+  describe('si son cerradas', () => {
+    test('si no hay reuniones cerradas devuelve una lista vacia', async () => {
+      const reunionesCerradas = await request(app).get('/api/reuniones?estaAbierta=false');
+
+      expect(response.statusCode).toEqual(200);
+      expect(reunionesCerradas.body.reuniones).toEqual([]);
+    });
   });
 
-  test('si no hay reuniones cerradas devuelve una lista vacia', async () => {
-    const reunionesCerradas = await request(app).get('/api/reuniones?estaAbierta=false');
 
-    expect(response.statusCode).toEqual(200);
-    expect(reunionesCerradas.body.reuniones.length).toEqual(0);
-    expect(reunionesCerradas.body.reuniones).toEqual([]);
-  });
-});
+  describe('para reuniones abiertas', () => {
+    test('si no hay reuniones abiertas devuelve una lista vacia', async () => {
+      const reunionesCerradas = await request(app).get('/api/reuniones?estaAbierta=true');
 
-
-describe('para reuniones abiertas', () => {
-  beforeAll(async () => {
-    await db.sequelize.sync({ force: true });
+      expect(response.statusCode).toEqual(200);
+      expect(reunionesCerradas.body.reuniones).toEqual([]);
+    });
   });
 
-  afterAll(async () => {
-    await db.sequelize.close();
-  });
-
-  test('si no hay reuniones abiertas devuelve una lista vacia', async () => {
-    const reunionesCerradas = await request(app).get('/api/reuniones?estaAbierta=true');
-
-    expect(response.statusCode).toEqual(200);
-    expect(reunionesCerradas.body.reuniones.length).toEqual(0);
-    expect(reunionesCerradas.body.reuniones).toEqual([]);
-  });
-});
-
-describe('para reuniones abiertas y cerradas', () => {
-  beforeEach(async () => {
-    await db.sequelize.sync({ force: true });
-  });
-
-  afterAll(async () => {
-    await db.sequelize.close();
-  });
-
-  test('si hay reuniones abiertas y cerradas y pido las cerradas', async () => {
-    const reunionesRepo = new ReunionesRepo();
-    const repoTemas = new TemasRepo();
-    const reunionCerrada = await reunionesRepo.create({ abierta: false, nombre: 'reunionCerrada' });
-    const reunionAbierta = await reunionesRepo.create({ abierta: true, nombre: 'reunionAbierta' });
-
-    const temasGuardados = await repoTemas.guardarTemas(reunionCerrada, [temaGenerico]);
-    await repoTemas.guardarTemas(reunionAbierta, [temaGenerico]);
+  describe('para reuniones abiertas y cerradas', () => {
+    test('si hay reuniones abiertas y cerradas y pido las cerradas', async () => {
+      const reunionesRepo = new ReunionesRepo();
+      const repoTemas = new TemasRepo();
+      const reunionCerrada = await reunionesRepo.create({ abierta: false, nombre: 'reunionCerrada' });
+      const reunionAbierta = await reunionesRepo.create({ abierta: true, nombre: 'reunionAbierta' });
+      const temasGuardados = await repoTemas.guardarTemas(reunionCerrada, [temaGenerico]);
+      await repoTemas.guardarTemas(reunionAbierta, [temaGenerico]);
 
 
-    const response = await request(app).get('/api/reuniones?estaAbierta=false');
+      const response = await request(app).get('/api/reuniones?estaAbierta=false');
 
-    expect(response.statusCode).toEqual(200);
-    expect(response.body.reuniones.length).toEqual(1);
-    expect(response.body.reuniones[0].id).toEqual(reunionCerrada.id);
-    assertTemaValido(reunionCerrada, response, temasGuardados[0]);
-  });
+      expect(response.statusCode).toEqual(200);
+      expect(response.body.reuniones.length).toEqual(1);
+      expect(response.body.reuniones[0].id).toEqual(reunionCerrada.id);
+      assertTemaValido(reunionCerrada, response, temasGuardados[0]);
+    });
 
-  test('si hay reuniones abiertas y cerradas y pido las abiertas', async () => {
-    const reunionesRepo = new ReunionesRepo();
-    const repoTemas = new TemasRepo();
-    const reunionAbierta = await reunionesRepo.create({ abierta: true, nombre: 'reunionAbierta' });
-    const reunionCerrada = await reunionesRepo.create({ abierta: false, nombre: 'reunionCerrada' });
-    const temasGuardados = await repoTemas.guardarTemas(reunionAbierta, [temaGenerico]);
-    await repoTemas.guardarTemas(reunionCerrada, [temaGenerico]);
+    test('si hay reuniones abiertas y cerradas y pido las abiertas', async () => {
+      const reunionesRepo = new ReunionesRepo();
+      const repoTemas = new TemasRepo();
+      const reunionAbierta = await reunionesRepo.create({ abierta: true, nombre: 'reunionAbierta' });
+      const reunionCerrada = await reunionesRepo.create({ abierta: false, nombre: 'reunionCerrada' });
+      const temasGuardados = await repoTemas.guardarTemas(reunionAbierta, [temaGenerico]);
+      await repoTemas.guardarTemas(reunionCerrada, [temaGenerico]);
 
-    const response = await request(app).get('/api/reuniones?estaAbierta=true');
+      const response = await request(app).get('/api/reuniones?estaAbierta=true');
 
-    expect(response.statusCode).toEqual(200);
-    expect(response.body.reuniones.length).toEqual(1);
-    expect(response.body.reuniones[0].id).toEqual(reunionAbierta.id);
-    assertTemaValido(reunionAbierta, response, temasGuardados[0]);
+      expect(response.statusCode).toEqual(200);
+      expect(response.body.reuniones.length).toEqual(1);
+      expect(response.body.reuniones[0].id).toEqual(reunionAbierta.id);
+      assertTemaValido(reunionAbierta, response, temasGuardados[0]);
+    });
   });
 });
