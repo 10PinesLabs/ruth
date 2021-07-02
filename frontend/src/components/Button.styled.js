@@ -8,8 +8,6 @@ export const Button = styled.button`
   border-radius: 0.2em;
   border: none;
   padding: 0.5em 3em;
-  margin: 0.5em;
-  min-width: 11em;
   cursor: ${(props) => (!props.disabled ? 'pointer' : null)};
   color: ${(props) => (!props.disabled ? colors.white : colors.black50)};
   font-family: ${font.p};
@@ -26,4 +24,9 @@ export const SecondaryButton = styled(Button)`
   &:hover {
     background: ${(props) => (!props.disabled ? colors.black10 : colors.white)};
   }
+`;
+
+export const UnirseButton = styled(Button)`
+  margin: 0.5em;
+  min-width: 11em;
 `;
