@@ -3,6 +3,7 @@ import ReunionesRepo from '~/domain/reuniones/repo';
 import app from '~/server';
 import db from '~/database/models';
 import TemasRepo from '~/domain/temas/repo';
+import {response} from "express";
 
 const temaGenerico = {
   autor: 'Ailen Muñoz',
@@ -37,6 +38,7 @@ describe('para reuniones cerradas', () => {
   test('si no hay reuniones cerradas devuelve una lista vacia', async () => {
     const reunionesCerradas = await request(app).get('/api/reuniones?estaAbierta=false');
 
+    expect(response.statusCode).toEqual(200);
     expect(reunionesCerradas.body.reuniones.length).toEqual(0);
     expect(reunionesCerradas.body.reuniones).toEqual([]);
   });
@@ -49,6 +51,7 @@ describe('para reuniones cerradas', () => {
 
     const reunionesCerradas = await request(app).get('/api/reuniones?estaAbierta=false');
 
+    expect(response.statusCode).toEqual(200);
     expect(reunionesCerradas.body.reuniones.length).toEqual(1);
     expect(reunionesCerradas.body.reuniones[0].id).toEqual(reunionCerrada.id);
     expect(reunionesCerradas.body.reuniones[0].temas[0].id).toEqual(temaGenerico.id);
@@ -67,6 +70,7 @@ describe('para reuniones abiertas', () => {
   test('si no hay reuniones abiertas devuelve una lista vacia', async () => {
     const reunionesCerradas = await request(app).get('/api/reuniones?estaAbierta=true');
 
+    expect(response.statusCode).toEqual(200);
     expect(reunionesCerradas.body.reuniones.length).toEqual(0);
     expect(reunionesCerradas.body.reuniones).toEqual([]);
   });
@@ -79,9 +83,9 @@ describe('para reuniones abiertas', () => {
 
     const reunionesCerradas = await request(app).get('/api/reuniones?estaAbierta=true');
 
+    expect(response.statusCode).toEqual(200);
     expect(reunionesCerradas.body.reuniones.length).toEqual(1);
     expect(reunionesCerradas.body.reuniones[0].id).toEqual(reunionAbierta.id);
     expect(reunionesCerradas.body.reuniones[0].temas[0].id).toEqual(temaGenerico.id);
   });
 });
-
