@@ -15,7 +15,7 @@ const FilaReunion = ({reunion,history}) => {
     return <TableRow>
         <StyledTableCell >{reunion.temas.length > 1 ? "Reunion de Roots" : reunion.nombre || reunion.temas[0].titulo}</StyledTableCell>
         <StyledTableCell >{reunion.temas.length > 1 ? "Roots" : reunion.temas[0].autor}</StyledTableCell>
-        <StyledTableCell >{"2021-07-01"}</StyledTableCell>
+        <StyledTableCell >{new Date(reunion.createdAt).toLocaleDateString('es')}</StyledTableCell>
         <StyledTableCell >
             <ButtonReunionCerrada className="boton-reunion-cerrada" /*onClick={onClick}*/>
                 Ver
