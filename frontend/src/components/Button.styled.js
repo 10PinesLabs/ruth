@@ -22,7 +22,7 @@ export const ButtonReunionCerrada = styled.button`
   background: ${(props) => (!props.disabled ? colors.primary : colors.black30)};
   border-radius: 0.2em;
   border: none;
-  padding: 0.7em;
+  padding: 0.5em;
   cursor: ${(props) => (!props.disabled ? 'pointer' : null)};
   color: ${(props) => (!props.disabled ? colors.white : colors.black50)};
   font-family: ${font.p};
