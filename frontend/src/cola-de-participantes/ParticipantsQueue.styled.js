@@ -17,6 +17,7 @@ export const QueuedCardsLeftContainerStyle = styled.div`
   flex-direction: row-reverse;
   overflow-x: auto;
   margin-top: 1em;
+  margin-left: 5em;
 `;
 
 export const QueuedCardsRightContainerStyle = styled.div`
