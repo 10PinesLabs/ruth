@@ -22,6 +22,7 @@ const temaGenerico = {
   titulo: 'HOla hola',
 };
 
+
 jest.mock('../login/estaLogueado', () => () => true);
 
 function assertTemaValido(reunion, response, temaGuardado) {
@@ -37,6 +38,13 @@ function assertTemaValido(reunion, response, temaGuardado) {
 }
 
 describe('para reuniones', () => {
+  let reunionesRepo;
+  let repoTemas;
+  let reunionCerrada;
+  let reunionAbierta;
+  let temasGuardadosCerrada;
+  let temasGuardadosAbierta;
+
   beforeEach(async () => {
     await db.sequelize.sync({ force: true });
     jest
@@ -45,56 +53,50 @@ describe('para reuniones', () => {
   });
 
   describe('si son cerradas', () => {
-    test('si no hay reuniones cerradas devuelve una lista vacia', async () => {
-      const reunionesCerradas = await request(app).get('/api/reuniones?estaAbierta=false');
+    test('y no hay reuniones cerradas devuelve una lista vacia', async () => {
+      const response = await request(app).get('/api/reuniones?estaAbierta=false');
 
       expect(response.statusCode).toEqual(200);
-      expect(reunionesCerradas.body.reuniones).toEqual([]);
+      expect(response.body.reuniones).toEqual([]);
     });
   });
 
 
-  describe('para reuniones abiertas', () => {
-    test('si no hay reuniones abiertas devuelve una lista vacia', async () => {
-      const reunionesCerradas = await request(app).get('/api/reuniones?estaAbierta=true');
+  describe('si son abiertas', () => {
+    test('y no hay reuniones abiertas devuelve una lista vacia', async () => {
+      const response = await request(app).get('/api/reuniones?estaAbierta=true');
 
       expect(response.statusCode).toEqual(200);
-      expect(reunionesCerradas.body.reuniones).toEqual([]);
+      expect(response.body.reuniones).toEqual([]);
     });
   });
 
   describe('para reuniones abiertas y cerradas', () => {
+    beforeEach(async () => {
+      reunionesRepo = new ReunionesRepo();
+      repoTemas = new TemasRepo();
+      reunionCerrada = await reunionesRepo.create({ abierta: false, nombre: 'reunionCerrada' });
+      reunionAbierta = await reunionesRepo.create({ abierta: true, nombre: 'reunionAbierta' });
+      temasGuardadosCerrada = await repoTemas.guardarTemas(reunionCerrada, [temaGenerico]);
+      temasGuardadosAbierta = await repoTemas.guardarTemas(reunionAbierta, [temaGenerico]);
+    });
+
     test('si hay reuniones abiertas y cerradas y pido las cerradas', async () => {
-      const reunionesRepo = new ReunionesRepo();
-      const repoTemas = new TemasRepo();
-      const reunionCerrada = await reunionesRepo.create({ abierta: false, nombre: 'reunionCerrada' });
-      const reunionAbierta = await reunionesRepo.create({ abierta: true, nombre: 'reunionAbierta' });
-      const temasGuardados = await repoTemas.guardarTemas(reunionCerrada, [temaGenerico]);
-      await repoTemas.guardarTemas(reunionAbierta, [temaGenerico]);
-
-
       const response = await request(app).get('/api/reuniones?estaAbierta=false');
 
       expect(response.statusCode).toEqual(200);
       expect(response.body.reuniones.length).toEqual(1);
       expect(response.body.reuniones[0].id).toEqual(reunionCerrada.id);
-      assertTemaValido(reunionCerrada, response, temasGuardados[0]);
+      assertTemaValido(reunionCerrada, response, temasGuardadosCerrada[0]);
     });
 
     test('si hay reuniones abiertas y cerradas y pido las abiertas', async () => {
-      const reunionesRepo = new ReunionesRepo();
-      const repoTemas = new TemasRepo();
-      const reunionAbierta = await reunionesRepo.create({ abierta: true, nombre: 'reunionAbierta' });
-      const reunionCerrada = await reunionesRepo.create({ abierta: false, nombre: 'reunionCerrada' });
-      const temasGuardados = await repoTemas.guardarTemas(reunionAbierta, [temaGenerico]);
-      await repoTemas.guardarTemas(reunionCerrada, [temaGenerico]);
-
       const response = await request(app).get('/api/reuniones?estaAbierta=true');
 
       expect(response.statusCode).toEqual(200);
       expect(response.body.reuniones.length).toEqual(1);
       expect(response.body.reuniones[0].id).toEqual(reunionAbierta.id);
-      assertTemaValido(reunionAbierta, response, temasGuardados[0]);
+      assertTemaValido(reunionAbierta, response, temasGuardadosAbierta[0]);
     });
   });
 });
