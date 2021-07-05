@@ -11,11 +11,12 @@ export const QueueContainer = styled.div`
   }
 `;
 
-
 export const QueuedCardsLeftContainerStyle = styled.div`
   grid-area: left;
   display: flex;
   flex-direction: row-reverse;
+  overflow-x: auto;
+  margin-top: 1em;
 `;
 
 export const QueuedCardsRightContainerStyle = styled.div`
