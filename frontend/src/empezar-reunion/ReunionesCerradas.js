@@ -8,7 +8,7 @@ import {ButtonReunionCerrada} from "../components/Button.styled";
 
 const FilaReunion = ({reunion,history}) => {
 
-   /* const onClick = () => {
+    /*const onClick = () => {
         history.push(`/${reunion.id}/`)
     }*/
 
@@ -40,7 +40,7 @@ export const ReunionCerradas = () => {
     const history = useHistory();
     const [reuniones,setReuniones] = useState()
     useEffect(() => {
-        backend.obtenerReunionesCerradas()
+        backend.obtenerReuniones(false)
             .then( ({reuniones}) => setReuniones(reuniones))
     }, []);
 
