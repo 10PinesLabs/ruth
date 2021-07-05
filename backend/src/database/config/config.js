@@ -11,12 +11,13 @@ module.exports = {
     ssl: true,
     dialectOptions: {
       ssl: {
-        rejectUnauthorized: false
-      }
-    }
+        rejectUnauthorized: false,
+      },
+    },
   },
   test: {
     dialect: 'sqlite',
     storage: ':memory:',
+    logging: false,
   },
 };
