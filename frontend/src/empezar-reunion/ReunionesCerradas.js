@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import backend from "../api/backend";
 import {CircularProgress, Paper, Table, TableBody, TableHead, TableRow} from "@material-ui/core";
 import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
 import {StyledTableCell} from "../minuta/TablaOradores.styled";
 import {TablaPinos} from "../minuta/Minuta.styled";
 import {useHistory} from "react-router-dom";
@@ -23,12 +24,12 @@ const FilaReunion = ({reunion}) => {
             <SecondaryButtonReunionCerrada>
                 Ver Minuta
             </SecondaryButtonReunionCerrada>
-            <Tooltip title="Reenviar mail de minuta">
+            <Tooltip title={<Typography color="inherit">Reenviar mail de minuta</Typography>}>
                 <ButtonIcono>
                     <FontAwesomeIcon icon={faEnvelope}/>
                 </ButtonIcono>
             </Tooltip>
-            <Tooltip title="Reenviar recordatorios de slack">
+            <Tooltip  title={<Typography color="inherit">Reenviar recordatorios de slack</Typography>}>
                 <ButtonIcono>
                     <FontAwesomeIcon icon={faSlack}/>
                 </ButtonIcono>
