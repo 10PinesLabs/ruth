@@ -2,6 +2,7 @@ import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import produce, { setAutoFreeze } from 'immer';
 import Backend from '../api/backend';
 import { reunionReducer } from "./reunion";
+import { toast } from 'react-toastify';
 import { createEvent } from './evento';
 
 setAutoFreeze(false);
@@ -14,7 +15,7 @@ export const stateEventoTypes = {
 
 export const stateEventos = {
 iniciarEnvioDeEvento: () => createEvent(stateEventoTypes.INICIAR_ENVIO),
-eventoConfirmadoPorBackend: (id) => createEvent(stateEventoTypes.ENVIO_CONFIRMADO, {id}),
+eventoConfirmadoPorBackend: (idConfirmado) => createEvent(stateEventoTypes.ENVIO_CONFIRMADO, {idConfirmado}),
 eventoRechazadoPorBackend: () => createEvent(stateEventoTypes.ENVIO_RECHAZADO),
 }
 
@@ -36,7 +37,7 @@ produce(state, (draft) => {
     }
     case stateEventoTypes.ENVIO_CONFIRMADO: {
       if (draft.esperandoConfirmacionDeEvento) {
-        if (draft.eventosEncolados.some((eventoId) => eventoId === action.payload)) {
+        if (draft.eventosEncolados.some((eventoId) => eventoId === action.idConfirmado)) {
           // el evento ya llego antes de que el backend nos confirmara asi que
           // No estamos esperando nada
           draft.eventosEncolados = [];
@@ -44,7 +45,7 @@ produce(state, (draft) => {
           draft.esperandoEventoId = null;
         } else {
           draft.esperandoConfirmacionDeEvento = false;
-          draft.esperandoEventoId = action.payload;
+          draft.esperandoEventoId = action.idConfirmado;
         }
       } else {
         console.warn('me llego un evento confirmado mientras no estaba esperando confirmacion...');
@@ -114,8 +115,17 @@ const wsForwarder = (store) => (next) => (action) => {
   }
 };
 
+const reunionAbiertaCheckMiddleware = (store) => (next) => (action) => {
+  let state = store.getState();
+  if(!state.reunion || state.reunion.abierta){
+    next(action)
+  }else{
+    toast.error('La reunion ya fue finalizada')
+  }
+}
+
 export default () =>
   configureStore({
     reducer: stateReducer,
-    middleware: [...getDefaultMiddleware(), wsForwarder],
+    middleware: [...getDefaultMiddleware(), reunionAbiertaCheckMiddleware, wsForwarder],
   });

@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
     alignSelf: "center",
     marginBottom: theme.spacing(1),
     borderCollapse: "collapse",
-    borderBottom: "2px solid rgba(0, 0, 0, 0.2)"
+    borderBottom: "2px solid rgba(0, 0, 0, 0.2)",
   },
   conclusionTextarea: {
     width: "100%",
@@ -43,7 +43,7 @@ export function ConclusionTitle(props) {
   return <h1 {...props} className={classes.conclusionTitle}>{props.children}</h1>;
 }
 
-export const BotonParaAbrirResumen = styled(Button)`
+export const BotonParaAbrirDesplegable = styled(Button)`
   && { 
     color: ${colors.primary};
     font-weight: bold;

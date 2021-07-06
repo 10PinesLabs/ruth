@@ -10,9 +10,10 @@ import Temario from '../temario/Temario';
 import Header from "./Header";
 import {useSpring} from "react-spring";
 import Mobile from '../mobile/index';
+import { temaEventos } from '../store/tema';
 
 
-const VistaTemas = ({actualizarTema, cerrarReunion, temas, usuario}) => {
+const VistaTemas = ({dispatch, cerrarReunion, temas, usuario}) => {
 
   const indiceTemaSinFinalizar = temas.findIndex((tema) => tema.fin === null);
   const ultimoTema = temas.length - 1;
@@ -29,16 +30,14 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas, usuario}) => {
 
   const empezarTema = () => {
     if (temaSeleccionado.inicio !== null) {
-      return toast.error('No se puede iniciar un tema que ya fue iniciado');
+      toast.error('No se puede iniciar un tema que ya fue iniciado');
+      return 
     }
     if(existeUnTemaEmpezado()){
-      return toast.error('Ya hay otro tema en curso');
+      toast.error('Ya hay otro tema en curso');
+      return
     }
-    return actualizarTema({
-      id: temaSeleccionado.id,
-      inicio: Date.now(),
-      fin: null,
-    });
+    dispatch(temaEventos.empezarTema(temaSeleccionado.id))
   };
 
   const existeUnTemaEmpezado = ()=> {
@@ -50,13 +49,19 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas, usuario}) => {
   } 
 
   const terminarTema = () => {
-    actualizarTema({
-      id: temaSeleccionado.id,
-      inicio: temaSeleccionado.inicio,
-      fin: Date.now(),
-    });
+    dispatch(temaEventos.terminarTema(temaSeleccionado.id))
     toast.success('Tema finalizado');
   };
+
+  const reabrirTema = () => {
+    if(existeUnTemaEmpezado()){
+      toast.error('Ya hay otro tema en curso');
+      return
+    }
+    dispatch(temaEventos.reabrirTema(temaSeleccionado.id))
+    toast.success('Tema reabierto');
+
+  }
 
   const handleCerrarReunion = () => {
     if (temaActivo()) {
@@ -83,16 +88,6 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas, usuario}) => {
     }
   };
 
-  const segundosRestantes = () => {
-    const {inicio, fin, cantidadDeMinutosDelTema} = temaSeleccionado;
-    if (inicio === null) {
-      return cantidadDeMinutosDelTema * 60;
-    }
-    const tiempo = fin === null ? Date.now() : Date.parse(fin);
-    return Math.round(cantidadDeMinutosDelTema * 60
-      - (tiempo - Date.parse(inicio)) / 1000);
-  };
-
   const temaActivo = () => {
     const {inicio, fin} = temaSeleccionado;
     return inicio !== null && fin === null;
@@ -110,15 +105,15 @@ const VistaTemas = ({actualizarTema, cerrarReunion, temas, usuario}) => {
       />
 
       {(selectedElement !== 'Opinar' &&
-      <Header titulo={temaSeleccionado.titulo}
-              segundosRestantes={segundosRestantes()}
-              temaActivo={temaActivo()}
+      <Header tema={temaSeleccionado}
+              estaActivo={temaActivo()}
       />)}
       <VistaTemaContainer shouldShowHeader={selectedElement !== 'Opinar'} style={propsToAnimate}>
         <VistaSeleccionada tema={temaSeleccionado}
                            usuario={usuario}
                            terminarTema={terminarTema}
                            empezarTema={empezarTema}
+                           reabrirTema={reabrirTema}
                            temaActivo={temaActivo()}
                            avanzarTema={avanzarTema}
                            retrocederTema={retrocederTema}

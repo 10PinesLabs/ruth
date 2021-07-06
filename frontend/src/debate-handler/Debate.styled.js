@@ -4,9 +4,8 @@ import {animated} from 'react-spring';
 export const GraphsAndLabelsContainer = styled.div`  
     display: flex;
     flex-direction: column;
-    flex: 1;
-    height: 50%;
     border-top: 1px solid silver;
+    height: 60%;
 `;
 
 export const SubDebateContainer = styled(animated.div)`  
@@ -26,4 +25,10 @@ export const GraphsContainer = styled.div`
 export const ReactionsContainer = styled.div`  
     display: flex;
     justify-content: space-around;
+`
+export const ParticipantsContainer = styled.div`
+display: flex;
+align-items: center;
+height: 40%;
+justify-content: center;
 `

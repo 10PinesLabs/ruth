@@ -26,6 +26,14 @@ const componerMailResumen = (reunion, temas, fecha) => {
     return 0;
   };
 
+  const parseResumen = (resumen) => {
+    if (resumen) {
+      return resumen.replace(/\n/g, '<br>');
+    }
+
+    return '';
+  };
+
   const timeStampElapsed = (fin, inicio) => Math.ceil((fin - inicio) / 1000);
 
   const minutosHablando = (orador) => Math
@@ -49,7 +57,13 @@ const componerMailResumen = (reunion, temas, fecha) => {
       <p>Temas:</p> 
       <ul> 
         <% temas.forEach((tema) => { %>
-            <li> <%= tema.titulo %> </li>
+         <li> 
+          <% if(tema.inicio){ %>
+              <b><%= tema.titulo %></b>
+            <% } else{ %>  
+              <%= tema.titulo %>
+          <% } %>
+          </li>
         <% }) %> 
       </ul>
       <% temasAListar.forEach((tema) => { %>
@@ -66,12 +80,18 @@ const componerMailResumen = (reunion, temas, fecha) => {
         <ul>
             <% tema.oradores.pasados.forEach((orador) => { %>
                 <li> 
-                    <p><%= orador.usuario.nombre %> (<%= tiempoHablando(orador) %>)</p>
-                    <p>Resumen: <%= orador.resumen %></p>
+                    <p><%- orador.usuario.nombre %> (<%= tiempoHablando(orador) %>)</p>
+                    <p>Resumen: <br><%- parseResumen(orador.resumen) %></p>
                     <ul>
-                          <li> Thumbs up: <%= orador.reacciones.thumbsUp.length %> </li>
-                          <li> Thumbs down: <%= orador.reacciones.thumbsDown.length %> </li>
-                          <li> Redondear: <%= orador.reacciones.redondeando.length %> </li>
+                          <% if(orador.reacciones.thumbsUp.length){ %>
+                            <li> Thumbs up: <%= orador.reacciones.thumbsUp.length %> </li>
+                          <% } %>
+                          <% if(orador.reacciones.thumbsDown.length){ %>
+                            <li> Thumbs down: <%= orador.reacciones.thumbsDown.length %> </li>
+                          <% } %>
+                          <% if(orador.reacciones.redondeando.length){ %>
+                            <li> Thumbs down: <%= orador.reacciones.redondeando.length %> </li>
+                          <% } %>
                     </ul>
                 </li>
             <% }) %>
@@ -90,6 +110,7 @@ const componerMailResumen = (reunion, temas, fecha) => {
       reaccionesATema,
       tiempoHablando,
       ownersActionItem,
+      parseResumen,
     }, 'utf8')
   );
 };

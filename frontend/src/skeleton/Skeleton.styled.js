@@ -48,10 +48,8 @@ export const SkeletonCircle = styled(SSkeletonPulse)`
 `;
 
 export const ReactionSkeletonContainer = styled.div`
-    height: 3.5em;
-    width: 3.5em;
-    margin-bottom: 1em;
-    margin-right: 1em;
+    height: 3em;
+    min-width: 3em;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -61,3 +59,13 @@ export const ReactionSkeletonContainer = styled.div`
     background: 'linear-gradient(145deg, rgb(230, 230, 230), rgb(200, 200, 200))';
 `;
 
+export const MobileCallToActionSkeletonContainer = styled.div`
+    height: 3em;
+    width: 12.5em;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: rgb(130, 130, 130) 4px 4px 10px, rgb(255, 255, 255) -4px -4px 10px;
+    background: 'linear-gradient(145deg, rgb(230, 230, 230), rgb(200, 200, 200))';
+`;

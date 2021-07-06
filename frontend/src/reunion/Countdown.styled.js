@@ -3,22 +3,22 @@ import { colors, font } from '../styles/theme';
 
 const timeIsUpAlarm = keyframes`
   0% {
-    color: ${colors.black50};
+    color: ${colors.black};
   }
   50% {
     color: ${colors.darkRed};
   }
   100% {
-    color: ${colors.black50};
+    color: ${colors.black};
   }
 `;
 
 const noAnimation = keyframes`
   0% {
-    color: ${colors.black50};
+    color: ${colors.black};
   }
   100% {
-    color: ${colors.black50};
+    color: ${colors.black};
   }
 `;
 
@@ -29,7 +29,7 @@ export const CountdownContainer = styled.div`
   padding: 0.7rem 0;
   text-align: center;
   width: 5em;
-
+  opacity:${(props) => props.opacity || 1};
   animation-name: ${(props) => (props.negative ? timeIsUpAlarm : noAnimation)};
   animation-duration: 2s;
   animation-timing-function: ease;

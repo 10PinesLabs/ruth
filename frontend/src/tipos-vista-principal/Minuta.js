@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import TablaOradores from "../minuta/TablaOradores";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons/faChevronDown";
-import {BotonParaAbrirResumen, TabRenderer, TabsHeader, CustomTab} from "../minuta/Minuta.styled";
+import {BotonParaAbrirDesplegable, TabRenderer, TabsHeader, CustomTab} from "../minuta/Minuta.styled";
 import Collapse from '@material-ui/core/Collapse';
 import { ActionItemEditor } from "../minuta/ActionItemEditor";
 import { ResumenOrador } from "../minuta/ResumenOrador";
@@ -33,6 +33,7 @@ const Minuta = ({ dispatch, tema }) => {
   let [tabValue, setTabValue] = useState(0);
   let [seActualizaExposicionSeleccionada, setActualizarExposicionSeleccionada] = useState(false)
   let [isResumenOradorCerrado, setIsResumenOradorCerrado] = useState(false);
+  let [isCreadorActionItemCerrado, setIsCreadorActionItemCerrado] = useState(false)
   
   const handleCambioConclusion = () => {
     if (!estaEditandoConclusion) {
@@ -121,6 +122,8 @@ const Minuta = ({ dispatch, tema }) => {
 
   const textoBotonEdicion = () => (isResumenOradorCerrado ? 'CERRAR EDICION' : 'ABRIR EDICION');
 
+  const textoBotonCreadorActionItems = () => !isCreadorActionItemCerrado ? 'Abrir creador de action items' : 'Cerrar creador';
+
   return (
     <VistaDelMedioContainer
       style={useSpring({ opacity: 1, from: { opacity: 0 } })}
@@ -138,13 +141,13 @@ const Minuta = ({ dispatch, tema }) => {
           value={tabValue}
           index={0}
         >
-          <BotonParaAbrirResumen
+          <BotonParaAbrirDesplegable
             variant="outlined"
             endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
             onClick={() => setIsResumenOradorCerrado(!isResumenOradorCerrado)}
           >
             {textoBotonEdicion()}
-          </BotonParaAbrirResumen>
+          </BotonParaAbrirDesplegable>
           <Collapse in={isResumenOradorCerrado}>
             <Box
               display={"flex"}
@@ -175,7 +178,22 @@ const Minuta = ({ dispatch, tema }) => {
             </Grid>
             <Grid item xs={7}>
               <h1>Action Items ({tema.actionItems.length})</h1>
-              <ActionItemEditor onSubmit={agregarActionItem}/>
+              <BotonParaAbrirDesplegable
+                variant="outlined"
+                endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
+                onClick={() => setIsCreadorActionItemCerrado(!isCreadorActionItemCerrado)}
+              >
+              {textoBotonCreadorActionItems()}
+              </BotonParaAbrirDesplegable>
+              <Collapse in={isCreadorActionItemCerrado}>
+                <Box
+                  display={"flex"}
+                  width={1}
+                  justifyContent={"center"}
+                >
+                  <ActionItemEditor onSubmit={agregarActionItem}/>
+                </Box>
+              </Collapse>
               <ListaActionItems actionItems={tema.actionItems} alBorrar={borrarActionItem} onEdit={editarActionItem} />
             </Grid>
           </Grid>

@@ -1,7 +1,7 @@
 {
   "name": "ruth",
   "version": "1.0.0",
-  "description": "Presentacionse roots",
+  "description": "Gestión de la reunión de roots",
   "main": "index.js",
   "scripts": {
     "start": "cd backend/build && node index.js",
@@ -53,9 +53,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.26",
     "@fortawesome/free-solid-svg-icons": "^5.12.0",
     "@fortawesome/react-fontawesome": "^0.1.8",
-    "chart.js": "^2.9.3",
-    "lodash": "^4.17.15",
-    "lodash.pick": "^4.4.0",
+    "chart.js": "^2.9.4",
     "react-chartjs-2": "^2.8.0"
   }
 }

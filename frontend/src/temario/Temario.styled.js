@@ -46,13 +46,13 @@ export const LeyendaEmpresa = styled.div`
   font-family: ${font.p};
   font-size:  ${font.sizeH2};
   letter-spacing: -3px;
-  color: white;
+  color: black;
 `;
 
 export const ExtensionLeyendaEmpresa = styled.div`
   font-family: ${font.p};
   font-size:  ${font.sizeP};
-  color: white;
+  color: black;
   margin-bottom: 2em;
 `;
 

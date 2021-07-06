@@ -17,7 +17,7 @@ export const colors = {
   primary: '#00AC83',
   secondary: '#448495',
   lightGrey: '#E0E0E0',
-  darkRed: '#FF7F7F',
+  darkRed: '#d32f2f',
   black50: '#7F7F7F',
   black40: '#AFAFAF',
   black30: '#DADADA',
@@ -43,7 +43,7 @@ export const sizeBreakpoint = {
   small: '768px',
   medium: '1024px',
   large: '1366px',
-  xlarge: '1920px',
+  xlarge: '1800px',
   xxlarge: '2560px',
 };
 
@@ -78,3 +78,5 @@ export const ThemedTextfield = withStyles({
     },
   },
 })(TextField);
+
+
