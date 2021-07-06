@@ -10,14 +10,11 @@ import {ButtonIcono, ButtonReunionCerrada, SecondaryButtonReunionCerrada} from "
 import {faSlack} from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Reunion} from "./Reunion";
 
 const FilaReunion = ({reunion}) => {
 
-    return <TableRow>
-        <StyledTableCell >{reunion.temas.length > 1 ? "Reunion de Roots" : reunion.nombre || reunion.temas[0].titulo}</StyledTableCell>
-        <StyledTableCell >{reunion.temas.length > 1 ? "Roots" : reunion.temas[0].autor}</StyledTableCell>
-        <StyledTableCell >{new Date(reunion.createdAt).toLocaleDateString('es')}</StyledTableCell>
-        <StyledTableCell >
+    return <StyledTableCell>
             <ButtonReunionCerrada>
                 Ver
             </ButtonReunionCerrada>
@@ -35,42 +32,13 @@ const FilaReunion = ({reunion}) => {
                 </ButtonIcono>
             </Tooltip>
         </StyledTableCell>
-
-    </TableRow>
 }
 
 
 export const ReunionCerradas = () => {
 
-    const history = useHistory();
-    const [reuniones,setReuniones] = useState()
-    useEffect(() => {
-        backend.obtenerReuniones(false)
-            .then( ({reuniones}) => setReuniones(reuniones))
-    }, []);
-
-    if(!reuniones){
-        return <CircularProgress/>
-    }
-
     return <>
-        <TablaPinos>
-            <Paper>
-                <Table aria-label="customized table">
-                    <TableHead>
-                        <TableRow>
-                            <StyledTableCell>Nombre de reunion</StyledTableCell>
-                            <StyledTableCell>Autor</StyledTableCell>
-                            <StyledTableCell>Fecha</StyledTableCell>
-                            <StyledTableCell>Acciones</StyledTableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {reuniones.map(reunion => <FilaReunion history={history} reunion={reunion} />)}
-                    </TableBody>
-                </Table>
-            </Paper>
-        </TablaPinos>
+        <Reunion estaAbierta={false} listaDeColumnas={["Nombre de reunion", "Autor", "Fecha", "Acciones"]} CallToActionButton={FilaReunion}/>
     </>
 
 }

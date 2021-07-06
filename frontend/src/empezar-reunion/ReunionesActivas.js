@@ -1,9 +1,5 @@
-import React, {useEffect, useState} from "react";
-import backend from "../api/backend";
-import {CircularProgress, Paper, Table, TableBody, TableHead, TableRow} from "@material-ui/core";
+import React from "react";
 import {StyledTableCell} from "../minuta/TablaOradores.styled";
-import {TablaPinos} from "../minuta/Minuta.styled";
-import {useHistory} from "react-router-dom";
 import {UnirseButton} from "../components/Button.styled";
 import {Reunion} from "./Reunion";
 
@@ -16,7 +12,7 @@ const FilaReunion = ({reunion,history}) => {
         history.push(`/${reunion.id}/presentador`)
     }
 
-    return <StyledTableCell >
+    return <StyledTableCell>
             <UnirseButton onClick={handleClickPresentar}>
                 Presentar
             </UnirseButton>

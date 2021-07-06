@@ -4,18 +4,15 @@ import {CircularProgress, Paper, Table, TableBody, TableHead, TableRow} from "@m
 import {StyledTableCell} from "../minuta/TablaOradores.styled";
 import {TablaPinos} from "../minuta/Minuta.styled";
 import {useHistory} from "react-router-dom";
-import {ButtonIcono, ButtonReunionCerrada, SecondaryButtonReunionCerrada} from "../components/Button.styled";
-import Tooltip from "@material-ui/core/Tooltip";
-import Typography from "@material-ui/core/Typography";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEnvelope} from "@fortawesome/free-solid-svg-icons";
-import {faSlack} from "@fortawesome/free-brands-svg-icons";
 
-const FilaReunion = ({reunion, CallToActionButton}) => {
+const FilaReunion = ({history, reunion, CallToActionButton, estaAbierta}) => {
     return <TableRow>
         <StyledTableCell >{reunion.temas.length > 1 ? "Reunion de Roots" : reunion.nombre || reunion.temas[0].titulo}</StyledTableCell>
         <StyledTableCell >{reunion.temas.length > 1 ? "Roots" : reunion.temas[0].autor}</StyledTableCell>
-        <CallToActionButton/>
+        {
+            !estaAbierta && <StyledTableCell>{new Date(reunion.createdAt).toLocaleDateString('es')}</StyledTableCell>
+        }
+        <CallToActionButton history={history} reunion={reunion}/>
     </TableRow>
 }
 
@@ -47,7 +44,7 @@ export const Reunion = ({estaAbierta, listaDeColumnas, CallToActionButton}) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {reuniones.map(reunion => <FilaReunion history={history} reunion={reunion} CallToActionButton={CallToActionButton}/>)}
+                        {reuniones.map(reunion => <FilaReunion history={history} reunion={reunion} estaAbierta={estaAbierta} CallToActionButton={CallToActionButton}/>)}
                     </TableBody>
                 </Table>
             </Paper>
