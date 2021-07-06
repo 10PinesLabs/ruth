@@ -15,7 +15,7 @@ export const font = {
 
 export const colors = {
   primary: '#00AC83',
-  secondary: '#448495',
+  secondary: '#929b9e78',
   lightGrey: '#E0E0E0',
   darkRed: '#d32f2f',
   black50: '#7F7F7F',
@@ -27,6 +27,7 @@ export const colors = {
   viridian: '#448475',
   downy: '#68c9b2',
   white: '#FFFFFF',
+  black: '#000000',
   thumbsUp: '#68A1EA',
   thumbsDown: '#FFB3BA',
   slack: '#FFDFBA',

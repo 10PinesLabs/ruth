@@ -4,10 +4,12 @@ import {CircularProgress, Paper, Table, TableBody, TableHead, TableRow} from "@m
 import {StyledTableCell} from "../minuta/TablaOradores.styled";
 import {TablaPinos} from "../minuta/Minuta.styled";
 import {useHistory} from "react-router-dom";
-import {ButtonReunionCerrada} from "../components/Button.styled";
+import {ButtonIconoSlack, ButtonReunionCerrada, SecondaryButtonReunionCerrada} from "../components/Button.styled";
+import {faSlack} from "@fortawesome/free-brands-svg-icons";
+import {IconContainer} from "../chart/Chart.styled";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const FilaReunion = ({reunion,history}) => {
-
     /*const onClick = () => {
         history.push(`/${reunion.id}/`)
     }*/
@@ -20,15 +22,14 @@ const FilaReunion = ({reunion,history}) => {
             <ButtonReunionCerrada className="boton-reunion-cerrada" /*onClick={onClick}*/>
                 Ver
             </ButtonReunionCerrada>
-            <ButtonReunionCerrada className="boton-reunion-cerrada" /*onClick={onClick}*/>
+            <SecondaryButtonReunionCerrada className="boton-reunion-cerrada" /*onClick={onClick}*/>
                 Ver Minuta
-            </ButtonReunionCerrada>
+            </SecondaryButtonReunionCerrada>
             <ButtonReunionCerrada className="boton-reunion-cerrada" /*onClick={onClick}*/>
                 Reenviar mail de minuta
             </ButtonReunionCerrada>
-            <ButtonReunionCerrada className="boton-reunion-cerrada" /*onClick={onClick}*/>
-                Reenviar recordatorios de slack
-            </ButtonReunionCerrada>
+            <FontAwesomeIcon icon={faSlack} size='1x' color='black' backgroundColor={'#FFDFBA'}/>
+
         </StyledTableCell>
 
     </TableRow>

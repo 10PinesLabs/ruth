@@ -32,6 +32,19 @@ export const ButtonReunionCerrada = styled.button`
   }
 `;
 
+export const SecondaryButtonReunionCerrada = styled(ButtonReunionCerrada)`
+  background: ${(props) => (!props.disabled ? colors.secondary : colors.black30)};
+  color: ${(props) => (!props.disabled ? colors.black : colors.black50)};
+  &:hover {
+    background: ${(props) => (!props.disabled ? colors.black40 : colors.black30)};
+  }
+`;
+
+export const ButtonIconoSlack = styled(ButtonReunionCerrada)`
+  background: ${(props) => (!props.disabled ? colors.white : colors.black30)};
+  color: ${(props) => (!props.disabled ? colors.black : colors.black50)};
+`;
+
 export const SecondaryButton = styled(Button)`
   border: 0.07em solid;
   border-color: ${(props) => (!props.disabled ? colors.downy : colors.black30)};
