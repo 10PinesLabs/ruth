@@ -40,7 +40,7 @@ export const SecondaryButtonReunionCerrada = styled(ButtonReunionCerrada)`
   }
 `;
 
-export const ButtonIconoSlack = styled(ButtonReunionCerrada)`
+export const ButtonIcono = styled(ButtonReunionCerrada)`
   background: ${(props) => (!props.disabled ? colors.secondary : colors.black30)};
   color: ${(props) => (!props.disabled ? colors.black : colors.black50)};
   &:hover {
