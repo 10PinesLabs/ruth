@@ -13,7 +13,7 @@ import Mobile from '../mobile/index';
 import { temaEventos } from '../store/tema';
 
 
-const VistaTemas = ({dispatch, cerrarReunion, temas, usuario}) => {
+const VistaTemas = ({dispatch, cerrarReunion, temas, usuario, estadoReunion}) => {
 
   const indiceTemaSinFinalizar = temas.findIndex((tema) => tema.fin === null);
   const ultimoTema = temas.length - 1;
@@ -54,6 +54,10 @@ const VistaTemas = ({dispatch, cerrarReunion, temas, usuario}) => {
   };
 
   const reabrirTema = () => {
+    if(estadoReunion === false){
+      toast.error('Esta reunion está cerrada, no se puede abrir un tema');
+      return;
+    }
     if(existeUnTemaEmpezado()){
       toast.error('Ya hay otro tema en curso');
       return

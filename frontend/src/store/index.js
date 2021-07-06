@@ -117,13 +117,13 @@ const wsForwarder = (store) => (next) => (action) => {
 };
 
 const reunionAbiertaCheckMiddleware = (store) => (next) => (action) => {
-  let state = store.getState();
-  if(!state.reunion || state.reunion.abierta){
-    next(action)
-  }else{
-    toast.error('La reunion ya fue finalizada')
+  const state = store.getState();
+  if (!state.reunion || state.reunion.abierta || !state.reunion.abierta) {
+    next(action);
+  } else {
+    toast.error('La reunion ya fue finalizada');
   }
-}
+};
 
 export default () =>
   configureStore({

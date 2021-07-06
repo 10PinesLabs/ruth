@@ -31,11 +31,12 @@ const Reunion = ({ usuario }) => {
   }
 
   return <>
-    <GlobalStyle/>
-    <Provider store={store}>
-        <Route exact path="/:reunionId/presentador" component={() => <TemasHandler usuario={usuario} />} />
-        <Route exact path="/:reunionId" component={() => <Mobile usuario={usuario}/>}/>
-    </Provider>
+        <GlobalStyle/>
+        <Provider store={store}>
+            <Route exact path="/:reunionId/presentador" component={() => <TemasHandler usuario={usuario}/>}/>
+            <Route exact path="/:reunionId/ver" component={() => <TemasHandler usuario={usuario}/>}/>
+            <Route exact path="/:reunionId" component={() => <Mobile usuario={usuario}/>}/>
+        </Provider>
   </>;
 };
 

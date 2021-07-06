@@ -57,7 +57,7 @@ export function useRuthConnectedStore(reunion) {
   const [store, setStore] = useState();
 
   useEffect(() => {
-    if (!reunion || !reunion.abierta) {
+    if (!reunion) {
       return;
     }
     const ws = new ReconnectingWebSocket(reunion.id);

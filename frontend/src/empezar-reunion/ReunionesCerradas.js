@@ -8,8 +8,12 @@ import { StyledTableCell } from '../minuta/TablaOradores.styled';
 import { ButtonIcono, ButtonReunionCerrada, SecondaryButtonReunionCerrada } from '../components/Button.styled';
 import { Reuniones } from './Reuniones';
 
-const FilaReunion = () => <StyledTableCell>
-            <ButtonReunionCerrada>
+    const onClick = () => {
+        history.push(`/${reunion.id}/ver`);
+    }
+
+    const FilaReunion = () => <StyledTableCell>
+            <ButtonReunionCerrada onClick={onClick}>
                 Ver
             </ButtonReunionCerrada>
             <SecondaryButtonReunionCerrada>
