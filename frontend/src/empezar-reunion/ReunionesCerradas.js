@@ -1,13 +1,12 @@
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
-import {faSlack} from '@fortawesome/free-brands-svg-icons';
-import {faEnvelope} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {StyledTableCell} from '../minuta/TablaOradores.styled';
-import {ButtonIcono, ButtonReunionCerrada, SecondaryButtonReunionCerrada} from '../components/Button.styled';
-import {Reuniones} from './Reuniones';
+import { faSlack } from '@fortawesome/free-brands-svg-icons';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { StyledTableCell } from '../minuta/TablaOradores.styled';
+import { ButtonIcono, ButtonReunionCerrada, SecondaryButtonReunionCerrada } from '../components/Button.styled';
+import { Reuniones } from './Reuniones';
 import React from 'react';
-
 
 const FilaReunion = ({reunion, history}) => {
   const handleClickVer = () => {

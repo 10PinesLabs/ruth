@@ -21,6 +21,7 @@ eventoRechazadoPorBackend: () => createEvent(stateEventoTypes.ENVIO_RECHAZADO),
 
 const INITIAL_STATE = {
   reunion: null,
+  ultimoEventoId: null,
   esperandoEventoId: null,
   esperandoConfirmacionDeEvento: false,
   eventosEncolados: [],
