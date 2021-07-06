@@ -29,6 +29,10 @@ const VistaTemas = ({dispatch, cerrarReunion, temas, usuario, estadoReunion}) =>
   }, [indiceTemaATratar]);
 
   const empezarTema = () => {
+    if(estadoReunion === false){
+      toast.error('Esta reunion está cerrada, no se puede abrir un tema');
+      return;
+    }
     if (temaSeleccionado.inicio !== null) {
       toast.error('No se puede iniciar un tema que ya fue iniciado');
       return 

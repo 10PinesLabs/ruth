@@ -9,7 +9,6 @@ import { reunionEventos } from '../store/reunion';
 
 class TemasHandler extends React.Component {
     cerrarReunion = (temas) => {
-      console.log(this.props.estadoReunion);
 
       backend.cerrarReunion(this.props.reunionId, temas)
         .then(() => {
