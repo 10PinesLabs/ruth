@@ -17,8 +17,7 @@ export const QueuedCardsLeftContainerStyle = styled.div`
   flex-direction: row-reverse;
   overflow-x: auto;
   overflow-y: hidden;
-  margin-top: 1em;
-  margin-left: 5em;
+  margin-left: 2em;
   &::-webkit-scrollbar {
     display: none;
   }
