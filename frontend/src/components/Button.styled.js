@@ -26,7 +26,7 @@ export const ButtonReunionCerrada = styled.button`
   cursor: ${(props) => (!props.disabled ? 'pointer' : null)};
   color: ${(props) => (!props.disabled ? colors.white : colors.black50)};
   font-family: ${font.p};
-  margin: 0em 0.1em 0.1em 0.1em;
+  margin: 0em 0.5em 0.1em 0.5em;
   &:hover {
     background: ${(props) => (!props.disabled ? colors.viridian : colors.black30)};
   }
