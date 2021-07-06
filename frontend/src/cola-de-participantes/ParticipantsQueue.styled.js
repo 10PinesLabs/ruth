@@ -16,8 +16,12 @@ export const QueuedCardsLeftContainerStyle = styled.div`
   display: flex;
   flex-direction: row-reverse;
   overflow-x: auto;
+  overflow-y: hidden;
   margin-top: 1em;
   margin-left: 5em;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const QueuedCardsRightContainerStyle = styled.div`
