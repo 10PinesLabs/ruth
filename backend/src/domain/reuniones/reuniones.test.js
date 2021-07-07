@@ -73,7 +73,6 @@ describe('para reuniones', () => {
     });
   });
 
-
   describe('si son abiertas', () => {
     test('y no hay reuniones abiertas devuelve una lista vacia', async () => {
       const response = await request(app).get('/api/reuniones?estaAbierta=true');
