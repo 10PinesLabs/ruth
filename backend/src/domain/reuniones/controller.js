@@ -1,6 +1,7 @@
 import VotacionDeRoots from '../votacionDeRoots/votacionDeRoots';
 import enviarResumenPorMail from '~/domain/mail/mail';
 import notificador from './notificador';
+import { RequestError } from '~/utils/asyncMiddleware';
 
 function validarReunionRapida(req) {
   const { tema, autor, nombre } = req.body;
@@ -62,6 +63,9 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
   actualizar: async (req) => {
     const { abierta, temas, id } = req.body;
     const reunionAActualizar = await repoReuniones.findOneById(id);
+    if (!reunionAActualizar.abierta) {
+      throw new RequestError(403, 'No se puede actualizar una reunion cerrada');
+    }
     await reunionAActualizar.update({ abierta });
 
     if (!abierta) {

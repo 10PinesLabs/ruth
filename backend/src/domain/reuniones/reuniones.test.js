@@ -59,6 +59,18 @@ describe('para reuniones', () => {
       expect(response.statusCode).toEqual(200);
       expect(response.body.reuniones).toEqual([]);
     });
+
+    test('y se intenta actualizar alguna debería fallar', async () => {
+      reunionesRepo = new ReunionesRepo();
+      repoTemas = new TemasRepo();
+      reunionCerrada = await reunionesRepo.create({ abierta: false, nombre: 'reunionCerrada' });
+      temasGuardadosCerrada = await repoTemas.guardarTemas(reunionCerrada, [temaGenerico]);
+      const requestBody = { abierta: reunionCerrada.abierta, id: reunionCerrada.id, temas: temasGuardadosCerrada };
+
+      const response = await request(app).put('/api/reunion').send(requestBody);
+
+      expect(response.status).toEqual(403);
+    });
   });
 
 
