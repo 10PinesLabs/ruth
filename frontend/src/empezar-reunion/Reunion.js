@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import backend from "../api/backend";
-import {CircularProgress, Paper, Table, TableBody, TableHead, TableRow} from "@material-ui/core";
+import {CircularProgress, Paper, TableBody, TableHead, TableRow} from "@material-ui/core";
 import {StyledTableCell} from "../minuta/TablaOradores.styled";
 import {TablaPinos} from "../minuta/Minuta.styled";
 import {useHistory} from "react-router-dom";
@@ -39,7 +39,6 @@ export const Reunion = ({estaAbierta, listaDeColumnas, CallToActionButton}) => {
     return <>
         <Paper>
             <TablaPinos>
-
                 <TableHead>
                     <TableRow>
                         {
@@ -56,7 +55,6 @@ export const Reunion = ({estaAbierta, listaDeColumnas, CallToActionButton}) => {
                                                                             estaAbierta={estaAbierta}
                                                                             CallToActionButton={CallToActionButton}/>)}
                 </TableBody>
-
             </TablaPinos>
         </Paper>
     </>

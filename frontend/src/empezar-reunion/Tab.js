@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import {useTheme} from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import {ReunionesActivasWrapper, ReunionesActivasTitle} from "./EmpezarReunion.styled";
 import {ReunionActivas} from "./ReunionesActivas";
