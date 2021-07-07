@@ -8,7 +8,7 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Reunion} from "./Reunion";
 
-const FilaReunion = ({reunion}) => {
+const FilaReunion = () => {
 
     return <StyledTableCell>
             <ButtonReunionCerrada>

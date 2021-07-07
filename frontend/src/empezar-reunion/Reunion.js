@@ -23,32 +23,42 @@ export const Reunion = ({estaAbierta, listaDeColumnas, CallToActionButton}) => {
     useEffect(() => {
         backend.obtenerReuniones(estaAbierta)
             .then( ({reuniones}) => setReuniones(reuniones))
-    }, []);
+    }, [estaAbierta]);
 
     if(!reuniones){
         return <CircularProgress/>
     }
 
+    const ordenarReunionesCerradas = () => {
+        if(!estaAbierta){
+            return reuniones.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        }
+        return reuniones
+    }
+
     return <>
-        <TablaPinos>
-            <Paper>
-                <Table aria-label="customized table">
-                    <TableHead>
-                        <TableRow>
-                            {
-                                listaDeColumnas.map((columna) => (
-                                    <StyledTableCell>{columna}</StyledTableCell>
-                                    )
+        <Paper>
+            <TablaPinos>
+
+                <TableHead>
+                    <TableRow>
+                        {
+                            listaDeColumnas.map((columna) => (
+                                    <StyledTableCell key={columna}>{columna}</StyledTableCell>
                                 )
-                            }
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {reuniones.map(reunion => <FilaReunion history={history} reunion={reunion} estaAbierta={estaAbierta} CallToActionButton={CallToActionButton}/>)}
-                    </TableBody>
-                </Table>
-            </Paper>
-        </TablaPinos>
+                            )
+                        }
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {ordenarReunionesCerradas().map(reunion => <FilaReunion key={reunion.id} history={history}
+                                                                            reunion={reunion}
+                                                                            estaAbierta={estaAbierta}
+                                                                            CallToActionButton={CallToActionButton}/>)}
+                </TableBody>
+
+            </TablaPinos>
+        </Paper>
     </>
 
 }

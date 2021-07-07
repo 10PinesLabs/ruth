@@ -22,7 +22,7 @@ function TabPanel(props) {
         >
             {value === index && (
                 <Box p={3}>
-                    <Typography>{children}</Typography>
+                    {children}
                 </Box>
             )}
         </div>
@@ -60,7 +60,7 @@ export default function FullWidthTabs() {
                 <ReunionesActivasTitle label="Reuniones Cerradas"/>
             </Tabs>
             <SwipeableViews
-                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}  //lo que hace es mover la tab de forma mas amena
                 index={value}
                 onChangeIndex={handleChangeIndex}
             >
