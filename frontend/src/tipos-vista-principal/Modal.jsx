@@ -11,7 +11,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export const ModalDeConfirmacion = ({ title, open, onClose, onConfirm, cancelText="Cancelar", confirmText="Confirmar"}) => (
+export const ModalDeConfirmacion = ({ title, open, onClose, onConfirm, cancelText="Cancelar", confirmText="Confirmar", Body}) => (
   <Dialog
     open={ open }
     onClose={ onClose }
@@ -25,6 +25,9 @@ export const ModalDeConfirmacion = ({ title, open, onClose, onConfirm, cancelTex
         {title}
       </Typography>
     </DialogTitle>
+    {
+      Body && <Body/>
+    }
     <DialogActions>
       <SecondaryButton onClick={ onClose }>
         {cancelText}
