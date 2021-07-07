@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {font, ThemedTextfield} from '../styles/theme';
+import {font} from '../styles/theme';
 import {Button, SecondaryButton} from "../components/Button.styled";
 import Tab from "@material-ui/core/Tab";
 

@@ -8,13 +8,12 @@ import {
   FormContainer,
   CrearButton,
   ReunionesActivasContainer,
-  ReunionesActivasTitle, ReunionesActivasWrapper, ReunionesContainer, EmpezarReunionContainer, RuthTitle,
+  ReunionesContainer, EmpezarReunionContainer, RuthTitle,
 } from './EmpezarReunion.styled';
 import backend from '../api/backend';
 import BotonParaIniciarReunion from './BotonParaIniciarReunion';
 import {ThemedTextfield} from "../styles/theme";
-import {ReunionActivas} from "./ReunionesActivas";
-import {ExtensionLeyendaEmpresa, LeyendaEmpresa, Temas} from "../temario/Temario.styled";
+import {ExtensionLeyendaEmpresa, LeyendaEmpresa} from "../temario/Temario.styled";
 import FullWidthTabs from "./Tab";
 
 class EmpezarReunion extends React.Component {

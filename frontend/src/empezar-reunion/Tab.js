@@ -47,15 +47,6 @@ export default function FullWidthTabs() {
         setValue(index);
     };
 
-    const styles = () => ({
-        label: {
-            color: "#FFF000"
-        },
-        indicator: {
-            backgroundColor: "#ad5200"
-        }
-    });
-
     return (
         <div>
             <Tabs

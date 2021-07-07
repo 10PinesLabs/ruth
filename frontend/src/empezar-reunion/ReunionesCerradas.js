@@ -1,11 +1,7 @@
-import React, {useEffect, useState} from "react";
-import backend from "../api/backend";
-import {CircularProgress, Paper, Table, TableBody, TableHead, TableRow} from "@material-ui/core";
+import React from "react";
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import {StyledTableCell} from "../minuta/TablaOradores.styled";
-import {TablaPinos} from "../minuta/Minuta.styled";
-import {useHistory} from "react-router-dom";
 import {ButtonIcono, ButtonReunionCerrada, SecondaryButtonReunionCerrada} from "../components/Button.styled";
 import {faSlack} from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
