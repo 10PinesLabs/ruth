@@ -1,13 +1,19 @@
 import styled from 'styled-components';
+import { TextField } from '@material-ui/core';
 import Tab from '@material-ui/core/Tab';
-import { font } from '../styles/theme';
 import { Button, SecondaryButton } from '../components/Button.styled';
+import { font } from '../styles/theme';
 
 export const BotonesContainer = styled.div`
   margin-bottom: 3rem;
 `;
 export const TextContainer = styled.div`
   margin-bottom: 2rem;
+`;
+
+export const TextContainerModalReenviarMail = styled(TextContainer)`
+  align-self: center;
+  padding: 0px;
 `;
 
 export const EmpezarReunionButton = styled(Button)`
@@ -29,7 +35,7 @@ export const ReunionesActivasTitle = styled(Tab)`
   }
 `;
 
-export const ReunionesWrapper = styled.span`
+export const ReunionesActivasWrapper = styled.span`
   height: 95%;
   overflow-y: scroll;
 `;
@@ -107,4 +113,15 @@ export const Title = styled.h1`
   font-family: ${font.h1};
   text-align: center;
   max-width: 10em;
+`;
+
+export const InputEmailReenviarMinuta = styled(TextField)`
+  border: 0;
+  margin: 0;
+  padding: 0px;
+  position: relative;
+  min-width: 0;
+  flex-direction: column;
+  vertical-align: top;
+  align-self: center;
 `;

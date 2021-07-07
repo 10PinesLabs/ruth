@@ -6,11 +6,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { StyledTableCell } from '../minuta/TablaOradores.styled';
 import { ButtonIcono, ButtonReunionCerrada, SecondaryButtonReunionCerrada } from '../components/Button.styled';
 import { Reuniones } from './Reuniones';
-import React from 'react';
+import React, { useState } from "react";
+import {ModalDeConfirmacion} from "../tipos-vista-principal/Modal";
+import {InputEmailReenviarMinuta, TextContainerModalReenviarMail} from "./EmpezarReunion.styled";
 
 const FilaReunion = ({reunion, history}) => {
+
+  const [open, setOpen] = useState(false);
+
   const handleClickVer = () => {
     history.push(`/${reunion.id}/presentador`);
+  }
+
+  const handleModalReenviarMailDeMinuta = () => {
+    setOpen(!open);
+  }
+
+  const [mail, setMail] = useState("")
+
+  const BodyModal = () => {
+    return <>
+      <TextContainerModalReenviarMail>
+        <InputEmailReenviarMinuta onChange={(event) => setMail(event.target.value)} multiline label="Mail"/>
+      </TextContainerModalReenviarMail>
+    </>
   }
 
   return <StyledTableCell>
@@ -20,11 +39,17 @@ const FilaReunion = ({reunion, history}) => {
     <SecondaryButtonReunionCerrada>
       Ver Minuta
     </SecondaryButtonReunionCerrada>
-    <Tooltip title={<Typography color="inherit">Reenviar mail de minuta</Typography>}>
+    <Tooltip title={<Typography color="inherit">Reenviar mail de minuta</Typography>}
+             onClick={handleModalReenviarMailDeMinuta}>
       <ButtonIcono>
         <FontAwesomeIcon icon={faEnvelope}/>
       </ButtonIcono>
     </Tooltip>
+    <ModalDeConfirmacion title={"Reenviar mail de minuta"}
+                         open={open}
+                         onClose={() => setOpen(false)}
+                         onConfirm={() => setOpen(false)}
+                         Body={BodyModal}/>
     <Tooltip title={<Typography color="inherit">Reenviar recordatorios de slack</Typography>}>
       <ButtonIcono>
         <FontAwesomeIcon icon={faSlack}/>
