@@ -15,7 +15,8 @@ export const font = {
 
 export const colors = {
   primary: '#00AC83',
-  secondary: '#929b9e78',
+  secondary: '#c3cacc78',
+  darkPrimary: '#448495',
   lightGrey: '#E0E0E0',
   darkRed: '#d32f2f',
   black50: '#7F7F7F',
