@@ -5,7 +5,7 @@ import SwipeableViews from 'react-swipeable-views';
 import { useTheme } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Box from '@material-ui/core/Box';
-import { ReunionesActivasWrapper, ReunionesActivasTitle } from './EmpezarReunion.styled';
+import { ReunionesWrapper, ReunionesActivasTitle } from './EmpezarReunion.styled';
 import { ReunionesActivas } from './ReunionesActivas';
 import { ReunionesCerradas } from './ReunionesCerradas';
 
@@ -39,20 +39,20 @@ TabPanel.propTypes = {
 
 export default function ReunionesTabs() {
   const theme = useTheme();
-  const [value, setValue] = React.useState(0);
+  const [reunion, setReunion] = React.useState(0);
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    setReunion(newValue);
   };
 
   const handleChangeIndex = (index) => {
-    setValue(index);
+    setReunion(index);
   };
 
   return (
         <div>
             <Tabs
-                value={value}
+                value={reunion}
                 TabIndicatorProps={{ style: { backgroundColor: '#448475' } }}
                 onChange={handleChange}
                 indicatorColor="primary"
@@ -63,18 +63,18 @@ export default function ReunionesTabs() {
             </Tabs>
             <SwipeableViews
                 axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'} // lo que hace es mover la tab de forma mas amena
-                index={value}
+                index={reunion}
                 onChangeIndex={handleChangeIndex}
             >
-                <TabPanel value={value} index={0} dir={theme.direction}>
-                    <ReunionesActivasWrapper>
+                <TabPanel value={reunion} index={0} dir={theme.direction}>
+                    <ReunionesWrapper>
                         <ReunionesActivas/>
-                    </ReunionesActivasWrapper>
+                    </ReunionesWrapper>
                 </TabPanel>
-                <TabPanel value={value} index={1} dir={theme.direction}>
-                    <ReunionesActivasWrapper>
+                <TabPanel value={reunion} index={1} dir={theme.direction}>
+                    <ReunionesWrapper>
                         <ReunionesCerradas/>
-                    </ReunionesActivasWrapper>
+                    </ReunionesWrapper>
                 </TabPanel>
             </SwipeableViews>
         </div>
