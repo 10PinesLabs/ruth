@@ -1,6 +1,6 @@
 import React from 'react';
 import { CircularProgress } from '@material-ui/core';
-import {EmpezarReunionButton} from "./EmpezarReunion.styled";
+import { EmpezarReunionButton } from './EmpezarReunion.styled';
 
 class BotonParaIniciarReunion extends React.Component {
   render() {

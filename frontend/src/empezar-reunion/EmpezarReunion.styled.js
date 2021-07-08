@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import {font} from '../styles/theme';
-import {Button, SecondaryButton} from "../components/Button.styled";
-import Tab from "@material-ui/core/Tab";
+import Tab from '@material-ui/core/Tab';
+import { font } from '../styles/theme';
+import { Button, SecondaryButton } from '../components/Button.styled';
 
 export const BotonesContainer = styled.div`
   margin-bottom: 3rem;
@@ -20,19 +20,19 @@ export const ReunionesActivasContainer = styled.div`
   background-color: white;
   border-radius: 30px;
   margin: 1em;
-` ;
+`;
 
 export const ReunionesActivasTitle = styled(Tab)`
   > span{
     font-size: large;
     font-family: ${font.h1};
   }
-` ;
+`;
 
 export const ReunionesActivasWrapper = styled.span`
   height: 95%;
   overflow-y: scroll;
-` ;
+`;
 
 export const EmpezarRootsContainer = styled.div`
   display: flex;
@@ -108,4 +108,3 @@ export const Title = styled.h1`
   text-align: center;
   max-width: 10em;
 `;
-

@@ -1,17 +1,20 @@
 import React from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
-import {useTheme} from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Box from '@material-ui/core/Box';
-import {ReunionesActivasWrapper, ReunionesActivasTitle} from "./EmpezarReunion.styled";
-import {ReunionesActivas} from "./ReunionesActivas";
-import {ReunionesCerradas} from "./ReunionesCerradas";
+import { ReunionesActivasWrapper, ReunionesActivasTitle } from './EmpezarReunion.styled';
+import { ReunionesActivas } from './ReunionesActivas';
+import { ReunionesCerradas } from './ReunionesCerradas';
 
 function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+  const {
+    children, value, index, ...other
+  } = props;
 
-    return (
+  return (
         <div
             role="tabpanel"
             hidden={value !== index}
@@ -25,32 +28,32 @@ function TabPanel(props) {
                 </Box>
             )}
         </div>
-    );
+  );
 }
 
 TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.any.isRequired,
-    value: PropTypes.any.isRequired,
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
 };
 
 export default function ReunionesTabs() {
-    const theme = useTheme();
-    const [value, setValue] = React.useState(0);
+  const theme = useTheme();
+  const [value, setValue] = React.useState(0);
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
-    const handleChangeIndex = (index) => {
-        setValue(index);
-    };
+  const handleChangeIndex = (index) => {
+    setValue(index);
+  };
 
-    return (
+  return (
         <div>
             <Tabs
                 value={value}
-                TabIndicatorProps={{style: {backgroundColor: '#448475'}}}
+                TabIndicatorProps={{ style: { backgroundColor: '#448475' } }}
                 onChange={handleChange}
                 indicatorColor="primary"
                 variant="fullWidth"
@@ -59,7 +62,7 @@ export default function ReunionesTabs() {
                 <ReunionesActivasTitle label="Reuniones Cerradas"/>
             </Tabs>
             <SwipeableViews
-                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}  //lo que hace es mover la tab de forma mas amena
+                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'} // lo que hace es mover la tab de forma mas amena
                 index={value}
                 onChangeIndex={handleChangeIndex}
             >
@@ -75,5 +78,5 @@ export default function ReunionesTabs() {
                 </TabPanel>
             </SwipeableViews>
         </div>
-    );
+  );
 }

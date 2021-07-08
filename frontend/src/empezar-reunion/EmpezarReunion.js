@@ -12,21 +12,21 @@ import {
 } from './EmpezarReunion.styled';
 import backend from '../api/backend';
 import BotonParaIniciarReunion from './BotonParaIniciarReunion';
-import {ThemedTextfield} from "../styles/theme";
-import {ExtensionLeyendaEmpresa, LeyendaEmpresa} from "../temario/Temario.styled";
-import ReunionesTabs from "./Tab";
+import { ThemedTextfield } from '../styles/theme';
+import { ExtensionLeyendaEmpresa, LeyendaEmpresa } from '../temario/Temario.styled';
+import ReunionesTabs from './Tab';
 
 class EmpezarReunion extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      tema: "",
-      descripcion: "",
-      autor: "",
+      tema: '',
+      descripcion: '',
+      autor: '',
       mostrarFormulario: false,
-      urlDePresentacion: "",
-      nombre: "",
+      urlDePresentacion: '',
+      nombre: '',
       cargando: false,
     };
   }
@@ -49,7 +49,7 @@ class EmpezarReunion extends React.Component {
     backend.empezarReunion(opcionesDeReunion)
       .then((reunion) => {
         toast.success('Reunión iniciada');
-        this.props.history.push("/"+reunion.id+"/presentador");
+        this.props.history.push(`/${reunion.id}/presentador`);
       })
       .catch(() => {
         this.setState({ cargando: false });
@@ -66,31 +66,35 @@ class EmpezarReunion extends React.Component {
 
               <BotonParaIniciarReunion
                   cargando={this.state.cargando}
-                  handleEmpezarReunion={() => this.handleEmpezarReunion({reunionDeRoots: true})}
+                  handleEmpezarReunion={() => this.handleEmpezarReunion({ reunionDeRoots: true })}
                   texto="Empezar Reunión de Root"
               />
 
               <BotonParaIniciarReunion
                   disabled={this.state.mostrarFormulario}
                   cargando={this.state.cargando}
-                  handleEmpezarReunion={() => this.setState({mostrarFormulario: true })}
+                  handleEmpezarReunion={() => this.setState({ mostrarFormulario: true })}
                   texto="Empezar Reunión rápida"/>
-              {this.state.mostrarFormulario &&
-              <FormContainer>
+              {this.state.mostrarFormulario
+              && <FormContainer>
                 <TextContainer>
-                  <ThemedTextfield required value={this.state.nombre} onChange={(event) => this.setState({nombre: event.target.value})} multiline label="Nombre de Reunion"/>
-                  <ThemedTextfield required value={this.state.tema} onChange={(event) => this.setState({tema: event.target.value})} multiline label="Tema propuesto"/>
-                  <ThemedTextfield required value={this.state.autor} onChange={(event) => this.setState({autor: event.target.value})} multiline label="Autor"/>
-                  <ThemedTextfield value={this.state.descripcion} onChange={(event) => this.setState({descripcion: event.target.value})} multiline label="Descripcion"/>
-                  <ThemedTextfield value={this.state.urlDePresentacion} onChange={(event) => this.setState({urlDePresentacion: event.target.value})} multiline label="Url de presentacion"/>
+                  <ThemedTextfield required value={this.state.nombre} onChange={(event) => this.setState({ nombre: event.target.value })} multiline label="Nombre de Reunion"/>
+                  <ThemedTextfield required value={this.state.tema} onChange={(event) => this.setState({ tema: event.target.value })} multiline label="Tema propuesto"/>
+                  <ThemedTextfield required value={this.state.autor} onChange={(event) => this.setState({ autor: event.target.value })} multiline label="Autor"/>
+                  <ThemedTextfield value={this.state.descripcion} onChange={(event) => this.setState({ descripcion: event.target.value })} multiline label="Descripcion"/>
+                  <ThemedTextfield value={this.state.urlDePresentacion} onChange={(event) => this.setState({ urlDePresentacion: event.target.value })} multiline label="Url de presentacion"/>
                 </TextContainer>
                 <BotonDeCreacionContainer>
                   <CancelButton
-                      onClick={() => this.setState({mostrarFormulario: false,tema: "", descripcion: "",urlDePresentacion: ""})}
+                      onClick={() => this.setState({
+                        mostrarFormulario: false, tema: '', descripcion: '', urlDePresentacion: '',
+                      })}
                   > Cancelar </CancelButton>
 
                   <CrearButton
-                      onClick={() => this.handleEmpezarReunion({reunionDeRoots: false, tema: this.state.tema, descripcion: this.state.descripcion,urlDePresentacion : this.state.urlDePresentacion,autor: this.state.autor,nombre: this.state.nombre })}
+                      onClick={() => this.handleEmpezarReunion({
+                        reunionDeRoots: false, tema: this.state.tema, descripcion: this.state.descripcion, urlDePresentacion: this.state.urlDePresentacion, autor: this.state.autor, nombre: this.state.nombre,
+                      })}
                   > Crear </CrearButton>
                 </BotonDeCreacionContainer>
               </FormContainer>
