@@ -1,7 +1,7 @@
 import React from "react";
 import {StyledTableCell} from "../minuta/TablaOradores.styled";
 import {UnirseButton} from "../components/Button.styled";
-import {Reunion} from "./Reunion";
+import {Reuniones} from "./Reuniones";
 
 const FilaReunion = ({reunion,history}) => {
     const handleClickUnirme = () => {
@@ -23,10 +23,10 @@ const FilaReunion = ({reunion,history}) => {
 }
 
 
-export const ReunionActivas = () => {
+export const ReunionesActivas = () => {
 
     return <>
-        <Reunion estaAbierta={true} listaDeColumnas={["Nombre de reunion", "Autor", "Acciones"]} CallToActionButton={FilaReunion}/>
+        <Reuniones estaAbierta={true} listaDeColumnas={["Nombre de reunion", "Autor", "Acciones"]} CallToActionButton={FilaReunion}/>
     </>
 
 }

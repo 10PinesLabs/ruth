@@ -5,8 +5,8 @@ import {useTheme} from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Box from '@material-ui/core/Box';
 import {ReunionesActivasWrapper, ReunionesActivasTitle} from "./EmpezarReunion.styled";
-import {ReunionActivas} from "./ReunionesActivas";
-import {ReunionCerradas} from "./ReunionesCerradas";
+import {ReunionesActivas} from "./ReunionesActivas";
+import {ReunionesCerradas} from "./ReunionesCerradas";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -34,7 +34,7 @@ TabPanel.propTypes = {
     value: PropTypes.any.isRequired,
 };
 
-export default function FullWidthTabs() {
+export default function ReunionesTabs() {
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
 
@@ -65,12 +65,12 @@ export default function FullWidthTabs() {
             >
                 <TabPanel value={value} index={0} dir={theme.direction}>
                     <ReunionesActivasWrapper>
-                        <ReunionActivas/>
+                        <ReunionesActivas/>
                     </ReunionesActivasWrapper>
                 </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>
                     <ReunionesActivasWrapper>
-                        <ReunionCerradas/>
+                        <ReunionesCerradas/>
                     </ReunionesActivasWrapper>
                 </TabPanel>
             </SwipeableViews>

@@ -6,7 +6,7 @@ import {ButtonIcono, ButtonReunionCerrada, SecondaryButtonReunionCerrada} from "
 import {faSlack} from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {Reunion} from "./Reunion";
+import {Reuniones} from "./Reuniones";
 
 const FilaReunion = () => {
 
@@ -31,10 +31,10 @@ const FilaReunion = () => {
 }
 
 
-export const ReunionCerradas = () => {
+export const ReunionesCerradas = () => {
 
     return <>
-        <Reunion estaAbierta={false} listaDeColumnas={["Nombre de reunion", "Autor", "Fecha", "Acciones"]} CallToActionButton={FilaReunion}/>
+        <Reuniones estaAbierta={false} listaDeColumnas={["Nombre de reunion", "Autor", "Fecha", "Acciones"]} CallToActionButton={FilaReunion}/>
     </>
 
 }

@@ -14,7 +14,7 @@ import backend from '../api/backend';
 import BotonParaIniciarReunion from './BotonParaIniciarReunion';
 import {ThemedTextfield} from "../styles/theme";
 import {ExtensionLeyendaEmpresa, LeyendaEmpresa} from "../temario/Temario.styled";
-import FullWidthTabs from "./Tab";
+import ReunionesTabs from "./Tab";
 
 class EmpezarReunion extends React.Component {
   constructor(props) {
@@ -97,7 +97,7 @@ class EmpezarReunion extends React.Component {
               }
             </EmpezarReunionContainer>
             <ReunionesActivasContainer>
-              <FullWidthTabs/>
+              <ReunionesTabs/>
             </ReunionesActivasContainer>
           </ReunionesContainer>
     );

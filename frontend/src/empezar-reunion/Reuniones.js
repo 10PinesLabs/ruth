@@ -16,7 +16,7 @@ const FilaReunion = ({history, reunion, CallToActionButton, estaAbierta}) => {
     </TableRow>
 }
 
-export const Reunion = ({estaAbierta, listaDeColumnas, CallToActionButton}) => {
+export const Reuniones = ({estaAbierta, listaDeColumnas, CallToActionButton}) => {
 
     const history = useHistory();
     const [reuniones,setReuniones] = useState()
@@ -29,7 +29,7 @@ export const Reunion = ({estaAbierta, listaDeColumnas, CallToActionButton}) => {
         return <CircularProgress/>
     }
 
-    const ordenarReunionesCerradas = () => {
+    const ordenarReuniones = () => {
         return reuniones.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     }
 
@@ -47,7 +47,7 @@ export const Reunion = ({estaAbierta, listaDeColumnas, CallToActionButton}) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {ordenarReunionesCerradas().map(reunion => <FilaReunion key={reunion.id} history={history}
+                    {ordenarReuniones().map(reunion => <FilaReunion key={reunion.id} history={history}
                                                                             reunion={reunion}
                                                                             estaAbierta={estaAbierta}
                                                                             CallToActionButton={CallToActionButton}/>)}
