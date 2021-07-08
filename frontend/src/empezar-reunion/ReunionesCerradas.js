@@ -10,7 +10,17 @@ import React, { useState } from "react";
 import {ModalDeConfirmacion} from "../tipos-vista-principal/Modal";
 import {InputEmailReenviarMinuta, TextContainerModalReenviarMail} from "./EmpezarReunion.styled";
 
+const BodyModal = ({mail, setMail}) => {
+    return <>
+        <TextContainerModalReenviarMail>
+            <InputEmailReenviarMinuta value={mail} onChange={(event) => setMail(event.target.value)} multiline label="Mail"/>
+        </TextContainerModalReenviarMail>
+    </>
+}
+
 const FilaReunion = ({reunion, history}) => {
+
+  const [mail, setMail] = useState("")
 
   const [open, setOpen] = useState(false);
 
@@ -22,15 +32,10 @@ const FilaReunion = ({reunion, history}) => {
     setOpen(!open);
   }
 
-  const [mail, setMail] = useState("")
-
-  const BodyModal = () => {
-    return <>
-      <TextContainerModalReenviarMail>
-        <InputEmailReenviarMinuta onChange={(event) => setMail(event.target.value)} multiline label="Mail"/>
-      </TextContainerModalReenviarMail>
-    </>
-  }
+  const reenviarMailMinuta = () => {
+    console.log(mail);
+    setMail("");
+  };
 
   return <StyledTableCell>
     <ButtonReunionCerrada onClick={handleClickVer}>
@@ -48,8 +53,11 @@ const FilaReunion = ({reunion, history}) => {
     <ModalDeConfirmacion title={"Reenviar mail de minuta"}
                          open={open}
                          onClose={() => setOpen(false)}
-                         onConfirm={() => setOpen(false)}
-                         Body={BodyModal}/>
+                         onConfirm={reenviarMailMinuta}
+                         Body={BodyModal}
+                         mail={mail}
+                         setMail={setMail}
+    />
     <Tooltip title={<Typography color="inherit">Reenviar recordatorios de slack</Typography>}>
       <ButtonIcono>
         <FontAwesomeIcon icon={faSlack}/>
