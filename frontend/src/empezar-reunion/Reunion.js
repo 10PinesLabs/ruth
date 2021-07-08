@@ -30,10 +30,7 @@ export const Reunion = ({estaAbierta, listaDeColumnas, CallToActionButton}) => {
     }
 
     const ordenarReunionesCerradas = () => {
-        if(!estaAbierta){
-            return reuniones.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        }
-        return reuniones
+        return reuniones.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     }
 
     return <>
