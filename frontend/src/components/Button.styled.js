@@ -10,22 +10,14 @@ export const Button = styled.button`
   padding: 0.5em 3em;
   cursor: ${(props) => (!props.disabled ? 'pointer' : null)};
   color: ${(props) => (!props.disabled ? colors.white : colors.black50)};
-  font-family: ${font.p};
   &:hover {
     background: ${(props) => (!props.disabled ? colors.viridian : colors.black30)};
   }
 `;
 
-export const ButtonReunionCerrada = styled.button`
-  font-family: ${font.p};
+export const ButtonReunionCerrada = styled(Button)`
   font-size: medium;
-  background: ${(props) => (!props.disabled ? colors.primary : colors.black30)};
-  border-radius: 0.2em;
-  border: none;
   padding: 0.5em;
-  cursor: ${(props) => (!props.disabled ? 'pointer' : null)};
-  color: ${(props) => (!props.disabled ? colors.white : colors.black50)};
-  font-family: ${font.p};
   margin: 0em 0.5em 0.1em 0.5em;
   &:hover {
     background: ${(props) => (!props.disabled ? colors.viridian : colors.black30)};
