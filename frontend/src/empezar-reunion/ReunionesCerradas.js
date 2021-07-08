@@ -13,7 +13,7 @@ import {InputEmailReenviarMinuta, TextContainerModalReenviarMail} from "./Empeza
 const BodyModal = ({mail, setMail}) => {
     return <>
         <TextContainerModalReenviarMail>
-            <InputEmailReenviarMinuta value={mail} onChange={(event) => setMail(event.target.value)} multiline label="Mail"/>
+            <InputEmailReenviarMinuta value={mail} type="email" onChange={(event) => setMail(event.target.value)} multiline label="Mail"/>
         </TextContainerModalReenviarMail>
     </>
 }
@@ -32,9 +32,9 @@ const FilaReunion = ({reunion, history}) => {
     setOpen(!open);
   }
 
-  const reenviarMailMinuta = () => {
-    console.log(mail);
-    setMail("");
+  const reenviarMailDeMinuta = () => {
+    backend.reenviarMailMinuta(mail, reunion.temas, reunion.id);
+    setMail(undefined);
   };
 
   return <StyledTableCell>
@@ -44,8 +44,7 @@ const FilaReunion = ({reunion, history}) => {
     <SecondaryButtonReunionCerrada>
       Ver Minuta
     </SecondaryButtonReunionCerrada>
-    <Tooltip title={<Typography color="inherit">Reenviar mail de minuta</Typography>}
-             onClick={handleModalReenviarMailDeMinuta}>
+    <Tooltip title={<Typography color="inherit">Reenviar mail de minuta</Typography>} onClick={handleModalReenviarMailDeMinuta}>
       <ButtonIcono>
         <FontAwesomeIcon icon={faEnvelope}/>
       </ButtonIcono>
@@ -53,7 +52,7 @@ const FilaReunion = ({reunion, history}) => {
     <ModalDeConfirmacion title={"Reenviar mail de minuta"}
                          open={open}
                          onClose={() => setOpen(false)}
-                         onConfirm={reenviarMailMinuta}
+                         onConfirm={reenviarMailDeMinuta}
                          Body={BodyModal}
                          mail={mail}
                          setMail={setMail}

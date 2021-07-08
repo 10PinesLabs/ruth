@@ -30,6 +30,10 @@ const Backend = {
   obtenerReuniones(estaActiva) {
     return requester.get(`/reuniones?estaAbierta=${estaActiva}`);
   },
+
+  reenviarMailMinuta(mail, temasReunion, idReunion) {
+    return requester.put(`/reunion/${idReunion}/reenviarMailMinuta`, {mail, temasReunion, idReunion});
+  },
 };
 
 export default Backend;

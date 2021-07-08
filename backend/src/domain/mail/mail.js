@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 import componerMailResumen from '~/domain/mail/mailParser';
 
-async function enviarResumenPorMail(reunion, temas) {
+async function enviarResumenPorMail(mail, reunion, temas) {
   const esMailSeguro = () => process.env.MAIL_PORT === '465';
 
   const fechaReunion = (date) => (
@@ -18,10 +18,9 @@ async function enviarResumenPorMail(reunion, temas) {
     },
   });
 
-
   await transporter.sendMail({
     from: `${process.env.MAIL_SENDER_NAME} <${process.env.MAIL_SENDER_ADDRESS}>`,
-    to: process.env.MAIL_DESTINATION,
+    to: mail || process.env.MAIL_DESTINATION,
     subject: `Resumen ${reunion.nombre} - ${fechaReunion(reunion.dataValues.updatedAt)}`,
     html: componerMailResumen(reunion, temas, fechaReunion(reunion.dataValues.updatedAt)),
   });
