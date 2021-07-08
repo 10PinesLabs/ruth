@@ -19,7 +19,7 @@ const FilaReunion = ({
     </TableRow>;
 
 // eslint-disable-next-line import/prefer-default-export
-export const Reuniones = ({ estaAbierta, listaDeColumnas, CallToActionButton }) => {
+export const Reuniones = ({ estaAbierta, columnas, CallToActionButton }) => {
   const history = useHistory();
   const [reuniones, setReuniones] = useState();
   useEffect(() => {
@@ -40,17 +40,16 @@ export const Reuniones = ({ estaAbierta, listaDeColumnas, CallToActionButton }) 
                 <TableHead>
                     <TableRow>
                         {
-                            listaDeColumnas.map((columna) => (
-                                    <StyledTableCell key={columna}>{columna}</StyledTableCell>
+                            columnas.map((columna) => (
+                                <StyledTableCell key={columna}>{columna}</StyledTableCell>
                             ))
                         }
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {ordenarReuniones().map((reunion) => <FilaReunion key={reunion.id} history={history}
-                                                                            reunion={reunion}
-                                                                            estaAbierta={estaAbierta}
-                                                                            CallToActionButton={CallToActionButton}/>)}
+                                                                      reunion={reunion} estaAbierta={estaAbierta}
+                                                                      CallToActionButton={CallToActionButton}/>)}
                 </TableBody>
             </TablaPinos>
         </Paper>

@@ -29,5 +29,5 @@ const FilaReunion = () => <StyledTableCell>
 
 
 export const ReunionesCerradas = () => <>
-        <Reuniones estaAbierta={false} listaDeColumnas={['Nombre de reunion', 'Autor', 'Fecha', 'Acciones']} CallToActionButton={FilaReunion}/>
+        <Reuniones estaAbierta={false} columnas={['Nombre de reunion', 'Autor', 'Fecha', 'Acciones']} CallToActionButton={FilaReunion}/>
 </>;
