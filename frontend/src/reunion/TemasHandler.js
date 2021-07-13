@@ -3,7 +3,6 @@ import { toast } from 'react-toastify';
 import { connect } from 'react-redux';
 import backend from '../api/backend';
 import VistaTemas from './VistaTemas';
-import { temaEventos } from '../store/tema'
 import { reunionEventos } from '../store/reunion';
 import {withRouter} from "react-router-dom";
 

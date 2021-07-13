@@ -1,5 +1,4 @@
 import React from 'react';
-import { createBrowserHistory } from 'history';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Backend from './api/backend';
 import Loading from "./common-pages/Loading";

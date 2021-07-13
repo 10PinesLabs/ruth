@@ -1,4 +1,4 @@
-import {TextField, withStyles} from "@material-ui/core";
+import { TextField, withStyles } from '@material-ui/core';
 
 export const font = {
   family: "'Poppins',sans-serif",
@@ -15,7 +15,8 @@ export const font = {
 
 export const colors = {
   primary: '#00AC83',
-  secondary: '#448495',
+  secondary: '#c3cacc78',
+  darkPrimary: '#448495',
   lightGrey: '#E0E0E0',
   darkRed: '#d32f2f',
   black50: '#7F7F7F',
@@ -27,6 +28,7 @@ export const colors = {
   viridian: '#448475',
   downy: '#68c9b2',
   white: '#FFFFFF',
+  black: '#000000',
   thumbsUp: '#68A1EA',
   thumbsDown: '#FFB3BA',
   slack: '#FFDFBA',
@@ -61,7 +63,7 @@ export const header = {
 
 export const ThemedTextfield = withStyles({
   root: {
-    width: "100%",
+    width: '100%',
     '& label.Mui-focused': {
       color: `${colors.primary} !important`,
     },
@@ -78,5 +80,3 @@ export const ThemedTextfield = withStyles({
     },
   },
 })(TextField);
-
-
