@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const QueueContainer = styled.div`
   display: grid;
   grid-template-areas: "left center right";
-  grid-template-columns: 35vw auto 35vw;
+  grid-template-columns: 35% auto 35%;
   justify-content:center;
   align-items: center;
   @media (min-width: 1800px) {

@@ -1,19 +1,19 @@
 import styled from 'styled-components';
 
-export const CardContainer = styled.div(({type}) => `
+export const CardContainer = styled.div(({ type }) => `
   background: linear-gradient(145deg, #c7c7c7, #ececec);
   box-shadow: 5px 5px 10px #828282, -5px -5px 10px #ffffff;
   border-radius: 7px;
   position:relative;
-  width: ${ type === "debate" ? '10em' : '14.5em'};
+  width: ${type === 'debate' ? '10em' : '14.5em'};
   margin: 0 5px;
   height:100%;
-  display: inline-table;
+  flex-shrink: 0;
   `);
 
-export const ParticipantDataReactableContainer = styled.div(() => `
-    width: 100%;  `
-);
+export const ParticipantDataReactableContainer = styled.div`
+    width: 100%;
+`;
 
 export const CardInfoContainer = styled.div`
   display: flex;
@@ -30,7 +30,7 @@ export const CardInfoContainer = styled.div`
   background-color: #ddddddab;
 `;
 
-export const UserAvatar = styled.div(({type}) => `
+export const UserAvatar = styled.div(({ type }) => `
   border-radius: 7px 7px 0 0;
   display: flex;
   height:100%;
@@ -38,7 +38,7 @@ export const UserAvatar = styled.div(({type}) => `
   align-items: flex-end;
   display: grid;
   position: relative;
-  min-height:${ type === "debate" ? '10em' : '14.5em'};
+  min-height:${type === 'debate' ? '10em' : '14.5em'};
 `);
 
 export const Avatar = styled.img`
@@ -46,7 +46,7 @@ export const Avatar = styled.img`
   width: 100%;
   object-fit: cover;
   border-radius: inherit;
-`
+`;
 
 export const CardName = styled.span`
   text-align: left;
