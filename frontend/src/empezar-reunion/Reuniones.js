@@ -24,7 +24,7 @@ export const Reuniones = ({ estaAbierta, columnas, CallToActionButton }) => {
   const [reuniones, setReuniones] = useState();
   useEffect(() => {
     backend.obtenerReuniones(estaAbierta)
-      .then(({ reuniones }) => setReuniones(reuniones));
+      .then((data) => setReuniones(data.reuniones));
   }, [estaAbierta]);
 
   if (!reuniones) {
@@ -47,10 +47,11 @@ export const Reuniones = ({ estaAbierta, columnas, CallToActionButton }) => {
                 </TableHead>
                 <TableBody>
                     {ordenarReuniones().map((reunion) => <FilaReunion
-                    key={reunion.id}
-                    history={history}
-                    reunion={reunion} estaAbierta={estaAbierta}
-                    CallToActionButton={CallToActionButton}
+                            key={reunion.id}
+                            history={history}
+                            reunion={reunion}
+                            estaAbierta={estaAbierta}
+                            CallToActionButton={CallToActionButton}
                     />)}
                 </TableBody>
             </TablaPinos>

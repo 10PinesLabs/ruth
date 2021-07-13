@@ -17,6 +17,7 @@
     "http-proxy-middleware": "^0.20.0",
     "immer": "^5.3.4",
     "md5": "^2.2.1",
+    "prop-types": "^15.7.2",
     "react": "^16.11.0",
     "react-chartjs-2": "^2.8.0",
     "react-dom": "^16.11.0",
@@ -28,8 +29,7 @@
     "react-swipeable-views": "^0.14.0",
     "react-toastify": "^5.4.1",
     "redux": "^4.0.5",
-    "styled-components": "^4.4.0",
-    "prop-types": "^15.7.2"
+    "styled-components": "^4.4.0"
   },
   "scripts": {
     "start:dev": "PORT=8761 react-scripts start",
