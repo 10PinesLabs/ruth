@@ -1,6 +1,6 @@
 import produce from "immer";
-import {createEvent} from "./evento";
-import {temaReducer} from "./tema";
+import { createEvent } from "./evento";
+import { temaReducer } from "./tema";
 
 export const reunionEventoTypes = {
   EMPEZAR_REUNION: "Una reunion es comenzada",
