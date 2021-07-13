@@ -15,7 +15,7 @@ const asyncMiddleware = (fn) => (req, res) => Promise.resolve(fn(req, res))
     if (error instanceof RequestError) {
       res.status(error.statusCode).send(error.errorMessage);
     } else {
-      throw error;
+      res.status(500).send('Request fallo');
     }
   });
 

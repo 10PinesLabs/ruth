@@ -6,7 +6,7 @@ import { RequestError } from '~/utils/asyncMiddleware';
 function validarReunionRapida(req) {
   const { tema, autor, nombre } = req.body;
   if (tema === '' || nombre === '' || autor === '') {
-    throw new Error('Faltan campos en la reunion');
+    throw new RequestError(400, 'Faltan campos en la reunion');
   }
 }
 

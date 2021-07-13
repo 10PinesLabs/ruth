@@ -53,7 +53,7 @@ class EmpezarReunion extends React.Component {
       })
       .catch(() => {
         this.setState({ cargando: false });
-        toast.error('Error al iniciar la reunión');
+
       });
   };
 

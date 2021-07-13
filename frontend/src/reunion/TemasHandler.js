@@ -8,24 +8,27 @@ import { temaEventos } from '../store/tema';
 import { reunionEventos } from '../store/reunion';
 
 class TemasHandler extends React.Component {
-    cerrarReunion = (temas) => {
-
-      backend.cerrarReunion(this.props.reunionId, temas)
-        .then(() => {
-          this.props.dispatch(reunionEventos.finalizarReunionActual());
-          this.props.history.push('/');
-        })
-        .then(() => {
-          if (this.props.estadoReunion) {
-            toast.success('Reunión finalizada');
-          } else {
-            toast.success('Reunión cerrada');
-          }
-        })
-        .catch(() => {
-          toast.error('No se pudo finalizar la reunión');
-        });
+cerrarReunion = (temas) => {
+    if (!this.props.estadoReunion) {
+        toast.error('La reunion ya está cerrada');
+    } else {
+        backend.cerrarReunion(this.props.reunionId, temas)
+            .then(() => {
+                this.props.dispatch(reunionEventos.finalizarReunionActual());
+                this.props.history.push('/');
+            })
+            .then(() => {
+                if (this.props.estadoReunion) {
+                    toast.success('Reunión finalizada');
+                } else {
+                    toast.success('Reunión cerrada');
+                }
+            })
+            .catch(() => {
+                toast.error('No se pudo finalizar la reunión');
+            });
     }
+}
 
 
     render() {

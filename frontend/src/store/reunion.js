@@ -26,6 +26,7 @@ export const reunionReducer = (state, action) =>
     switch (action.type) {
       case reunionEventoTypes.EMPEZAR_REUNION: {
         draft.reunion = action.reunion;
+        draft.reunion.abierta = true;
         draft.reunion.temas = action.reunion.temas
           .map((tema) => temaReducer(tema, action))
           .sort(compareTema);
@@ -52,7 +53,9 @@ export const reunionReducer = (state, action) =>
           );
           break;
         }
-
+        if (!draft.reunion.abierta) {
+          break;
+        }
         draft.reunion.temas[temaIndex] = temaReducer(
             draft.reunion.temas[temaIndex],
             action
