@@ -24,7 +24,6 @@ export const Reuniones = ({ estaAbierta, columnas, CallToActionButton }) => {
   const [reuniones, setReuniones] = useState();
   useEffect(() => {
     backend.obtenerReuniones(estaAbierta)
-    // eslint-disable-next-line no-shadow
       .then(({ reuniones }) => setReuniones(reuniones));
   }, [estaAbierta]);
 
@@ -47,9 +46,12 @@ export const Reuniones = ({ estaAbierta, columnas, CallToActionButton }) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {ordenarReuniones().map((reunion) => <FilaReunion key={reunion.id} history={history}
-                                                                      reunion={reunion} estaAbierta={estaAbierta}
-                                                                      CallToActionButton={CallToActionButton}/>)}
+                    {ordenarReuniones().map((reunion) => <FilaReunion
+                    key={reunion.id}
+                    history={history}
+                    reunion={reunion} estaAbierta={estaAbierta}
+                    CallToActionButton={CallToActionButton}
+                    />)}
                 </TableBody>
             </TablaPinos>
         </Paper>
