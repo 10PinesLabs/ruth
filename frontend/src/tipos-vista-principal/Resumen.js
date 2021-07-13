@@ -13,11 +13,10 @@ import Zoom from "@material-ui/core/Zoom";
 import CustomTooltip from "../styles/CustomTooltip";
 
 const tiposDeTema = {
-    'conDescripcion': DescripcionTemaComun,
-    'repasarActionItems': DescripcionActionItems,
-    'proponerPinos': DescripcionPropuestaPinos,
+  'conDescripcion': DescripcionTemaComun,
+  'repasarActionItems': DescripcionActionItems,
+  'proponerPinos': DescripcionPropuestaPinos,
 };
-
 
 const Resumen = ({ tema, retrocederTema, empezarTema, avanzarTema, temaActivo, terminarTema, reabrirTema, reunionAbierta }) => {
   const props = useSpring({opacity: 1, from: {opacity: 0}});
