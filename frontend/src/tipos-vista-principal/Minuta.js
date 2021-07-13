@@ -26,7 +26,7 @@ const expositor = (nombreOrador, ordenDeOrador, resumen) => {
   }
 }
 
-const Minuta = ({ dispatch, tema }) => {
+const Minuta = ({ dispatch, tema, reunionAbierta }) => {
   let [conclusion, setConclusion] = useState(tema.conclusion);
   let [estaEditandoConclusion, setEstaEditandoConclusion] = useState(false);
   let [exposicionSeleccionada, setExposicionSeleccionada] = useState(null);
@@ -144,6 +144,7 @@ const Minuta = ({ dispatch, tema }) => {
           <BotonParaAbrirDesplegable
             variant="outlined"
             endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
+            disabled={!reunionAbierta}
             onClick={() => setIsResumenOradorCerrado(!isResumenOradorCerrado)}
           >
             {textoBotonEdicion()}
@@ -168,6 +169,7 @@ const Minuta = ({ dispatch, tema }) => {
               <ConclusionTema
                 titulo={"Resumen General"}
                 conclusion={conclusion}
+                reunionAbierta={reunionAbierta}
                 onChange={(event) => {
                   handleCambioInputConclusion(event.target.value);
                 }}
@@ -181,6 +183,7 @@ const Minuta = ({ dispatch, tema }) => {
               <BotonParaAbrirDesplegable
                 variant="outlined"
                 endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
+                disabled={!reunionAbierta}
                 onClick={() => setIsCreadorActionItemCerrado(!isCreadorActionItemCerrado)}
               >
               {textoBotonCreadorActionItems()}

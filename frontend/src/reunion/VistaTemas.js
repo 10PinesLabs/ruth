@@ -13,7 +13,7 @@ import Mobile from '../mobile/index';
 import { temaEventos } from '../store/tema';
 
 
-const VistaTemas = ({dispatch, cerrarReunion, temas, usuario, estadoReunion}) => {
+const VistaTemas = ({dispatch, cerrarReunion, temas, usuario, estadoReunion: reunionAbierta}) => {
 
   const indiceTemaSinFinalizar = temas.findIndex((tema) => tema.fin === null);
   const ultimoTema = temas.length - 1;
@@ -29,13 +29,13 @@ const VistaTemas = ({dispatch, cerrarReunion, temas, usuario, estadoReunion}) =>
   }, [indiceTemaATratar]);
 
   const empezarTema = () => {
-    if(!estadoReunion){
+    if(!reunionAbierta){
       toast.error('Esta reunion está cerrada, no se puede abrir un tema');
       return;
     }
     if (temaSeleccionado.inicio !== null) {
       toast.error('No se puede iniciar un tema que ya fue iniciado');
-      return 
+      return
     }
     if(existeUnTemaEmpezado()){
       toast.error('Ya hay otro tema en curso');
@@ -50,7 +50,7 @@ const VistaTemas = ({dispatch, cerrarReunion, temas, usuario, estadoReunion}) =>
 
   const estaElTemaEmpezado = (tema) => {
    return tema.inicio && !tema.fin;
-  } 
+  }
 
   const terminarTema = () => {
     dispatch(temaEventos.terminarTema(temaSeleccionado.id))
@@ -58,7 +58,7 @@ const VistaTemas = ({dispatch, cerrarReunion, temas, usuario, estadoReunion}) =>
   };
 
   const reabrirTema = () => {
-    if(estadoReunion === false){
+    if(!reunionAbierta){
       toast.error('Esta reunion está cerrada, no se puede reabrir un tema');
       return;
     }
@@ -125,7 +125,8 @@ const VistaTemas = ({dispatch, cerrarReunion, temas, usuario, estadoReunion}) =>
                            temaActivo={temaActivo()}
                            avanzarTema={avanzarTema}
                            retrocederTema={retrocederTema}
-                           handleCerrarReunion={handleCerrarReunion}/>
+                           handleCerrarReunion={handleCerrarReunion}
+                           reunionAbierta={reunionAbierta}/>
       </VistaTemaContainer>
       <Sidebar handleSelection={setSelectedElement}
                selectedElement={selectedElement}
