@@ -23,6 +23,8 @@ const FilaReunion = ({ reunion, history }) => {
 };
 
 
-export const ReunionesActivas = () => <>
+const ReunionesActivas = () => <>
         <Reuniones estaAbierta={true} columnas={['Nombre de reunion', 'Autor', 'Acciones']} CallToActionButton={FilaReunion}/>
 </>;
+
+export default ReunionesActivas;

@@ -5,9 +5,9 @@ import SwipeableViews from 'react-swipeable-views';
 import { useTheme } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Box from '@material-ui/core/Box';
-import { ReunionesWrapper, ReunionesActivasTitle } from './EmpezarReunion.styled';
-import { ReunionesActivas } from './ReunionesActivas';
-import { ReunionesCerradas } from './ReunionesCerradas';
+import { ReunionesActivasTitle, ReunionesWrapper } from './EmpezarReunion.styled';
+import ReunionesActivas from './ReunionesActivas';
+import ReunionesCerradas from './ReunionesCerradas';
 
 function TabPanel(props) {
   const {

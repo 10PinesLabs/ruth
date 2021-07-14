@@ -35,7 +35,7 @@ export const ReunionesActivasTitle = styled(Tab)`
   }
 `;
 
-export const ReunionesActivasWrapper = styled.span`
+export const ReunionesWrapper = styled.span`
   height: 95%;
   overflow-y: scroll;
 `;

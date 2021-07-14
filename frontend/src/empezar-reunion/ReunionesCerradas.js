@@ -1,14 +1,14 @@
-import React, {useState} from "react";
-import {StyledTableCell} from "../minuta/TablaOradores.styled";
+import React, { useState } from 'react';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import { faSlack } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { StyledTableCell } from '../minuta/TablaOradores.styled';
 import { ButtonIcono, ButtonReunionCerrada, SecondaryButtonReunionCerrada } from '../components/Button.styled';
 import { Reuniones } from './Reuniones';
-import {ModalDeConfirmacion} from "../tipos-vista-principal/Modal";
-import {InputEmailReenviarMinuta, TextContainerModalReenviarMail} from "./EmpezarReunion.styled";
+import { ModalDeConfirmacion } from '../tipos-vista-principal/Modal';
+import { InputEmailReenviarMinuta, TextContainerModalReenviarMail } from './EmpezarReunion.styled';
 import backend from '../api/backend';
 
 const FilaReunion = ({ reunion, history }) => {
@@ -24,9 +24,7 @@ const FilaReunion = ({ reunion, history }) => {
     setOpen(!open);
   };
 
-  const reenviarMailDeMinuta = () => {
-    return backend.reenviarMailMinuta(mail, reunion.temas, reunion.id);
-  };
+  const reenviarMailDeMinuta = () => backend.reenviarMailMinuta(mail, reunion.temas, reunion.id);
 
   function handleOnClose() {
     setMail('');
@@ -60,8 +58,10 @@ const FilaReunion = ({ reunion, history }) => {
       </ButtonIcono>
     </Tooltip>
   </StyledTableCell>;
+};
 
-
-export const ReunionesCerradas = () => <>
+const ReunionesCerradas = () => <>
  <Reuniones estaAbierta={false} columnas={['Nombre de reunion', 'Autor', 'Fecha', 'Acciones']} CallToActionButton={FilaReunion}/>
 </>;
+
+export default ReunionesCerradas;
