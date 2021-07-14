@@ -202,7 +202,7 @@ const Minuta = ({ dispatch, tema, reunionAbierta }) => {
                   <ActionItemEditor onSubmit={agregarActionItem}/>
                 </Box>
               </Collapse>
-              <ListaActionItems actionItems={tema.actionItems} alBorrar={borrarActionItem} onEdit={editarActionItem} />
+              <ListaActionItems actionItems={tema.actionItems} alBorrar={borrarActionItem} onEdit={editarActionItem} reunionAbierta={reunionAbierta}/>
             </Grid>
           </Grid>
         </TabRenderer>

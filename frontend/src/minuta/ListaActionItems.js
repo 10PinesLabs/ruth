@@ -3,7 +3,7 @@ import {List, ListItem, Divider, makeStyles} from '@material-ui/core';
 import {ActionItemContainer, ActionItemDescription, ListaActionItemsContainer, Owner} from './ListaActionItems.styled'
 import {ActionItemEditor} from "./ActionItemEditor";
 
-const ActionItem = ({descripcion, owners, onEdit, onDelete, id}) =>{
+const ActionItem = ({descripcion, owners, onEdit, onDelete, id, reunionAbierta}) =>{
   const [estaEditando, setEstaEditando] = useState(false);
 
   const actionItemConId = (actionItem) => { return {...actionItem, id}}
@@ -22,12 +22,13 @@ const ActionItem = ({descripcion, owners, onEdit, onDelete, id}) =>{
   };
   
   return (
-    <ListItem 
-      style={itemClass} 
+    <ListItem
+      style={itemClass}
       button={!estaEditando}
-      onClick={()=> !estaEditando? setEstaEditando(true) : null}
+      onClick={()=> !estaEditando ? setEstaEditando(true) : null}
+      disabled={!reunionAbierta}
     >
-      {!estaEditando ? 
+      {!estaEditando ?
         <ActionItemContainer>
           <ActionItemDescription>{descripcion}</ActionItemDescription>
           <div>
@@ -35,7 +36,7 @@ const ActionItem = ({descripcion, owners, onEdit, onDelete, id}) =>{
           </div>
         </ActionItemContainer>
       :
-        <ActionItemEditor 
+        <ActionItemEditor
           itemDescription={descripcion}
           itemOwners={owners}
           estaEditando={estaEditando}
@@ -48,7 +49,7 @@ const ActionItem = ({descripcion, owners, onEdit, onDelete, id}) =>{
   )
 }
 
-export const ListaActionItems = ({actionItems, onEdit, alBorrar}) => {
+export const ListaActionItems = ({actionItems, onEdit, alBorrar, reunionAbierta}) => {
   
   function esElUltimoItem(index) {
     return actionItems.length === index + 1;
@@ -75,7 +76,7 @@ export const ListaActionItems = ({actionItems, onEdit, alBorrar}) => {
                   owners={item.actionItem.owners}
                   onEdit={onEdit}
                   onDelete={alBorrar}
-                  disabled={!reunionAbierta}
+                  reunionAbierta={reunionAbierta}
                 />
                 {!esElUltimoItem(index) && <Divider/>}
               </>
