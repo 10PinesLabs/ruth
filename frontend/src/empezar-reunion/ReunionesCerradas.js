@@ -1,26 +1,24 @@
+import React, {useState} from "react";
+import {StyledTableCell} from "../minuta/TablaOradores.styled";
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import { faSlack } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { StyledTableCell } from '../minuta/TablaOradores.styled';
 import { ButtonIcono, ButtonReunionCerrada, SecondaryButtonReunionCerrada } from '../components/Button.styled';
 import { Reuniones } from './Reuniones';
-import React, { useState } from "react";
 import {ModalDeConfirmacion} from "../tipos-vista-principal/Modal";
 import {InputEmailReenviarMinuta, TextContainerModalReenviarMail} from "./EmpezarReunion.styled";
+import backend from '../api/backend';
 
-const BodyModal = ({mail, setMail}) => {
-    return <>
+const BodyModal = ({ mail, setMail }) => <>
         <TextContainerModalReenviarMail>
             <InputEmailReenviarMinuta value={mail} type="email" onChange={(event) => setMail(event.target.value)} multiline label="Mail"/>
         </TextContainerModalReenviarMail>
-    </>
-}
+</>;
 
-const FilaReunion = ({reunion, history}) => {
-
-  const [mail, setMail] = useState("")
+const FilaReunion = ({ reunion, history }) => {
+  const [mail, setMail] = useState("");
 
   const [open, setOpen] = useState(false);
 
