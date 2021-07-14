@@ -17,6 +17,7 @@ import {ListaActionItems} from "../minuta/ListaActionItems"
 import {ConclusionTema} from "../minuta/ConclusionTema";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
+import CustomTooltip from "../styles/CustomTooltip";
 
 const expositor = (nombreOrador, ordenDeOrador, resumen) => {
   return {
@@ -141,14 +142,16 @@ const Minuta = ({ dispatch, tema, reunionAbierta }) => {
           value={tabValue}
           index={0}
         >
-          <BotonParaAbrirDesplegable
-            variant="outlined"
-            endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
-            disabled={!reunionAbierta}
-            onClick={() => setIsResumenOradorCerrado(!isResumenOradorCerrado)}
-          >
-            {textoBotonEdicion()}
-          </BotonParaAbrirDesplegable>
+          <CustomTooltip title='La reunion esta cerrada' disable={!reunionAbierta}>
+            <BotonParaAbrirDesplegable
+              variant="outlined"
+              endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
+              disabled={!reunionAbierta}
+              onClick={() => setIsResumenOradorCerrado(!isResumenOradorCerrado)}
+            >
+              {textoBotonEdicion()}
+            </BotonParaAbrirDesplegable>
+          </CustomTooltip>
           <Collapse in={isResumenOradorCerrado}>
             <Box
               display={"flex"}
@@ -180,14 +183,16 @@ const Minuta = ({ dispatch, tema, reunionAbierta }) => {
             </Grid>
             <Grid item xs={7}>
               <h1>Action Items ({tema.actionItems.length})</h1>
-              <BotonParaAbrirDesplegable
-                variant="outlined"
-                endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
-                disabled={!reunionAbierta}
-                onClick={() => setIsCreadorActionItemCerrado(!isCreadorActionItemCerrado)}
-              >
-              {textoBotonCreadorActionItems()}
-              </BotonParaAbrirDesplegable>
+              <CustomTooltip title='La reunion esta cerrada' disable={!reunionAbierta}>
+                <BotonParaAbrirDesplegable
+                  variant="outlined"
+                  endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
+                  disabled={!reunionAbierta}
+                  onClick={() => setIsCreadorActionItemCerrado(!isCreadorActionItemCerrado)}
+                >
+                {textoBotonCreadorActionItems()}
+                </BotonParaAbrirDesplegable>
+              </CustomTooltip>
               <Collapse in={isCreadorActionItemCerrado}>
                 <Box
                   display={"flex"}

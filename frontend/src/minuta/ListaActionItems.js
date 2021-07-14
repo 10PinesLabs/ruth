@@ -68,13 +68,14 @@ export const ListaActionItems = ({actionItems, onEdit, alBorrar}) => {
         <List alignItems="flex-start" className={classes.root}>
             {actionItems.slice().reverse().map((item, index) =>
               <>
-                <ActionItem 
+                <ActionItem
                   key={item.id} 
                   id={item.id}
                   descripcion={item.actionItem.descripcion} 
                   owners={item.actionItem.owners}
                   onEdit={onEdit}
                   onDelete={alBorrar}
+                  disabled={!reunionAbierta}
                 />
                 {!esElUltimoItem(index) && <Divider/>}
               </>
