@@ -11,14 +11,8 @@ import {ModalDeConfirmacion} from "../tipos-vista-principal/Modal";
 import {InputEmailReenviarMinuta, TextContainerModalReenviarMail} from "./EmpezarReunion.styled";
 import backend from '../api/backend';
 
-const BodyModal = ({ mail, setMail }) => <>
-        <TextContainerModalReenviarMail>
-            <InputEmailReenviarMinuta value={mail} type="email" onChange={(event) => setMail(event.target.value)} multiline label="Mail"/>
-        </TextContainerModalReenviarMail>
-</>;
-
 const FilaReunion = ({ reunion, history }) => {
-  const [mail, setMail] = useState("");
+  const [mail, setMail] = useState('');
 
   const [open, setOpen] = useState(false);
 
@@ -28,12 +22,16 @@ const FilaReunion = ({ reunion, history }) => {
 
   const handleModalReenviarMailDeMinuta = () => {
     setOpen(!open);
-  }
+  };
 
   const reenviarMailDeMinuta = () => {
-    backend.reenviarMailMinuta(mail, reunion.temas, reunion.id);
-    setMail(undefined);
+    return backend.reenviarMailMinuta(mail, reunion.temas, reunion.id);
   };
+
+  function handleOnClose() {
+    setMail('');
+    setOpen(false);
+  }
 
   return <StyledTableCell>
     <ButtonReunionCerrada onClick={handleClickVer}>
@@ -49,19 +47,20 @@ const FilaReunion = ({ reunion, history }) => {
     </Tooltip>
     <ModalDeConfirmacion title={"Reenviar mail de minuta"}
                          open={open}
-                         onClose={() => setOpen(false)}
+                         onClose={handleOnClose}
                          onConfirm={reenviarMailDeMinuta}
-                         Body={BodyModal}
-                         mail={mail}
-                         setMail={setMail}
-    />
+    >
+      <TextContainerModalReenviarMail>
+        <InputEmailReenviarMinuta value={mail} type="email" onChange={(event) => setMail(event.target.value)} multiline label="Mail"/>
+      </TextContainerModalReenviarMail>
+    </ModalDeConfirmacion>
     <Tooltip title={<Typography color="inherit">Reenviar recordatorios de slack</Typography>}>
       <ButtonIcono>
         <FontAwesomeIcon icon={faSlack}/>
       </ButtonIcono>
     </Tooltip>
   </StyledTableCell>;
-}
+
 
 export const ReunionesCerradas = () => <>
  <Reuniones estaAbierta={false} columnas={['Nombre de reunion', 'Autor', 'Fecha', 'Acciones']} CallToActionButton={FilaReunion}/>

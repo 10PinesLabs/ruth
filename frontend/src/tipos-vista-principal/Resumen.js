@@ -23,31 +23,33 @@ const Resumen = ({ tema, retrocederTema, empezarTema, avanzarTema, temaActivo, t
   const DescripcionDelTema = tiposDeTema[tema.tipo];
   const [open, setOpen] = useState(false);
 
-  return (
-    <VistaDelMedioContainer style={props}>
-      <DescripcionDelTema tema={tema}/>
-      <InfoTema tema={tema}/>
-      <Botonera>
-        <BotoneraNavegacionTemas>
-          <FontAwesomeIcon
-            icon={faCaretLeft}
-            size="4x"
-            cursor={'pointer'}
-            onClick={retrocederTema}/>
-            {!tema.inicio &&
-              <CustomTooltip title='La reunion está cerrada' disable={!reunionAbierta}>
-                <Button onClick={empezarTema} disabled={!reunionAbierta} style={!reunionAbierta ? {pointerEvents: "none"} : {}}>Empezar Tema</Button>
-              </CustomTooltip>
-            }
-            {tema.inicio &&
-              <Zoom in style={{transitionDelay: '100ms'}}>
-                <CustomTooltip title='La reunion está cerrada' disable={!reunionAbierta}>
-                  <SecondaryButton onClick={() => temaActivo ? setOpen(true) : reabrirTema()}
-                                   disabled={!reunionAbierta}
-                                   style={!reunionAbierta ? {pointerEvents: "none"} : {}}>
-                            {temaActivo ? 'Terminar Tema' : 'Reabrir tema'}
-                  </SecondaryButton>
-                </CustomTooltip>
+    return (
+        <VistaDelMedioContainer style={props}>
+            <DescripcionDelTema tema={tema}/>
+            <InfoTema tema={tema}/>
+            <Botonera>
+                <BotoneraNavegacionTemas>
+                    <FontAwesomeIcon
+                        icon={faCaretLeft}
+                        size="4x"
+                        cursor={'pointer'}
+                        onClick={retrocederTema}/>
+                    {!tema.inicio &&
+                    <CustomTooltip title='Reunion cerrada' disable={!reunionAbierta}>
+                        <Button onClick={empezarTema} disabled={!reunionAbierta}
+                                style={!reunionAbierta ? {pointerEvents: "none"} : {}}>Empezar Tema</Button>
+                    </CustomTooltip>
+                    }
+
+                    {tema.inicio &&
+                    <Zoom in style={{transitionDelay: '100ms'}}>
+                        <CustomTooltip title='Reunion cerrada' disable={!reunionAbierta}>
+                            <SecondaryButton onClick={() => temaActivo ? setOpen(true) : reabrirTema()}
+                                             disabled={!reunionAbierta}
+                                             style={!reunionAbierta ? {pointerEvents: "none"} : {}}>
+                                {temaActivo ? 'Terminar Tema' : 'Reabrir tema'}
+                            </SecondaryButton>
+                        </CustomTooltip>
 
               </Zoom>
             }

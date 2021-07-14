@@ -2,16 +2,16 @@ import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Button, SecondaryButton } from "../components/Button.styled";
-import { Typography } from "@material-ui/core";
-import Slide from "@material-ui/core/Slide";
-import './modal.css'
+import { Typography } from '@material-ui/core';
+import Slide from '@material-ui/core/Slide';
+import { Button, SecondaryButton } from '../components/Button.styled';
+import './modal.css';
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
 
-export const ModalDeConfirmacion = ({ title, open, onClose, onConfirm, cancelText="Cancelar", confirmText="Confirmar", Body, mail, setMail}) => (
+export const ModalDeConfirmacion = ({
+  title, open, onClose, onConfirm, cancelText = 'Cancelar', confirmText = 'Confirmar', children,
+}) => (
   <Dialog
     open={ open }
     onClose={ onClose }
@@ -26,15 +26,14 @@ export const ModalDeConfirmacion = ({ title, open, onClose, onConfirm, cancelTex
       </Typography>
     </DialogTitle>
     {
-      Body && <Body mail={mail} setMail={setMail}/>
+      children
     }
     <DialogActions>
       <SecondaryButton onClick={ onClose }>
         {cancelText}
       </SecondaryButton>
       <Button onClick={ () => {
-        onClose();
-        onConfirm()
+        onConfirm().finally(onClose);
       } } color="primary" autoFocus>
         {confirmText}
       </Button>
