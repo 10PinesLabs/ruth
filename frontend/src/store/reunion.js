@@ -1,6 +1,6 @@
 import produce from "immer";
-import { createEvent } from "./evento";
-import { temaReducer } from "./tema";
+import {createEvent} from "./evento";
+import {temaReducer} from "./tema";
 
 export const reunionEventoTypes = {
   EMPEZAR_REUNION: "Una reunion es comenzada",
@@ -13,11 +13,11 @@ export const reunionEventos = {
   comenzarReunion: (reunion) =>
     createEvent(reunionEventoTypes.EMPEZAR_REUNION, {
       reunion,
-      comesFromWS:true
+      comesFromWS: true
     }),
-  finalizarReunionActual: () => 
+  finalizarReunionActual: () =>
     createEvent(reunionEventoTypes.TERMINAR_REUNION),
-  
+
 };
 
 export const reunionReducer = (state, action) =>
@@ -25,8 +25,7 @@ export const reunionReducer = (state, action) =>
     draft.ultimoEventoId = action.id;
     switch (action.type) {
       case reunionEventoTypes.EMPEZAR_REUNION: {
-        draft.reunion = action.reunion;
-        draft.reunion.abierta = true;
+        draft.reunion = {...action.reunion, abierta: true}
         draft.reunion.temas = action.reunion.temas
           .map((tema) => temaReducer(tema, action))
           .sort(compareTema);
@@ -36,17 +35,17 @@ export const reunionReducer = (state, action) =>
         draft.reunion.abierta = false;
         break;
       }
-      
-      default:{
+
+      default: {
         if (!draft.reunion?.temas) {
           break;
         }
-        
+
         const temaIndex = draft.reunion.temas.findIndex(
           (tema) => tema.id === action.idTema
         );
 
-        if (temaIndex === -1){
+        if (temaIndex === -1) {
           console.error(
             "Se recibio una accion con un idTema desconocido",
             action
@@ -57,10 +56,10 @@ export const reunionReducer = (state, action) =>
           break;
         }
         draft.reunion.temas[temaIndex] = temaReducer(
-            draft.reunion.temas[temaIndex],
-            action
-          );
-          break;
+          draft.reunion.temas[temaIndex],
+          action
+        );
+        break;
       }
     }
   });

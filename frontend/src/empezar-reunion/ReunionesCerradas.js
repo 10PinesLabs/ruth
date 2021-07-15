@@ -11,7 +11,7 @@ import React from 'react';
 
 const FilaReunion = ({reunion, history}) => {
   const handleClickVer = () => {
-    history.push(`/${reunion.id}/ver`);
+    history.push(`/${reunion.id}/presentador`);
   }
 
   return <StyledTableCell>
