@@ -64,7 +64,7 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
     const { abierta, temas, id } = req.body;
     const reunionAActualizar = await repoReuniones.findOneById(id);
     if (!reunionAActualizar.abierta) {
-      throw new RequestError(403, 'No se puede actualizar una reunion cerrada');
+      throw new RequestError(400, 'No se puede actualizar una reunion cerrada');
     }
     await reunionAActualizar.update({ abierta });
 

@@ -42,9 +42,10 @@ describe('si una reunión está cerrada ', () => {
 
   describe('y se quiere publicar un evento diferente al de cerrar reunión', () => {
     test('no debería poder hacerlo', async () => {
+      const tipoEventoNoPermitido = 'Reaccionar';
       const eventoReaccionar = {
         reunionId: reunionCerrada.id,
-        type: 'Reaccionar',
+        type: tipoEventoNoPermitido,
         idTema: 44,
         nombre: '👍',
         usuario: { nombre: 'Pine Buena Onda', email: 'pine.buenaonda@10pines.com' },
@@ -57,9 +58,10 @@ describe('si una reunión está cerrada ', () => {
   });
   describe('y se quiere publicar un evento diferente de cerrar reunión', () => {
     test('debería poder hacerlo', async () => {
+      const tipoEventoPermitido = 'La reunion fue finalizada';
       const eventoReaccionar = {
         reunionId: reunionCerrada.id,
-        type: 'La reunion fue finalizada',
+        type: tipoEventoPermitido,
       };
 
       const response = await request(app).post('/api/eventos').send(eventoReaccionar);

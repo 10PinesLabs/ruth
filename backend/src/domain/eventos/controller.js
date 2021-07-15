@@ -10,9 +10,10 @@ const Controller = (wss) => {
       const eventoRaw = req.body;
       const { reunionId } = eventoRaw;
       const reunion = await context.reunionesRepo.findOneById(reunionId);
-      console.log('Estado de la reunion');
-      console.log(reunion.abierta);
-      if (!reunion.abierta && eventoRaw.type !== 'La reunion fue finalizada') {
+      const eventoPermitido = 'La reunion fue finalizada';
+      const reunionCerradaYEventoNoPermitido = !reunion.abierta && eventoRaw.type !== eventoPermitido;
+
+      if (reunionCerradaYEventoNoPermitido) {
         throw new RequestError(400, 'La reunion está cerrada');
       }
       await lock.acquire(`event/${reunionId}`, async () => {
