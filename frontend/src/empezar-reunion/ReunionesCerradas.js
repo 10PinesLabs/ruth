@@ -4,12 +4,15 @@ import Typography from '@material-ui/core/Typography';
 import { faSlack } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { configureStore } from '@reduxjs/toolkit';
 import { StyledTableCell } from '../minuta/TablaOradores.styled';
 import { ButtonIcono, ButtonReunionCerrada, SecondaryButtonReunionCerrada } from '../components/Button.styled';
 import { Reuniones } from './Reuniones';
 import { ModalDeConfirmacion } from '../tipos-vista-principal/Modal';
 import { InputEmailReenviarMinuta, TextContainerModalReenviarMail } from './EmpezarReunion.styled';
 import backend from '../api/backend';
+import createStore from '../store';
+import { reunionEventos } from '../store/reunion';
 
 const FilaReunion = ({ reunion, history }) => {
   const [mail, setMail] = useState('');
@@ -24,7 +27,19 @@ const FilaReunion = ({ reunion, history }) => {
     setOpen(!open);
   };
 
-  const reenviarMailDeMinuta = () => backend.reenviarMailMinuta(mail, reunion.temas, reunion.id);
+  const reenviarMailDeMinuta = async () => {
+    // crear el store
+    const store = createStore();
+    // conseguir los eventos que ya pasaron para esa reunion
+    const { eventos } = await backend.obtenerEventos(reunion.id);
+    // aplicar esos eventos al store
+    store.dispatch(reunionEventos.comenzarReunion(reunion)); // TODO deuda tecnica refactor, rename?
+    eventos.forEach((evento) => store.dispatch({ ...evento.evento, comesFromWS: true })); // TODO cambiar comesFromWS
+    // conseguir lo que necesitemos del store
+    const state = store.getState();
+
+    backend.reenviarMailMinuta(mail, state.reunion.temas, state.reunion.id);
+  };
 
   function handleOnClose() {
     setMail('');

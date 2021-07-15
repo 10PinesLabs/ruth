@@ -2,6 +2,7 @@ import VotacionDeRoots from '../votacionDeRoots/votacionDeRoots';
 import enviarResumenPorMail from '~/domain/mail/mail';
 import notificador from './notificador';
 import { RequestError } from '~/utils/asyncMiddleware';
+import context from '~/context';
 
 function validarReunionRapida(req) {
   const { tema, autor, nombre } = req.body;
@@ -87,5 +88,10 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
     return { reuniones: reunionesConTemas };
   },
 
+  obtenerEventos: async (req) => {
+    const { idReunion } = req.params;
+    const eventosDeReunion = await context.eventosRepo.findEventosParaReunion(undefined, idReunion);
+    return { eventos: eventosDeReunion }; // TODO devolver el evento mini?
+  },
 });
 export default ReunionController;

@@ -36,7 +36,7 @@ const Backend = {
   },
 
   obtenerEventos(idReunion) {
-    return requester.get(`/reunion/${idReunion}/eventos`);
+    return requester.get(`/reuniones/${idReunion}/eventos`);
   },
 };
 
