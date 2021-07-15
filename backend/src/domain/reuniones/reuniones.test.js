@@ -69,7 +69,7 @@ describe('para reuniones', () => {
 
       const response = await request(app).put('/api/reunion').send(requestBody);
 
-      expect(response.status).toEqual(403);
+      expect(response.status).toEqual(400);
     });
   });
 

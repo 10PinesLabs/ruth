@@ -9,7 +9,7 @@ const respondWithSuccess = (res, data) => {
 };
 
 
-const asyncMiddleware = (fn) => (req, res) => Promise.resolve(fn(req, res, next))
+const asyncMiddleware = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next))
   .then((data) => respondWithSuccess(res, data))
   .catch((error) => {
     if (error instanceof RequestError) {

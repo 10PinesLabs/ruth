@@ -11,7 +11,8 @@ const Controller = (wss) => {
       const { reunionId } = eventoRaw;
       const reunion = await context.reunionesRepo.findOneById(reunionId);
       const eventoPermitido = 'La reunion fue finalizada';
-      const reunionCerradaYEventoNoPermitido = !reunion.abierta && eventoRaw.type !== eventoPermitido;
+      const reunionCerradaYEventoNoPermitido = !reunion.abierta
+          && eventoRaw.type !== eventoPermitido;
 
       if (reunionCerradaYEventoNoPermitido) {
         throw new RequestError(400, 'La reunion está cerrada');
