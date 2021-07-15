@@ -110,6 +110,7 @@ const VistaTemas = ({dispatch, cerrarReunion, temas, usuario, estadoReunion: reu
                seleccionarTema={seleccionarTema}
                cerrarReunion={handleCerrarReunion}
                temaActual={temaSeleccionado}
+               reunionAbierta={reunionAbierta}
       />
 
       {(selectedElement !== 'Opinar' &&
