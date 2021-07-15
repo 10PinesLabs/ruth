@@ -116,17 +116,8 @@ const wsForwarder = (store) => (next) => (action) => {
   }
 };
 
-const reunionAbiertaCheckMiddleware = (store) => (next) => (action) => {
-  const state = store.getState();
-  if (!state.reunion || state.reunion.abierta || !state.reunion.abierta) {
-    next(action);
-  } else {
-    toast.error('La reunion ya fue finalizada');
-  }
-};
-
 export default () =>
   configureStore({
     reducer: stateReducer,
-    middleware: [...getDefaultMiddleware(), reunionAbiertaCheckMiddleware, wsForwarder],
+    middleware: [...getDefaultMiddleware(), wsForwarder],
   });
