@@ -7,5 +7,6 @@ export default (wss) => {
   const controller = Controller(wss);
 
   router.post('/', asyncMiddleware(controller.publicar));
+  router.get('/reuniones/:idReunion/eventos', asyncMiddleware(controller.obtenerEventos));
   return router;
 };
