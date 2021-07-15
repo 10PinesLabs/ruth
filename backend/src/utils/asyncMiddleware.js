@@ -9,13 +9,13 @@ const respondWithSuccess = (res, data) => {
 };
 
 
-const asyncMiddleware = (fn) => (req, res) => Promise.resolve(fn(req, res))
+const asyncMiddleware = (fn) => (req, res) => Promise.resolve(fn(req, res, next))
   .then((data) => respondWithSuccess(res, data))
   .catch((error) => {
     if (error instanceof RequestError) {
       res.status(error.statusCode).send(error.errorMessage);
     } else {
-      res.status(500).send('Request fallo');
+      next(error);
     }
   });
 
