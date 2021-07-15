@@ -19,16 +19,16 @@ const ParticipantsQueue = ({ participants, finTema }) => {
             .map((participant, index) => <ParticipantsCard
               participant={participant}
               key={index}
-              type={"debate"}/>)
+              type={'debate'}/>)
           }
         </QueuedCardsLeftContainerStyle>
         <CenterCard>
           {talkingParticipant
-          && <ParticipantsCard participant={talkingParticipant} isParticipantTalking finTema={finTema} type={"debate"}/>}
+          && <ParticipantsCard participant={talkingParticipant} isParticipantTalking finTema={finTema} type={'debate'}/>}
         </CenterCard>
         <QueuedCardsRightContainerStyle>
           { participantsThatAlreadyTalked.map((participant, index) => <ParticipantsCard
-            participant={participant} key={index} type={"debate"}/> )}
+            participant={participant} key={index} type={'debate'}/>)}
         </QueuedCardsRightContainerStyle>
     </QueueContainer>
   );
