@@ -8,12 +8,10 @@ const extractResponse = (response) => response.data;
 const handleError = (error) => {
     // eslint-disable-next-line no-console
     console.error(error);
-    if (error.response){
-        toast.error(error.response.data);
-
-    }else{
+    if (!error.response.data){
         toast.error(error.message);
-
+    }else{
+        toast.error(error.response.data);
     }
     return Promise.reject(error);
 };
