@@ -91,7 +91,7 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
   obtenerEventos: async (req) => {
     const { idReunion } = req.params;
     const eventosDeReunion = await context.eventosRepo.findEventosParaReunion(undefined, idReunion);
-    return { eventos: eventosDeReunion }; // TODO devolver el evento mini?
+    return { eventos: eventosDeReunion };
   },
 });
 export default ReunionController;

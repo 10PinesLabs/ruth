@@ -4,6 +4,7 @@ import ReunionesRepo from '~/domain/reuniones/repo';
 import app from '~/server';
 import db from '~/database/models';
 import TemasRepo from '~/domain/temas/repo';
+import EventosRepo from '~/domain/eventos/repo';
 
 const fechaDeHoy = new Date(Date.now());
 
@@ -108,6 +109,20 @@ describe('para reuniones', () => {
       expect(response.body.reuniones.length).toEqual(1);
       expect(response.body.reuniones[0].id).toEqual(reunionAbierta.id);
       assertTemaValido(reunionAbierta, response, temasGuardadosAbierta[0]);
+    });
+
+    test('y se quiere obtener los eventos de una reunion determinada los devuelve', async () => {
+      const eventoReaccionarReunionCerrada = {
+        reunionId: reunionCerrada.id,
+        type: 'La reunion fue finalizada',
+      };
+
+      const evento = await request(app).post('/api/eventos').send(eventoReaccionarReunionCerrada);
+      const response = await request(app).get(`/api/reuniones/${reunionCerrada.id}/eventos`);
+
+      expect(response.statusCode).toEqual(200);
+      expect(response.body.eventos[0].id).toEqual(evento.body.id);
+      expect(response.body.eventos[0].reunionId).toEqual(evento.body.reunionId);
     });
   });
 });
