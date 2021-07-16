@@ -111,7 +111,14 @@ describe('para reuniones', () => {
       assertTemaValido(reunionAbierta, response, temasGuardadosAbierta[0]);
     });
 
-    test('y se quiere obtener los eventos de una reunion determinada los devuelve', async () => {
+    test('si se quiere obtener los eventos de una reunion cerrada sin eventos devuelve una lista vacia', async () => {
+      const response = await request(app).get(`/api/reuniones/${reunionCerrada.id}/eventos`);
+
+      expect(response.statusCode).toEqual(200);
+      expect(response.body.eventos).toEqual([]);
+    });
+
+    test('si se quiere obtener los eventos de una reunion cerrada con eventos los devuelve', async () => {
       const eventoReaccionarReunionCerrada = {
         reunionId: reunionCerrada.id,
         type: 'La reunion fue finalizada',
@@ -123,6 +130,34 @@ describe('para reuniones', () => {
       expect(response.statusCode).toEqual(200);
       expect(response.body.eventos[0].id).toEqual(evento.body.id);
       expect(response.body.eventos[0].reunionId).toEqual(evento.body.reunionId);
+    });
+
+    test('si se cierra una reunion abierta con eventos y pido los eventos de esa reunion los devuelve', async () => {
+      const eventoReaccionarReunionAbierta = {
+        reunionId: reunionAbierta.id,
+        type: 'Reaccionar',
+        idTema: 44,
+        nombre: '👍',
+        usuario: { nombre: 'Pine Buena Onda', email: 'pine.buenaonda@10pines.com' },
+      };
+
+      const evento1 = await request(app).post('/api/eventos').send(eventoReaccionarReunionAbierta);
+      const requestBodyActualizar = { abierta: !reunionAbierta.abierta, id: reunionAbierta.id, temas: temasGuardadosAbierta };
+      await request(app).put('/api/reunion').send(requestBodyActualizar);
+
+      const eventoReaccionarReunionCerrada = {
+        reunionId: reunionAbierta.id,
+        type: 'La reunion fue finalizada',
+      };
+
+      const evento2 = await request(app).post('/api/eventos').send(eventoReaccionarReunionCerrada);
+      const response = await request(app).get(`/api/reuniones/${reunionAbierta.id}/eventos`);
+
+      expect(response.statusCode).toEqual(200);
+      expect(response.body.eventos[0].id).toEqual(evento1.body.id);
+      expect(response.body.eventos[0].reunionId).toEqual(evento1.body.reunionId);
+      expect(response.body.eventos[1].id).toEqual(evento2.body.id);
+      expect(response.body.eventos[1].reunionId).toEqual(evento2.body.reunionId);
     });
   });
 });
