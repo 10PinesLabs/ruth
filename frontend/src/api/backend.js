@@ -32,7 +32,7 @@ const Backend = {
   },
 
   reenviarMailMinuta(mail, temasReunion, idReunion) {
-    return requester.put(`/reunion/${idReunion}/reenviarMailMinuta`, {mail, temasReunion, idReunion});
+    return requester.put(`/reuniones/${idReunion}/reenviarMailMinuta`, {mail, temasReunion, idReunion});
   },
 
   obtenerEventos(idReunion) {

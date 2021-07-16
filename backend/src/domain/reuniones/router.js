@@ -14,6 +14,6 @@ router.post('/reunionDeRoots', asyncMiddleware(controller.crear));
 router.put('/reunion', asyncMiddleware(controller.actualizar));
 router.get('/reuniones', asyncMiddleware(controller.obtenerReuniones));
 router.get('/reuniones/:idReunion/eventos', asyncMiddleware(controller.obtenerEventos));
-router.use('/reunion/:id', mailRouter);
+router.use('/reuniones/:id', mailRouter);
 
 export default router;
