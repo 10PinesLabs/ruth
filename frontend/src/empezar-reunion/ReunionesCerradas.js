@@ -9,14 +9,15 @@ import { StyledTableCell } from '../minuta/TablaOradores.styled';
 import { ButtonIcono, ButtonReunionCerrada, SecondaryButtonReunionCerrada } from '../components/Button.styled';
 import { Reuniones } from './Reuniones';
 import { ModalDeConfirmacion } from '../tipos-vista-principal/Modal';
-import { InputEmailReenviarMinuta, TextContainerModalReenviarMail } from './EmpezarReunion.styled';
+import { InputEmailReenviarMinuta, ParrafoMail, TextContainerModalReenviarMail } from './EmpezarReunion.styled';
 import backend from '../api/backend';
 import createStore from '../store';
 import { reunionEventos } from '../store/reunion';
 
 const FilaReunion = ({ reunion, history }) => {
+  const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
   const [mail, setMail] = useState('');
-
+  const [mailValid, setMailValid] = useState(true);
   const [open, setOpen] = useState(false);
 
   const handleClickVer = () => {
@@ -44,6 +45,13 @@ const FilaReunion = ({ reunion, history }) => {
   function handleOnClose() {
     setMail('');
     setOpen(false);
+    setMailValid(true);
+  }
+
+  function handleOnChange(value) {
+    const isValid = emailRegex.test(value);
+    setMailValid(isValid);
+    setMail(value);
   }
 
   return <StyledTableCell>
@@ -58,14 +66,17 @@ const FilaReunion = ({ reunion, history }) => {
         <FontAwesomeIcon icon={faEnvelope}/>
       </ButtonIcono>
     </Tooltip>
-    <ModalDeConfirmacion title={"Reenviar mail de minuta"}
+    <ModalDeConfirmacion title={'Reenviar mail de minuta'}
                          open={open}
                          onClose={handleOnClose}
                          onConfirm={reenviarMailDeMinuta}
     >
       <TextContainerModalReenviarMail>
-        <InputEmailReenviarMinuta value={mail} type="email" onChange={(event) => setMail(event.target.value)} multiline label="Mail"/>
+        <InputEmailReenviarMinuta value={mail} type="email" onChange={(event) => handleOnChange(event.target.value)} multiline label="Mail"/>
       </TextContainerModalReenviarMail>
+      {
+        !mailValid && <ParrafoMail>El email es inválido</ParrafoMail>
+      }
     </ModalDeConfirmacion>
     <Tooltip title={<Typography color="inherit">Reenviar recordatorios de slack</Typography>}>
       <ButtonIcono>
