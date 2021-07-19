@@ -4,11 +4,14 @@ export default (sequelize, DataTypes) => {
     abierta: DataTypes.BOOLEAN,
     nombre: {
       type: DataTypes.TEXT,
-      validate:{
+      validate: {
         notNull: true,
         notEmpty: true,
       },
-      allowNull: false
+      allowNull: false,
+    },
+    settings: {
+      type: DataTypes.JSON,
     },
   }, {});
 

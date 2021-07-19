@@ -111,4 +111,36 @@ describe('para reuniones', () => {
       assertTemaValido(reunionAbierta, response, temasGuardadosAbierta[0]);
     });
   });
+
+  describe('al intentar crear una reunion', () => {
+    beforeEach(() =>{
+      reunionesRepo = new ReunionesRepo();
+    });
+    test('si le defino el tipo roots en las configuraciones, se puede crear', async () => {
+      const response = await request(app).post('/api/reunionDeRoots').send({ abierta: true, configuracion: { tipo: 'roots' } });
+      const reunionesActuales = await reunionesRepo.findAllWhereOpened(true);
+
+
+      expect(response.statusCode).toEqual(200);
+      expect(response.body.id).toEqual(reunionesActuales[0].id);
+    });
+
+    test('si le defino el tipo rapida en las configuraciones, se puede crear', async () => {
+      const requestBody = {
+        abierta: true,
+        nombre: 'reunion generica',
+        tema: 'unTema',
+        autor: 'unPino',
+        descripcion: 'una descripcion',
+        urlDePresentacion: '',
+        configuracion: { tipo: 'rapida' },
+      };
+
+      const response = await request(app).post('/api/reunionDeRoots').send(requestBody);
+      const reunionesActuales = await reunionesRepo.findAllWhereOpened(true);
+
+      expect(response.statusCode).toEqual(200);
+      expect(response.body.id).toEqual(reunionesActuales[0].id);
+    });
+  });
 });
