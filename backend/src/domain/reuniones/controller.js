@@ -32,13 +32,17 @@ async function generarReunion(body) {
   switch (body.configuracion.tipo) {
     case 'roots': {
       const temas = await VotacionDeRoots.getTemasRoots();
-      const reunion = { abierta: body.abierta, nombre: 'Reunion de Roots' };
+      const reunion = { abierta: body.abierta, nombre: 'Reunion de Roots', configuracion: body.configuracion };
       return { temas, reunion };
     }
     case 'rapida': {
       validarReunionRapida(body);
       const temas = [crearTema(body.tema, body.descripcion, body.urlDePresentacion, body.autor)];
-      const reunion = { abierta: body.abierta, nombre: body.nombre };
+      const reunion = {
+        abierta: body.abierta,
+        nombre: body.nombre,
+        configuracion: body.configuracion,
+      };
       return { temas, reunion };
     }
     default: {

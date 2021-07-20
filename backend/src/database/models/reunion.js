@@ -10,7 +10,7 @@ export default (sequelize, DataTypes) => {
       },
       allowNull: false,
     },
-    settings: {
+    configuracion: {
       type: DataTypes.JSON,
     },
   }, {});
