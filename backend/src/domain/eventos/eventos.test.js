@@ -50,13 +50,18 @@ describe('si una reunión está cerrada ', () => {
         nombre: '👍',
         usuario: { nombre: 'Pine Buena Onda', email: 'pine.buenaonda@10pines.com' },
       };
+      const temasDeReunionAntes = await
+      eventosRepo.findEventosParaReunion(undefined, reunionCerrada.id);
 
       const response = await request(app).post('/api/eventos').send(eventoReaccionar);
+      const temasDeReunionDespues = await
+      eventosRepo.findEventosParaReunion(undefined, reunionCerrada.id);
 
       expect(response.status).toEqual(400);
+      expect(temasDeReunionAntes).toEqual(temasDeReunionDespues);
     });
   });
-  describe('y se quiere publicar un evento diferente de cerrar reunión', () => {
+  describe('y se quiere publicar un evento de cerrar reunión', () => {
     test('debería poder hacerlo', async () => {
       const tipoEventoPermitido = 'La reunion fue finalizada';
       const eventoReaccionar = {

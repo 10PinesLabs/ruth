@@ -142,7 +142,7 @@ const Minuta = ({ dispatch, tema, reunionAbierta }) => {
           value={tabValue}
           index={0}
         >
-          <CustomTooltip title='La reunion esta cerrada' disable={!reunionAbierta}>
+          <CustomTooltip title='La reunion está cerrada' disable={!reunionAbierta}>
             <BotonParaAbrirDesplegable
               variant="outlined"
               endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
@@ -183,7 +183,7 @@ const Minuta = ({ dispatch, tema, reunionAbierta }) => {
             </Grid>
             <Grid item xs={7}>
               <h1>Action Items ({tema.actionItems.length})</h1>
-              <CustomTooltip title='La reunion esta cerrada' disable={!reunionAbierta}>
+              <CustomTooltip title='La reunion está cerrada' disable={!reunionAbierta}>
                 <BotonParaAbrirDesplegable
                   variant="outlined"
                   endIcon={<FontAwesomeIcon icon={faChevronDown}/>}

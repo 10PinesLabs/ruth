@@ -36,13 +36,13 @@ const Resumen = ({ tema, retrocederTema, empezarTema, avanzarTema, temaActivo, t
             cursor={'pointer'}
             onClick={retrocederTema}/>
             {!tema.inicio &&
-              <CustomTooltip title='Reunion cerrada' disable={!reunionAbierta}>
+              <CustomTooltip title='La reunion está cerrada' disable={!reunionAbierta}>
                 <Button onClick={empezarTema} disabled={!reunionAbierta} style={!reunionAbierta ? {pointerEvents: "none"} : {}}>Empezar Tema</Button>
               </CustomTooltip>
             }
             {tema.inicio &&
               <Zoom in style={{transitionDelay: '100ms'}}>
-                <CustomTooltip title='Reunion cerrada' disable={!reunionAbierta}>
+                <CustomTooltip title='La reunion está cerrada' disable={!reunionAbierta}>
                   <SecondaryButton onClick={() => temaActivo ? setOpen(true) : reabrirTema()}
                                    disabled={!reunionAbierta}
                                    style={!reunionAbierta ? {pointerEvents: "none"} : {}}>
