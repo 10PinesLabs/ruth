@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import mailRouter from '~/domain/mail/router';
 import context from '~/context';
 
 import ReunionController from './controller';
@@ -14,6 +13,6 @@ router.post('/reunionDeRoots', asyncMiddleware(controller.crear));
 router.put('/reunion', asyncMiddleware(controller.actualizar));
 router.get('/reuniones', asyncMiddleware(controller.obtenerReuniones));
 router.get('/reuniones/:idReunion/eventos', asyncMiddleware(controller.obtenerEventos));
-router.use('/reuniones/:id', mailRouter);
+router.put('/reuniones/:id/reenviarMailMinuta', asyncMiddleware(controller.reenviarMailMinuta));
 
 export default router;

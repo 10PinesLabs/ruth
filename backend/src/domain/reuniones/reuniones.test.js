@@ -1,10 +1,9 @@
 import request from 'supertest';
-import { response } from 'express';
+import nodemailer from 'nodemailer';
 import ReunionesRepo from '~/domain/reuniones/repo';
 import app from '~/server';
 import db from '~/database/models';
 import TemasRepo from '~/domain/temas/repo';
-import EventosRepo from '~/domain/eventos/repo';
 
 const fechaDeHoy = new Date(Date.now());
 
@@ -25,6 +24,7 @@ const temaGenerico = {
 
 
 jest.mock('../login/estaLogueado', () => () => true);
+jest.mock('nodemailer', () => ({ createTransport: jest.fn().mockImplementation(() => ({ sendMail: jest.fn() })) }));
 
 function assertTemaValido(reunion, response, temaGuardado) {
   const temaGenericoGuardado = {
@@ -34,7 +34,6 @@ function assertTemaValido(reunion, response, temaGuardado) {
     updatedAt: temaGuardado.updatedAt.toISOString(),
     reunionId: reunion.id,
   };
-
   expect(response.body.reuniones[0].temas[0]).toEqual(temaGenericoGuardado);
 }
 
@@ -71,6 +70,34 @@ describe('para reuniones', () => {
       const response = await request(app).put('/api/reunion').send(requestBody);
 
       expect(response.status).toEqual(400);
+    });
+
+    test('y se quiere reenviar el mail de minuta lo envia', async () => {
+      reunionesRepo = new ReunionesRepo();
+      reunionCerrada = await reunionesRepo.create({ abierta: false, nombre: 'reunionCerrada' });
+      repoTemas = new TemasRepo();
+      temasGuardadosCerrada = await repoTemas.guardarTemas(reunionCerrada, [temaGenerico]);
+      const requestBody = {
+        mail: 'leda.graham74@ethereal.email',
+        temasReunion: temasGuardadosCerrada,
+        idReunion: reunionCerrada.id,
+      };
+
+      const response = await request(app).put(`/api/reuniones/${reunionCerrada.id}/reenviarMailMinuta`).send(requestBody);
+
+      expect(response.statusCode).toEqual(200);
+      expect(nodemailer.createTransport).toHaveBeenCalledWith({
+        host: 'smtp.ethereal.email',
+        port: '587',
+        secure: false,
+        auth: { pass: 'gs9eQKqAMzPt2XWbs8', user: 'leda.graham74@ethereal.email' },
+      });
+      /*
+      const transport = nodemailer.createTransport;
+      expect(transport.sendMail).toHaveBeenCalledWith({
+        host: 'smtp.ethereal.email', port: '587', secure: false, auth: { pass: 'gs9eQKqAMzPt2XWbs8', user: 'leda.graham74@ethereal.email' },
+      });
+      */
     });
   });
 

@@ -93,5 +93,12 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
     const eventosDeReunion = await context.eventosRepo.findEventosParaReunion(undefined, idReunion);
     return { eventos: eventosDeReunion };
   },
+
+  reenviarMailMinuta: async (req) => {
+    const { mail, temasReunion, idReunion } = req.body;
+    const reunionAActualizar = await repoReuniones.findOneById(idReunion);
+    await enviarResumenPorMail(mail, reunionAActualizar, temasReunion);
+  },
+
 });
 export default ReunionController;
