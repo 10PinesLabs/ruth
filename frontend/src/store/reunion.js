@@ -22,7 +22,6 @@ export const reunionEventos = {
 
 export const reunionReducer = (state, action) =>
   produce(state, (draft) => {
-    draft.ultimoEventoId = action.id;
     switch (action.type) {
       case reunionEventoTypes.EMPEZAR_REUNION: {
         draft.reunion = action.reunion;

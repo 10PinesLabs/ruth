@@ -2,11 +2,6 @@ import { Op } from 'sequelize';
 import models from '~/database/models';
 
 export default class EventosRepo {
-  async conseguirUltimoEventoId(){
-    const ultimaReunionId = await models.Reunion.max('id');
-    return ultimaReunionId && models.Evento.max('id', { where: { reunionId: ultimaReunionId } });
-  }
-
   findEventosParaReunion(lastEvent = undefined, reunionId){
     const whereClause = { reunionId };
 
