@@ -12,9 +12,8 @@ export const TextContainer = styled.div`
 `;
 
 export const TextContainerModalReenviarMail = styled.div`
-  align-self: center;
   padding: 0px;
-  margin-bottom: 2.5%;
+  margin: 0 2.5% 2.5%;
 `;
 
 export const EmpezarReunionButton = styled(Button)`
@@ -130,6 +129,5 @@ export const InputEmailReenviarMinuta = styled(TextField)`
 
 export const ParrafoMail = styled.span`
   margin: 0 2.5% 2.5%;
-  align-self: center;
   color: red;
 `;
