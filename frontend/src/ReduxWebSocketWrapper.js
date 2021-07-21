@@ -2,9 +2,9 @@
 import { useEffect, useState } from 'react';
 import { batch } from 'react-redux';
 import createStore from './store';
-import { reunionEventos } from "./store/reunion";
+import { reunionEventos } from './store/reunion';
 
-function getWebSocket(lastEvent,reunionId) {
+function getWebSocket(lastEvent, reunionId) {
   const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
   const host = process.env.NODE_ENV === 'production' ? window.location.host : 'localhost:8760';
   return new WebSocket(`${protocol}://${host}/api/ws?lastEvent=${lastEvent}&reunionId=${reunionId}`);
@@ -18,7 +18,7 @@ export class ReconnectingWebSocket {
   }
 
   reconnect() {
-    this.websocket = getWebSocket(this.lastEvent,this.reunionId);
+    this.websocket = getWebSocket(this.lastEvent, this.reunionId);
 
     this.websocket.onclose = () => {
       console.log('Socket was closed');
@@ -34,10 +34,10 @@ export class ReconnectingWebSocket {
     this.websocket.onmessage = (mensaje) => {
       batch(() => {
         JSON.parse(mensaje.data).forEach((rawEvento) => {
-          if(rawEvento.reunionId === this.reunionId) {
+          if (rawEvento.reunionId === this.reunionId) {
             const nextEvent = {
               ...rawEvento,
-              comesFromWS: true,
+              isAlreadyPublished: true,
             };
 
             if (this.onmessage) {

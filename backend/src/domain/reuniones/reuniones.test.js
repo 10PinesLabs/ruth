@@ -37,6 +37,11 @@ function assertTemaValido(reunion, response, temaGuardado) {
   expect(response.body.reuniones[0].temas[0]).toEqual(temaGenericoGuardado);
 }
 
+function assertIdDelEventoYDeLaReunionDeDichoEventoSeanValidos(response, posicionDelEventoEnLaResponse, evento1) {
+  expect(response.body.eventos[posicionDelEventoEnLaResponse].id).toEqual(evento1.body.id);
+  expect(response.body.eventos[posicionDelEventoEnLaResponse].reunionId).toEqual(evento1.body.reunionId);
+}
+
 describe('para reuniones', () => {
   let reunionesRepo;
   let repoTemas;
@@ -157,8 +162,7 @@ describe('para reuniones', () => {
       const response = await request(app).get(`/api/reuniones/${reunionCerrada.id}/eventos`);
 
       expect(response.statusCode).toEqual(200);
-      expect(response.body.eventos[0].id).toEqual(evento.body.id);
-      expect(response.body.eventos[0].reunionId).toEqual(evento.body.reunionId);
+      assertIdDelEventoYDeLaReunionDeDichoEventoSeanValidos(response, 0, evento);
     });
 
     test('si se cierra una reunion abierta con eventos y pido los eventos de esa reunion los devuelve', async () => {
@@ -183,10 +187,8 @@ describe('para reuniones', () => {
       const response = await request(app).get(`/api/reuniones/${reunionAbierta.id}/eventos`);
 
       expect(response.statusCode).toEqual(200);
-      expect(response.body.eventos[0].id).toEqual(evento1.body.id);
-      expect(response.body.eventos[0].reunionId).toEqual(evento1.body.reunionId);
-      expect(response.body.eventos[1].id).toEqual(evento2.body.id);
-      expect(response.body.eventos[1].reunionId).toEqual(evento2.body.reunionId);
+      assertIdDelEventoYDeLaReunionDeDichoEventoSeanValidos(response, 0, evento1);
+      assertIdDelEventoYDeLaReunionDeDichoEventoSeanValidos(response, 1, evento2);
     });
   });
 });

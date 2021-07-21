@@ -10,14 +10,14 @@ setAutoFreeze(false);
 export const stateEventoTypes = {
   INICIAR_ENVIO: 'iniciarEnvioDeEvento',
   ENVIO_CONFIRMADO: 'eventoConfirmadoPorBackend',
-  ENVIO_RECHAZADO: 'eventoRechazadoPorBackend'
-}
+  ENVIO_RECHAZADO: 'eventoRechazadoPorBackend',
+};
 
 export const stateEventos = {
-iniciarEnvioDeEvento: () => createEvent(stateEventoTypes.INICIAR_ENVIO),
-eventoConfirmadoPorBackend: (idConfirmado) => createEvent(stateEventoTypes.ENVIO_CONFIRMADO, {idConfirmado}),
-eventoRechazadoPorBackend: () => createEvent(stateEventoTypes.ENVIO_RECHAZADO),
-}
+  iniciarEnvioDeEvento: () => createEvent(stateEventoTypes.INICIAR_ENVIO),
+  eventoConfirmadoPorBackend: (idConfirmado) => createEvent(stateEventoTypes.ENVIO_CONFIRMADO, { idConfirmado }),
+  eventoRechazadoPorBackend: () => createEvent(stateEventoTypes.ENVIO_RECHAZADO),
+};
 
 const INITIAL_STATE = {
   reunion: null,
@@ -27,8 +27,7 @@ const INITIAL_STATE = {
   eventosEncolados: [],
 };
 
-export const stateReducer = (state = INITIAL_STATE, action) =>
-produce(state, (draft) => {
+export const stateReducer = (state = INITIAL_STATE, action) => produce(state, (draft) => {
   switch (action.type) {
     case stateEventoTypes.INICIAR_ENVIO: {
       draft.esperandoConfirmacionDeEvento = true;
@@ -90,7 +89,7 @@ produce(state, (draft) => {
 });
 
 const wsForwarder = (store) => (next) => (action) => {
-  if (!action.comesFromWS) {
+  if (!action.isAlreadyPublished) {
     // We don't dispatch actions that we send to the backend since we'll
     // see them twice, in the future we could be smarter.
     let state = store.getState();

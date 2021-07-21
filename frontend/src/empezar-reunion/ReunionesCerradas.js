@@ -4,7 +4,6 @@ import Typography from '@material-ui/core/Typography';
 import { faSlack } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { configureStore } from '@reduxjs/toolkit';
 import { StyledTableCell } from '../minuta/TablaOradores.styled';
 import { ButtonIcono, ButtonReunionCerrada, SecondaryButtonReunionCerrada } from '../components/Button.styled';
 import { Reuniones } from './Reuniones';
@@ -34,8 +33,8 @@ const FilaReunion = ({ reunion, history }) => {
     // conseguir los eventos que ya pasaron para esa reunion
     const { eventos } = await backend.obtenerEventos(reunion.id);
     // aplicar esos eventos al store
-    store.dispatch(reunionEventos.comenzarReunion(reunion)); // TODO deuda tecnica refactor, rename?
-    eventos.forEach((evento) => store.dispatch({ ...evento.evento, comesFromWS: true })); // TODO cambiar comesFromWS
+    store.dispatch(reunionEventos.comenzarReunion(reunion));
+    eventos.forEach((evento) => store.dispatch({ ...evento.evento, isAlreadyPublished: true }));
     // conseguir lo que necesitemos del store
     const state = store.getState();
 
