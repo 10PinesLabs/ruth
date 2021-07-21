@@ -17,6 +17,7 @@ import {ListaActionItems} from "../minuta/ListaActionItems"
 import {ConclusionTema} from "../minuta/ConclusionTema";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
+import CustomTooltip from "../styles/CustomTooltip";
 
 const expositor = (nombreOrador, ordenDeOrador, resumen) => {
   return {
@@ -26,7 +27,7 @@ const expositor = (nombreOrador, ordenDeOrador, resumen) => {
   }
 }
 
-const Minuta = ({ dispatch, tema }) => {
+const Minuta = ({ dispatch, tema, reunionAbierta }) => {
   let [conclusion, setConclusion] = useState(tema.conclusion);
   let [estaEditandoConclusion, setEstaEditandoConclusion] = useState(false);
   let [exposicionSeleccionada, setExposicionSeleccionada] = useState(null);
@@ -141,13 +142,16 @@ const Minuta = ({ dispatch, tema }) => {
           value={tabValue}
           index={0}
         >
-          <BotonParaAbrirDesplegable
-            variant="outlined"
-            endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
-            onClick={() => setIsResumenOradorCerrado(!isResumenOradorCerrado)}
-          >
-            {textoBotonEdicion()}
-          </BotonParaAbrirDesplegable>
+          <CustomTooltip title='La reunion está cerrada' disable={!reunionAbierta}>
+            <BotonParaAbrirDesplegable
+              variant="outlined"
+              endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
+              disabled={!reunionAbierta}
+              onClick={() => setIsResumenOradorCerrado(!isResumenOradorCerrado)}
+            >
+              {textoBotonEdicion()}
+            </BotonParaAbrirDesplegable>
+          </CustomTooltip>
           <Collapse in={isResumenOradorCerrado}>
             <Box
               display={"flex"}
@@ -168,6 +172,7 @@ const Minuta = ({ dispatch, tema }) => {
               <ConclusionTema
                 titulo={"Resumen General"}
                 conclusion={conclusion}
+                reunionAbierta={reunionAbierta}
                 onChange={(event) => {
                   handleCambioInputConclusion(event.target.value);
                 }}
@@ -178,13 +183,16 @@ const Minuta = ({ dispatch, tema }) => {
             </Grid>
             <Grid item xs={7}>
               <h1>Action Items ({tema.actionItems.length})</h1>
-              <BotonParaAbrirDesplegable
-                variant="outlined"
-                endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
-                onClick={() => setIsCreadorActionItemCerrado(!isCreadorActionItemCerrado)}
-              >
-              {textoBotonCreadorActionItems()}
-              </BotonParaAbrirDesplegable>
+              <CustomTooltip title='La reunion está cerrada' disable={!reunionAbierta}>
+                <BotonParaAbrirDesplegable
+                  variant="outlined"
+                  endIcon={<FontAwesomeIcon icon={faChevronDown}/>}
+                  disabled={!reunionAbierta}
+                  onClick={() => setIsCreadorActionItemCerrado(!isCreadorActionItemCerrado)}
+                >
+                {textoBotonCreadorActionItems()}
+                </BotonParaAbrirDesplegable>
+              </CustomTooltip>
               <Collapse in={isCreadorActionItemCerrado}>
                 <Box
                   display={"flex"}
@@ -194,7 +202,7 @@ const Minuta = ({ dispatch, tema }) => {
                   <ActionItemEditor onSubmit={agregarActionItem}/>
                 </Box>
               </Collapse>
-              <ListaActionItems actionItems={tema.actionItems} alBorrar={borrarActionItem} onEdit={editarActionItem} />
+              <ListaActionItems actionItems={tema.actionItems} alBorrar={borrarActionItem} onEdit={editarActionItem} reunionAbierta={reunionAbierta}/>
             </Grid>
           </Grid>
         </TabRenderer>

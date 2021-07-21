@@ -1,5 +1,6 @@
 import AsyncLock from 'async-lock';
 import context from '~/context';
+import { RequestError } from '../../utils/asyncMiddleware';
 
 const Controller = (wss) => {
   const lock = new AsyncLock();
@@ -8,7 +9,14 @@ const Controller = (wss) => {
     publicar: async (req, res) => {
       const eventoRaw = req.body;
       const { reunionId } = eventoRaw;
+      const reunion = await context.reunionesRepo.findOneById(reunionId);
+      const eventoPermitido = 'La reunion fue finalizada';
+      const reunionCerradaYEventoNoPermitido = !reunion.abierta
+          && eventoRaw.type !== eventoPermitido;
 
+      if (reunionCerradaYEventoNoPermitido) {
+        throw new RequestError(400, 'La reunion está cerrada');
+      }
       await lock.acquire(`event/${reunionId}`, async () => {
         const contenidoEvento = {
           ...eventoRaw,

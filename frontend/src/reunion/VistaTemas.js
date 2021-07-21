@@ -13,7 +13,7 @@ import Mobile from '../mobile/index';
 import { temaEventos } from '../store/tema';
 
 
-const VistaTemas = ({dispatch, cerrarReunion, temas, usuario}) => {
+const VistaTemas = ({dispatch, cerrarReunion, temas, usuario, estadoReunion: reunionAbierta}) => {
 
   const indiceTemaSinFinalizar = temas.findIndex((tema) => tema.fin === null);
   const ultimoTema = temas.length - 1;
@@ -29,9 +29,13 @@ const VistaTemas = ({dispatch, cerrarReunion, temas, usuario}) => {
   }, [indiceTemaATratar]);
 
   const empezarTema = () => {
+    if(!reunionAbierta){
+      toast.error('Esta reunion está cerrada, no se puede abrir un tema');
+      return;
+    }
     if (temaSeleccionado.inicio !== null) {
       toast.error('No se puede iniciar un tema que ya fue iniciado');
-      return 
+      return
     }
     if(existeUnTemaEmpezado()){
       toast.error('Ya hay otro tema en curso');
@@ -46,7 +50,7 @@ const VistaTemas = ({dispatch, cerrarReunion, temas, usuario}) => {
 
   const estaElTemaEmpezado = (tema) => {
    return tema.inicio && !tema.fin;
-  } 
+  }
 
   const terminarTema = () => {
     dispatch(temaEventos.terminarTema(temaSeleccionado.id))
@@ -54,6 +58,10 @@ const VistaTemas = ({dispatch, cerrarReunion, temas, usuario}) => {
   };
 
   const reabrirTema = () => {
+    if(!reunionAbierta){
+      toast.error('Esta reunion está cerrada, no se puede reabrir un tema');
+      return;
+    }
     if(existeUnTemaEmpezado()){
       toast.error('Ya hay otro tema en curso');
       return
@@ -102,6 +110,7 @@ const VistaTemas = ({dispatch, cerrarReunion, temas, usuario}) => {
                seleccionarTema={seleccionarTema}
                cerrarReunion={handleCerrarReunion}
                temaActual={temaSeleccionado}
+               reunionAbierta={reunionAbierta}
       />
 
       {(selectedElement !== 'Opinar' &&
@@ -117,7 +126,8 @@ const VistaTemas = ({dispatch, cerrarReunion, temas, usuario}) => {
                            temaActivo={temaActivo()}
                            avanzarTema={avanzarTema}
                            retrocederTema={retrocederTema}
-                           handleCerrarReunion={handleCerrarReunion}/>
+                           handleCerrarReunion={handleCerrarReunion}
+                           reunionAbierta={reunionAbierta}/>
       </VistaTemaContainer>
       <Sidebar handleSelection={setSelectedElement}
                selectedElement={selectedElement}

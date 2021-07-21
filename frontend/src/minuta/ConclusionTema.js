@@ -4,7 +4,7 @@ import {Box} from "@material-ui/core";
 import {ThemedTextfield} from "../styles/theme";
 import {BotonCancelar, BotonEnviar} from "./ActionItemEditor.styled";
 
-export function ConclusionTema({ titulo, conclusion, onChange, onBorrar, onGuardar, estaEditandoConclusion }) {
+export function ConclusionTema({ titulo, conclusion, onChange, onBorrar, onGuardar, estaEditandoConclusion, reunionAbierta }) {
   
   return <ConclusionForm>
     <ConclusionTitle>
@@ -17,6 +17,7 @@ export function ConclusionTema({ titulo, conclusion, onChange, onBorrar, onGuard
       multiline
       rows="10"
       variant="outlined"
+      disabled={!reunionAbierta}
       onChange={onChange}
     />
 

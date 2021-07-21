@@ -6,10 +6,14 @@ const backendUrl = '/api';
 const extractResponse = (response) => response.data;
 
 const handleError = (error) => {
-  // eslint-disable-next-line no-console
-  console.error(error);
-  toast.error(error.message);
-  return Promise.reject(error);
+    // eslint-disable-next-line no-console
+    console.error(error);
+    if (!error.response.data){
+        toast.error(error.message);
+    }else{
+        toast.error(error.response.data);
+    }
+    return Promise.reject(error);
 };
 
 const Requester = {
