@@ -4,6 +4,7 @@ import ReunionesRepo from '~/domain/reuniones/repo';
 import app from '~/server';
 import db from '~/database/models';
 import TemasRepo from '~/domain/temas/repo';
+import context from "~/context";
 
 const fechaDeHoy = new Date(Date.now());
 
@@ -113,11 +114,11 @@ describe('para reuniones', () => {
   });
 
   describe('al intentar crear una reunion', () => {
-    beforeEach(() =>{
-      reunionesRepo = new ReunionesRepo();
+    beforeEach(() => {
+      reunionesRepo = context.reunionesRepo;
     });
     test('si le defino el tipo roots en las configuraciones, se puede crear', async () => {
-      const response = await request(app).post('/api/reunionDeRoots').send({ abierta: true, configuracion: { tipo: 'roots' } });
+      const response = await request(app).post('/api/reunionDeRoots').send({ abierta: true, tipo: 'roots' });
       const reunionesActuales = await reunionesRepo.findAllWhereOpened(true);
 
 
@@ -135,7 +136,7 @@ describe('para reuniones', () => {
         autor: 'unPino',
         descripcion: 'una descripcion',
         urlDePresentacion: '',
-        configuracion: { tipo: 'rapida' },
+        tipo: 'rapida',
       };
 
       const response = await request(app).post('/api/reunionDeRoots').send(requestBody);

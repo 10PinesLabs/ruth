@@ -29,10 +29,10 @@ function crearTema(tema, descripcionDelTema, urlDePresentacion, autor) {
 }
 
 async function generarReunion(body) {
-  switch (body.configuracion.tipo) {
+  switch (body.tipo) {
     case 'roots': {
       const temas = await VotacionDeRoots.getTemasRoots();
-      const reunion = { abierta: body.abierta, nombre: 'Reunion de Roots', configuracion: body.configuracion };
+      const reunion = { abierta: body.abierta, nombre: 'Reunion de Roots', configuracion: { tipo: body.tipo } };
       return { temas, reunion };
     }
     case 'rapida': {
@@ -41,7 +41,7 @@ async function generarReunion(body) {
       const reunion = {
         abierta: body.abierta,
         nombre: body.nombre,
-        configuracion: body.configuracion,
+        configuracion: { tipo: body.tipo },
       };
       return { temas, reunion };
     }

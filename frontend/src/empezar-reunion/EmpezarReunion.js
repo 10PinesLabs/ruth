@@ -66,7 +66,7 @@ class EmpezarReunion extends React.Component {
 
               <BotonParaIniciarReunion
                   cargando={this.state.cargando}
-                  handleEmpezarReunion={() => this.handleEmpezarReunion({ configuracion: {tipo: 'roots'} })}
+                  handleEmpezarReunion={() => this.handleEmpezarReunion({ tipo: 'roots' })}
                   texto="Empezar Reunión de Root"
               />
 
@@ -93,7 +93,7 @@ class EmpezarReunion extends React.Component {
 
                   <CrearButton
                       onClick={() => this.handleEmpezarReunion({
-                      configuracion: {tipo: 'rapida'}, tema: this.state.tema, descripcion: this.state.descripcion, urlDePresentacion: this.state.urlDePresentacion, autor: this.state.autor, nombre: this.state.nombre,
+                      tipo: 'rapida', tema: this.state.tema, descripcion: this.state.descripcion, urlDePresentacion: this.state.urlDePresentacion, autor: this.state.autor, nombre: this.state.nombre,
                       })}
                   > Crear </CrearButton>
                 </BotonDeCreacionContainer>
