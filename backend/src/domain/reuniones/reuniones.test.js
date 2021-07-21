@@ -125,7 +125,6 @@ describe('para reuniones', () => {
       expect(response.statusCode).toEqual(200);
       expect(response.body.id).toEqual(reunionesActuales[0].id);
       expect(response.body.configuracion).toEqual(reunionesActuales[0].configuracion);
-
     });
 
     test('si le defino el tipo rapida en las configuraciones, se puede crear', async () => {
@@ -145,6 +144,25 @@ describe('para reuniones', () => {
       expect(response.statusCode).toEqual(200);
       expect(response.body.id).toEqual(reunionesActuales[0].id);
       expect(response.body.configuracion).toEqual(reunionesActuales[0].configuracion);
+    });
+
+    test('si le defino un tipo basura no debería crearla', async () => {
+      const requestBody = {
+        abierta: true,
+        nombre: 'reunion generica',
+        tema: 'unTema',
+        autor: 'unPino',
+        descripcion: 'una descripcion',
+        urlDePresentacion: '',
+        tipo: 'saraza',
+      };
+
+      const response = await request(app).post('/api/reunionDeRoots').send(requestBody);
+      const reunionesActuales = await reunionesRepo.findAllWhereOpened(true);
+
+      expect(response.statusCode).toEqual(400);
+      expect(reunionesActuales).toEqual([]);
+
     });
   });
 });
