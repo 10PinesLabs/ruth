@@ -22,9 +22,9 @@ const temaGenerico = {
   titulo: 'HOla hola',
 };
 
-
+const mockSendMail = jest.fn();
 jest.mock('../login/estaLogueado', () => () => true);
-jest.mock('nodemailer', () => ({ createTransport: jest.fn().mockImplementation(() => ({ sendMail: jest.fn() })) }));
+jest.mock('nodemailer', () => ({ createTransport: jest.fn().mockImplementation(() => ({ sendMail: mockSendMail })) }));
 
 function assertTemaValido(reunion, response, temaGuardado) {
   const temaGenericoGuardado = {
@@ -92,12 +92,14 @@ describe('para reuniones', () => {
         secure: false,
         auth: { pass: 'gs9eQKqAMzPt2XWbs8', user: 'leda.graham74@ethereal.email' },
       });
-      /*
-      const transport = nodemailer.createTransport;
-      expect(transport.sendMail).toHaveBeenCalledWith({
-        host: 'smtp.ethereal.email', port: '587', secure: false, auth: { pass: 'gs9eQKqAMzPt2XWbs8', user: 'leda.graham74@ethereal.email' },
-      });
-      */
+
+      expect(mockSendMail).toHaveBeenCalledWith(
+        expect.objectContaining({
+          from: 'Ruth <leda.graham74@ethereal.email>',
+          subject: `Resumen reunionCerrada - ${fechaDeHoy.getDate()}-${fechaDeHoy.getMonth() + 1}-${fechaDeHoy.getFullYear()}`,
+          to: 'leda.graham74@ethereal.email',
+        }),
+      );
     });
   });
 
