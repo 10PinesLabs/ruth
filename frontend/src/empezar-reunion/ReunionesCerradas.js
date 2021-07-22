@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import { faSlack } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { toast } from 'react-toastify';
 import { StyledTableCell } from '../minuta/TablaOradores.styled';
 import { ButtonIcono, ButtonReunionCerrada, SecondaryButtonReunionCerrada } from '../components/Button.styled';
 import { Reuniones } from './Reuniones';
@@ -15,42 +16,49 @@ import { reunionEventos } from '../store/reunion';
 
 const FilaReunion = ({ reunion, history }) => {
   const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-  const [mail, setMail] = useState('');
-  const [mailValid, setMailValid] = useState(true);
+  const [email, setEmail] = useState('');
+  const [emailValid, setEmailValid] = useState(true);
   const [open, setOpen] = useState(false);
 
   const handleClickVer = () => {
     history.push(`/${reunion.id}/presentador`);
-  }
+  };
 
   const handleModalReenviarMailDeMinuta = () => {
     setOpen(!open);
   };
 
   const reenviarMailDeMinuta = async () => {
+    if (email === '') {
+      toast.error('No se puede reenviar el mail de minuta a un email vacio');
+    } else if (emailRegex.test(email)) {
     // crear el store
-    const store = createStore();
-    // conseguir los eventos que ya pasaron para esa reunion
-    const { eventos } = await backend.obtenerEventos(reunion.id);
-    // aplicar esos eventos al store
-    store.dispatch(reunionEventos.comenzarReunion(reunion));
-    eventos.forEach((evento) => store.dispatch({ ...evento.evento, isAlreadyPublished: true }));
-    // conseguir lo que necesitemos del store
-    const state = store.getState();
+      const store = createStore();
+      // conseguir los eventos que ya pasaron para esa reunion
+      const { eventos } = await backend.obtenerEventos(reunion.id);
+      // aplicar esos eventos al store
+      store.dispatch(reunionEventos.comenzarReunion(reunion));
+      eventos.forEach((evento) => store.dispatch({ ...evento.evento, isAlreadyPublished: true }));
+      // conseguir lo que necesitemos del store
+      const state = store.getState();
 
-    backend.reenviarMailMinuta(mail, state.reunion.temas, state.reunion.id);
+      backend.reenviarMailMinuta(email, state.reunion.temas, state.reunion.id).then(toast.success(`Mail de minuta enviado a ${email}`));
+    }
   };
 
   function handleOnClose() {
-    setMail('');
+    if (!emailRegex.test(email) && emailValid === false && email !== '') {
+      toast.error('Email inválido, no se ha podido enviar el mail');
+    }
+    setEmail('');
     setOpen(false);
-    setMailValid(true);
+    setEmailValid(true);
   }
 
   function handleOnChange(value) {
     const isValid = emailRegex.test(value);
-    setMailValid(isValid);
-    setMail(value);
+    setEmailValid(isValid);
+    setEmail(value);
   }
 
   return <StyledTableCell>
@@ -71,10 +79,10 @@ const FilaReunion = ({ reunion, history }) => {
                          onConfirm={reenviarMailDeMinuta}
     >
       <TextContainerModalReenviarMail>
-        <InputEmailReenviarMinuta value={mail} type="email" onChange={(event) => handleOnChange(event.target.value)} multiline label="Mail"/>
+        <InputEmailReenviarMinuta value={email} type="email" onChange={(event) => handleOnChange(event.target.value)} multiline label="Email"/>
       </TextContainerModalReenviarMail>
       {
-        !mailValid && <ParrafoMail>El email es inválido</ParrafoMail>
+        !emailValid && <ParrafoMail>El email es inválido</ParrafoMail>
       }
     </ModalDeConfirmacion>
     <Tooltip title={<Typography color="inherit">Reenviar recordatorios de slack</Typography>}>
