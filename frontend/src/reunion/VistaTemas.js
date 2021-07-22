@@ -13,7 +13,7 @@ import Mobile from '../mobile/index';
 import { temaEventos } from '../store/tema';
 
 
-const VistaTemas = ({dispatch, cerrarReunion, temas, usuario, estadoReunion: reunionAbierta, volverALobby}) => {
+const VistaTemas = ({dispatch, cerrarReunion, temas, usuario, estadoReunion: reunionAbierta}) => {
 
   const indiceTemaSinFinalizar = temas.findIndex((tema) => tema.fin === null);
   const ultimoTema = temas.length - 1;
@@ -111,7 +111,6 @@ const VistaTemas = ({dispatch, cerrarReunion, temas, usuario, estadoReunion: reu
                cerrarReunion={handleCerrarReunion}
                temaActual={temaSeleccionado}
                reunionAbierta={reunionAbierta}
-               volverALobby={volverALobby}
       />
 
       {(selectedElement !== 'Opinar' &&

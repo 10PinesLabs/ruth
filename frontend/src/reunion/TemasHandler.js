@@ -24,9 +24,6 @@ class TemasHandler extends React.Component {
       }
   }
 
-  volverALobby = () => {
-    this.props.history.push('/');
-  }
 
   render() {
     return <VistaTemas
@@ -35,7 +32,6 @@ class TemasHandler extends React.Component {
       dispatch={this.props.dispatch}
       cerrarReunion={this.cerrarReunion}
       estadoReunion={this.props.estadoReunion}
-      volverALobby={this.volverALobby}
       />;
   }
 }
