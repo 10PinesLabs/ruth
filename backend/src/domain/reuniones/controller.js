@@ -28,7 +28,7 @@ function crearTema(tema, descripcionDelTema, urlDePresentacion, autor) {
   };
 }
 
-async function generarReunion(body) {
+export async function generarReunion(body) {
   switch (body.tipo) {
     case 'roots': {
       const temas = await VotacionDeRoots.getTemasRoots();

@@ -4,11 +4,13 @@ import ReunionesRepo from '~/domain/reuniones/repo';
 import app from '~/server';
 import db from '~/database/models';
 import TemasRepo from '~/domain/temas/repo';
-import context from "~/context";
+import context from '~/context';
+import { generarReunion } from '~/domain/reuniones/controller';
+import { RequestError } from '~/utils/asyncMiddleware';
 
 const fechaDeHoy = new Date(Date.now());
 
-const temaGenerico = {
+const temaGenericoDuracionMedia = {
   autor: 'Ailen Muñoz',
   cantidadDeMinutosDelTema: 60,
   descripcion: ':)',
@@ -23,12 +25,26 @@ const temaGenerico = {
   titulo: 'HOla hola',
 };
 
+const temaGenericoDuracionCorta = {
+  tipo: 'conDescripcion',
+  titulo: 'unTema',
+  descripcion: ':)',
+  duracion: 'CORTO',
+  autor: 'Ailen Muñoz',
+  obligatoriedad: 'NO_OBLIGATORIO',
+  linkDePresentacion: '',
+  propuestas: null,
+  temasParaRepasar: null,
+  cantidadDeMinutosDelTema: 30,
+  prioridad: 1,
+  mailDelAutor: 'roots@10pines.com',
+};
 
 jest.mock('../login/estaLogueado', () => () => true);
 
 function assertTemaValido(reunion, response, temaGuardado) {
   const temaGenericoGuardado = {
-    ...temaGenerico,
+    ...temaGenericoDuracionMedia,
     id: temaGuardado.id,
     createdAt: temaGuardado.createdAt.toISOString(),
     updatedAt: temaGuardado.updatedAt.toISOString(),
@@ -65,7 +81,7 @@ describe('para reuniones', () => {
       reunionesRepo = new ReunionesRepo();
       repoTemas = new TemasRepo();
       reunionCerrada = await reunionesRepo.create({ abierta: false, nombre: 'reunionCerrada' });
-      temasGuardadosCerrada = await repoTemas.guardarTemas(reunionCerrada, [temaGenerico]);
+      temasGuardadosCerrada = await repoTemas.guardarTemas(reunionCerrada, [temaGenericoDuracionMedia]);
       const requestBody = { abierta: reunionCerrada.abierta, id: reunionCerrada.id, temas: temasGuardadosCerrada };
 
       const response = await request(app).put('/api/reunion').send(requestBody);
@@ -90,8 +106,8 @@ describe('para reuniones', () => {
       repoTemas = new TemasRepo();
       reunionCerrada = await reunionesRepo.create({ abierta: false, nombre: 'reunionCerrada' });
       reunionAbierta = await reunionesRepo.create({ abierta: true, nombre: 'reunionAbierta' });
-      temasGuardadosCerrada = await repoTemas.guardarTemas(reunionCerrada, [temaGenerico]);
-      temasGuardadosAbierta = await repoTemas.guardarTemas(reunionAbierta, [temaGenerico]);
+      temasGuardadosCerrada = await repoTemas.guardarTemas(reunionCerrada, [temaGenericoDuracionMedia]);
+      temasGuardadosAbierta = await repoTemas.guardarTemas(reunionAbierta, [temaGenericoDuracionMedia]);
     });
 
     test('si hay reuniones abiertas y cerradas y pido las cerradas', async () => {
@@ -162,7 +178,47 @@ describe('para reuniones', () => {
 
       expect(response.statusCode).toEqual(400);
       expect(reunionesActuales).toEqual([]);
-
     });
+  });
+});
+
+describe('generar una reunion a partir de un body definido', () => {
+  test('con un tipo valido', async () => {
+    const requestBody = {
+      abierta: true,
+      nombre: 'reunion generica',
+      tema: 'unTema',
+      autor: temaGenericoDuracionCorta.autor,
+      descripcion: temaGenericoDuracionCorta.descripcion,
+      urlDePresentacion: '',
+      tipo: 'rapida',
+    };
+    const response = await generarReunion(requestBody);
+
+    expect(response.reunion).toEqual({
+      abierta: requestBody.abierta,
+      configuracion: { tipo: requestBody.tipo },
+      nombre: requestBody.nombre,
+    });
+    expect(response.temas[0]).toEqual(temaGenericoDuracionCorta);
+  });
+  test('con un tipo invalido', async () => {
+    const requestBody = {
+      abierta: true,
+      nombre: 'reunion generica',
+      tema: 'unTema',
+      autor: temaGenericoDuracionCorta.autor,
+      descripcion: temaGenericoDuracionCorta.descripcion,
+      urlDePresentacion: '',
+      tipo: 'invalido',
+    };
+    try {
+      await generarReunion(requestBody);
+      fail;
+    } catch (e) {
+      if(e instanceof RequestError){
+        expect(e.statusCode).toEqual(400);
+      }
+    }
   });
 });
