@@ -3,8 +3,8 @@ import enviarResumenPorMail from '~/domain/mail/mail';
 import notificador from './notificador';
 import { RequestError } from '~/utils/asyncMiddleware';
 
-function validarReunionRapida(req) {
-  const { tema, autor, nombre } = req.body;
+function validarReunionRapida(body) {
+  const { tema, autor, nombre } = body;
   if (tema === '' || nombre === '' || autor === '') {
     throw new RequestError(400, 'Faltan campos en la reunion');
   }
@@ -28,6 +28,29 @@ function crearTema(tema, descripcionDelTema, urlDePresentacion, autor) {
   };
 }
 
+export async function generarReunion(body) {
+  switch (body.tipo) {
+    case 'roots': {
+      const temas = await VotacionDeRoots.getTemasRoots();
+      const reunion = { abierta: body.abierta, nombre: 'Reunion de Roots', configuracion: { tipo: body.tipo } };
+      return { temas, reunion };
+    }
+    case 'rapida': {
+      validarReunionRapida(body);
+      const temas = [crearTema(body.tema, body.descripcion, body.urlDePresentacion, body.autor)];
+      const reunion = {
+        abierta: body.abierta,
+        nombre: body.nombre,
+        configuracion: { tipo: body.tipo },
+      };
+      return { temas, reunion };
+    }
+    default: {
+      throw new RequestError(400, 'No existe ese tipo de reunion');
+    }
+  }
+}
+
 const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas }) => ({
   reunion: async (req) => {
     const { id } = req.params;
@@ -42,22 +65,10 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
   },
 
   crear: async (req) => {
-    const esReunionDeRoots = req.body.reunionDeRoots;
-    if (!esReunionDeRoots) {
-      validarReunionRapida(req);
-    }
-    const {
-      tema, urlDePresentacion, descripcion, autor, nombre,
-    } = req.body;
-
-    const { abierta } = req.body;
-    const nombreDeReunion = esReunionDeRoots ? 'Reunion de Roots' : nombre;
-    const temas = esReunionDeRoots
-      ? await VotacionDeRoots.getTemasRoots()
-      : [crearTema(tema, descripcion, urlDePresentacion, autor)];
-    const reunion = await repoReuniones.create({ abierta, nombre: nombreDeReunion });
-    const temasNuevos = await repoTemas.guardarTemas(reunion, temas);
-    return { ...(reunion.toJSON()), temas: temasNuevos.map((t) => t.toJSON()) };
+    const { temas, reunion } = await generarReunion(req.body);
+    const reunionCreada = await repoReuniones.create(reunion);
+    const temasNuevos = await repoTemas.guardarTemas(reunionCreada, temas);
+    return { ...(reunionCreada.toJSON()), temas: temasNuevos.map((t) => t.toJSON()) };
   },
 
   actualizar: async (req) => {
