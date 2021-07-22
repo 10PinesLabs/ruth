@@ -4,7 +4,7 @@ import app from '~/server';
 import db from '~/database/models';
 import TemasRepo from '~/domain/temas/repo';
 import context from '~/context';
-import {generarReunion} from '~/domain/reuniones/controller';
+import { generarReunion } from '~/domain/reuniones/controller';
 
 const fechaDeHoy = new Date(Date.now());
 
@@ -154,6 +154,16 @@ describe('para reuniones', () => {
 
       const response = await request(app).post('/api/reunionDeRoots').send(requestBody);
       const reunionesActuales = await reunionesRepo.findAllWhereOpened(true);
+
+      expect(response.statusCode).toEqual(200);
+      expect(response.body.id).toEqual(reunionesActuales[0].id);
+      expect(response.body.configuracion).toEqual(reunionesActuales[0].configuracion);
+    });
+
+    test('si le defino el tipo espontanea en las configuraciones, se puede crear', async () => {
+      const response = await request(app).post('/api/reunionDeRoots').send({ abierta: true, tipo: 'espontanea' });
+      const reunionesActuales = await reunionesRepo.findAllWhereOpened(true);
+
 
       expect(response.statusCode).toEqual(200);
       expect(response.body.id).toEqual(reunionesActuales[0].id);

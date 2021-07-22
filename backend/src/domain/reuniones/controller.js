@@ -45,6 +45,16 @@ export async function generarReunion(body) {
       };
       return { temas, reunion };
     }
+    case 'espontanea': {
+      const temas = [];
+      const fecha = new Date();
+      const reunion = {
+        abierta: body.abierta,
+        nombre: `Reunion Espontanea creada el ${fecha.toLocaleDateString()} a las ${fecha.toLocaleTimeString()}`,
+        configuracion: { tipo: body.tipo },
+      };
+      return { temas, reunion };
+    }
     default: {
       throw new RequestError(400, 'No existe ese tipo de reunion');
     }
