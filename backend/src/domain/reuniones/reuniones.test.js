@@ -1,12 +1,10 @@
 import request from 'supertest';
-import { response } from 'express';
 import ReunionesRepo from '~/domain/reuniones/repo';
 import app from '~/server';
 import db from '~/database/models';
 import TemasRepo from '~/domain/temas/repo';
 import context from '~/context';
-import { generarReunion } from '~/domain/reuniones/controller';
-import { RequestError } from '~/utils/asyncMiddleware';
+import {generarReunion} from '~/domain/reuniones/controller';
 
 const fechaDeHoy = new Date(Date.now());
 
@@ -212,13 +210,6 @@ describe('generar una reunion a partir de un body definido', () => {
       urlDePresentacion: '',
       tipo: 'invalido',
     };
-    try {
-      await generarReunion(requestBody);
-      fail;
-    } catch (e) {
-      if(e instanceof RequestError){
-        expect(e.statusCode).toEqual(400);
-      }
-    }
+    await expect(generarReunion(requestBody)).rejects.toEqual({ errorMessage: 'No existe ese tipo de reunion', statusCode: 400 });
   });
 });
