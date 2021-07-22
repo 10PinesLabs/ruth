@@ -49,6 +49,11 @@ export const SecondaryButton = styled(Button)`
     background: ${(props) => (!props.disabled ? colors.black10 : colors.white)};
   }
 `;
+export const SidebarButton = styled(SecondaryButton)`
+  margin: .5em 0em;
+  padding: 0.5em 0;  
+  height: 3em;
+`;
 
 export const UnirseButton = styled(Button)`
   margin: 0.5em;
