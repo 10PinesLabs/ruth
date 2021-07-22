@@ -2,6 +2,7 @@ import VotacionDeRoots from '../votacionDeRoots/votacionDeRoots';
 import enviarResumenPorMail from '~/domain/mail/mail';
 import notificador from './notificador';
 import { RequestError } from '~/utils/asyncMiddleware';
+import context from '~/context';
 
 function validarReunionRapida(req) {
   const { tema, autor, nombre } = req.body;
@@ -69,7 +70,7 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
     await reunionAActualizar.update({ abierta });
 
     if (!abierta) {
-      await enviarResumenPorMail(reunionAActualizar, req.body.temas);
+      await enviarResumenPorMail(process.env.MAIL_DESTINATION, reunionAActualizar, req.body.temas);
       notificador.notificarOwnersDeActionItemsDeReunion(temas);
     }
   },
@@ -85,6 +86,18 @@ const ReunionController = ({ reunionesRepo: repoReuniones, temasRepo: repoTemas 
     });
     const reunionesConTemas = await Promise.all(reunionesPromises);
     return { reuniones: reunionesConTemas };
+  },
+
+  obtenerEventos: async (req) => {
+    const { idReunion } = req.params;
+    const eventosDeReunion = await context.eventosRepo.findEventosParaReunion(undefined, idReunion);
+    return { eventos: eventosDeReunion };
+  },
+
+  reenviarMailMinuta: async (req) => {
+    const { mail, temasReunion, idReunion } = req.body;
+    const reunionAActualizar = await repoReuniones.findOneById(idReunion);
+    await enviarResumenPorMail(mail, reunionAActualizar, temasReunion);
   },
 
 });

@@ -1,10 +1,9 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 import { connect } from 'react-redux';
-import { useParams, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import backend from '../api/backend';
 import VistaTemas from './VistaTemas';
-import { temaEventos } from '../store/tema';
 import { reunionEventos } from '../store/reunion';
 
 class TemasHandler extends React.Component {
