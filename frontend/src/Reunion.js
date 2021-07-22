@@ -34,7 +34,7 @@ const Reunion = ({ usuario }) => {
     <GlobalStyle/>
     <Provider store={store}>
       <Route exact path="/:reunionId/presentador" component={() => <TemasHandler usuario={usuario}/>}/>
-      <Route exact path="/:reunionId" component={() => <Mobile usuario={usuario}/>}/>
+      <Route exact path="/:reunionId" component={() => <Mobile usuario={usuario} participante={true}/>}/>
     </Provider>
   </>;
 };

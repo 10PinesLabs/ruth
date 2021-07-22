@@ -4,7 +4,7 @@ import Vista from './vista';
 import { reacciones } from './actions';
 
 const Mobile = ({
-  usuario, dispatch, tema, queuedParticipants, ...props
+  usuario, participante, dispatch, tema, queuedParticipants, ...props
 }) => {
 
   const esUsuarioActual = (evento) => evento.usuario.email === usuario.email;
@@ -38,7 +38,8 @@ const Mobile = ({
         thumbsDown={reaccionoCon(reacciones.THUMBS_DOWN)}
         slack={reaccionoCon(reacciones.SLACK)}
         redondear={reaccionoCon(reacciones.REDONDEAR)}
-        tema={tema}/>
+        tema={tema}
+        participante={participante}/>
     </>
   );
 };

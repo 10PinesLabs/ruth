@@ -130,8 +130,13 @@ export const CantidadDeOradoresContainer = styled.div`
     right: 16.8em;
     font-size: 0.9em;
     color:gray;
-`
+`;
 
 export const TemaReactionButtonContainer = styled.div`
     margin: 0 13px;
-`
+`;
+
+export const BotonesParaIrAOtrasPantallas = styled.div`
+    margin-bottom: 5%;
+`;
+

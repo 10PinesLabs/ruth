@@ -4,9 +4,12 @@ import {
   faThumbsDown,
   faThumbsUp,
   faHandPaper,
-  faTimes
+  faTimes,
+  faArrowAltCircleLeft,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSlack } from '@fortawesome/free-brands-svg-icons';
+import Button from '@material-ui/core/Button';
 import ParticipantsCard from '../cola-de-participantes/ParticipantsCard';
 import { ReactionButton } from './ReactionButton';
 import {
@@ -25,17 +28,17 @@ import {
   CantidadDeOradoresContainer,
   TitleContainer,
   TitleDecoration,
-  TemaReactionButtonContainer
+  TemaReactionButtonContainer, BotonesParaIrAOtrasPantallas,
 } from './vista.styled';
 import { oradorEventos } from '../store/oradores';
 import { CardInteractionsContainer } from '../components/InteractionsContainer.styled';
 import { reaccionEventos } from '../store/reacciones';
-import { SkeletonCircle, SkeletonLine, ReactionSkeletonContainer, SkeletonBlock, MobileCallToActionSkeletonContainer } from '../skeleton/Skeleton.styled';
+import {
+  SkeletonCircle, SkeletonLine, ReactionSkeletonContainer, SkeletonBlock, MobileCallToActionSkeletonContainer,
+} from '../skeleton/Skeleton.styled';
 import { reacciones } from './actions';
-import { faSlack } from '@fortawesome/free-brands-svg-icons';
-import { colors } from '../../src/styles/theme.js'
-import Button from '@material-ui/core/Button';
-import { CantidadDeOradores } from './CantidadDeOradores'
+import { colors } from '../styles/theme.js';
+import { CantidadDeOradores } from './CantidadDeOradores';
 
 const logoImage = 'https://res-4.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_'
   + '256,f_auto,q_auto:eco/wuhk5weer0fkhmh2oyhv';
@@ -72,10 +75,11 @@ const Vista = ({
   wannaTalk,
   isTalking,
   tema,
-  queuedParticipants
+  queuedParticipants,
+  participante,
 }) => {
   const handleReaction = (nombre, estaReaccionado) => {
-    const evento = estaReaccionado ? reaccionEventos.desreaccionar(usuario, nombre, tema.id) :  reaccionEventos.reaccionar(usuario, nombre, tema.id);
+    const evento = estaReaccionado ? reaccionEventos.desreaccionar(usuario, nombre, tema.id) : reaccionEventos.reaccionar(usuario, nombre, tema.id);
     dispatch(evento);
   };
 
@@ -89,7 +93,7 @@ const Vista = ({
     else dispatch(oradorEventos.desencolar(usuario, tema.id));
   };
 
-  const kickear = ( usuario ) => {
+  const kickear = (usuario) => {
     dispatch(oradorEventos.kickear(usuario, tema.id));
   };
 
@@ -100,18 +104,16 @@ const Vista = ({
 
   const inQueueIcon = () => (faTimes);
 
-  const MobileCallToActionButton = ({children, color = colors.primary, ...props}) => {
-    return (
+  const MobileCallToActionButton = ({ children, color = colors.primary, ...props }) => (
       <Button
         variant="outlined"
-        style={{ color: color, borderColor: color }}
+        style={{ color, borderColor: color }}
         size="large"
         {...props}
       >
         {children}
       </Button>
-    );
-  };
+  );
 
   let botonesDeReaccion;
   if (temaEmpezado) {
@@ -158,7 +160,7 @@ const Vista = ({
             color="black"
             onClick={onWannaStopTalkClick}
             startIcon={
-              <FontAwesomeIcon icon={inQueueIcon()} color="black" size={"2x"} />
+              <FontAwesomeIcon icon={inQueueIcon()} color="black" size={'2x'} />
             }
           >
             Dejar de hablar
@@ -174,8 +176,8 @@ const Vista = ({
             startIcon={
               <FontAwesomeIcon
                 icon={inQueueIcon()}
-                color={"black"}
-                size={"2x"}
+                color={'black'}
+                size={'2x'}
               />
             }
           >
@@ -191,7 +193,7 @@ const Vista = ({
             <FontAwesomeIcon
               icon={faHandPaper}
               color={colors.primary}
-              size={"2x"}
+              size={'2x'}
             />
           }
         >
@@ -205,7 +207,7 @@ const Vista = ({
         color="#ff3b3b8c"
         disabled
         startIcon={
-          <FontAwesomeIcon icon={faHandPaper} color={"#ff3b3b8c"} size={"2x"} />
+          <FontAwesomeIcon icon={faHandPaper} color={'#ff3b3b8c'} size={'2x'} />
         }
       >
         Aun no
@@ -227,9 +229,9 @@ const Vista = ({
             <SubjectTitle>
               {showSkeleton ? <SkeletonLine/> : title}
             </SubjectTitle>
-            
+
           </TitleContainer>
-          
+
           {showSkeleton
             ? <ReactionsContainer height={6}>
                 <TemaReactionButtonContainer>
@@ -257,10 +259,10 @@ const Vista = ({
           }
         </CardInteractionsContainer>
       </TopSectionContainer>
-      <ParticipantsContainer>
+      <ParticipantsContainer participante={participante}>
         <SpeakerAreaContainer>
-          { queuedParticipants?.length>0 &&
-          <CantidadDeOradoresContainer>
+          { queuedParticipants?.length > 0
+          && <CantidadDeOradoresContainer>
             <CantidadDeOradores
              wannaTalk={wannaTalk}
              queuedParticipants={queuedParticipants}
@@ -270,7 +272,7 @@ const Vista = ({
             }
           <ParticipantsCard
             sePuedeReaccionar={
-              process.env.REACT_APP_MINUTA_PERMITIDA === "true"
+              process.env.REACT_APP_MINUTA_PERMITIDA === 'true'
             }
             usuario={usuario}
             interactive
@@ -281,18 +283,29 @@ const Vista = ({
             tema={tema}/>
           </SpeakerAreaContainer>
         <ActionContainerStyle>
-          {showSkeleton ? 
-            <MobileCallToActionSkeletonContainer>
+          {showSkeleton
+            ? <MobileCallToActionSkeletonContainer>
               <SkeletonBlock/>
             </MobileCallToActionSkeletonContainer>
-            : 
-            microphone
+            : microphone
           }
         </ActionContainerStyle>
+        {
+          participante && <BotonesParaIrAOtrasPantallas>
+              <MobileCallToActionButton
+                startIcon={ <FontAwesomeIcon icon={faArrowAltCircleLeft} color={colors.primary} size={'2x'}/> }
+                styled
+              >
+              Volver al lobby
+              </MobileCallToActionButton>
+              <MobileCallToActionButton>
+              Ir a la presentacion
+              </MobileCallToActionButton>
+            </BotonesParaIrAOtrasPantallas>
+        }
       </ParticipantsContainer>
     </MobileUsableArea>
   );
 };
 
 export default Vista;
-
