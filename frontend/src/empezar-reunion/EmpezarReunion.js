@@ -99,6 +99,12 @@ class EmpezarReunion extends React.Component {
                 </BotonDeCreacionContainer>
               </FormContainer>
               }
+              <BotonParaIniciarReunion
+                cargando={this.state.cargando}
+                handleEmpezarReunion={() => this.handleEmpezarReunion({ tipo: 'espontanea' })}
+                texto="Empezar Reunión Espontanea"
+              />
+
             </EmpezarReunionContainer>
             <ReunionesActivasContainer>
               <ReunionesTabs/>
